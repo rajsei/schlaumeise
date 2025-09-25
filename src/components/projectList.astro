@@ -1,0 +1,73 @@
+---
+// src/components/projectList.astro
+import { getCollection } from "astro:content";
+import { collections } from "../content.config";
+import "../styles/project_grid.css";
+
+// Alle Collection-Namen, die mit "project" beginnen:
+const projectCollections = Object.keys(collections).filter((name) =>
+  name.startsWith("project")
+);
+
+const docsArrays = await Promise.all(
+  projectCollections.map((name) => getCollection(name as keyof typeof collections))
+);
+const docs = docsArrays.flat();
+
+console.log(docs);
+
+// nur overview.md-Projekte
+const projects = docs.filter((d) =>
+  d.id === "overview.md"
+) as any[];
+---
+
+<div>
+
+  <div id="project-list" class="grid">
+  {projects.map((p) => (
+    <a href={`/${p.collection}/${p.slug}`} class="card">
+  <h3>{p.data.title}</h3>
+  <p>{p.data.description}</p>
+  <div class="tags">
+    {(p.data.tags ?? []).map((t: string) => <span>{t}</span>)}
+  </div>
+</a>
+  ))}
+</div>
+
+  <script type="module">
+    import { filterProjects } from "../utils/filterProjects.ts";
+
+    const projects = Array.from(
+      document.querySelectorAll("#project-list article")
+    );
+
+    const categories = [...new Set(projects.map(p => p.dataset.category))].filter(Boolean);
+    const tags = [
+      ...new Set(
+        projects.flatMap(p => (p.dataset.tags || "").split(" ").filter(Boolean))
+      ),
+    ];
+
+    const catContainer = document.querySelector("#category-filters");
+    if (catContainer) {
+      categories.forEach((cat) => {
+        const btn = document.createElement("button");
+        btn.textContent = cat ?? "";
+        btn.onclick = () => filterProjects(projects, cat, null);
+        catContainer.appendChild(btn);
+      });
+    }
+
+    const tagContainer = document.querySelector("#tag-filters");
+    if (tagContainer) {
+      tags.forEach((tag) => {
+        const btn = document.createElement("button");
+        btn.textContent = tag;
+        btn.onclick = () => filterProjects(projects, null, tag);
+        tagContainer.appendChild(btn);
+      });
+    }
+  </script>
+</div>

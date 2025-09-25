@@ -1,0 +1,64 @@
+/* src/styles/projects.css */
+
+/* Grid Layout für Projekte */
+#project-list.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Card-Styling an Starlight-LinkCard angelehnt */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background-color: var(--sl-color-bg);
+  border: 1px solid var(--sl-color-hairline);
+  box-shadow: var(--sl-shadow-sm);
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--sl-color-accent);
+  box-shadow: var(--sl-shadow-md);
+  transform: translateY(-2px);
+  background-color: var(--sl-color-bg-nav);
+}
+
+/* Titel */
+.card h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--sl-color-text);
+}
+
+/* Beschreibung */
+.card p {
+  flex-grow: 1;
+  margin: 0 0 0.75rem 0;
+  color: var(--sl-color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tags span {
+  font-size: 0.75rem;
+  background-color: var(--sl-color-bg-inline-code);
+  color: var(--sl-color-text-accent);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  line-height: 1.2;
+}
