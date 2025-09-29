@@ -11,6 +11,7 @@ import starlightUtils from "@lorenzo_lewis/starlight-utils";
 export default defineConfig({
   integrations: [
     starlight({
+      customCss: ["./src/styles/project.css"],
       plugins: [
         starlightUtils({
           navLinks: {
@@ -43,15 +44,12 @@ export default defineConfig({
         },
 
         {
-          label: "Guides",
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example Guide", slug: "guides/example" },
-          ],
+          label: "Project01",
+          autogenerate: { directory: "project01" },
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "Project02",
+          autogenerate: { directory: "project02" },
         },
       ],
     }),
