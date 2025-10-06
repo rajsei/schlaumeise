@@ -1,0 +1,135 @@
+---
+title: Raspberry Pi Setup Install
+description: ...
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+
+...
+
+## Voraussetzungen
+
+Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi und eine Internetverbindung. ...
+
+## Setup der SD-Karte (2.Teil)
+
+### BirdNET pi installieren
+
+<Steps>
+
+1. Raspberry Pi anschließen
+
+2. Terminal öffnen
+
+3. Verbinde dich über das folgendem Komando mit dem Pi. Nutze die von dir gesetzten Daten. ... "dracula", "github-dark", "material-dark"
+
+</Steps>
+
+<div class="step-code">
+```sh
+ssh birder@birdnetpi.local
+````
+<Code code='ssh birder@birdnetpi.local' lang='js' title='Terminal'  class="terminal-code" theme="github-dark"/>
+<Code code='ssh birder@birdnetpi.local' lang='js' title='Terminal'  />
+
+![](/src/images/project01/pi-setup2/01.png)
+
+```sh
+yes
+```
+
+</div>
+
+<Steps>
+
+4. Darauf hin sollte ein Passwort abgefragt werden. Nutze das Passwort das du im OS gespeichert hast.
+
+5. Nutze das Kommando um eine Datei zu öffnen:
+
+</Steps>
+
+<div class="step-code">
+```sh
+
+sudo nano /etc/rc.local
+
+````
+
+</div>
+
+<Steps>
+
+6. Füge folgenden Inhalt ein:
+
+</Steps>
+
+<div class="step-code">
+```sh
+
+#!/bin/bash
+sudo iw wlan0 set power_save off
+exit 0
+
+````
+
+</div>
+
+<Steps>
+
+7. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />.
+
+8. Nur für ... / Überprüfen (100/512) unter `sudo nano /etc/dphys-swapfile`
+
+</Steps>
+
+<div class="step-code">
+```sh
+
+sudo sed -i 's/CONF_SWAPSIZE=512/CONF_SWAPSIZE=2048/g' /etc/dphys-swapfile &&
+sudo sed -i 's/#CONF_MAXSWAP=2048/CONF_MAXSWAP=4096/g' /etc/dphys-swapfile
+
+````
+
+</div>
+
+<Steps>
+
+9. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
+
+</Steps>
+
+<div class="step-code">
+```sh
+
+sudo nmtui
+
+```
+
+</div>
+
+<Steps>
+
+10. Im Network Manager kannst du das Ausgewählte Element über die <Kbd windows="Pfeiltasten" /> verschieben und mit <Kbd windows="Enter" /> bestätigen.
+
+11. Wähle `Edit a connection`
+
+12. Wähle `Add`
+
+13. Wähle `Wi-Fi` als Typ der Verbindung (`type of connection`)
+
+14. Wähle `Create`
+
+15. Nun müssen die Daten deines Netzwerkes hinzugefügt werden.
+
+16.
+17.
+
+18.
+
+</Steps>
+
+
+```
+````

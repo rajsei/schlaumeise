@@ -1,5 +1,5 @@
 ---
-title: Raspberry Pi Setup
+title: Raspberry Pi Setup OS
 description: ...
 ---
 
@@ -13,7 +13,9 @@ Auch wenn technisches Vorwissen hilfreich sein kann, haben wir die Anleitung so 
 
 Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi und eine Internetverbindung.
 
-## Setup der SD-Karte
+## Setup der SD-Karte (1.Teil)
+
+### Betriebssystem installieren
 
 <Steps>
 
@@ -23,51 +25,51 @@ Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi un
 2. Raspberry Pi Imager unter raspberrypi.com herunterladen und öffnen. Folge einfach den Installationsanweisungen.
    ![Screenshot des Raspberry Pi Imager](/src/images/project01/pi-setup/01pi_imager.png)
 
-3. Klicke auf „Modell wählen” und wähle das Modell, das du besitzt.
+3. Klicke auf `Modell wählen` und wähle das Modell, das du besitzt.
    ![](/src/images/project01/pi-setup/02.png)
 
-4. Klicke zunächst auf „OS wählen” und dann auf „Raspberry Pi OS (other)”.
+4. Klicke zunächst auf `OS wählen` und dann auf `Raspberry Pi OS (other)`.
    ![](/src/images/project01/pi-setup/03.png)
 
-5. Klicke auf „Raspberry Pi OS Lite (64-Bit) A port of Debian Bookworm with no desktop environment …”.
+5. Klicke auf `Raspberry Pi OS Lite (64-Bit) A port of Debian Bookworm with no desktop environment …`.
    ![](/src/images/project01/pi-setup/04.png)
 
-6. Klicke auf „SD-Karte wählen” und wähle die SD-Karte aus, die dein BirdNET-Pi benutzen soll. Überprüfe den Namen der SD-Karte über den „Dateimanager (Explorer)” > „Dieser PC”, da die Daten auf der SD-Karte im folgenden Schritt gelöscht werden.
+6. Klicke auf `SD-Karte wählen` und wähle die SD-Karte aus, die dein BirdNET-Pi benutzen soll. Überprüfe den Namen der SD-Karte über den `Dateimanager (Explorer)` > `Dieser PC`, da die Daten auf der SD-Karte im folgenden Schritt gelöscht werden.
    ![](/src/images/project01/pi-setup/05.png)![](/src/images/project01/pi-setup/06.png)
 
-7. Klicke auf „Weiter”.
+7. Klicke auf `Weiter`.
    ![](/src/images/project01/pi-setup/07.png)
 
-8. Klicke auf „Einstellungen bearbeiten”.
+8. Klicke auf `Einstellungen bearbeiten`.
    ![](/src/images/project01/pi-setup/09.png)
 
-9. Richten wir nun alle Punkte unter „Allgemein” ein.
+9. Richten wir nun alle Punkte unter `Allgemein` ein.
    ![](/src/images/project01/pi-setup/10.png)
 
-10. Lege den „Hostname“ fest, unter dem der BirdNET-Pi erreichbar sein soll. Wenn du z. B. mehrere BirdNET-Pis im gleichen Netzwerk hast, kannst du jedem einen anderen Hostnamen geben. In diesem Beispiel ist die Installation unter `http://birdnetpi.local` erreichbar, da dies der in diesem Schritt festgelegte Hostname ist. Wenn Sie diesen Wert nicht setzen (und den Standard-Hostnamen „raspberrypi” verwenden), wird die Installation von BirdNET standardmäßig unter `http://raspberrypi.local` erreichbar sein.
+10. Lege den `Hostname` fest, unter dem der BirdNET-Pi erreichbar sein soll. Wenn du z. B. mehrere BirdNET-Pis im gleichen Netzwerk hast, kannst du jedem einen anderen Hostnamen geben. In diesem Beispiel ist die Installation unter `http://birdnetpi.local` erreichbar, da dies der in diesem Schritt festgelegte Hostname ist. Wenn Sie diesen Wert nicht setzen (und den Standard-Hostnamen `raspberrypi` verwenden), wird die Installation von BirdNET standardmäßig unter `http://raspberrypi.local` erreichbar sein.
     ![](/src/images/project01/pi-setup/11.png)
 
-11. Als Nächstes legen wir einen Benutzernamen und ein Passwort fest, mit denen wir später auf den Raspberry Pi zugreifen können. In diesem Beispiel haben wir einen Nutzer mit dem Namen „birder” erstellt. Merke dir das Passwort, denn wir werden es später benötigen.
+11. Als Nächstes legen wir einen Benutzernamen und ein Passwort fest, mit denen wir später auf den Raspberry Pi zugreifen können. In diesem Beispiel haben wir einen Nutzer mit dem Namen `birder` erstellt. Merke dir das Passwort, denn wir werden es später benötigen.
     ![](/src/images/project01/pi-setup/12.png)
 
-12. Gib nun den Namen deines WLANs unter „SSID” und das Passwort deines WLANs unter „Passwort” ein. Befindest du dich nicht in deinem eigenen WLAN, kannst du auch über deinen PC oder dein Handy einen Hotspot erstellen und die entsprechenden Daten in den Feldern „SSID” und „Passwort” eingeben. Wenn du den Hotspot nicht mit dem PC erstellst, musst du in den späteren Schritten sicherstellen, dass dein PC mit demselben Hotspot verbunden ist. Nur so befinden sich PC und Raspberry Pi im gleichen Netzwerk/WLAN/Hotspot. Zudem muss das Gerät, mit dem du den Hotspot erstellst, mit dem Internet verbunden sein. Als „WiFi-Land” kannst du „DE” auswählen.
+12. Gib nun den Namen deines WLANs unter `SSID` und das Passwort deines WLANs unter `Passwort` ein. Befindest du dich nicht in deinem eigenen WLAN, kannst du auch über deinen PC oder dein Handy einen Hotspot erstellen und die entsprechenden Daten in den Feldern `SSID` und `Passwort` eingeben. Wenn du den Hotspot nicht mit dem PC erstellst, musst du in den späteren Schritten sicherstellen, dass dein PC mit demselben Hotspot verbunden ist. Nur so befinden sich PC und Raspberry Pi im gleichen Netzwerk/WLAN/Hotspot. Zudem muss das Gerät, mit dem du den Hotspot erstellst, mit dem Internet verbunden sein. Als `WiFi-Land` kannst du `DE` auswählen.
     ![](/src/images/project01/pi-setup/13.png)
 
-13. Passe anschließend deine „Zeitzone” und „Tastaturlayout” an.
+13. Passe anschließend deine `Zeitzone` und `Tastaturlayout` an.
     ![](/src/images/project01/pi-setup/14.png)
 
-14. Unter „Allgemein“ sollte es am Ende wie folgt aussehen, natürlich mit deinen eigenen Daten ausgefüllt. Aber noch nicht auf „Speichern“ klicken!
+14. Unter `Allgemein` sollte es am Ende wie folgt aussehen, natürlich mit deinen eigenen Daten ausgefüllt. Aber noch nicht auf `Speichern` klicken!
     ![](/src/images/project01/pi-setup/15.png)
 
-15. Wechsel zu dem Bereich „Dienste“.
+15. Wechsel zu dem Bereich `Dienste`.
     ![](/src/images/project01/pi-setup/16.png)
 
-16. Aktiviere SSH und wähle „Passwort zur Authentifizierung verwenden”. Damit kannst du deinen BirdNET-Pi ganz bequem von deinem Computer aus einrichten und musst weder einen Bildschirm noch eine Tastatur an deinen Raspberry Pi anschließen.
+16. Aktiviere SSH und wähle `Passwort zur Authentifizierung verwenden`. Damit kannst du deinen BirdNET-Pi ganz bequem von deinem Computer aus einrichten und musst weder einen Bildschirm noch eine Tastatur an deinen Raspberry Pi anschließen.
     ![](/src/images/project01/pi-setup/17.png)
 
-17. Damit sind wir fertig und du kannst auf „Speichern“ klicken.
-18. Klicke auf „Ja“.
+17. Damit sind wir fertig und du kannst auf `Speichern` klicken.
+18. Klicke auf `Ja`.
 
-19. Klicke noch einmal auf „Ja“. Jetzt werden alle Daten von deiner SD-Karte gelöscht und Raspberry Pi OS installiert.
+19. Klicke noch einmal auf `Ja`. Jetzt werden alle Daten von deiner SD-Karte gelöscht und Raspberry Pi OS installiert.
 
 </Steps>

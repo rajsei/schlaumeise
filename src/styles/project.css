@@ -4,3 +4,39 @@ main img {
 
   margin: 1rem 1rem auto;
 }
+
+.step-code {
+  margin-left: 2.5rem;
+  margin-top: 0rem;
+}
+
+/* customized background color and text color for terminal text */
+.terminal-code,
+.terminal-code pre,
+.terminal-code code {
+  background-color: #17181c !important;
+}
+.terminal-code pre code span {
+  color: #ffffff !important;
+}
+
+/* customized background color and text color for terminal text title
+.frame.has-title .header .title {
+  color: #ffffff;
+  background-color: #17181c;
+}*/
+
+.terminal-code .header .title {
+  color: #ffffff;
+  background-color: #17181c;
+}
+
+.terminal-code.expressive-code .frame.has-title:not(.is-terminal) .header {
+  background: #303030; /*#23262f;*/
+}
+
+.terminal-code.expressive-code
+  .frame.has-title:not(.is-terminal)
+  .title::after {
+  border-top: 0.17rem solid hsl(251, 75%, 55%);
+}
