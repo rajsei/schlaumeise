@@ -1,17 +1,21 @@
 ---
 title: Raspberry Pi Setup Install
 description: ...
+sidebar:
+  order: 3
 ---
 
 import { Steps } from "@astrojs/starlight/components";
 import { Kbd } from "starlight-kbd/components";
 import { Code } from "@astrojs/starlight/components";
-
-...
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
 
 ## Voraussetzungen
 
-Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi und eine Internetverbindung. ...
+Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi und eine
+Internetverbindung. ...
 
 ## Setup der SD-Karte (2.Teil)
 
@@ -19,11 +23,24 @@ Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi un
 
 <Steps>
 
-1. Raspberry Pi anschließen
+1. Stecke die SD-Karte in den Raspberry Pi.
 
-2. Terminal öffnen
+2. Raspberry Pi mit dem Netzteil an den Strom anschließen, es sollte eine LED am Raspberry Pi leuchten oder blinken. Warte am bsten ein Paar Minuten damit der Raspberry Pi hochfahren kann.
 
-3. Verbinde dich über das folgendem Komando mit dem Pi. Nutze die von dir gesetzten Daten. ... "dracula", "github-dark", "material-dark"
+3. Konsole öffnen
+
+</Steps>
+
+<div class="step-code">
+  <LinkCard
+    title=" Mehr Informationen zur Konsole"
+    href="/glossary/console"
+    description="Hier finden Sie eine Anleitung zum Öffnen und Bedienen der Konsole."
+  />
+</div>
+
+<Steps>
+3. Verbinde dich über das folgendem Komando mit dem Pi. Nutze die von dir gesetzten Daten. ...
 
 </Steps>
 
@@ -31,17 +48,35 @@ Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi un
 ```sh
 ssh birder@birdnetpi.local
 ````
-<Code code='ssh birder@birdnetpi.local' lang='js' title='Terminal'  class="terminal-code" theme="github-dark"/>
-<Code code='ssh birder@birdnetpi.local' lang='js' title='Terminal'  />
+<Code code='ssh birder@birdnetpi.local' lang='plaintext' title='Terminal'  class="terminal-code"/>
+<Code code='ssh birder@birdnetpi.local' lang='plaintext' title='Terminal'  />
+
+<Aside>
+  Sollte die Verbindung zu deinem Raspberry Pi **nicht** hergestellt werden
+  können, überprüfe zunächst, ob dein PC und der Raspberry Pi **im selben
+  Netzwerk** sind, das bedeutet sie mit dem gleichen WLAN oder Hotspot verbunden
+  sind. Achte außerdem darauf, dass der **Raspberry Pi** mit **Strom** versorgt
+  ist, die **konfigurierte SD-Karte** eingesteckt ist und die **Status-LEDs**
+  blinken oder leuchten. Wenn es dennoch nicht funktioniert, installiere
+  Raspberry Pi OS erneut auf die SD-Karte und gib die **WLAN-Daten** sorgfältig
+  erneut ein. Für technikaffine Nutzer ist es auch möglich, eine Tastatur und
+  einen Bildschirm direkt am Raspberry Pi anzuschließen, um die Fehlerbehebung
+  manuell vorzunehmen.
+</Aside>
 
 ![](/src/images/project01/pi-setup2/01.png)
 
+</div>
+<Steps>
+
+4. Jetzt muss du die Verbindung betätigen.
+
+</Steps>
+<div class="step-code">
 ```sh
 yes
 ```
-
 </div>
-
 <Steps>
 
 4. Darauf hin sollte ein Passwort abgefragt werden. Nutze das Passwort das du im OS gespeichert hast.

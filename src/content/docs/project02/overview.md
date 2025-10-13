@@ -3,6 +3,7 @@ title: "Projekt 02"
 description: "Ein Bildverarbeitungsprojekt."
 category: "Vision"
 tags: ["image", "machine-learning"]
+draft: true
 ---
 
 Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.

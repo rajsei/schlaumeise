@@ -40,7 +40,10 @@ export default defineConfig({
       sidebar: [
         {
           label: "leadingNavLinks",
-          items: [{ label: "Overview", slug: "project_overview" }],
+          items: [
+            { label: "Overview", slug: "projects" },
+            { label: "Impressum", slug: "impressum" },
+          ],
         },
 
         {
@@ -50,6 +53,10 @@ export default defineConfig({
         {
           label: "Project02",
           autogenerate: { directory: "project02" },
+        },
+        {
+          label: "Begriffsverzeichnis",
+          autogenerate: { directory: "glossary" },
         },
       ],
     }),
