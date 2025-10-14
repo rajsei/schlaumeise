@@ -15,7 +15,7 @@ const projects = docs.filter((d) =>
 
   <div id="project-list" class="grid">
   {projects.map((p) => (
-    <a href={`/${p.id}`} class="card">
+    <a href={`${Astro.site?.pathname ?? '/'}${p.id}/`} class="card">
       <h3>{p.data.title}</h3>
       <p>{p.data.description}</p>
       <div class="tags">
