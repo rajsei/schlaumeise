@@ -1,7 +1,7 @@
 main img {
   max-width: 650px;
   height: auto;
-
+  border-radius: 6px;
   margin: 1rem 1rem auto;
 }
 
@@ -17,22 +17,16 @@ main img {
   background-color: #17181c !important;
 }
 .terminal-code pre code span {
-  color: #ffffff !important;
+  color: #c1c3c8 !important;
 }
 
-/* customized background color and text color for terminal text title
-.frame.has-title .header .title {
-  color: #ffffff;
-  background-color: #17181c;
-}*/
-
 .terminal-code .header .title {
-  color: #ffffff;
+  color: #c1c3c8;
   background-color: #17181c;
 }
 
 .terminal-code.expressive-code .frame.has-title:not(.is-terminal) .header {
-  background: #303030; /*#23262f;*/
+  background: #303441;
 }
 
 .terminal-code.expressive-code

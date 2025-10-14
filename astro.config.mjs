@@ -43,19 +43,20 @@ export default defineConfig({
         {
           label: "leadingNavLinks",
           items: [
-            { label: "Overview", slug: "projects" },
+            { label: "Projekte", slug: "projects" },
             { label: "Impressum", slug: "impressum" },
           ],
         },
 
         {
-          label: "Project01",
+          label: "Das lauschende Vogelhaus",
           autogenerate: { directory: "project01" },
         },
         {
-          label: "Project02",
-          autogenerate: { directory: "project02" },
+          label: "Wissenssammlung",
+          autogenerate: { directory: "knowledge_collection" },
         },
+        //{label: "Project02",autogenerate: { directory: "project02" },},
         {
           label: "Begriffsverzeichnis",
           autogenerate: { directory: "glossary" },
