@@ -9,6 +9,8 @@ import starlightUtils from "@lorenzo_lewis/starlight-utils";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://rajsei.github.io/schlaumeise/",
+  base: "/schlaumeise/",
   integrations: [
     starlight({
       customCss: ["./src/styles/project.css"],
