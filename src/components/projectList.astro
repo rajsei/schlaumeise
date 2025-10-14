@@ -9,13 +9,15 @@ const projects = docs.filter((d) =>
   d.id.endsWith("overview")
 ) as any[];
 
+const base = import.meta.env.BASE_URL;
+
 ---
 
 <div>
 
   <div id="project-list" class="grid">
   {projects.map((p) => (
-    <a href={`${Astro.site?.pathname ?? '/'}${p.id}/`} class="card">
+    <a href={`${base}${p.id}/`} class="card">
       <h3>{p.data.title}</h3>
       <p>{p.data.description}</p>
       <div class="tags">
