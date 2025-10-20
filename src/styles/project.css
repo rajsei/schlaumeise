@@ -1,5 +1,6 @@
 main img {
   max-width: 580px;
+  max-height: 350px;
   height: auto;
   border-radius: 6px;
   margin: 1rem 1rem auto;
@@ -14,7 +15,7 @@ main img {
 .terminal-code,
 .terminal-code pre,
 .terminal-code code {
-  background-color: #17181c !important;
+  background-color: #1c202a !important; /* #17181c */
 }
 .terminal-code pre code span {
   color: #c1c3c8 !important;
@@ -22,7 +23,7 @@ main img {
 
 .terminal-code .header .title {
   color: #c1c3c8;
-  background-color: #17181c;
+  background-color: #1c202a; /* #17181c */
 }
 
 .terminal-code.expressive-code .frame.has-title:not(.is-terminal) .header {

@@ -1,0 +1,315 @@
+---
+title: Hotspot einrichten (Optional)
+description: ...
+sidebar:
+  order: 4
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+
+## Wann sollte ich das tun?
+
+Sollte dein BirdNET Pi nur im bereich deines WLANs aufgestellt werden, kannst du die folgenden Schritte überspringen.
+In diesem Teil werden wir Einstellungen treffen damit, sollte dein Birdnet Pi außerhalb deines WLANs sein, als ein Hotspot funktioniert und ein eigenes wlan aussendet (dieses hat kein Internetzugang), dadurch kannst du dich zb mit deinem Handy mit dem Birdnet Pi über wlan verbinden und auf die daten des Birdnet pis zugreifen.
+Du kannst hier auch Beispielsweise weitere Wlan verbindungen hinzufügen oder bereits im Raspberry pi os setup eingegeben Wlan daten ändern.
+
+## Anleitung
+
+<Steps>
+0. verbinde dich per ssh
+1. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
+
+</Steps>
+<div class="step-code">
+
+```sh
+sudo nmtui
+```
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+<Steps>
+
+2. Im Network Manager kannst du das Ausgewählte Element über die <Kbd windows="Pfeiltasten" /> verschieben und mit <Kbd windows="Enter" /> bestätigen.
+
+3. Wähle `Edit a connection`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+<Steps>
+
+4. Wähle `Add`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui02.jpg)
+
+</div>
+<Steps>
+
+5. Wähle `Wi-Fi` als Typ der Verbindung.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui03.jpg)
+
+</div>
+<Steps>
+
+6. Wähle `Create`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui04.jpg)
+
+</div>
+<Steps>
+
+7. Nun müssen die Daten deines Netzwerkes hinzugefügt werden.
+   `Profile Name` ist nur zur identifikation, hier kannst du einen beliebigen Namen eingeben. Achte aber inden folgenden befehlen Hotspot mitdeinem gewählten Namen ersetzt.
+   `Device` (wlan0 überprüfen ob notwendig)
+   `SSID` Ist der Name des WLANs das erzeugt wird, auch das kannst du frei wählen, merke es dir aber!
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
+
+</div>
+<Steps>
+
+8. Bei `Mode` wird `Access Point` ausgewählt.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui06.jpg)
+
+</div>
+<Steps>
+
+9. Bei `Channel` wird `B/G (2.4 GHz)` ausgewählt.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui08.jpg)
+
+</div>
+<Steps>
+
+10. Bei `Security` wähle `WPA & WPA2 Personal`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui09.jpg)
+
+</div>
+<Steps>
+
+11. Bei `Password` gib nun das Passwort für den Hotspot eingeben. Merke es dir!
+
+</Steps>
+
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
+
+</div>
+
+<Steps>
+
+12. Nun können wir das Programm schließen. Gehe dafür unten auf `OK`.
+13. Gehe auf `Back`.
+
+</Steps>
+
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui11.jpg)
+
+</div>
+<Steps>
+
+14. Gehe auf `Quit`.
+
+</Steps>
+
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui12.jpg)
+
+</div>
+<Steps>
+
+15. ...
+
+</Steps>
+
+```
+birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+
+birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+birder@birdnetpi:/etc/NetworkManager/system-connections $
+
+sudo nano Hotspot.nmconnection
+
+
+
+  GNU nano 7.2                     Hotspot.nmconnection                               [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+interface-name=wlan0
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Den Eltern mal den Vogel zeigen!
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+
+
+
+
+                                  [ Read 23 lines ]
+^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
+^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
+
+
+
+
+
+autoconnect=true
+autoconnect-priority=0
+
+
+
+  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+interface-name=wlan0
+
+autoconnect=true
+autoconnect-priority=0
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Den Eltern mal den Vogel zeigen!
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+
+
+^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
+^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
+
+sudo nano preconfigured.nmconnection
+
+
+  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+id=preconfigured
+uuid=fh6c02n6-j705-4911-9g5c-d36127245
+type=wifi
+timestamp=27604593
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Dein_Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+
+
+
+
+                                  [ Read 23 lines ]
+^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
+^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
+
+  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+id=preconfigured
+uuid=fh6c02n6-j705-4911-9g5c-d36127245
+type=wifi
+timestamp=27604593
+
+autoconnect=true
+autoconnect-priority=10
+
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Dein_Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Wrote 27 lines ]
+^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
+^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
+
+
+
+```

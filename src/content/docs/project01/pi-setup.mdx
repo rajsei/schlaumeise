@@ -1,84 +1,304 @@
 ---
-title: SD-Karte einrichten
+title: Raspberry Pi einrichten
 description: ...
 sidebar:
-  order: 2
+  order: 3
 ---
 
 import { Steps } from "@astrojs/starlight/components";
-
-Hast du alle Punkte auf der Checkliste abgehakt? Dann nimm dir etwas Zeit, um deinen Raspberry Pi in Ruhe einzurichten.
-
-Falls du auf Probleme stößt, zögere nicht, uns per E-Mail zu kontaktieren.
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+import { Accordion, AccordionItem } from "free-astro-components";
 
 ## Voraussetzungen
 
-Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi und eine Internetverbindung.
+Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi, auf der das richtige Betriebssystem installiert ist
+(siehe „SD-Karte einrichten”), sowie eine Internetverbindung. …
 
-## Setup der SD-Karte (1.Teil)
-
-### Betriebssystem installieren
+## BirdNET Pi installieren
 
 <Steps>
 
-1. Verbinde die MicroSD-Karte mit deinem Computer.
-   Stelle sicher, dass du weißt, wie die SD-Karte auf deinem Computer benannt ist. Sollten sich noch Daten auf der SD-Karte befinden, solltest du diese sichern, da sie im Laufe der Installation verloren gehen. Unter Windows kannst du dies über den Dateimanager (Explorer) > Dieser PC überprüfen.
+1. Stecke die SD-Karte in den Raspberry Pi.
 
-2. Raspberry Pi Imager unter [raspberrypi.com](https://www.raspberrypi.com/software/) herunterladen und öffnen. Folge einfach den Installationsanweisungen.
-   ![Screenshot des Raspberry Pi Imager](/schlaumeise//images/project01/pi-setup/01.jpg)
+2. Schließe den Raspberry Pi mithilfe des Netzteils an den Strom an.
+   Es sollte eine LED am Raspberry Pi leuchten oder blinken. Warte am besten ein paar Minuten, damit er hochfahren kann.
 
-3. Klicke auf `Modell wählen` und wähle das Modell, das du besitzt.
-   ![](/schlaumeise//images/project01/pi-setup/02.jpg)
-
-4. Klicke als nächstes auf `OS wählen` und dann auf `Raspberry Pi OS (other)`.
-   ![](/schlaumeise//images/project01/pi-setup/03.jpg)
-
-5. Klicke auf `Raspberry Pi OS (Legacy, 64-bit) Lite | A port of Debian Bookworm with security updates and no desktop environment`. (Achte auf **Lite** und **Debian Bookworm**)
-   ![](/schlaumeise//images/project01/pi-setup/04.jpg)
-
-6. Klicke auf `SD-Karte wählen` und wähle die SD-Karte aus, die dein BirdNET-Pi benutzen soll. Überprüfe den Namen der SD-Karte über den `Dateimanager (Explorer)` > `Dieser PC`, da die Daten auf der SD-Karte im folgenden Schritt gelöscht werden.
-   ![](/schlaumeise//images/project01/pi-setup/05.jpg)![](/schlaumeise//images/project01/pi-setup/06.jpg)
-
-7. Klicke auf `Weiter`.
-   ![](/schlaumeise//images/project01/pi-setup/07.jpg)
-
-8. Klicke auf `Einstellungen bearbeiten`.
-   ![](/schlaumeise//images/project01/pi-setup/08.png)
-
-9. Richten wir nun alle Punkte unter `Allgemein` ein.
-   ![](/schlaumeise//images/project01/pi-setup/09.jpg)
-
-10. Lege den `Hostname` fest, unter dem der BirdNET-Pi erreichbar sein soll. Wenn du z. B. mehrere BirdNET-Pis im gleichen Netzwerk hast, kannst du jedem einen anderen Hostnamen geben. In diesem Beispiel ist die Installation unter `http://birdnetpi.local` erreichbar, da dies der in diesem Schritt festgelegte Hostname ist. Wenn Sie diesen Wert nicht setzen (und den Standard-Hostnamen `raspberrypi` verwenden), wird die Installation von BirdNET standardmäßig unter `http://raspberrypi.local` erreichbar sein.
-    ![](/schlaumeise//images/project01/pi-setup/10.jpg)
-
-11. Als Nächstes legen wir einen Benutzernamen und ein Passwort fest, mit denen wir später auf den Raspberry Pi zugreifen können. In diesem Beispiel haben wir einen Nutzer mit dem Namen `birder` erstellt. Merke dir das Passwort, denn wir werden es später benötigen.
-    ![](/schlaumeise//images/project01/pi-setup/11.jpg)
-
-12. Gib nun den Namen deines WLANs unter `SSID` und das Passwort deines WLANs unter `Passwort` ein. Befindest du dich nicht in deinem eigenen WLAN, kannst du auch über deinen PC oder dein Handy einen Hotspot erstellen und die entsprechenden Daten in den Feldern `SSID` und `Passwort` eingeben. Wenn du den Hotspot nicht mit dem PC erstellst, musst du in den späteren Schritten sicherstellen, dass dein PC mit demselben Hotspot verbunden ist. Nur so befinden sich PC und Raspberry Pi im gleichen Netzwerk/WLAN/Hotspot. Zudem muss das Gerät, mit dem du den Hotspot erstellst, mit dem Internet verbunden sein. Als `WiFi-Land` kannst du `DE` auswählen.
-    ![](/schlaumeise//images/project01/pi-setup/12.jpg)
-
-13. Passe anschließend deine `Zeitzone` und `Tastaturlayout` an.
-    ![](/schlaumeise//images/project01/pi-setup/13.jpg)
-
-14. Unter `Allgemein` sollte es am Ende wie folgt aussehen, natürlich mit deinen eigenen Daten ausgefüllt. Aber noch nicht auf `Speichern` klicken!
-    ![](/schlaumeise//images/project01/pi-setup/14.jpg)
-
-15. Wechsel zu dem Bereich `Dienste`.
-    ![](/schlaumeise//images/project01/pi-setup/15.jpg)
-
-16. Aktiviere SSH und wähle `Passwort zur Authentifizierung verwenden`. Damit kannst du deinen BirdNET-Pi ganz bequem von deinem Computer aus einrichten und musst weder einen Bildschirm noch eine Tastatur an deinen Raspberry Pi anschließen.
-    ![](/schlaumeise//images/project01/pi-setup/16.jpg)
-
-17. Damit sind wir fertig und du kannst auf `Speichern` klicken.
-
-18. Klicke auf `Ja`.
-    ![](/schlaumeise//images/project01/pi-setup/17.jpg)
-
-19. Klicke noch einmal auf `Ja`. Jetzt werden alle Daten von deiner SD-Karte gelöscht und Raspberry Pi OS installiert, dies kann ein paar Minuten dauern.
-    ![](/schlaumeise//images/project01/pi-setup/18.jpg)
-    ![](/schlaumeise//images/project01/pi-setup/19.jpg)
-
-20. Wenn die SD-Karte bereit ist, erscheint eine Meldung, dass die SD-Karte aus dem Computer entfernt werden kann.
-    ![](/schlaumeise//images/project01/pi-setup/20.jpg)
+3. Öffne die Konsole.
 
 </Steps>
+
+<div class="step-code">
+  <LinkCard
+    title="Mehr Informationen zur Konsole"
+    href="/glossary/console"
+    description="Eine Anleitung zum Öffnen und Bedienen der Konsole."
+  />
+</div>
+
+<Steps>
+  4. Verbinde dich mit dem Pi über das folgende Kommando. Nutze dazu die von dir
+  zuvor eingegebenen Daten. ...
+</Steps>
+
+<div class="step-code">
+  ```sh
+  ssh birder@birdnetpi.local
+  ```
+  <Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="PS C:\Users\Name> ssh birder@birdnetpi.local 
+  The authenticity of host 'birdnetpi.local (2a02:4454:c122:2000:15gc:24b7:f06a:f322)' can't be established. 
+  ED25519 key fingerprint is SHA256:kfRttaVIh+Z/FbSq9g6adalVfIsgvUtk4o. 
+  This key is not known by any other names. 
+  Are you sure you want to continue connecting (yes/no/[fingerprint])?"
+  />
+
+<Aside type="caution" title="Fehlerbehebung"> 
+  <Accordion>
+    <AccordionItem title="Was wenn keine Verbindung hergestellt werden kann? (Der angegebene Host ist unbekannt.)">
+
+      Wenn die Meldung erscheint:
+      <Code
+      lang="plaintext" title="Terminal" class="terminal-code"
+      code="PS C:\Users\Name> ssh birder@birdnetpi.local
+      ssh: Could not resolve hostname birdnetpi.local: Der angegebene Host ist unbekannt."
+      />
+      bedeutet das, dass keine Verbindung zu deinem Raspberry Pi hergestellt werden kann.
+
+      Überprüfe folgende Punkte:
+      <Steps>
+        1. Stromversorgung: Stelle sicher, dass der Raspberry Pi eingeschaltet ist, die SD-Karte korrekt eingesteckt ist
+        und die Status-LEDs blinken oder leuchten.
+        2. Netzwerk: Vergewissere dich, dass PC und Raspberry Pi im selben Netzwerk sind – also mit demselben WLAN oder Hotspot verbunden.
+        (Achte darauf, dass die WLAN-Daten im Raspberry Pi OS mit deinem aktuellen WLAN übereinstimmen.)
+        3. Neuinstallation: Wenn die Verbindung weiterhin fehlschlägt, installiere Raspberry Pi OS neu auf der SD-Karte
+        und trage die WLAN-Zugangsdaten erneut sorgfältig ein.
+        4. Direkte Verbindung: Erfahrene Nutzer können eine Tastatur und einen Bildschirm direkt am Raspberry Pi anschließen,
+        um die Verbindung und Netzwerkeinstellungen manuell zu überprüfen.
+      </Steps>
+    </AccordionItem>
+    <AccordionItem title="Was wenn 'WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!' angezeigt wir? ">
+
+      Keine Sorge – das ist normal, wenn du bereits früher per SSH mit einem
+      Raspberry Pi gleichen Namens verbunden warst. So behebst du das Problem:
+
+      <Steps>
+        1. Öffne die Datei: C:\Users\Benutzername\.ssh\known_hosts (der genaue Pfad steht auch in der Warnung) mit einem Texteditor.
+        2. Suche alle Zeilen, die mit birdnetpi.local beginnen, und lösche sie.
+        Es können mehrere Einträge sein, die sich über mehrere Zeilen erstrecken.
+        3. Wenn du SSH noch nie für andere Verbindungen genutzt hast, kannst du auch den gesamten Inhalt der Datei löschen.
+        4. Speichere die Datei, schließe den Editor und versuche die Verbindung anschließend erneut.
+      </Steps>
+
+    </AccordionItem>
+
+  </Accordion>
+</Aside>
+</div>
+<Steps>
+
+5. Bestätige die Verbindung.
+
+</Steps>
+<div class="step-code">
+
+```sh
+yes
+```
+
+{" "}
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+  Warning: Permanently added 'birdnetpi.local' (ED25529) to the list of known hosts.
+  Connection closed by 2a02:4454:c122:2000:15gc:24b7:f06a:f322 port 23
+  birder@birdnetpi.local's password:"
+/>
+
+</div>
+<Steps>
+
+6. Daraufhin sollte eine Passworteingabe erscheinen.
+   Gib das im Betriebssystem gespeicherte Passwort ein. Beachte, dass die Eingabe dabei unsichtbar bleibt.
+   Wenn du nicht mehr zur Eingabe eines Passworts aufgefordert wirst, starte den Vorgang erneut, indem du den Befehl aus Schritt 4 eingibst.
+
+</Steps>
+<div class="step-code">
+
+  <Code lang='plaintext' title='Terminal'  class="terminal-code" 
+  code="birder@birdnetpi.local's password:
+  Linux birdnetpi 6.12.47+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.12.47-1+rpt1~bookworm (2025-09-01) aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/\*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Oct 01 00:00:00 2025 from 2a02:4454:c122:2000:15gc:24b7:f06a:f322" />
+
+</div>
+<Steps>
+
+7. Dieser Schritt ist nur für Raspberry Pi Zero 2 W:
+   Der Arbeitsspeicher des Raspberry Pi Zero 2 W ist zu gering, um BirdNET-Pi ohne Anpassung zu installieren.
+   Daher muss die sogenannte Swapsize erhöht werden. Sie sorgt dafür, dass zusätzlich zur physischen Hardware
+   auch ein Teil der SD-Karte als Arbeitsspeicher genutzt wird.
+   Ohne diese Anpassung lässt sich BirdNET-Pi auf dem Zero 2 W nicht installieren.
+   Zudem müssen die WLAN-Energieoptionen angepasst werden.
+
+</Steps>
+<div class="step-code">
+
+```sh
+sudo sed -i 's/CONF_SWAPSIZE=512/CONF_SWAPSIZE=2048/g' /etc/dphys-swapfile &&
+sudo sed -i 's/#CONF_MAXSWAP=2048/CONF_MAXSWAP=4096/g' /etc/dphys-swapfile &&
+sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
+```
+
+<Aside type="caution" title="Änderungen prüfen"> 
+<Accordion>
+  <AccordionItem title="Überprüfen der 'Swapsize'.">
+
+    Um sicherzustellen, dass die Änderungen tatsächlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl öffnen.
+
+    ```sh
+    sudo nano /etc/dphys-swapfile
+    ```
+    Wichtig ist, dass die Zeilen `CONF_SWAPSIZE=2048` und `CONF_MAXSWAP=4096` stimmen. Falls nicht, passe die Zahlen an.
+
+    <Code lang='plaintext' title='Terminal'  class="terminal-code"
+    code="  GNU nano 7.2                  /etc/dphys-swapfile                           # /etc/dphys-swapfile - user settings for dphys-swapfile package
+    # author Neil Franklin, last modification 2010.05.05
+    # copyright ETH Zuerich Physics Departement
+    #   use under either modified/non-advertising BSD or GPL license
+
+    # this file is sourced with . so full normal sh syntax applies
+
+    # the default settings are added as commented out CONF\__=_ lines
+
+    # where we want the swapfile to be, this is the default
+
+    #CONF_SWAPFILE=/var/swap
+
+    # set size to absolute value, leaving empty (default) then uses computed value# you most likely don't want this, unless you have an special disk situation
+
+    CONF_SWAPSIZE=2048
+
+    # set size to computed value, this times RAM size, dynamically adapts,
+
+    # guarantees that there is enough swap without wasting disk space on excess
+
+    #CONF_SWAPFACTOR=2
+
+    # restrict size (computed and absolute!) to maximally this limit
+
+    # can be set to empty for no limit, but beware of filled partitions!
+
+    # this is/was a (outdated?) 32bit kernel limit (in MBytes), do not overrun ># but is also sensible on 64bit to prevent filling /var or even / partition
+
+    CONF_MAXSWAP=4096
+    [ Read 26 lines ]
+    ^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute
+    ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify" />
+
+    Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+
+  </AccordionItem>
+  <AccordionItem title="Überprüfen der WLAN-Energieoptionen.">
+
+    <Steps>
+
+      1. Um sicherzustellen, dass die Änderungen tatsächlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl öffnen.
+
+    </Steps>
+
+    <div class="step-code">
+      ```sh
+
+      sudo nano /etc/rc.local
+
+      ```
+
+      <Code lang='plaintext' title='Terminal'  class="terminal-code"
+      code="  GNU nano 7.2                     /etc/rc.local
+
+          [ New File ]
+      ^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+      ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify" />
+
+      Sollte die Datei leer sein, führe die weiteren Schritte aus.
+      Sollte sie hingegen wie im folgenden Schritt zwei aussehen, kannst du die Datei wieder schließen.
+    </div>
+
+    <Steps>
+
+      2. Füge folgenden Inhalt ein:
+
+    </Steps>
+
+    <div class="step-code">
+      ```sh
+
+      #!/bin/bash
+      sudo iw wlan0 set power_save off
+      exit 0
+
+      ```
+
+    <Code
+      lang="plaintext"
+      title="Terminal"
+      class="terminal-code"
+      code="  GNU nano 7.2                     /etc/rc.local
+      #!/bin/bash
+      sudo iw wlan0 set power_save off
+      exit 0
+            [ New File ]
+      ^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+      ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify"
+    />
+
+    </div>
+
+    <Steps>
+
+      3. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+
+    </Steps>
+
+  </AccordionItem>
+</Accordion>
+</Aside>
+Starte den Raspberry Pi jetzt neu.
+
+```sh
+sudo reboot
+```
+
+Warte anschließend einige Minuten, bis das System vollständig gestartet ist und sich mit dem WLAN verbunden hat.
+Verbinde dich danach erneut per SSH mit dem Pi (siehe Schritt 4 und 6).
+
+</div>
+<Steps>
+
+8. Mit diesem Befehl startest du die Installation von BirdNET-Pi.
+   Der Vorgang kann mehrere Minuten dauern – je nach Internetverbindung und Systemleistung.
+   Lass das Terminal geöffnet, bis die Installation vollständig abgeschlossen ist.
+
+</Steps>
+
+<div class="step-code">
+```sh
+curl -s https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh | bash
+```
+
+</div>
