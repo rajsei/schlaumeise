@@ -45,10 +45,12 @@ Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi, a
 </Steps>
 
 <div class="step-code">
-  ```sh
-  ssh birder@birdnetpi.local
-  ```
-  <Code
+
+```sh
+ssh birder@birdnetpi.local
+```
+
+<Code
   lang="plaintext"
   title="Terminal"
   class="terminal-code"
@@ -57,7 +59,7 @@ Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi, a
   ED25519 key fingerprint is SHA256:kfRttaVIh+Z/FbSq9g6adalVfIsgvUtk4o. 
   This key is not known by any other names. 
   Are you sure you want to continue connecting (yes/no/[fingerprint])?"
-  />
+/>
 
 <Aside type="caution" title="Fehlerbehebung"> 
   <Accordion>
@@ -113,6 +115,7 @@ yes
 ```
 
 {" "}
+
 <Code
   lang="plaintext"
   title="Terminal"
@@ -175,7 +178,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
     ```
     Wichtig ist, dass die Zeilen `CONF_SWAPSIZE=2048` und `CONF_MAXSWAP=4096` stimmen. Falls nicht, passe die Zahlen an.
 
-    <Code lang='plaintext' title='Terminal'  class="terminal-code"
+    <Code lang='plaintext' title='Terminal'  class="terminal-code" mark={[16,30]}
     code="  GNU nano 7.2                  /etc/dphys-swapfile                           # /etc/dphys-swapfile - user settings for dphys-swapfile package
     # author Neil Franklin, last modification 2010.05.05
     # copyright ETH Zuerich Physics Departement
@@ -228,7 +231,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
 
       ```
 
-      <Code lang='plaintext' title='Terminal'  class="terminal-code"
+      <Code lang='plaintext' title='Terminal'  class="terminal-code" mark={2}
       code="  GNU nano 7.2                     /etc/rc.local
 
           [ New File ]
@@ -258,6 +261,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
       lang="plaintext"
       title="Terminal"
       class="terminal-code"
+      ins={[2,3,4]}
       code="  GNU nano 7.2                     /etc/rc.local
       #!/bin/bash
       sudo iw wlan0 set power_save off

@@ -21,6 +21,7 @@ Du kannst hier auch Beispielsweise weitere Wlan verbindungen hinzufügen oder be
 ## Anleitung
 
 <Steps>
+
 0. verbinde dich per ssh
 1. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
 
@@ -124,20 +125,17 @@ sudo nmtui
 11. Bei `Password` gib nun das Passwort für den Hotspot eingeben. Merke es dir!
 
 </Steps>
-
 <div class="step-code">
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
 
 </div>
-
 <Steps>
 
 12. Nun können wir das Programm schließen. Gehe dafür unten auf `OK`.
 13. Gehe auf `Back`.
 
 </Steps>
-
 <div class="step-code">
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui11.jpg)
@@ -148,7 +146,6 @@ sudo nmtui
 14. Gehe auf `Quit`.
 
 </Steps>
-
 <div class="step-code">
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui12.jpg)
@@ -156,21 +153,44 @@ sudo nmtui
 </div>
 <Steps>
 
-15. ...
+15. Nun werden die Verbindungsprioritäten der WLAN- und Hotspot-Verbindung festgelegt.
+    Dadurch versucht der Raspberry Pi zuerst, sich mit dem bekannten WLAN zu verbinden.
+    Nur wenn keine Verbindung möglich ist, erstellt er automatisch einen eigenen Hotspot,
+    damit weiterhin eine Verbindung zum Gerät hergestellt werden kann.
+    Zunächst müssen wir mit dem `cd` Befehl in den richtigen Ordner navigieren.
 
 </Steps>
+<div class="step-code">
 
 ```
-birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+cd /etc/NetworkManager/system-connections
+```
 
-birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
-birder@birdnetpi:/etc/NetworkManager/system-connections $
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+  birder@birdnetpi:/etc/NetworkManager/system-connections $"
+/>
 
+</div>
+<Steps>
+
+16. Öffnen wir nun zunächst die Datei für die Hotspot-Verbindung.
+
+</Steps>
+<div class="step-code">
+
+```
 sudo nano Hotspot.nmconnection
+```
 
-
-
-  GNU nano 7.2                     Hotspot.nmconnection                               [connection]
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="  GNU nano 7.2                     Hotspot.nmconnection                               [connection]
 id=Hotspot
 uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
 type=wifi
@@ -183,7 +203,7 @@ ssid=BirdNET Pi Hotspot
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk=Den Eltern mal den Vogel zeigen!
+psk=Hier steht dein Passwort für den Hotspot
 
 [ipv4]
 method=auto
@@ -193,25 +213,35 @@ addr-gen-mode=default
 method=auto
 
 [proxy]
-
-
-
-
 
                                   [ Read 23 lines ]
-^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
-^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
 
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
 
+</div>
+<Steps>
 
+17. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
+    Der Eintrag `autoconnect=true` aktiviert die automatische Verbindungsherstellung.
+    Der Wert `autoconnect-priority=0` legt die Priorität des Netzwerks fest.
+    Je höher die Zahl, desto bevorzugter wird dieses Netzwerk beim automatischen Verbinden ausgewählt.
 
+</Steps>
+<div class="step-code">
 
+```
 autoconnect=true
 autoconnect-priority=0
+```
 
-
-
-  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  code="  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
 id=Hotspot
 uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
 type=wifi
@@ -238,17 +268,30 @@ method=auto
 
 [proxy]
 
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
 
+</div>
+<Steps>
 
-^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
-^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
+18. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+19. Öffnen wir nun zunächst die Datei für die Wlan-Verbindung.
 
+</Steps>
+<div class="step-code">
+
+```
 sudo nano preconfigured.nmconnection
+```
 
-
-  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code='  GNU nano 7.2              preconfigured.nmconnection                  [connection]
 id=preconfigured
-uuid=fh6c02n6-j705-4911-9g5c-d36127245
+uuid=fh6c02n6-5th7-4911-9g5c-d356zh245
 type=wifi
 timestamp=27604593
 
@@ -259,7 +302,7 @@ ssid=Dein_Wlan_Name
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+psk=4c9ed4tg67fd672c6896d1ec9e1g885a61f4th322be
 
 [ipv4]
 method=auto
@@ -270,15 +313,32 @@ method=auto
 
 [proxy]
 
-
-
-
-
                                   [ Read 23 lines ]
-^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
-^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
 
-  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line'
+/>
+
+</div>
+<Steps>
+
+20. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=10
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  mark={['autoconnect=true', 'autoconnect-priority=10']}
+  code="  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
 id=preconfigured
 uuid=fh6c02n6-j705-4911-9g5c-d36127245
 type=wifi
@@ -286,7 +346,6 @@ timestamp=27604593
 
 autoconnect=true
 autoconnect-priority=10
-
 
 [wifi]
 hidden=true
@@ -307,9 +366,21 @@ method=auto
 [proxy]
 
                                   [ Wrote 27 lines ]
-^G Help       ^O Write Out  ^W Where Is   ^K Cut        ^T Execute    ^C Location
-^X Exit       ^R Read File  ^\ Replace    ^U Paste      ^J Justify    ^/ Go To Line
 
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
 
+</div>
+<Steps>
+21. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+22. Starte jetzt den Raspberry pi neu.
 
+</Steps>
+<div class="step-code">
+
+```sh
+sudo reboot
 ```
+
+</div>

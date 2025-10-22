@@ -23,7 +23,8 @@ main img {
 
 .terminal-code .header .title {
   color: #c1c3c8;
-  background-color: #1c202a; /* #17181c */
+  background-color: #1c202a; /* #17181c  background-color: var(--ec-mark-bg) !important;
+  border-color: var(--ec-mark-border) !important;*/
 }
 
 .terminal-code.expressive-code .frame.has-title:not(.is-terminal) .header {
@@ -34,4 +35,40 @@ main img {
   .frame.has-title:not(.is-terminal)
   .title::after {
   border-top: 0.17rem solid hsl(251, 75%, 55%);
+}
+
+/*customize code highlighting*/
+.terminal-code mark {
+  background-color: #ffffff17; /*var(--ec-tm-markBg);*/
+  --tmInlineBrdCol: #ffffff40; /*var(--ec-tm-markBrdCol);*/
+}
+
+.terminal-code.expressive-code .ec-line.ins .code {
+  --ecLineBrdCol: #487f3bd0; /*var(--ec-tm-insBrdCol)*/
+}
+.terminal-code .ins {
+  background-color: #1e571599; /*var(--ec-tm-insBg);*/
+  --ec-tm-insDiffIndCol: #79b169d0; /*var(--ec-tm-insDiffIndCol);*/
+
+  /*
+
+  --ec-tm-insBg: #1e571599;
+  --ec-tm-insBrdCol: #487f3bd0;
+  --ec-tm-insDiffIndCol: #79b169d0;
+  */
+}
+
+.terminal-code.expressive-code .ec-line.del .code {
+  --ecLineBrdCol: #b4554bd0;
+}
+.terminal-code .del {
+  background-color: #862d2799;
+  --ec-tm-delDiffIndCol: #ed8779d0;
+}
+
+.terminal-code.expressive-code .ec-line.mark .code {
+  --ecLineBrdCol: #ffffff40;
+}
+.terminal-code .mark {
+  background-color: #ffffff17;
 }
