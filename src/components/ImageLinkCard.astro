@@ -1,0 +1,140 @@
+---
+import { Icon as AstroIcon } from 'free-astro-components'
+import { Icon } from '@astrojs/starlight/components';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'title'> {
+  title: string;
+  description?: string;
+  imgSrc?: string;
+  imgAlt?: string;
+  isExternal?: boolean; //diffrent icon for external links
+}
+
+const { title, description, imgSrc, imgAlt = '',isExternal = false, ...attributes } = Astro.props;
+---
+
+<div class="sl-link-card has-image">
+  {imgSrc && (
+    <img src={imgSrc} alt={imgAlt} class="sl-link-card-image" loading="lazy" decoding="async" />
+  )}
+
+  <span class="sl-flex stack">
+    <a {...attributes}>
+      <span class="title" set:html={title} />
+    </a>
+    {description && <span class="description" set:html={description} />}
+  </span>
+ 
+
+  <Icon name="right-arrow" size="1.333em" class="icon rtl:flip" />
+ 
+</div>
+
+<div class="sl-link-card has-image">
+  {imgSrc && (
+    <img src={imgSrc} alt={imgAlt} class="sl-link-card-image" loading="lazy" decoding="async" />
+  )}
+
+  <span class="sl-flex stack">
+    <a {...attributes}>
+      <span class="title" set:html={title} />
+    </a>
+    {description && <span class="description" set:html={description} />}
+  </span>
+  <AstroIcon icon="launch-2" class="iconastro" /><!--    -->
+</div>
+
+<style>
+
+
+
+
+
+  @layer starlight.components {
+    .sl-link-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+      border: 1px solid var(--sl-color-gray-5);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: var(--sl-shadow-sm);
+      position: relative;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .sl-link-card.has-image {
+      /*grid-template-columns: auto 1fr auto;
+      gap: 1rem;*/ /**/
+    }
+
+    .sl-link-card-image {
+      max-width: 200px;
+      height: auto;
+      margin-right: 1rem;
+      border-radius: 0.5rem;
+      /*object-fit: cover;*/
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    a {
+      text-decoration: none;
+      line-height: var(--sl-line-height-headings);
+      color: inherit;
+    }
+
+    /**/
+    a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    .stack {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .title {
+      color: var(--sl-color-white);
+      font-weight: 600;
+      font-size: var(--sl-text-lg);
+    }
+
+    .description {
+      color: var(--sl-color-gray-3);
+      line-height: 1.5;
+    }
+
+    .icon {
+      color: var(--sl-color-gray-3);
+      position: absolute;
+      top: 1rem;   
+      right: 1rem;/**/
+    }
+
+    .iconastro {
+        color: var(--sl-color-gray-3);
+        position: absolute;top: 1rem;   
+        right: 1rem;
+        width: 1.333em;
+        height: 1.333em;/*
+        display: inline-block;
+        vertical-align: middle;*/
+
+    }
+
+    /* Hover state */
+    .sl-link-card:hover {
+      background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+      border-color: var(--sl-color-gray-2);
+    }
+
+    .sl-link-card:hover .icon {
+      color: var(--sl-color-white);
+    }
+  }
+</style>
