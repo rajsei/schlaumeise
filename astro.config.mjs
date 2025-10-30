@@ -6,14 +6,19 @@ import starlightKbd from "starlight-kbd";
 import starlightFullViewMode from "starlight-fullview-mode";
 import starlightGitHubAlerts from "starlight-github-alerts";
 import starlightUtils from "@lorenzo_lewis/starlight-utils";
+import icon from "astro-icon";
+
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://rajsei.github.io/schlaumeise/",
   base: "/schlaumeise/",
+
   integrations: [
+    icon(),
     starlight({
-      customCss: ["./src/styles/project.css"],
+      customCss: ["./src/styles/global.css", "./src/styles/project.css"],
       plugins: [
         starlightUtils({
           navLinks: {
@@ -64,4 +69,8 @@ export default defineConfig({
       ],
     }),
   ],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

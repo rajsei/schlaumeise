@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from 'free-astro-components'
+import { Icon as AstroIcon } from 'astro-icon/components';
 import { Icon } from '@astrojs/starlight/components';
 import type { HTMLAttributes } from 'astro/types';
 
@@ -11,7 +11,7 @@ interface Props extends Omit<HTMLAttributes<'a'>, 'title'> {
   isExternal?: boolean; //diffrent icon for external links
 }
 
-const { title, description, imgSrc, imgAlt = '',isExternal = false, ...attributes } = Astro.props;
+const { title, description, imgSrc, imgAlt = '', isExternal = false, ...attributes } = Astro.props;
 ---
 
 <div class="sl-link-card has-image">
@@ -26,32 +26,19 @@ const { title, description, imgSrc, imgAlt = '',isExternal = false, ...attribute
     {description && <span class="description" set:html={description} />}
   </span>
  
-
-  <Icon name="right-arrow" size="1.333em" class="icon rtl:flip" />
+  {isExternal ? (
+    <AstroIcon name="mdi:external-link" class="iconastro" />
+  ) : (
+    <Icon name="right-arrow" size="1.333em" class="icon rtl:flip" />
+  )}
  
 </div>
 
-<div class="sl-link-card has-image">
-  {imgSrc && (
-    <img src={imgSrc} alt={imgAlt} class="sl-link-card-image" loading="lazy" decoding="async" />
-  )}
-
-  <span class="sl-flex stack">
-    <a {...attributes}>
-      <span class="title" set:html={title} />
-    </a>
-    {description && <span class="description" set:html={description} />}
-  </span>
-  <AstroIcon icon="launch-2" class="iconastro" /><!--    -->
-</div>
 
 <style>
 
-
-
-
-
   @layer starlight.components {
+
     .sl-link-card {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -63,11 +50,6 @@ const { title, description, imgSrc, imgAlt = '',isExternal = false, ...attribute
       position: relative;
       align-items: center;
       text-decoration: none;
-    }
-
-    .sl-link-card.has-image {
-      /*grid-template-columns: auto 1fr auto;
-      gap: 1rem;*/ /**/
     }
 
     .sl-link-card-image {
@@ -124,7 +106,6 @@ const { title, description, imgSrc, imgAlt = '',isExternal = false, ...attribute
         height: 1.333em;/*
         display: inline-block;
         vertical-align: middle;*/
-
     }
 
     /* Hover state */
