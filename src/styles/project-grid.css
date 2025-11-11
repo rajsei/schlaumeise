@@ -1,6 +1,9 @@
-/* src/styles/projects.css */
+/* Project grid and cards
+ * Scope: ProjectList component grid and its cards
+ * Note: Keep selectors scoped to #project-list to avoid collisions
+ */
 
-/* Grid Layout für Projekte */
+/* Grid layout for project cards */
 #project-list.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -8,7 +11,7 @@
   margin-top: 1.5rem;
 }
 
-/* Card-Styling an Starlight-LinkCard angelehnt */
+/* Card styling (inspired by Starlight LinkCard) */
 .card {
   display: flex;
   flex-direction: column;
@@ -32,7 +35,7 @@
   background-color: var(--sl-color-bg-nav);
 }
 
-/* Titel */
+/* Title */
 .card h3 {
   font-size: 1.125rem;
   font-weight: 600;
@@ -40,7 +43,7 @@
   color: var(--sl-color-text);
 }
 
-/* Beschreibung */
+/* Description */
 .card p {
   flex-grow: 1;
   margin: 0 0 0.75rem 0;

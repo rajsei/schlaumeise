@@ -43,6 +43,9 @@ export default defineConfig({
       logo: {
         src: "./src/assets/favicon.svg",
       },
+      components: {
+        Footer: "./src/components/CustomFooter.astro",
+      },
 
       sidebar: [
         {

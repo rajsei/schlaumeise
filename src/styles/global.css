@@ -1,10 +1,13 @@
+/* Global styles and tokens
+ * Layers follow Starlight + Tailwind order to avoid specificity issues
+ */
 @layer base, starlight, theme, components, utilities;
 
 @import "@astrojs/starlight-tailwind";
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-/* Dark mode colors. */
+/* Default (dark theme) color tokens */
 :root {
   --sl-color-accent-low: #1f1e46;
   --sl-color-accent: #5c4ae2;
@@ -18,7 +21,7 @@
   --sl-color-gray-6: #1f2733;
   --sl-color-black: #15181e;
 }
-/* Light mode colors. */
+/* Light theme overrides */
 :root[data-theme="light"] {
   --sl-color-accent-low: #d0d3fb;
   --sl-color-accent: #4a2fc9;

@@ -1,9 +1,14 @@
+/* Project styles
+ * Scope: content helpers and code/zoom customizations used across docs pages
+ */
+
+/* Image zoom: constrain and round corners */
 starlight-image-zoom-zoomable > img {
   max-width: 580px;
   max-height: 350px;
   height: auto;
   border-radius: 6px;
-  margin: 1rem 1rem auto; /**/
+  margin: 1rem 1rem auto;
 }
 
 .step-code {
@@ -11,7 +16,7 @@ starlight-image-zoom-zoomable > img {
   margin-top: 0rem;
 }
 
-/* customized background color and text color for terminal text */
+/* Expressive Code: terminal look & feel overrides */
 .terminal-code,
 .terminal-code pre,
 .terminal-code code {
@@ -37,7 +42,7 @@ starlight-image-zoom-zoomable > img {
   border-top: 0.17rem solid hsl(251, 75%, 55%);
 }
 
-/*customize code highlighting*/
+/* Inline mark and diff indicators */
 .terminal-code mark {
   background-color: #ffffff17; /*var(--ec-tm-markBg);*/
   --tmInlineBrdCol: #ffffff40; /*var(--ec-tm-markBrdCol);*/
