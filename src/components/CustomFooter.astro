@@ -4,6 +4,7 @@ import esf from '../assets/EFRE-ESF_LO_Kombination_EU-Logo_SachsenSignet-klassis
 import schlaumeiseLogo from '../assets/favicon.svg';
 
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
 ---
 
 <DefaultFooter />
@@ -28,11 +29,8 @@ const year = new Date().getFullYear();
     </div>
 
     <nav class="footer-links" aria-label="Footer links">
-      <a href="#">About</a>
-      <a href="#">Kontakt</a>
-      <a href="#">Impressum</a>
-      <a href="#">Datenschutz</a>
-      <a href="#">GitHub</a>
+      <a href={`${base}impressum/`}>Impressum</a>
+      <a href="https://github.com/rajsei/schlaumeise">GitHub</a>
     </nav>
 
     <div class="funding-block">
@@ -76,7 +74,7 @@ const year = new Date().getFullYear();
 
     .footer-content {
       display: grid;
-      gap: 1rem 2rem;
+      gap: 1rem 1rem;
       align-items: center;
       justify-content: center; /* mobile portrait: stack centered */
       grid-template-columns: 1fr; /* single column */
@@ -157,8 +155,8 @@ const year = new Date().getFullYear();
 
     @media (min-width: 64rem) {
       .footer-links {
-        grid-template-columns: repeat(3, minmax(120px, auto));
-        gap: 0.5rem 1.25rem; /* 3 columns */
+        grid-template-columns: repeat(2, minmax(140px, auto));
+        gap: 0.6rem 1.5rem; /* 2 columns */
       }
       .funding-logo { max-width: min(340px, 100%); }
     }
