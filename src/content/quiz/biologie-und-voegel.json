@@ -1,0 +1,244 @@
+{
+  "title": "Biologie & Vögel",
+  "description": "Überprüfe dein Wissen rund um Biologie und Vögel.",
+  "level": "Einsteiger",
+  "estimatedTime": "7 Minuten",
+  "questions": [
+    {
+      "id": "bio_definition",
+      "prompt": "Was beschreibt die Biologie als Wissenschaft?",
+      "type": "single",
+      "tip": "Der Begriff stammt aus dem Griechischen und bedeutet Lehre vom Leben.",
+      "explanation": "Biologie befasst sich mit allem, was lebt – von Mikroorganismen über Pflanzen und Tiere bis zum Menschen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Die Wissenschaft vom Leben und den Lebewesen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Die Erforschung von Sternen und Galaxien.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Die Lehre von chemischen Elementen und Reaktionen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "bio_importance",
+      "prompt": "Warum ist Biologie wichtig?",
+      "type": "single",
+      "tip": "Biologie betrifft sowohl deinen Körper als auch Umwelt und Artenvielfalt.",
+      "explanation": "Biologie hilft zu verstehen, wie Organismen funktionieren, ermöglicht medizinische Fortschritte und unterstützt Umwelt- und Artenschutz.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil sie uns hilft zu verstehen, wie Lebewesen funktionieren und wie wir Umwelt und Gesundheit schützen können.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil sie erklärt, wie Maschinen gebaut werden.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil sie ausschließlich mit Pflanzenzucht zu tun hat.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "birds_ecosystem_roles",
+      "prompt": "Welche Aufgabe übernehmen Vögel bei der Samenverbreitung?",
+      "type": "single",
+      "tip": "Viele Pflanzen breiten sich durch Tiere aus.",
+      "explanation": "Vögel fressen Früchte und scheiden die Samen an anderen Orten aus oder verstecken sie – so breiten sich Pflanzen aus.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Sie transportieren Samen über weite Strecken, indem sie Früchte fressen und die Samen wieder ausscheiden.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sie graben gezielt Löcher, um Samen zu vergraben.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sie produzieren eigene Samen zur Vermehrung.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "birds_pollination",
+      "prompt": "Welche besondere Rolle übernehmen manche Vogelarten bei Blütenpflanzen?",
+      "type": "single",
+      "tip": "Nicht nur Insekten übertragen Pollen.",
+      "explanation": "Einige Vogelarten wie Kolibris übertragen Pollen von Blüte zu Blüte und bestäuben so Pflanzen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Sie bestäuben Blüten, indem sie beim Nektartrinken Pollen übertragen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sie schützen Pflanzen vor zu starker Sonne.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sie produzieren Duftstoffe für Pflanzen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "birds_pestcontrol",
+      "prompt": "Wie helfen Vögel bei der natürlichen Schädlingsbekämpfung?",
+      "type": "single",
+      "tip": "Manche Arten fressen sehr viele Insekten.",
+      "explanation": "Vögel wie Blaumeisen fressen große Mengen an Insekten und halten dadurch Schädlinge ohne Chemie in Schach.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Durch das Fressen zahlreicher Insekten reduzieren sie Schädlingspopulationen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sie vertreiben Schädlinge durch laute Gesänge.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sie bauen Fallen für Insekten.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "birds_bioindicators",
+      "prompt": "Warum gelten Vögel als wichtige Bioindikatoren?",
+      "type": "single",
+      "tip": "Vögel reagieren schnell auf Umweltveränderungen.",
+      "explanation": "Veränderungen in Vogelpopulationen zeigen frühzeitig Probleme oder Verbesserungen in Ökosystemen an.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil Veränderungen in ihren Beständen früh auf Umweltprobleme oder Erholung hinweisen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil sie besonders langlebig sind.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil sie ausschließlich in Wäldern vorkommen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "calls_songs_difference",
+      "prompt": "Wodurch unterscheiden sich Rufe und Gesänge bei Vögeln?",
+      "type": "single",
+      "tip": "Gesänge sind meist komplexer.",
+      "explanation": "Rufe sind kurz und funktional. Gesänge sind längere, komplexe Tonfolgen, oft zur Reviermarkierung oder Partnersuche.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Rufe sind kurz und funktional, Gesänge länger und komplexer.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Rufe sind nur in der Brutzeit zu hören, Gesänge das ganze Jahr.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Nur Jungvögel verwenden Gesänge.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "why_birds_sing",
+      "prompt": "Warum singen Vögel?",
+      "type": "single",
+      "tip": "Es geht um Kommunikation.",
+      "explanation": "Vögel singen zur Partnersuche, Reviermarkierung, Gefahrenkommunikation und Koordination von Gruppen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Zur Partnersuche, zur Reviermarkierung und zur Kommunikation über Gefahr oder Gruppenverhalten.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Um sich gegenseitig in den Schlaf zu wiegen.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Um Pflanzen beim Wachstum zu unterstützen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "dialects",
+      "prompt": "Was sind Dialekte bei Vogelgesängen?",
+      "type": "single",
+      "tip": "Manche Arten klingen je nach Region unterschiedlich.",
+      "explanation": "Dialekte sind regionale Varianten der Gesänge oder Rufe einer Art, z. B. bei Goldammern.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Regionale Unterschiede in Gesängen und Rufen derselben Vogelart.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Unterschiede zwischen Männchen und Weibchen einer Art.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Laute, die Vögel nur bei schlechtem Wetter verwenden.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "age_difference_calls",
+      "prompt": "Wie können sich adulte und junge Vögel akustisch unterscheiden?",
+      "type": "single",
+      "tip": "Auch innerhalb einer Art gibt es Unterschiede.",
+      "explanation": "Adulte und Jungvögel können unterschiedliche Ruf- und Gesangsmerkmale zeigen, etwa Tonhöhe oder Komplexität.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Durch Unterschiede in Tonhöhe, Struktur oder Komplexität ihrer Rufe oder Gesänge.",
+          "correct": true
+        },
+        { "id": "b", "text": "Nur durch ihre Lautstärke.", "correct": false },
+        {
+          "id": "c",
+          "text": "Sie unterscheiden sich akustisch nie.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+---
+interface Props {
+  total: number;
+}
+
+const { total } = Astro.props as Props;
+const steps = Array.from({ length: total }, (_, index) => index + 1);
+---
+
+<nav class="quiz-progress" aria-label="Fortschrittsanzeige">
+  <p class="sr-only" id="progress-helper">
+    Zeigt die Anzahl der Fragen und welche davon aktiv ist. Schrittleiste ist fokusierbar und
+    screenreader-freundlich.
+  </p>
+
+  <ol class="quiz-progress__list" aria-describedby="progress-helper">
+    {steps.map((step, index) => (
+      <li
+        class="quiz-progress__step"
+        data-progress-step
+        data-step-index={index}
+        aria-current={index === 0 ? "step" : undefined}
+      >
+        Frage {step}
+      </li>
+    ))}
+  </ol>
+
+  <output class="quiz-progress__status" data-progress-status aria-live="polite">
+    Frage 1 von {total} | {Math.round((1 / total) * 100)} % abgeschlossen
+  </output>
+</nav>

@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  quizzes: CollectionEntry<"quiz">[];
+}
+
+const { quizzes } = Astro.props as Props;
+const base = import.meta.env.BASE_URL;
+const items = [...quizzes].sort((a, b) => a.data.title.localeCompare(b.data.title, "de"));
+---
+
+<section class="quiz-hero">
+  <p class="quiz-hero__badge">Quiz · Beta</p>
+  <h1>Teste dein Schlaumeise-Wissen</h1>
+  <p>
+    Ob Sensorik, Artenwissen oder Monitoring-Flows: Die Quizze ergänzen die Dokumentation und
+    unterstützen beim aktiven Lernen. Wähle ein Set, beantworte Frage für Frage und erhalte direktes
+    Feedback samt Tipp und Erklärung.
+  </p>
+  <div class="quiz-hero__actions">
+    <a class="quiz-button quiz-button--primary" href="#quiz-liste">Quiz auswählen</a>
+    <a class="quiz-button quiz-button--ghost" href={base}>Zur Dokumentation</a>
+  </div>
+</section>
+
+<section aria-labelledby="quiz-liste-heading">
+  <header>
+    <h2 id="quiz-liste-heading">Verfügbare Quizze</h2>
+    <p>
+      Alle Fragen werden redaktionell gepflegt. Weitere Sets folgen nach dem Content-Freeze – prüfe
+      regelmäßig neue Einträge.
+    </p>
+  </header>
+
+  <ol id="quiz-liste" class="quiz-grid">
+    {items.map((quiz) => {
+      const slug = quiz.slug ?? quiz.id;
+      const questionCount = quiz.data.questions.length;
+      const href = `${base}quiz/${slug}/`;
+      return (
+        <li class="quiz-card">
+          <div class="quiz-card__header">
+            <h3>{quiz.data.title}</h3>
+            <p>{quiz.data.description}</p>
+          </div>
+
+          <div class="quiz-meta" aria-label="Quiz-Metadaten">
+            {quiz.data.level && <span class="quiz-meta__item">{quiz.data.level}</span>}
+            {quiz.data.estimatedTime && <span class="quiz-meta__item">{quiz.data.estimatedTime}</span>}
+            <span class="quiz-meta__item">
+              {questionCount} Frage{questionCount > 1 ? "n" : ""}
+            </span>
+          </div>
+
+          <a class="quiz-button quiz-button--primary" href={href} aria-label={`Quiz ${quiz.data.title} starten`}>
+            Quiz starten
+          </a>
+        </li>
+      );
+    })}
+  </ol>
+</section>

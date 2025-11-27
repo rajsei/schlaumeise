@@ -1,0 +1,10 @@
+---
+import DocHeader from "./DocHeader.astro";
+import tailwindcss from "@tailwindcss/vite";
+
+---
+
+<header class="global-header">
+  <DocHeader currentPath={Astro.props.currentPath} />
+</header>
+

@@ -1,0 +1,364 @@
+{
+  "title": "Akustik",
+  "description": "Überprüfe dein Wissen rund um Akustik.",
+  "level": "Einsteiger",
+  "estimatedTime": "10 Minuten",
+  "questions": [
+    {
+      "id": "sound_definition",
+      "prompt": "Was ist Schall?",
+      "type": "single",
+      "tip": "Schall entsteht durch Schwingungen, die sich in einem Medium ausbreiten.",
+      "explanation": "Schall ist eine Schwingung, die sich als Welle durch ein Medium wie Luft, Wasser oder feste Stoffe ausbreitet.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Eine Schwingung, die sich als Welle in einem Medium ausbreitet.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Ein Lichtstrahl, der auf Oberflächen reflektiert wird.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Eine elektrische Ladungsbewegung in Metallen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "sound_needs_medium",
+      "prompt": "Warum kann sich Schall im Weltall nicht ausbreiten?",
+      "type": "single",
+      "tip": "Schall braucht Teilchen, die schwingen können.",
+      "explanation": "Schall benötigt ein Medium wie Luft. Im Weltall herrscht Vakuum, wodurch keine Schwingungen übertragen werden können.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil es kein Medium wie Luft oder Wasser gibt, durch das sich Schwingungen ausbreiten können.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil Schall dort zu leise wäre, um ihn zu hören.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil kosmische Strahlung Schall überlagert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "frequency_behaviour",
+      "prompt": "Wie verhalten sich hohe und tiefe Töne bei der Ausbreitung in Luft?",
+      "type": "single",
+      "tip": "Hohe Frequenzen werden schneller abgeschwächt.",
+      "explanation": "Hohe Töne verlieren in Luft schneller an Energie, während tiefe Töne weiter hörbar bleiben.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Hohe Töne werden schneller abgeschwächt, tiefe Töne tragen weiter.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tiefe Töne werden schneller abgeschwächt, hohe Töne tragen weiter.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hohe und tiefe Töne verhalten sich identisch.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "speed_medium",
+      "prompt": "Warum breitet sich Schall in Wasser schneller aus als in Luft?",
+      "type": "single",
+      "tip": "Dichte und Teilchenabstände beeinflussen die Ausbreitungsgeschwindigkeit.",
+      "explanation": "In Wasser liegen die Teilchen dichter beieinander, sodass Schwingungen schneller übertragen werden.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil Wassermoleküle dichter gepackt sind und Schwingungen schneller weitergeben.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil Wasser selbst Geräusche erzeugt, die Schall verstärken.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil Wasser Schall grundsätzlich lauter macht.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "temperature_effect",
+      "prompt": "Wie beeinflusst die Temperatur die Schallausbreitung in Luft?",
+      "type": "single",
+      "tip": "Bewegliche Luftteilchen erleichtern die Schwingungsübertragung.",
+      "explanation": "Warme Luft trägt Schall weiter, da ihre Teilchen schneller schwingen und die Welle besser transportieren.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Warme Luft trägt Schall weiter als kalte Luft.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Kalte Luft trägt Schall weiter als warme Luft.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Temperatur hat keinen Einfluss auf Schall.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "reflection_echo",
+      "prompt": "Warum entsteht in einem leeren Raum ein stärkeres Echo?",
+      "type": "single",
+      "tip": "Glatte Oberflächen reflektieren Schall.",
+      "explanation": "Ohne Möbel oder weiche Materialien wird Schall kaum absorbiert und stärker zurückgeworfen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil harte, glatte Flächen den Schall reflektieren und wenig absorbieren.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil ein leerer Raum automatisch lautere Geräusche erzeugt.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil die Luft dort dünner ist.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "spectrogram_axes",
+      "prompt": "Welche Achsen zeigt ein Spektrogramm typischerweise?",
+      "type": "single",
+      "tip": "Zeit und Tonhöhe spielen eine Rolle.",
+      "explanation": "Ein Spektrogramm stellt auf der x-Achse die Zeit, auf der y-Achse die Frequenz dar; die Farben zeigen die Lautstärke.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Zeit auf der x-Achse und Frequenz auf der y-Achse.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Lautstärke auf der x-Achse und Temperatur auf der y-Achse.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tonhöhe auf der x-Achse und Geräuschquelle auf der y-Achse.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "spectrogram_use",
+      "prompt": "Warum sind Spektrogramme in der Ornithologie besonders nützlich?",
+      "type": "single",
+      "tip": "Vögel haben artspezifische Muster.",
+      "explanation": "Jede Vogelart erzeugt charakteristische Muster im Spektrogramm, sodass man Arten visuell unterscheiden kann.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil Vogelarten akustische Fingerabdrücke erzeugen, die im Spektrogramm sichtbar sind.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil Spektrogramme Vogelgesang lauter wiedergeben.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil sie nur für tiefe Töne funktionieren.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "bioacoustics_definition",
+      "prompt": "Womit beschäftigt sich die Bioakustik?",
+      "type": "single",
+      "tip": "Es geht um Tierlaute und ihre Bedeutung.",
+      "explanation": "Bioakustik untersucht die von Lebewesen erzeugten Geräusche und was sie über Verhalten, Art und Umwelt verraten.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Mit den von Tieren erzeugten Lauten und deren Bedeutung.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mit der Farbgebung von Pflanzen.",
+          "correct": false
+        },
+        { "id": "c", "text": "Mit der Bewegung von Sternen.", "correct": false }
+      ]
+    },
+    {
+      "id": "passive_monitoring",
+      "prompt": "Was ist passives akustisches Monitoring?",
+      "type": "single",
+      "tip": "Dabei zeichnen Geräte automatisch auf.",
+      "explanation": "Automatische Aufnahmegeräte zeichnen kontinuierlich Tierlaute auf, auch in der Nacht oder abgelegenen Gebieten.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Der Einsatz automatischer Aufnahmegeräte, die Tiergeräusche ohne menschliche Anwesenheit aufzeichnen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Das aktive Verfolgen von Tieren mit Mikrophonen in der Hand.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Das Erzeugen künstlicher Tierlaute zur Forschung.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "bioacoustics_behavior",
+      "prompt": "Welche Informationen können Tierlaute über Verhalten verraten?",
+      "type": "single",
+      "tip": "Laute enthalten häufig Hinweise.",
+      "explanation": "Tierlaute können zeigen, ob Tiere alarmiert sind, balzen, füttern oder sich orientieren.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Sie können Hinweise auf Alarm, Balz, Fütterung oder Orientierung geben.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sie geben nur Auskunft über den Gesundheitszustand.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sie zeigen ausschließlich das Alter eines Tieres an.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "ki_spektrogramm",
+      "prompt": "Warum wandelt KI ein Audiosignal zuerst in ein Spektrogramm um?",
+      "type": "single",
+      "tip": "KI arbeitet häufig wie ein Bildanalysesystem.",
+      "explanation": "KI-Systeme erkennen Muster besser in visuellen Darstellungen wie Spektrogrammen als in rohen Audiodaten.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil KI Muster in Bildern leichter erkennt als in reinen Audiosignalen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil ein Spektrogramm das Audio lauter macht.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil KI keine Audiodaten verarbeiten kann.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "ki_artenkennung",
+      "prompt": "Wie erkennt KI verschiedene Tierarten anhand ihrer Laute?",
+      "type": "single",
+      "tip": "Training mit vielen Beispielen spielt eine Rolle.",
+      "explanation": "KI vergleicht neue Aufnahmen mit Musterbeispielen, die sie zuvor aus tausenden Trainingsdaten gelernt hat.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Durch das Erkennen charakteristischer Klangmuster, die im Training gelernt wurden.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil KI die Tiere live beobachten kann.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil jede Tierart eine eigene Lautstärke hat.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "citizen_science_apps",
+      "prompt": "Warum begeistern KI-basierte Tierstimmen-Apps viele Menschen?",
+      "type": "single",
+      "tip": "Apps ermöglichen ein neues Naturerlebnis.",
+      "explanation": "Sie erlauben es auch Laien, Vogel- oder Tierstimmen in Echtzeit zu erkennen, ohne die Tiere sehen zu müssen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Weil sie Tierlaute in Echtzeit analysieren und Arten anzeigen.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Weil sie automatisch Tiere anlocken.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Weil sie Geräusche lauter wiedergeben.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "ki_conservation",
+      "prompt": "Wie unterstützt KI den Naturschutz?",
+      "type": "single",
+      "tip": "Trends schnell erkennen.",
+      "explanation": "Mit KI lassen sich Tierbestände überwachen, Trends früh erkennen und Schutzmaßnahmen gezielt planen.",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Durch das automatische Erkennen und Auswerten von Tierlauten, wodurch Bestände überwacht werden können.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Durch das Bauen künstlicher Lebensräume.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Durch das Ersetzen menschlicher Beobachter vollständig.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

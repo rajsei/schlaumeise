@@ -44,6 +44,7 @@ export default defineConfig({
         src: "./src/assets/favicon.svg",
       },
       components: {
+        Header: "./src/components/DocHeader.astro",
         Footer: "./src/components/CustomFooter.astro",
       },
 

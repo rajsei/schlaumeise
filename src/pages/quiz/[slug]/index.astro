@@ -1,0 +1,27 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import QuizRunner from "../../../components/quiz/QuizRunner.astro";
+
+export async function getStaticPaths() {
+  const quizzes = await getCollection("quiz");
+  return quizzes.map((entry) => ({
+    params: { slug: entry.slug ?? entry.id },
+  }));
+}
+
+const { slug } = Astro.params;
+const quiz = slug ? await getEntry("quiz", slug) : null;
+
+if (!quiz) {
+  return new Response("Quiz nicht gefunden", { status: 404 });
+}
+---
+
+<MainLayout
+  title={`${quiz.data.title} | Quiz | Schlaumeise`}
+  description={quiz.data.description}
+  currentPath="/quiz"
+>
+  <QuizRunner quiz={quiz} />
+</MainLayout>

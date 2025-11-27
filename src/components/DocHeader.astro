@@ -1,0 +1,120 @@
+---
+import config from "virtual:starlight/user-config";
+import LanguageSelect from "virtual:starlight/components/LanguageSelect";
+import Search from "virtual:starlight/components/Search";
+import SocialIcons from "virtual:starlight/components/SocialIcons";
+import ThemeSelect from "virtual:starlight/components/ThemeSelect";
+import brandIcon from "../assets/favicon.svg";
+
+interface Props {
+  currentPath?: string;
+}
+
+const shouldRenderSearch =
+  config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+
+const { currentPath } = Astro.props as Props;
+const base = import.meta.env.BASE_URL;
+const astroPath = Astro && Astro.url && Astro.url.pathname ? Astro.url.pathname : "/";
+const pathname = currentPath ?? astroPath ?? "/";
+
+const normalizePath = (value: string) => {
+  const safe = value.startsWith("http")
+    ? new URL(value).pathname
+    : value.startsWith(base)
+      ? value
+      : `${base.replace(/\/$/, "")}/${value.replace(/^\//, "")}`;
+  const cleaned = safe.replace(base, "/").replace(/\/+/g, "/") || "/";
+  if (cleaned === "/") return cleaned;
+  return cleaned.endsWith("/") ? cleaned : `${cleaned}/`;
+};
+
+const current = normalizePath(pathname);
+
+const navItems = [
+  { label: "Start", href: `${base}` },
+  { label: "Projekte", href: `${base}projects/` },
+  { label: "Wissenssammlung", href: `${base}knowledge_collection/biology` },
+  { label: "Quiz", href: `${base}quiz/` },
+  { label: "Impressum", href: `${base}impressum/` },
+];
+
+const itemsWithState = navItems.map((item) => {
+  const path = normalizePath(item.href);
+  const isActive = path === "/" ? current === "/" : current.startsWith(path);
+  return { ...item, path, isActive };
+});
+---
+
+  <div class="global-header__inner">
+    <div class="global-header__brand">
+      <a class="global-header__logo" href={base} aria-label="Zur Startseite">
+        <img src={brandIcon.src} alt="" width="32" height="32" loading="lazy" decoding="async" />
+        <span class="global-header__title">Schlaumeise</span>
+      </a>
+      <button
+        class="global-header__toggle"
+        aria-expanded="false"
+        aria-controls="site-navigation"
+        data-nav-toggle
+      >
+        Menü
+      </button>
+    </div>
+
+    <nav id="site-navigation" class="global-nav" aria-label="Hauptnavigation" data-nav data-open="false">
+      <ul class="global-nav__list">
+        {itemsWithState.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={["global-nav__link", item.isActive && "is-active"].filter(Boolean).join(" ")}
+              aria-current={item.isActive ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="global-header__actions">
+      {shouldRenderSearch && (
+        <div class="global-header__search">
+          <Search />
+        </div>
+      )}
+      <div class="global-header__shortcuts">
+        <SocialIcons />
+        <ThemeSelect />
+        <LanguageSelect />
+      </div>
+    </div>
+  </div>
+
+
+<script type="module">
+  const script = document.currentScript;
+  const header = script ? script.closest(".global-header") : null;
+  const toggle = header ? header.querySelector("[data-nav-toggle]") : null;
+  const nav = header ? header.querySelector("[data-nav]") : null;
+
+  if (toggle instanceof HTMLButtonElement && nav instanceof HTMLElement) {
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") {
+        toggle.setAttribute("aria-expanded", "false");
+        nav.dataset.open = "false";
+      }
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      nav.dataset.open = String(!isOpen);
+      if (!isOpen) {
+        document.addEventListener("keydown", closeOnEscape, { once: true });
+      }
+    });
+  }
+</script>
+

@@ -5,9 +5,15 @@ import schlaumeiseLogo from '../assets/favicon.svg';
 
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL;
+let hasStarlightContext = false;
+try {
+  hasStarlightContext = Boolean((Astro as any).locals?.starlightRoute);
+} catch {
+  hasStarlightContext = false;
+}
 ---
 
-<DefaultFooter />
+{hasStarlightContext && <DefaultFooter />}
 
 <footer class="site-footer" aria-labelledby="site-footer-heading">
   <h2 id="site-footer-heading" class="sr-only">Website footer</h2>

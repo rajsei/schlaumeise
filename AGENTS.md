@@ -3,11 +3,15 @@
 Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten soll. Ziel ist konsistente, zugängliche und wartbare Ergebnisse für die Starlight‑Docs „Schlaumeise“ zu liefern.
 
 ## Ziel & Scope
-- Fokus: Astro + Starlight Doku unter `src/content/docs`, Komponenten unter `src/components`, Styles unter `src/styles`, Starlight‑Konfig in `astro.config.mjs`.
-- Änderungen sollen minimal‑invasiv sein und bestehende Seiten nicht brechen.
+
+- Fokus: Astro + Starlight Doku unter `src/content/docs`, Komponenten unter `src/components`, Styles unter `src/styles`, Starlight-Konfig in `astro.config.mjs`.
+- Änderungen sollen minimal-invasiv sein und bestehende Seiten nicht brechen.
 - Standardsprache für Nutzeroberfläche und Inhalte: Deutsch. Standardsprache in Code/Kommentare: Englisch (kurz und präzise).
+- `src/content/docs/` enthält ausschließlich die Live-Inhalte der Website (Starlight-Dokumentation). Agenten-Guidelines und Funktionsbeschreibungen liegen außerhalb, z. B. projektübergreifend in dieser `AGENTS.md` und detaillierte Feature-Dokumente im Ordner `documentation/`.
+- Live-Seiten außerhalb der Starlight-Doku entstehen unter `src/pages/` (z. B. `src/pages/quiz/index.astro` plus optionale Unterseiten). Nutze diesen Bereich gezielt für eigenständige Astro-Routen.
 
 ## Agent‑Qualitäten
+
 - Präzise, knapp, freundlich; aktive Sprache, keine Ausschweife.
 - Actionable: klare nächste Schritte, Annahmen, Risiken.
 - Sorgfältig & sicher: nicht raten; bei Unklarheit nachfragen; Sandbox/Approvals respektieren.
@@ -15,6 +19,7 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
 - Kontextsensitiv: Starlight‑Konventionen nutzen (Komponenten‑Overrides, Sidebar, CSS‑Variablen).
 
 ## Prioritäten (absteigend)
+
 1. Korrektheit & Stabilität (Build/Navigation darf nicht brechen)
 2. Barrierefreiheit (WCAG 2.2 AA) und semantische HTML‑Struktur
 3. Responsives Design (alle Bildschirmgrößen)
@@ -23,6 +28,7 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
 6. Minimaler Scope (nur ändern, was zur Aufgabe gehört)
 
 ## Accessibility (A11y) – Grundregeln
+
 - Semantik: korrekte Überschriften‑Hierarchie, Listen, Tabellen‑Header (`<th scope>`), Landmarken (`<header>`, `<main>`, `<nav>`, `<footer>`).
 - Tastatur: alles fokussierbar; sichtbare Focus‑Styles; keine Tab‑Fallen.
 - Kontraste: Text/Icons ≥ 4.5:1; große Texte ≥ 3:1.
@@ -32,6 +38,7 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
 - Hinweise/Fehler: verständlich und programmatisch erkennbar.
 
 ## Benennungen & Struktur
+
 - Komponenten (Astro): PascalCase, `.astro`, z. B. `HighlightSection.astro`, `CustomFooter.astro`.
 - Styles: Dateien in kebab‑case (`global.css`, `project-grid.css`); CSS‑Klassen semantisch in kebab‑case.
 - Inhalte: Slugs/Ordner in `src/content/docs` in kebab‑case.
@@ -39,59 +46,71 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
 - Konfiguration: Starlight‑Overrides unter `components` in `astro.config.mjs` pflegen.
 
 ## Designprinzipien
+
+- Nutze bei den Farben --sl-color- Fraben siehe `global.css` um einen einheitlichen Stil beizubehalten.
 - Struktur/Logik/Präsentation trennen: Markup in `.astro`, Styles in CSS, Logik sparsam.
 - Wiederverwendung vor Duplikation: Starlight‑Komponenten über Overrides erweitern.
 - Progressive Enhancement: Basis ohne JS funktionsfähig; Interaktivität optional.
 - i18n‑Bereitschaft: Texte nicht hart in Logik backen.
 
 ## Starlight‑Spezifika (Repo)
+
 - Layout‑Overrides via `starlight({ components: { … } })`.
 - Sidebar per `sidebar`‑Konfiguration; Autogenerate folgt Verzeichnissen.
 - Styles: Starlight‑Variablen (`--sl-*`) und Layer (`@layer starlight.components`) nutzen.
 - Footer global via `components.Footer` ersetz/erweiterbar (vgl. `src/components/CustomFooter.astro`).
 
 ## Arbeitsweise & Patches
+
 - Kleine, fokussierte Änderungen; nur betroffene Dateien anfassen.
 - Pfade & Zeilen angeben, kurz begründen, Risiken nennen.
 - Keine Lizenz‑Header hinzufügen; keine Ein‑Buchstaben‑Variablen.
 - Keine ungebetenen Refactorings; verbundene Doku knapp aktualisieren.
 
 ## Checklisten
+
 - A11y‑Kurzcheck: eine `<h1>` pro Seite; Fokus sichtbar; Alt‑Texte; Kontrast; Rollen/Zustände erkennbar.
 - Inhalt/Struktur: aktive Sprache; sprechende Dateinamen; konsistente Komponenten‑/Klassenbezeichnungen.
 - Technik: `astro.config.mjs` korrekt; keine toten Imports/Assets; keine unnötigen Dependencies.
 
 ## Do & Don’t
+
 - Do: erst prüfen, dann ändern; knapp erklären; Beispiele; Repo‑Konventionen respektieren.
 - Don’t: raten; destruktive Befehle; irrelevante Umstellungen; UI ohne A11y bauen.
 
 ## Komponenten & Importe
+
 - Komponenten in PascalCase mit `.astro` (z. B. `ProjectList.astro`).
 - Importe exakt case‑sensitiv pflegen (CI auf Linux).
 - Keine Selbst‑Imports: In `X.astro` nie `import X from './X.astro'`.
 
 ### Renames (Case‑Sensitivity)
+
 - Case‑only Renames zweistufig ausführen:
   - `git mv ProjectList.astro projectlist.tmp`
   - `git mv projectlist.tmp ProjectList.astro`
 - Danach alle Importpfade aktualisieren. Keine dauerhaften Wrapper behalten.
 
 ### Lösch-/Move‑Policy
+
 - Vor Löschen/Verschieben Referenzen anpassen:
   - Importe finden: `rg -n "from ['\"](\.\./|\./).*ProjectList\.astro" src`
   - Nutzung finden: `rg -n "<ProjectList\b" src`
 - Erst wenn alle Referenzen passen, alte Datei löschen/verschieben.
 
 ### Build‑ und CI‑Checks
+
 - Vor Merge: `pnpm build` (keine „Could not resolve …“).
 - Optional: `astro check`.
 - Linux‑CI nicht überspringen — deckt Case‑Fehler auf.
 
 ### Script‑Blöcke in `.astro`
+
 - In Client‑Scripts ohne TS‑Assertions arbeiten oder `lang="ts"` setzen.
 - DOM‑Selektoren an tatsächliches Markup anpassen (z. B. `#project-list .card`).
 
 ### Checkliste vor PR
+
 - [ ] Keine Selbst‑Imports/Zyklen.
 - [ ] Einheitliche Schreibweise von Datei und Import.
 - [ ] Renames via zweistufigem `git mv`, Importe aktualisiert.
@@ -99,6 +118,7 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
 - [ ] Temporäre Wrapper entfernt oder mit TODO markiert.
 
 ## Astro‑Komponenten: Aufbau
+
 - Frontmatter (zwischen `---` und `---`)
   - Nur serverseitiges Setup: `import`, Props/Interfaces, Datenabrufe, Konstanten/Derived Values.
   - Keine Datei‑Header/TODOs im Frontmatter. Kommentare erst NACH dem zweiten `---`.
@@ -110,6 +130,7 @@ Dieses Dokument beschreibt, wie der Codex‑Agent in diesem Repository arbeiten 
   - `<style>`; nutze `@layer starlight.components` und Starlight‑Variablen.
 
 Beispiel
+
 ```
 ---
 import { getCollection } from "astro:content";
@@ -138,6 +159,16 @@ const base = import.meta.env.BASE_URL;
   }
 </style>
 ```
+
+# Hilfreiche Formulierungen:
+
+Zum Verbessern von Prompts:
+
+`You are an expert prompt engineer specializing in creating prompts for AI language models, particularly ChatGPT 5 Thinking model.Your task is to take my prompt and transform it into a well-crafted and effective prompt that will elicit optimal responses.Format your output prompt withing a code block for clarity and easy copy-pasting. Original prompt:`
+
+Zum Verbessern von Implementierungen:
+
+`Before you respond, create an internal rubric for what defines a 'world-class' answer to my request. Then internally iterate on your work until it scores 10/10 against that rubric, and show me only the final, perfect output.`
 
 ---
 

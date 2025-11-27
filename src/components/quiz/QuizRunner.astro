@@ -1,0 +1,451 @@
+---
+import type { CollectionEntry } from "astro:content";
+import QuizProgress from "./QuizProgress.astro";
+
+interface Props {
+  quiz: CollectionEntry<"quiz">;
+}
+
+const { quiz } = Astro.props as Props;
+const total = quiz.data.questions.length;
+const base = import.meta.env.BASE_URL;
+const quizSlug = (quiz.slug ?? quiz.id).replace(/[^a-z0-9\-]/gi, "-");
+const initialQuestion = quiz.data.questions[0];
+const initialPercent = Math.round((1 / total) * 100);
+
+const payload = JSON.stringify({
+  slug: quiz.slug ?? quiz.id,
+  title: quiz.data.title,
+  description: quiz.data.description,
+  questions: quiz.data.questions,
+});
+---
+
+<section class="quiz-runner" data-quiz-id={quizSlug} data-base={base}>
+  <div class="quiz-runner__header">
+    <p class="quiz-hero__badge">Quiz</p>
+    <h1>{quiz.data.title}</h1>
+    <p>{quiz.data.description}</p>
+  </div>
+
+  <QuizProgress total={total} />
+
+  <section class="question-stage" data-question-stage aria-live="polite">
+    <article class="question-card" data-question-card>
+      <div>
+        <p class="question-step" data-step-text>
+          Frage 1 von {total}, {initialPercent} Prozent abgeschlossen
+        </p>
+        <h2 data-question-title>{initialQuestion.prompt}</h2>
+        {initialQuestion.description && (
+          <p data-question-description>{initialQuestion.description}</p>
+        )}
+      </div>
+
+      <form data-answer-form>
+        <fieldset data-answer-fieldset>
+          <legend class="sr-only">Antwort auswählen</legend>
+          <ul class="answer-list" data-answer-options>
+            {initialQuestion.answers.map((answer) => {
+              const inputId = `${quizSlug}-${initialQuestion.id}-${answer.id}`;
+              return (
+                <li class="answer-option">
+                  <input
+                    type={initialQuestion.type === "multiple" ? "checkbox" : "radio"}
+                    name="answer-initial"
+                    id={inputId}
+                    value={answer.id}
+                  />
+                  <label for={inputId}>{answer.text}</label>
+                </li>
+              );
+            })}
+          </ul>
+        </fieldset>
+
+        <div class="question-actions">
+          <button
+            type="button"
+            class="quiz-button quiz-button--ghost"
+            data-tip-trigger
+            disabled={!initialQuestion.tip}
+          >
+            Tipp anzeigen
+          </button>
+          <button type="submit" class="quiz-button quiz-button--primary" data-submit disabled>
+            Antwort prüfen
+          </button>
+        </div>
+      </form>
+
+      <div class="tip-panel" data-tip hidden>
+        {initialQuestion.tip ?? ""}
+      </div>
+
+      <div class="feedback-panel" data-feedback hidden>
+        <p class="feedback-status" data-feedback-status></p>
+        <p data-feedback-solution></p>
+        <p data-feedback-explanation></p>
+        <button type="button" class="quiz-button quiz-button--primary" data-next>
+          Weiter zur nächsten Frage
+        </button>
+      </div>
+    </article>
+
+    <noscript>
+      <p>
+        Dieses Quiz benötigt JavaScript, um Antworten auszuwerten und die Auswertung zu erstellen.
+        Bitte aktiviere JavaScript oder nutze die Dokumentation ohne Quiz.
+      </p>
+    </noscript>
+  </section>
+
+  <section class="quiz-summary" data-summary hidden aria-live="polite">
+    <h2>Auswertung</h2>
+    <p class="quiz-summary__score" data-summary-score></p>
+    <ol class="summary-list" data-summary-list></ol>
+    <a class="quiz-button quiz-button--ghost" href={`${base}quiz/`}>Zur Übersicht</a>
+  </section>
+
+  <script type="application/json" data-quiz-payload set:html={payload}></script>
+
+  <script type="module">
+    const container = document.querySelector(".quiz-runner");
+    const payloadElement = container ? container.querySelector('[data-quiz-payload]') : null;
+
+    if (!container || !payloadElement) {
+      throw new Error("Quizdaten fehlen. Bitte Seite neu laden.");
+    }
+
+    const data = JSON.parse(payloadElement.textContent || "{}");
+    const questions = Array.isArray(data.questions) ? data.questions : [];
+    const baseAttr = container ? container.getAttribute("data-base") : null;
+    const basePath = baseAttr || "/";
+
+    const state = {
+      index: 0,
+      results: [],
+    };
+
+    const elements = {
+      stepText: container.querySelector('[data-step-text]'),
+      questionTitle: container.querySelector('[data-question-title]'),
+      questionDescription: container.querySelector('[data-question-description]'),
+      answerForm: container.querySelector('[data-answer-form]'),
+      fieldset: container.querySelector('[data-answer-fieldset]'),
+      answersWrapper: container.querySelector('[data-answer-options]'),
+      tipTrigger: container.querySelector('[data-tip-trigger]'),
+      tipPanel: container.querySelector('[data-tip]'),
+      submitButton: container.querySelector('[data-submit]'),
+      feedbackPanel: container.querySelector('[data-feedback]'),
+      feedbackStatus: container.querySelector('[data-feedback-status]'),
+      feedbackSolution: container.querySelector('[data-feedback-solution]'),
+      feedbackExplanation: container.querySelector('[data-feedback-explanation]'),
+      nextButton: container.querySelector('[data-next]'),
+      summary: container.querySelector('[data-summary]'),
+      summaryScore: container.querySelector('[data-summary-score]'),
+      summaryList: container.querySelector('[data-summary-list]'),
+      questionStage: container.querySelector('[data-question-stage]'),
+      progressStatus: container.querySelector('[data-progress-status]'),
+      progressSteps: Array.from(container.querySelectorAll('[data-progress-step]')),
+    };
+
+    const getCurrent = () => questions[state.index];
+
+    const vectorHasText = (value) => typeof value === "string" && value.trim().length > 0;
+
+    const getSelectedValues = () => {
+      if (!elements.answersWrapper) return [];
+      const inputs = elements.answersWrapper.querySelectorAll("input");
+      return Array.from(inputs)
+        .filter((input) => input.checked)
+        .map((input) => input.value);
+    };
+
+    const handleSelectionChange = () => {
+      const hasSelection = getSelectedValues().length > 0;
+      if (elements.submitButton) {
+        if (hasSelection) {
+          elements.submitButton.removeAttribute("disabled");
+        } else {
+          elements.submitButton.setAttribute("disabled", "true");
+        }
+      }
+    };
+
+    const describePercent = (index) => {
+      const percent = Math.round(((index + 1) / questions.length) * 100);
+      return { percent };
+    };
+
+    const updateProgress = () => {
+      const { percent } = describePercent(state.index);
+      if (elements.progressStatus) {
+        elements.progressStatus.textContent = `Frage ${state.index + 1} von ${questions.length} | ${percent}% abgeschlossen`;
+      }
+
+      elements.progressSteps.forEach((step, index) => {
+        const isCurrent = index === state.index;
+        const isComplete = index < state.index;
+        step.classList.toggle("is-complete", isComplete);
+        if (isCurrent) {
+          step.setAttribute("aria-current", "step");
+        } else {
+          step.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    const renderAnswers = (question) => {
+      if (!elements.answersWrapper) return;
+      const type = question.type === "multiple" ? "checkbox" : "radio";
+      const name = `question-${question.id}`;
+      elements.answersWrapper.innerHTML = "";
+      question.answers.forEach((answer) => {
+        const item = document.createElement("li");
+        item.className = "answer-option";
+
+        const input = document.createElement("input");
+        input.type = type;
+        input.name = name;
+        input.id = `${data.slug}-${question.id}-${answer.id}`;
+        input.value = answer.id;
+        input.addEventListener("change", handleSelectionChange);
+        input.addEventListener("input", handleSelectionChange);
+
+        const label = document.createElement("label");
+        label.setAttribute("for", input.id);
+        label.textContent = answer.text;
+
+        item.appendChild(input);
+        item.appendChild(label);
+        if (elements.answersWrapper) {
+          elements.answersWrapper.appendChild(item);
+        }
+      });
+    };
+
+    const toggleTip = () => {
+      if (!elements.tipPanel || !elements.tipTrigger) return;
+      const isHidden = elements.tipPanel.hasAttribute("hidden");
+      if (isHidden) {
+        elements.tipPanel.removeAttribute("hidden");
+        elements.tipTrigger.textContent = "Tipp ausblenden";
+      } else {
+        elements.tipPanel.setAttribute("hidden", "true");
+        elements.tipTrigger.textContent = "Tipp anzeigen";
+      }
+    };
+
+    const updateQuestion = () => {
+      const question = getCurrent();
+      if (!question || !elements.stepText || !elements.questionTitle) return;
+      const { percent } = describePercent(state.index);
+
+      elements.stepText.textContent = `Frage ${state.index + 1} von ${questions.length} | ${percent}% abgeschlossen`;
+      elements.questionTitle.textContent = question.prompt;
+
+      if (vectorHasText(question.description) && elements.questionDescription) {
+        elements.questionDescription.textContent = question.description;
+        elements.questionDescription.removeAttribute("hidden");
+      } else if (elements.questionDescription) {
+        elements.questionDescription.setAttribute("hidden", "true");
+      }
+
+      if (elements.tipTrigger) {
+        elements.tipTrigger.disabled = !vectorHasText(question.tip);
+        elements.tipTrigger.textContent = "Tipp anzeigen";
+      }
+
+      if (elements.tipPanel) {
+        if (vectorHasText(question.tip)) {
+          elements.tipPanel.textContent = question.tip;
+          elements.tipPanel.setAttribute("hidden", "true");
+        } else {
+          elements.tipPanel.setAttribute("hidden", "true");
+        }
+      }
+
+      if (elements.feedbackPanel) {
+        elements.feedbackPanel.setAttribute("hidden", "true");
+      }
+
+      if (elements.fieldset) {
+        elements.fieldset.disabled = false;
+      }
+
+      renderAnswers(question);
+      if (elements.submitButton) {
+        elements.submitButton.setAttribute("disabled", "true");
+      }
+      updateProgress();
+    };
+
+    const evaluate = (event) => {
+      event.preventDefault();
+      const question = getCurrent();
+      if (!question || !elements.feedbackPanel) return;
+      const selected = getSelectedValues();
+      if (selected.length === 0) return;
+
+      const correctAnswers = question.answers.filter((answer) => answer.correct).map((a) => a.id);
+      const isCorrect =
+        selected.length === correctAnswers.length &&
+        selected.every((value) => correctAnswers.includes(value));
+
+      if (elements.feedbackStatus) {
+        elements.feedbackStatus.textContent = isCorrect ? "Richtig beantwortet" : "Leider falsch";
+        elements.feedbackStatus.classList.remove("feedback-status--correct", "feedback-status--incorrect");
+        elements.feedbackStatus.classList.add(
+          isCorrect ? "feedback-status--correct" : "feedback-status--incorrect"
+        );
+      }
+
+      if (elements.feedbackSolution) {
+        const solution = question.answers
+          .filter((answer) => answer.correct)
+          .map((answer) => answer.text)
+          .join(", ");
+        elements.feedbackSolution.textContent = `Korrekte Lösung: ${solution}`;
+      }
+
+      if (elements.feedbackExplanation) {
+        elements.feedbackExplanation.textContent = question.explanation;
+      }
+
+      if (elements.nextButton) {
+        elements.nextButton.textContent =
+          state.index === questions.length - 1 ? "Zur Auswertung" : "Weiter zur nächsten Frage";
+      }
+
+      if (elements.feedbackPanel) elements.feedbackPanel.removeAttribute("hidden");
+      if (elements.fieldset) elements.fieldset.disabled = true;
+      if (elements.submitButton) elements.submitButton.setAttribute("disabled", "true");
+
+      state.results[state.index] = {
+        question,
+        selected,
+        isCorrect,
+      };
+    };
+
+    const goToNext = () => {
+      if (state.index === questions.length - 1) {
+        finishQuiz();
+        return;
+      }
+      state.index += 1;
+      updateQuestion();
+    };
+
+    const finishQuiz = () => {
+      if (!elements.summary || !elements.summaryList || !elements.summaryScore || !elements.questionStage) {
+        return;
+      }
+
+      const correct = state.results.filter((entry) => entry && entry.isCorrect).length;
+      if (elements.summaryScore) {
+        elements.summaryScore.textContent = `Du hast ${correct} von ${questions.length} Fragen richtig beantwortet.`;
+      }
+
+      elements.summaryList.innerHTML = "";
+      state.results.forEach((entry, index) => {
+        if (!entry) return;
+        const listItem = document.createElement("li");
+        const details = document.createElement("details");
+        details.open = index === 0;
+
+        const summary = document.createElement("summary");
+        summary.innerHTML = `<span>${index + 1}. ${entry.question.prompt}</span>`;
+        const badge = document.createElement("span");
+        badge.className = `status-badge ${entry.isCorrect ? "is-correct" : "is-wrong"}`;
+        badge.textContent = entry.isCorrect ? "Richtig" : "Falsch";
+        summary.appendChild(badge);
+        details.appendChild(summary);
+
+        const body = document.createElement("div");
+        body.className = "summary-body";
+
+        const yourAnswer = document.createElement("p");
+        const selectedTexts = entry.selected
+          .map((value) => {
+            const option = entry.question.answers.find((answer) => answer.id === value);
+            return option ? option.text : undefined;
+          })
+          .filter(Boolean);
+        yourAnswer.innerHTML = `<strong>Deine Antwort:</strong> ${
+          selectedTexts.length ? selectedTexts.join(", ") : "Keine Auswahl"
+        }`;
+
+        const solution = document.createElement("p");
+        const correctOptions = entry.question.answers
+          .filter((answer) => answer.correct)
+          .map((answer) => answer.text)
+          .join(", ");
+        solution.innerHTML = `<strong>Korrekte Lösung:</strong> ${correctOptions}`;
+
+        const explanation = document.createElement("p");
+        explanation.innerHTML = `<strong>Erklärung:</strong> ${entry.question.explanation}`;
+
+        body.appendChild(yourAnswer);
+        body.appendChild(solution);
+        body.appendChild(explanation);
+
+        if (vectorHasText(entry.question.tip)) {
+          const tip = document.createElement("p");
+          tip.innerHTML = `<strong>Tipp:</strong> ${entry.question.tip}`;
+          body.appendChild(tip);
+        }
+
+        if (Array.isArray(entry.question.resources) && entry.question.resources.length > 0) {
+          const list = document.createElement("ul");
+          list.className = "resources-list";
+          entry.question.resources.forEach((resource) => {
+            const item = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = `${basePath}${resource.href.replace(/^\//, "")}`;
+            link.textContent = resource.label;
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            item.appendChild(link);
+            list.appendChild(item);
+          });
+          body.appendChild(list);
+        }
+
+        details.appendChild(body);
+        listItem.appendChild(details);
+        if (elements.summaryList) {
+          elements.summaryList.appendChild(listItem);
+        }
+      });
+
+      if (elements.questionStage) {
+        elements.questionStage.setAttribute("hidden", "true");
+      }
+      if (elements.summary) {
+        elements.summary.removeAttribute("hidden");
+      }
+
+      if (elements.progressStatus) {
+        elements.progressStatus.textContent = `Quiz abgeschlossen | 100% erreicht`;
+      }
+
+      elements.progressSteps.forEach((step) => {
+        step.classList.add("is-complete");
+        step.removeAttribute("aria-current");
+      });
+    };
+
+    if (elements.answerForm) elements.answerForm.addEventListener("submit", evaluate);
+    if (elements.answersWrapper) {
+      elements.answersWrapper.addEventListener("change", handleSelectionChange);
+      elements.answersWrapper.addEventListener("input", handleSelectionChange);
+    }
+    if (elements.tipTrigger) elements.tipTrigger.addEventListener("click", toggleTip);
+    if (elements.nextButton) elements.nextButton.addEventListener("click", goToNext);
+
+    updateQuestion();
+    handleSelectionChange();
+  </script>
+</section>
