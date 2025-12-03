@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import QuizOverview from "../../../components/quiz/QuizOverview.astro";
+
+const quizzes = await getCollection("quiz");
+---
+
+<MainLayout
+  title="Quiz-Übersicht | Schlaumeise"
+  description="Eigenständige Quiz-Route mit redaktionell gepflegten Fragen für die Schlaumeise."
+  currentPath="/quiz"
+>
+  This part is not yet translated into English.
+</MainLayout>

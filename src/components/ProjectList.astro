@@ -1,9 +1,26 @@
 ---
 import { getCollection } from "astro:content";
+import config from "virtual:starlight/user-config";
 import "../styles/project-grid.css";
 
 const docs = await getCollection("docs");
-const projects = docs.filter((d) => d.id.endsWith("overview"));
+const localeKeys = Object.keys(config.locales ?? {});
+const activeLocale = (() => {
+  try {
+    return (Astro as any).locals?.starlightRoute?.locale;
+  } catch {
+    return undefined;
+  }
+})();
+const defaultLocale = config.defaultLocale?.locale ?? "root";
+const resolvedLocale = activeLocale ?? defaultLocale;
+const getEntryLocale = (id: string) => {
+  const [first] = id.split("/");
+  return localeKeys.includes(first) ? first : "root";
+};
+const projects = docs.filter(
+  (d) => d.id.endsWith("overview") && getEntryLocale(d.id) === resolvedLocale,
+);
 const base = import.meta.env.BASE_URL;
 ---
 <!-- Renders a grid of project overview links -->

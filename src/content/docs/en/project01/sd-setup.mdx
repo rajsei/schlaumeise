@@ -1,0 +1,84 @@
+---
+title: Setting up your SD card
+description: ...
+sidebar:
+  order: 2
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Have you checked off all the items on the checklist? Then take some time to set up your Raspberry Pi at your leisure.
+
+If you encounter any problems, don't hesitate to contact us by email.
+
+## Requirements
+
+You will need a computer, an SD card suitable for your Raspberry Pi, and an internet connection.
+
+## Setting up the SD card
+
+### Installing the operating system
+
+<Steps>
+
+1. Connect the microSD card to your computer.
+   Make sure you know what the SD card is named on your computer. If there is any data on the SD card, you should back it up, as it will be lost during the installation process. In Windows, you can do this via File Explorer > This PC.
+
+2. Download Raspberry Pi Imager from [raspberrypi.com](https://www.raspberrypi.com/software/) and open it. Simply follow the installation instructions.
+   ![Screenshot of Raspberry Pi Imager](/schlaumeise//images/project01/pi-setup/01.jpg)
+
+3. Click on `Select model` and choose the model you have.
+   ![](/schlaumeise//images/project01/pi-setup/02.jpg)
+
+4. Next, click on `Select OS` and then on `Raspberry Pi OS (other)`.
+   ![](/schlaumeise//images/project01/pi-setup/03.jpg)
+
+5. Click on `Raspberry Pi OS (Legacy, 64-bit) Lite | A port of Debian Bookworm with security updates and no desktop environment`. (Pay attention to **Lite** and **Debian Bookworm**)
+   ![](/schlaumeise//images/project01/pi-setup/04.jpg)
+
+6. Click on `Select SD card` and select the SD card that your BirdNET Pi should use. Check the name of the SD card via `File Manager (Explorer)` > `This PC`, as the data on the SD card will be deleted in the next step.
+   ![](/schlaumeise//images/project01/pi-setup/05.jpg)![](/schlaumeise//images/project01/pi-setup/06.jpg)
+
+7. Click on `Next`.
+   ![](/schlaumeise//images/project01/pi-setup/07.jpg)
+
+8. Click on `Edit Settings`.
+   ![](/schlaumeise//images/project01/pi-setup/08.png)
+
+9. Now let's set up all the items under `General`.
+   ![](/schlaumeise//images/project01/pi-setup/09.jpg)
+
+10. Set the `Hostname` under which the BirdNET Pi should be accessible. For example, if you have multiple BirdNET Pis on the same network, you can give each one a different hostname. In this example, the installation is accessible at `http://birdnetpi.local`, as this is the hostname specified in this step. If you do not set this value (and use the default hostname raspberrypi), the BirdNET installation will be accessible at http://raspberrypi.local by default.
+    ![](/schlaumeise//images/project01/pi-setup/10.jpg)
+
+11. Next, we will set a username and password that we can use to access the Raspberry Pi later. In this example, we have created a user named `birder`. Remember the password, as we will need it later.
+    ![](/schlaumeise//images/project01/pi-setup/11.jpg)
+
+12. Now enter the name of your Wi-Fi network under `SSID` and the password for your Wi-Fi network under `Password`. If you are not connected to your own Wi-Fi network, you can also create a hotspot via your PC or cell phone and enter the relevant data in the `SSID` and `Password` fields. If you do not create the hotspot with your PC, you must ensure in later steps that your PC is connected to the same hotspot. This is the only way to ensure that your PC and Raspberry Pi are on the same network/Wi-Fi/hotspot. In addition, the device you use to create the hotspot must be connected to the Internet. You can select `DE` as the `WiFi country`.
+    ![](/schlaumeise//images/project01/pi-setup/12.jpg)
+
+13. Then adjust your `Time Zone` and `Keyboard Layout`.
+    ![](/schlaumeise//images/project01/pi-setup/13.jpg)
+
+14. Under `General`, it should look like this at the end, filled in with your own data, of course. But **don't** click `Save` yet!
+    ![](/schlaumeise//images/project01/pi-setup/14.jpg)
+
+15. Switch to the `Services` section.
+    ![](/schlaumeise//images/project01/pi-setup/15.jpg)
+
+16. Enable SSH and select `Use password for authentication`. This allows you to conveniently set up your BirdNET Pi from your computer without having to connect a screen or keyboard to your Raspberry Pi.
+    ![](/schlaumeise//images/project01/pi-setup/16.jpg)
+
+17. That's it, you're done! Now you can click `Save`.
+
+18. Click `Yes`.
+    ![](/schlaumeise//images/project01/pi-setup/17.jpg)
+
+19. Click `Yes` again. All data will now be deleted from your SD card and Raspberry Pi OS will be installed. This may take a few minutes.
+    ![](/schlaumeise//images/project01/pi-setup/18.jpg)
+    ![](/schlaumeise//images/project01/pi-setup/19.jpg)
+
+20. When the SD card is ready, a message will appear stating that the SD card can be removed from the computer.
+    ![](/schlaumeise//images/project01/pi-setup/20.jpg)
+
+</Steps>

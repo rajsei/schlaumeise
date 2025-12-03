@@ -1,0 +1,387 @@
+---
+title: Set up a hotspot (Optional)
+description: ...
+sidebar:
+  order: 4
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+
+## When should I do this?
+
+If your BirdNET Pi is only going to be set up within range of your Wi-Fi, you can skip the following steps.
+In this section, we will configure settings so that if your Birdnet Pi is outside your Wi-Fi range, it will function as a hotspot and transmit its own Wi-Fi signal (which does not have internet access). This allows you to connect to the Birdnet Pi via Wi-Fi with your cell phone, for example, and access the Birdnet Pi's data.
+Here, you can also add additional Wi-Fi connections or change Wi-Fi data already entered in the Raspberry Pi OS setup.
+
+## Instructions
+
+<Steps>
+
+0. Connect via SSH
+1. Now we will edit the Wi-Fi and hotspot settings. To do this, we first need to open the Network Manager:
+
+</Steps>
+<div class="step-code">
+
+```sh
+sudo nmtui
+```
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+<Steps>
+
+2. In Network Manager, you can move the selected item using the <Kbd windows="arrow keys" /> and confirm with <Kbd windows="Enter" />.
+
+3. Select `Edit a connection`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+<Steps>
+
+4. Select `Add`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui02.jpg)
+
+</div>
+<Steps>
+
+5. Select `Wi-Fi` as the connection type.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui03.jpg)
+
+</div>
+<Steps>
+
+6. Select `Create`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui04.jpg)
+
+</div>
+<Steps>
+
+7. Now you need to add your network data.
+   `Profile Name` is for identification purposes only; you can enter any name you like here. However, make sure to replace Hotspot with your chosen name in the following commands.
+   `Device` (check wlan0 if necessary)
+   `SSID` is the name of the Wi-Fi network that is created. You can choose this freely, but make sure to remember it!
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
+
+</div>
+<Steps>
+
+8. Select `Access Point` for `Mode`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui06.jpg)
+
+</div>
+<Steps>
+
+9. Select `B/G (2.4 GHz)` for `Channel`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui08.jpg)
+
+</div>
+<Steps>
+
+10. Under `Security`, select `WPA & WPA2 Personal`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui09.jpg)
+
+</div>
+<Steps>
+
+11. Under “Password”, enter the password for the hotspot. Remember it!
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
+
+</div>
+<Steps>
+
+12. Now we can close the program. To do this, select `OK` at the bottom.
+13. Select `Back`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui11.jpg)
+
+</div>
+<Steps>
+
+14. Select `Quit`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui12.jpg)
+
+</div>
+<Steps>
+
+15. Now we will set the connection priorities for the Wi-Fi and hotspot connections.
+    This means that the Raspberry Pi will first attempt to connect to the known Wi-Fi network.
+    Only if no connection is possible will it automatically create its own hotspot so that a
+    connection to the device can still be established.
+    First, we need to navigate to the correct folder using the `cd` command.
+
+</Steps>
+<div class="step-code">
+
+```
+cd /etc/NetworkManager/system-connections
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+  birder@birdnetpi:/etc/NetworkManager/system-connections $"
+/>
+
+</div>
+<Steps>
+
+16. Let's now open the file for the hotspot connection.
+
+</Steps>
+<div class="step-code">
+
+```
+sudo nano Hotspot.nmconnection
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="  GNU nano 7.2                     Hotspot.nmconnection                               [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+interface-name=wlan0
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Here is your password for the hotspot
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Read 23 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+17. Insert the following code snippet into the first part of the file.
+    The entry `autoconnect=true` activates automatic connection establishment.
+    The value `autoconnect-priority=0` sets the priority of the network.
+    The higher the number, the more preferred this network is when connecting automatically.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=0
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  code="  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+interface-name=wlan0
+
+autoconnect=true
+autoconnect-priority=0
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Den Eltern mal den Vogel zeigen!
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+18. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, and finally <Kbd windows="Enter" /> to save the file.
+19. Now let's open the file for the Wi-Fi connection.
+
+</Steps>
+<div class="step-code">
+
+```
+sudo nano preconfigured.nmconnection
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code='  GNU nano 7.2              preconfigured.nmconnection                  [connection]
+id=preconfigured
+uuid=fh6c02n6-5th7-4911-9g5c-d356zh245
+type=wifi
+timestamp=27604593
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Dein_Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9ed4tg67fd672c6896d1ec9e1g885a61f4th322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Read 23 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line'
+/>
+
+</div>
+<Steps>
+
+20. Insert the following code snippet into the first part of the file.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=10
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  mark={['autoconnect=true', 'autoconnect-priority=10']}
+  code="  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+id=preconfigured
+uuid=fh6c02n6-j705-4911-9g5c-d36127245
+type=wifi
+timestamp=27604593
+
+autoconnect=true
+autoconnect-priority=10
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Dein_Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Wrote 27 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+21. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, and finally <Kbd windows="Enter" /> to save the file.
+22. Now restart the Raspberry Pi.
+
+</Steps>
+<div class="step-code">
+
+```sh
+sudo reboot
+```
+
+</div>

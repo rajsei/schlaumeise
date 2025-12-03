@@ -20,11 +20,6 @@ export default defineConfig({
     starlight({
       customCss: ["./src/styles/global.css", "./src/styles/project.css"],
       plugins: [
-        starlightUtils({
-          navLinks: {
-            leading: { useSidebarLabelled: "leadingNavLinks" },
-          },
-        }),
         starlightImageZoom(),
         starlightKbd({
           types: [
@@ -38,7 +33,10 @@ export default defineConfig({
         }),
         starlightGitHubAlerts(),
       ],
-      title: "Schlaumeise",
+      title: {
+        de: "Schlaumeise",
+        en: "Smartfinch",
+      },
       //social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
       logo: {
         src: "./src/assets/favicon.svg",
@@ -48,26 +46,27 @@ export default defineConfig({
         Footer: "./src/components/CustomFooter.astro",
       },
 
+      locales: {
+        root: { label: "Deutsch", lang: "de" },
+        en: { label: "English", lang: "en" },
+      },
+      defaultLocale: "root",
+
       sidebar: [
         {
-          label: "leadingNavLinks",
-          items: [
-            { label: "Projekte", slug: "projects" },
-            { label: "Impressum", slug: "impressum" },
-          ],
-        },
-
-        {
           label: "Das lauschende Vogelhaus",
+          translations: { en: "The Listening Birdhouse" },
           autogenerate: { directory: "project01" },
         },
         {
           label: "Wissenssammlung",
+          translations: { en: "Knowledge Collection" },
           autogenerate: { directory: "knowledge_collection" },
         },
         //{label: "Project02",autogenerate: { directory: "project02" },},
         {
           label: "Begriffsverzeichnis",
+          translations: { en: "Glossary" },
           autogenerate: { directory: "glossary" },
         },
       ],

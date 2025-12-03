@@ -1,0 +1,85 @@
+---
+title: Acoustics
+description: What can you hear here?
+sidebar:
+  order: 5
+---
+
+import HighlightSection from "../../../../components/HighlightSection.astro";
+
+## What is sound, and how does it propagate?
+
+Acoustics is the study of sound. But what exactly is sound?
+Tap on the table or shout “Hello” in an empty room – the sound you hear is created by sound waves.
+Sound is a vibration that propagates like a wave in a medium (usually air).
+For example, when a speaker plays music or you clap your hands, it causes the surrounding air to vibrate.
+These sound waves spread out from the source in all directions – similar to the circular waves on the surface of water when you throw a stone into it.
+Our ears pick up the waves and our brain then converts them into the sound we hear.
+Important: Sound needs a medium (air, water, or a solid material) to propagate.
+This is why there is an eerie silence in the airless vacuum of space—sound cannot travel in a vacuum.
+
+## What influences sound?
+
+However, sound does not always propagate in the same way. Various factors can influence sound:
+
+**Frequency (pitch):** High-pitched sounds behave differently than low-pitched sounds.
+High frequencies (e.g., the high-pitched chirping of a cricket) are attenuated much more quickly in air than low frequencies (a distant rumble of thunder).
+You can tell this by the fact that bass rumblings can often be heard from a great distance, while high-pitched sounds are lost over long distances.
+Walls also allow low bass frequencies to pass through more easily than high-pitched sounds – which is why often only the “booming” of the bass penetrates the wall from your neighbor's loud music.
+
+**Medium and temperature:** The speed of sound depends on the medium through which it travels.
+In air, sound travels at around 343 meters per second. In water, it is about four times faster, at around 1,500 meters per second.
+This is why whales and dolphins can communicate over very long distances.
+Sound also travels very quickly in metals, which is why you can often hear an approaching train sooner if you put your ear to the track (don't try this at home!).
+In addition, warm air usually carries sound further than cold air because the particles move faster in warm air (so temperature also influences sound propagation).
+
+<HighlightSection
+  title="Did you know?"
+  text="**Blue whales** produce **extremely loud and deep sounds** – some of which are below the human hearing threshold. These infrasonic sounds enable them to **communicate** over distances of **1600 km**. To put that into perspective, that's twice the distance from the northernmost to the southernmost point of Germany as the crow flies."
+  color="blue"
+/>
+
+**Obstacles and reflection:** When sound hits an obstacle, it can be reflected or absorbed. Hard, smooth surfaces such as walls or rocks reflect sound, creating an echo or reverberation. Soft, porous materials (e.g., curtains, upholstered furniture in a room), on the other hand, absorb sound and dampen noise. This is why empty rooms echo more than furnished ones. Forests and leafy canopies also act as sound absorbers in nature, while a smooth lake reflects sound well.
+
+**In summary:** Sound propagates as a wave in all directions, requires a medium, and can be deflected, dampened, or amplified by environmental influences. This explains why a walk in the forest is much quieter than a stroll through the city—the acoustics differ considerably depending on the environment.
+
+## Spectrogram – What does a spectrogram show, how does it work?
+
+What does sound actually look like? A spectrogram provides the answer.
+It is a visual representation of an audio signal—put simply, an image that shows which sounds (frequencies) occur in a noise
+at what time and how loud they are.
+The horizontal axis of the spectrogram usually shows time, while the vertical axis shows frequency (pitch) .
+The volume or intensity of each frequency is then represented by the color intensity or brightness.
+Spectrograms are therefore often seen as colorful diagrams: for example, with blue areas for quiet parts and red for very loud parts.
+You can think of it as a 3D image – time (x-axis) versus pitch (y-axis), and the color indicates the volume.
+This creates a vivid image from the “invisible” sound.
+
+**An example:** When a bird trills, many parallel “lines” or “bands” appear on the spectrogram, showing the pitches contained in the song.
+A single loud whistle would appear as a short, distinctive line at a specific frequency and time.
+Spectrograms thus reveal patterns that our ears alone might not notice.
+In ornithology (the study of birds), spectrograms are therefore often used to analyze birdsong.
+Each bird species has a characteristic pattern in the spectrogram – also known as an “acoustic fingerprint.”
+Experts (or trained AI models) can use these patterns to identify a species, similar to how an optical fingerprint is used to identify a person. The spectrogram thus helps to visualize complex sound sequences and make them comparable.
+
+### What is this useful for?
+
+Spectrograms are used in many areas:
+in music and speech research, in animal research (for whale songs, bird calls, etc.) and even in technology.
+They can be used, for example, to visualize and examine spoken words—linguists can recognize vowels and consonants on speech spectrograms by their typical patterns.
+In bioacoustics, our topic, spectrograms are indispensable for comparing animal voices and discovering new sounds.
+Researchers can compare unknown animal sounds as spectrograms with known patterns.
+And AI systems such as the bird song recognition apps mentioned above first convert incoming sounds into a spectrogram in order to filter out the relevant features.
+For AI, the spectrogram is essentially the “language” in which it can read sounds.
+Strictly speaking, AI does not work with audio, but with image processing.
+
+A spectrogram answers the question: Who sings what and when?
+It shows which frequencies (pitches) are present at what time and how strong they are.
+This allows you to see, for example, whether bass or high tones dominate in a sound, whether a noise consists of individual clicks or continuous noise, and whether several sounds occur simultaneously.
+In a forest recording spectrogram, for example, you would see if a deep frog croaks and a cricket chirps above it at the same time—two different frequency bands at the same time.
+You can hear this, but the image makes it much clearer.
+
+In summary, a spectrogram functions like a time-frequency map for sound.
+It is useful for visualizing, analyzing, and comparing sounds.
+Whether you are a biologist or a musician, everyone can glean information from it that would be difficult to grasp with the naked ear.
+In our everyday technology, we encounter spectrograms, for example, in audio software (equalizer displays) or in the aforementioned animal sound apps.
+This reveals what is normally invisible!

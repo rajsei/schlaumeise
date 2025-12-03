@@ -1,7 +1,9 @@
 ---
+import config from "virtual:starlight/user-config";
 import DefaultFooter from '@astrojs/starlight/components/Footer.astro';
 import esf from '../assets/EFRE-ESF_LO_Kombination_EU-Logo_SachsenSignet-klassisch_H_RGB.png';
 import schlaumeiseLogo from '../assets/favicon.svg';
+import '../styles/global.css';
 
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL;
@@ -70,11 +72,10 @@ try {
     }
 
     .site-footer {
-      background-color: var(--sl-color-bg-nav); /* match navbar in light/dark */
+      background-color: var(--sl-color-gray-6); /* match navbar in light/dark */
       margin-top: 0.5rem;
-      padding: 1.25rem 0 1.5rem;
-      border-top: 1px solid var(--sl-color-hairline);
-      color: var(--sl-color-gray-3);
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid color-mix(in srgb, var(--sl-color-gray-5), transparent 30%);
       font-size: var(--sl-text-sm);
     }
 
@@ -126,7 +127,7 @@ try {
       max-width: min(400px, 100%);
       height: auto;
       border-radius: 2px;
-      background: #F4F6FA; /* ensure logo readable in dark mode */
+      background: #eceff4; /* ensure logo readable in dark mode */
       padding: 0.25rem 0.5rem;
     }
 

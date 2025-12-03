@@ -2,9 +2,35 @@
 import DocHeader from "./DocHeader.astro";
 import tailwindcss from "@tailwindcss/vite";
 
+interface Props {
+  currentPath?: string;
+  enableStarlightControls?: boolean;
+}
+
+const { currentPath, enableStarlightControls = true } = Astro.props as Props;
+
 ---
 
 <header class="global-header">
-  <DocHeader currentPath={Astro.props.currentPath} />
+  <DocHeader currentPath={currentPath} enableStarlightControls={enableStarlightControls} />
 </header>
 
+
+<style>
+  @layer starlight.components {
+
+  .global-header {
+    box-sizing: border-box;
+    position: fixed;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    z-index: var(--sl-z-index-navbar, 10);
+    width: 100%;
+    height: 4rem;
+    background: var(--sl-color-gray-6);
+    padding: 0.75rem 1.5rem;
+    border-bottom:  1px solid color-mix(in srgb, var(--sl-color-gray-5), transparent 30%);
+  }
+  }
+
+</style>

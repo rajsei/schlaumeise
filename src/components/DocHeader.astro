@@ -1,56 +1,124 @@
 ---
 import config from "virtual:starlight/user-config";
-import LanguageSelect from "virtual:starlight/components/LanguageSelect";
-import Search from "virtual:starlight/components/Search";
-import SocialIcons from "virtual:starlight/components/SocialIcons";
-import ThemeSelect from "virtual:starlight/components/ThemeSelect";
-import brandIcon from "../assets/favicon.svg";
+import Search from "@astrojs/starlight/components/Search.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import schlaumeiseIcon from "../assets/SchlaumeiseLogo.svg";
+import smartfinchIcon from "../assets/SmartfinchLogo.svg";
 
 interface Props {
   currentPath?: string;
+  enableStarlightControls?: boolean;
 }
+
+let LanguageSelect: any = null;
 
 const shouldRenderSearch =
   config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
 
-const { currentPath } = Astro.props as Props;
+const { currentPath, enableStarlightControls = true } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
 const astroPath = Astro && Astro.url && Astro.url.pathname ? Astro.url.pathname : "/";
 const pathname = currentPath ?? astroPath ?? "/";
+const hasStarlightRoute = (() => {
+  try {
+    return Boolean((Astro as any).locals?.starlightRoute);
+  } catch {
+    return false;
+  }
+})();
+const hasTranslations = (() => {
+  try {
+    return Boolean((Astro as any).locals?.t);
+  } catch {
+    return false;
+  }
+})();
+if (enableStarlightControls && hasStarlightRoute) {
+  const { default: LanguageSelectComponent } = await import(
+    "@astrojs/starlight/components/LanguageSelect.astro"
+  );
+  LanguageSelect = LanguageSelectComponent;
+}
+const allowLanguageSelect = enableStarlightControls && hasStarlightRoute && LanguageSelect;
+const allowSearch = shouldRenderSearch && hasTranslations;
+
+const selectedLocale = (() => {
+  try {
+    return (Astro as any).locals?.starlightRoute?.locale;
+  } catch {
+    return undefined;
+  }
+})();
+const defaultLocale = config.defaultLocale?.locale ?? "root";
+const activeLocale = selectedLocale ?? defaultLocale;
+const localeSlug = activeLocale && activeLocale !== "root" ? activeLocale : "";
+const basePath = base.replace(/\/+$/, "") || "/";
+const isEnglish = activeLocale === "en";
+const brandName = isEnglish ? "Smartfinch" : "Schlaumeise";
+const brandIcon = isEnglish ? smartfinchIcon : schlaumeiseIcon;
+const homeLabel = isEnglish ? "Go to homepage" : "Zur Startseite";
+const navAriaLabel = isEnglish ? "Main navigation" : "Hauptnavigation";
+
+const ensureTrailingSlash = (value: string) => (value.endsWith("/") ? value : `${value}/`);
+const buildHref = (slug = "") => {
+  const cleanedSlug = slug.replace(/^\/+|\/+$/g, "");
+  const relativePath = [localeSlug, cleanedSlug].filter(Boolean).join("/");
+  const url = new URL(relativePath || ".", new URL(base, "http://example.com"));
+  return ensureTrailingSlash(url.pathname);
+};
 
 const normalizePath = (value: string) => {
   const safe = value.startsWith("http")
     ? new URL(value).pathname
     : value.startsWith(base)
       ? value
-      : `${base.replace(/\/$/, "")}/${value.replace(/^\//, "")}`;
+      : `${basePath}/${value.replace(/^\//, "")}`;
   const cleaned = safe.replace(base, "/").replace(/\/+/g, "/") || "/";
   if (cleaned === "/") return cleaned;
   return cleaned.endsWith("/") ? cleaned : `${cleaned}/`;
 };
 
 const current = normalizePath(pathname);
+const homeHref = buildHref();
+
+const navLabels = isEnglish
+  ? {
+      start: "Home",
+      projects: "Projects",
+      knowledge: "Knowledge Collection",
+      quiz: "Quiz",
+      imprint: "Imprint",
+    }
+  : {
+      start: "Start",
+      projects: "Projekte",
+      knowledge: "Wissenssammlung",
+      quiz: "Quiz",
+      imprint: "Impressum",
+    };
 
 const navItems = [
-  { label: "Start", href: `${base}` },
-  { label: "Projekte", href: `${base}projects/` },
-  { label: "Wissenssammlung", href: `${base}knowledge_collection/biology` },
-  { label: "Quiz", href: `${base}quiz/` },
-  { label: "Impressum", href: `${base}impressum/` },
+  { label: navLabels.start, slug: "" },
+  { label: navLabels.projects, slug: "projects" },
+  { label: navLabels.knowledge, slug: "knowledge_collection/biology" },
+  { label: navLabels.quiz, slug: "quiz" },
+  { label: navLabels.imprint, slug: "impressum" },
 ];
 
 const itemsWithState = navItems.map((item) => {
-  const path = normalizePath(item.href);
-  const isActive = path === "/" ? current === "/" : current.startsWith(path);
-  return { ...item, path, isActive };
+  const href = buildHref(item.slug);
+  const path = normalizePath(href);
+  const isActive = item.slug === "" ? current === path : current.startsWith(path);
+  return { ...item, href, path, isActive };
 });
 ---
 
   <div class="global-header__inner">
     <div class="global-header__brand">
-      <a class="global-header__logo" href={base} aria-label="Zur Startseite">
+      <a class="global-header__logo" href={homeHref} aria-label={homeLabel}>
         <img src={brandIcon.src} alt="" width="32" height="32" loading="lazy" decoding="async" />
-        <span class="global-header__title">Schlaumeise</span>
+        <span class="global-header__title">{brandName}</span>
       </a>
       <button
         class="global-header__toggle"
@@ -62,7 +130,7 @@ const itemsWithState = navItems.map((item) => {
       </button>
     </div>
 
-    <nav id="site-navigation" class="global-nav" aria-label="Hauptnavigation" data-nav data-open="false">
+    <nav id="site-navigation" class="global-nav" aria-label={navAriaLabel} data-nav data-open="false">
       <ul class="global-nav__list">
         {itemsWithState.map((item) => (
           <li>
@@ -79,16 +147,22 @@ const itemsWithState = navItems.map((item) => {
     </nav>
 
     <div class="global-header__actions">
-      {shouldRenderSearch && (
+      {allowSearch && (
         <div class="global-header__search">
           <Search />
         </div>
       )}
-      <div class="global-header__shortcuts">
-        <SocialIcons />
-        <ThemeSelect />
-        <LanguageSelect />
-      </div>
+      {(hasTranslations || allowLanguageSelect) && (
+        <div class="global-header__shortcuts">
+          {hasTranslations && (
+            <>
+              <SocialIcons />
+              <ThemeSelect />
+            </>
+          )}
+          {allowLanguageSelect && <LanguageSelect />}
+        </div>
+      )}
     </div>
   </div>
 
@@ -118,3 +192,152 @@ const itemsWithState = navItems.map((item) => {
   }
 </script>
 
+<style>
+   @layer starlight.components {
+
+  .global-header__inner {
+    max-width: 100rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .global-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .global-header__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--sl-color-white);
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .global-header__logo img {
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgb(0 0 0 / 0.25);
+  }
+
+  .global-header__title {
+    font-size: 1.1rem;
+  }
+
+  .global-header__toggle {
+    display: none;
+    border: 1px solid
+      color-mix(in srgb, var(--sl-color-gray-3), transparent 45%);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    color: var(--sl-color-white);
+    background: transparent;
+    font-weight: 600;
+  }
+
+  .global-nav {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .global-nav__list {
+    list-style: none;
+    display: flex;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .global-nav__link {
+    color: var(--sl-color-gray-1);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    transition:
+      color 150ms ease,
+      background 150ms ease;
+  }
+
+  .global-nav__link:hover,
+  .global-nav__link:focus-visible {
+    color: var(--sl-color-white);
+    background: color-mix(in srgb, var(--sl-color-accent), transparent 70%);
+  }
+
+  .global-nav__link.is-active {
+    color: var(--sl-color-white);
+    background: var(--sl-color-accent-low);
+  }
+
+  .global-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .global-header__search {
+    font-size: 0.9rem;
+    max-width: 240px;
+  }
+
+  .global-header__shortcuts {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 64rem) {
+    .global-header__inner {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .global-header__brand {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .global-header__toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .global-nav {
+      width: 100%;
+      order: 3;
+    }
+
+    .global-nav__list {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+    }
+
+    .global-nav[data-open="false"],
+    .global-nav:not([data-open]) {
+      display: none;
+    }
+
+    .global-nav[data-open="true"] {
+      display: block;
+      width: 100%;
+    }
+
+    .global-header__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>
