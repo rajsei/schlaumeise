@@ -38,6 +38,12 @@ if (enableStarlightControls && hasStarlightRoute) {
 }
 const allowLanguageSelect = enableStarlightControls && hasStarlightRoute && LanguageSelect;
 
+const localeFromPath = (() => {
+  const locales = Object.keys(config.locales || {});
+  const match = locales.find((code) => pathname === `/${code}` || pathname.startsWith(`/${code}/`));
+  return match;
+})();
+
 const selectedLocale = (() => {
   try {
     return (Astro as any).locals?.starlightRoute?.locale;
@@ -46,7 +52,7 @@ const selectedLocale = (() => {
   }
 })();
 const defaultLocale = config.defaultLocale?.locale ?? "root";
-const activeLocale = selectedLocale ?? defaultLocale;
+const activeLocale = selectedLocale ?? localeFromPath ?? defaultLocale;
 const localeSlug = activeLocale && activeLocale !== "root" ? activeLocale : "";
 const basePath = base.replace(/\/+$/, "") || "/";
 const isEnglish = activeLocale === "en";
@@ -359,7 +365,7 @@ const itemsWithState = navItems.map((item) => {
       align-items: center;
       justify-content: center;
       padding: 0.25rem 0;
-      gap: 0.45rem;
+      gap: 0.3rem;
       flex-wrap: wrap;
     }
 
@@ -395,7 +401,11 @@ const itemsWithState = navItems.map((item) => {
     }
 
     .global-nav__list {
-      gap: 0.35rem;
+      gap: 0.25rem;
+    }
+
+    .global-nav__list > li:nth-child(5) {
+      display: none;
     }
 
     .global-header__actions {
