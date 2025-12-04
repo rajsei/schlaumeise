@@ -1,6 +1,5 @@
 ---
 import config from "virtual:starlight/user-config";
-import Search from "@astrojs/starlight/components/Search.astro";
 import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 import schlaumeiseIcon from "../assets/SchlaumeiseLogo.svg";
@@ -12,9 +11,6 @@ interface Props {
 }
 
 let LanguageSelect: any = null;
-
-const shouldRenderSearch =
-  config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
 
 const { currentPath, enableStarlightControls = true } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
@@ -41,7 +37,6 @@ if (enableStarlightControls && hasStarlightRoute) {
   LanguageSelect = LanguageSelectComponent;
 }
 const allowLanguageSelect = enableStarlightControls && hasStarlightRoute && LanguageSelect;
-const allowSearch = shouldRenderSearch && hasTranslations;
 
 const selectedLocale = (() => {
   try {
@@ -59,6 +54,8 @@ const brandName = isEnglish ? "Smartfinch" : "Schlaumeise";
 const brandIcon = isEnglish ? smartfinchIcon : schlaumeiseIcon;
 const homeLabel = isEnglish ? "Go to homepage" : "Zur Startseite";
 const navAriaLabel = isEnglish ? "Main navigation" : "Hauptnavigation";
+const menuLabel = isEnglish ? "Open menu" : "Menue oeffnen";
+const barsPath = "M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z";
 
 const ensureTrailingSlash = (value: string) => (value.endsWith("/") ? value : `${value}/`);
 const buildHref = (slug = "") => {
@@ -86,7 +83,7 @@ const navLabels = isEnglish
   ? {
       start: "Home",
       projects: "Projects",
-      knowledge: "Knowledge Collection",
+      knowledge: "Knowledge Base",
       quiz: "Quiz",
       imprint: "Imprint",
     }
@@ -114,48 +111,36 @@ const itemsWithState = navItems.map((item) => {
 });
 ---
 
-  <div class="global-header__inner">
-    <div class="global-header__brand">
-      <a class="global-header__logo" href={homeHref} aria-label={homeLabel}>
-        <img src={brandIcon.src} alt="" width="32" height="32" loading="lazy" decoding="async" />
-        <span class="global-header__title">{brandName}</span>
-      </a>
-      <button
-        class="global-header__toggle"
-        aria-expanded="false"
-        aria-controls="site-navigation"
-        data-nav-toggle
-      >
-        Menü
-      </button>
-    </div>
+<div class="global-header__inner">
+  <div class="global-header__brand">
+    <a class="global-header__logo" href={homeHref} aria-label={homeLabel}>
+      <img src={brandIcon.src} alt="" width="32" height="32" loading="lazy" decoding="async" />
+      <span class="global-header__title">{brandName}</span>
+    </a>
+  </div>
 
-    <nav id="site-navigation" class="global-nav" aria-label={navAriaLabel} data-nav data-open="false">
-      <ul class="global-nav__list">
-        {itemsWithState.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class={["global-nav__link", item.isActive && "is-active"].filter(Boolean).join(" ")}
-              aria-current={item.isActive ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+  <nav id="site-navigation" class="global-nav" aria-label={navAriaLabel} data-nav data-open="false">
+    <ul class="global-nav__list">
+      {itemsWithState.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class={["global-nav__link", item.isActive && "is-active"].filter(Boolean).join(" ")}
+            aria-current={item.isActive ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 
+  <div class="global-header__controls">
     <div class="global-header__actions">
-      {allowSearch && (
-        <div class="global-header__search">
-          <Search />
-        </div>
-      )}
-      {(hasTranslations || allowLanguageSelect) && (
-        <div class="global-header__shortcuts">
-          {hasTranslations && (
-            <>
+    {(hasTranslations || allowLanguageSelect) && (
+      <div class="global-header__shortcuts">
+        {hasTranslations && (
+          <>
               <SocialIcons />
               <ThemeSelect />
             </>
@@ -164,8 +149,28 @@ const itemsWithState = navItems.map((item) => {
         </div>
       )}
     </div>
+    <button
+      class="global-header__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-label={menuLabel}
+      aria-controls="site-navigation"
+      data-nav-toggle
+    >
+      <svg
+        class="global-header__toggle-icon"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        role="img"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d={barsPath} fill="currentColor"></path>
+      </svg>
+    </button>
   </div>
-
+</div>
 
 <script type="module">
   const script = document.currentScript;
@@ -193,8 +198,7 @@ const itemsWithState = navItems.map((item) => {
 </script>
 
 <style>
-   @layer starlight.components {
-
+  @layer starlight.components {
   .global-header__inner {
     max-width: 100rem;
     margin: 0 auto;
@@ -202,13 +206,15 @@ const itemsWithState = navItems.map((item) => {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .global-header__brand {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    min-width: 0;
+    flex: 0 0 auto;
   }
 
   .global-header__logo {
@@ -230,15 +236,49 @@ const itemsWithState = navItems.map((item) => {
     font-size: 1.1rem;
   }
 
+  .global-header__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-inline-start: auto;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+  }
+
+  .global-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .global-header__shortcuts {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
   .global-header__toggle {
     display: none;
-    border: 1px solid
-      color-mix(in srgb, var(--sl-color-gray-3), transparent 45%);
+    border: 1px solid color-mix(in srgb, var(--sl-color-gray-3), transparent 45%);
     border-radius: 999px;
-    padding: 0.35rem 0.9rem;
+    padding: 0.45rem;
     color: var(--sl-color-white);
     background: transparent;
-    font-weight: 600;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .global-header__toggle:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+  }
+
+  .global-header__toggle-icon {
+    font-size: 1.25rem;
+    color: currentColor;
   }
 
   .global-nav {
@@ -249,7 +289,7 @@ const itemsWithState = navItems.map((item) => {
   .global-nav__list {
     list-style: none;
     display: flex;
-    gap: 0.9rem;
+    gap: 0.7rem;
     margin: 0;
     padding: 0;
     justify-content: center;
@@ -260,7 +300,8 @@ const itemsWithState = navItems.map((item) => {
     color: var(--sl-color-gray-1);
     text-decoration: none;
     font-weight: 600;
-    padding: 0.45rem 0.9rem;
+    font-size: 0.95rem;
+    padding: 0.38rem 0.8rem;
     border-radius: 999px;
     transition:
       color 150ms ease,
@@ -278,65 +319,88 @@ const itemsWithState = navItems.map((item) => {
     background: var(--sl-color-accent-low);
   }
 
-  .global-header__actions {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    min-width: 0;
-  }
-
-  .global-header__search {
-    font-size: 0.9rem;
-    max-width: 240px;
-  }
-
-  .global-header__shortcuts {
-    display: flex;
-    gap: 0.4rem;
-    align-items: center;
+  @media (max-width: 72rem) {
+    .global-header__title {
+      display: none;
+    }
   }
 
   @media (max-width: 64rem) {
     .global-header__inner {
       flex-wrap: wrap;
       gap: 0.5rem;
+      align-items: center;
     }
 
     .global-header__brand {
-      width: 100%;
-      justify-content: space-between;
+      order: 1;
+      flex: 0 0 auto;
+      width: auto;
+      justify-content: flex-start;
     }
 
     .global-header__toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .global-nav {
-      width: 100%;
-      order: 3;
-    }
-
-    .global-nav__list {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0.5rem 0;
-    }
-
-    .global-nav[data-open="false"],
-    .global-nav:not([data-open]) {
       display: none;
     }
 
-    .global-nav[data-open="true"] {
-      display: block;
+    .global-nav {
+      order: 2;
+      flex: 1 1 auto;
+      width: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .global-nav__list {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .global-header__controls {
+      order: 3;
       width: 100%;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      gap: 0.3rem;
+      align-self: flex-start;
     }
 
     .global-header__actions {
-      width: 100%;
+      order: 0;
+      flex: 0 0 auto;
+      margin-inline-start: auto;
       justify-content: flex-end;
+      flex-wrap: nowrap;
+      gap: 0.3rem;
+      padding: 0.18rem 0.4rem;
+      /* background: var(--sl-color-gray-6); */
+      border-radius: 0.65rem;
+      align-self: flex-start;
+      box-sizing: border-box;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 50rem) {
+    .global-nav__list > li:first-child {
+      display: none;
+    }
+
+    .global-nav__list {
+      gap: 0.35rem;
+    }
+
+    .global-header__actions {
+      padding: 0.14rem 0.35rem;
+      gap: 0.22rem;
     }
   }
 }

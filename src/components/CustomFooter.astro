@@ -3,6 +3,8 @@ import config from "virtual:starlight/user-config";
 import DefaultFooter from '@astrojs/starlight/components/Footer.astro';
 import esf from '../assets/EFRE-ESF_LO_Kombination_EU-Logo_SachsenSignet-klassisch_H_RGB.png';
 import schlaumeiseLogo from '../assets/favicon.svg';
+import schlaumeiseMark from '../assets/SchlaumeiseLogo.svg';
+import smartfinchMark from '../assets/SmartfinchLogo.svg';
 import '../styles/global.css';
 
 const year = new Date().getFullYear();
@@ -13,6 +15,31 @@ try {
 } catch {
   hasStarlightContext = false;
 }
+
+const activeLocale = (() => {
+  try {
+    return (Astro as any).locals?.starlightRoute?.locale;
+  } catch {
+    return undefined;
+  }
+})();
+const defaultLocale = config.defaultLocale?.locale ?? "root";
+const resolvedLocale = activeLocale ?? defaultLocale;
+const localeSlug = resolvedLocale && resolvedLocale !== "root" ? resolvedLocale : "";
+const isEnglish = resolvedLocale === "en";
+const brandName = isEnglish ? "Smartfinch" : "Schlaumeise";
+const brandMark = isEnglish ? smartfinchMark : schlaumeiseMark;
+const brandAria = isEnglish ? "Smartfinch home" : "Schlaumeise Startseite";
+const imprintLabel = isEnglish ? "Imprint" : "Impressum";
+const ensureSlash = (value: string) => (value.endsWith("/") ? value : `${value}/`);
+const buildHref = (slug = "") => {
+  const cleanedSlug = slug.replace(/^\/+|\/+$/g, "");
+  const relative = [localeSlug, cleanedSlug].filter(Boolean).join("/");
+  const url = new URL(relative || ".", new URL(base, "http://example.com"));
+  return ensureSlash(url.pathname);
+};
+const homeHref = buildHref();
+const imprintHref = buildHref("impressum");
 ---
 
 {hasStarlightContext && <DefaultFooter />}
@@ -22,22 +49,22 @@ try {
 
   <div class="footer-content">
     <div class="brand-block">
-      <a class="brand" href="#" aria-label="Schlaumeise home">
+      <a class="brand" href={homeHref} aria-label={brandAria}>
         <img
-          src={schlaumeiseLogo.src}
-          alt="Schlaumeise Logo"
+          src={(brandMark?.src ?? schlaumeiseLogo.src)}
+          alt={`${brandName} Logo`}
           width="40"
           height="40"
           loading="lazy"
           decoding="async"
         />
-        <span class="brand-name">Schlaumeise</span>
+        <span class="brand-name">{brandName}</span>
       </a>
 
     </div>
 
     <nav class="footer-links" aria-label="Footer links">
-      <a href={`${base}impressum/`}>Impressum</a>
+      <a href={imprintHref}>{imprintLabel}</a>
       <a href="https://github.com/rajsei/schlaumeise">GitHub</a>
     </nav>
 
@@ -53,7 +80,7 @@ try {
   </div>
 
   <div class="footer-meta">
-    <p> · &copy; {year} Schlaumeise · </p>
+    <p> · &copy; {year} {brandName} · </p>
   </div>
 </footer>
 
