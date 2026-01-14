@@ -331,7 +331,19 @@ const itemsWithState = navItems.map((item) => {
     }
   }
 
-  @media (max-width: 64rem) {
+  @media (max-width: 30rem) {
+    .global-header__logo {
+      display: none;
+    }
+  }
+    @media (max-width: 30rem) {
+    .global-header__controls {
+      display: none;
+    }
+  }
+  
+
+  @media (max-width: 50rem) {
     .global-header__inner {
       flex-wrap: wrap;
       gap: 0.5rem;
@@ -395,17 +407,20 @@ const itemsWithState = navItems.map((item) => {
     }
   }
 
-  @media (max-width: 50rem) {
+  @media (max-width: 61rem) {
     .global-nav__list > li:first-child {
       display: none;
     }
 
-    .global-nav__list {
-      gap: 0.25rem;
-    }
-
     .global-nav__list > li:nth-child(5) {
       display: none;
+    }
+
+  }
+  @media (max-width: 50rem) {
+
+    .global-nav__list {
+      gap: 0.25rem;
     }
 
     .global-header__actions {
