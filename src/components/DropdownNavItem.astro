@@ -1,0 +1,223 @@
+---
+/**
+ * DropdownNavItem.astro
+ * Minimal, framework-free dropdown toggle for a navbar.
+ *
+ * Usage:
+ * <DropdownNavItem label="Resources">
+ *   <a href="/documentation/">Documentation</a>
+ *   <a href="/blog/">Blog</a>
+ * </DropdownNavItem>
+ *
+ * You can also pass custom markup as children (e.g. list items).
+ */
+
+const {
+  label = "Resources",
+  buttonId = `dropdown-btn-${Math.random().toString(36).slice(2)}`,
+  menuId = `dropdown-menu-${Math.random().toString(36).slice(2)}`,
+} = Astro.props;
+---
+
+<div class="dropdown" data-dropdown>
+  <div
+    id={buttonId}
+    class="dropdown__button"
+    tabindex="0"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls={menuId}
+    data-dropdown-button
+  >
+    <span class="global-nav__link global-nav__link_text">{label}
+
+    <!-- Arrow icon; rotates when open -->
+    <span class="dropdown__arrow" aria-hidden="true" data-dropdown-arrow>
+      <svg
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 18"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span></span>
+  </div>
+
+  <!-- Submenu (positioned under button) -->
+  <div
+    id={menuId}
+    class="dropdown__menu"
+    role="menu"
+    aria-labelledby={buttonId}
+    hidden
+    data-dropdown-menu
+  >
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Minimal functional styling only (positioning + arrow rotation + basic menu behavior). */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown__menu {
+    position: absolute;
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+    top: 100%;
+
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+
+    background-color: var(--sl-color-black);
+    border-width: 1px;
+    border-color: var(--sl-color-gray-5);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(11, 5, 26, 0.175);
+    
+    /* keep it on top of other nav items */
+    z-index: 1000;
+  }
+
+  .dropdown__menu[hidden] {
+    display: none;
+  }
+
+  .dropdown__arrow {
+    display: inline-flex;
+
+    transform: rotate(0deg);
+    transition: transform 150ms linear;
+    transform-origin: 50% calc(50% + 2px);
+  }
+
+  .dropdown[data-open="true"] .dropdown__arrow {
+    transform: rotate(90deg);
+  }
+
+  .dropdown__button{
+    display:inline;
+    align-items: baseline;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    color: var(--sl-color-text);
+  }
+
+  /* Achtung das ist aus docHeader kopiert muss noch angepasst werden */
+  .global-nav__link_text{
+
+      
+  }
+
+    .global-nav__link {
+      display:inline;
+      padding: 0.38rem 0.8rem;
+      border-radius: 999px;
+
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      
+      /* color: var(--sl-color-gray-1);
+      transition:
+        color 150ms ease,
+        background 150ms ease;  */
+    }
+
+  .global-nav__link:hover,
+  .global-nav__link:focus-visible {
+    color: var(--sl-color-white);
+    background: color-mix(in srgb, var(--sl-color-accent), transparent 70%);
+  }
+
+  .global-nav__link.is-active {
+    color: var(--sl-color-white);
+    background: var(--sl-color-accent-low);
+  }
+</style>
+
+<script is:inline>
+  // Framework-free dropdown logic.
+  // Works for multiple dropdowns on the same page.
+  (() => {
+    const dropdowns = document.querySelectorAll("[data-dropdown]");
+
+    function closeAll(except = null) {
+      dropdowns.forEach((root) => {
+        if (except && root === except) return;
+        setOpen(root, false);
+      });
+    }
+
+    function setOpen(root, open) {
+      const button = root.querySelector("[data-dropdown-button]");
+      const menu = root.querySelector("[data-dropdown-menu]");
+
+      root.dataset.open = open ? "true" : "false";
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+      menu.hidden = !open;
+    }
+
+    dropdowns.forEach((root) => {
+      const button = root.querySelector("[data-dropdown-button]");
+      const menu = root.querySelector("[data-dropdown-menu]");
+
+      // Safety: ensure initial state
+      setOpen(root, false);
+
+      // Toggle on button click
+      button.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = root.dataset.open === "true";
+        closeAll(root);
+        setOpen(root, !isOpen);
+      });
+
+      // Keyboard: Enter/Space toggles when using role="button"
+      button.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          button.click();
+        }
+      });
+
+      // Close when clicking inside menu links/buttons (optional, common nav behavior)
+      menu.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target && target.closest && target.closest("a, button")) {
+          setOpen(root, false);
+        }
+      });
+
+      // Keyboard: Escape closes and returns focus to button
+      root.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          setOpen(root, false);
+          button.focus();
+        }
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener("click", () => closeAll());
+
+    // Close when focus moves outside (helps keyboard users)
+    document.addEventListener("focusin", (e) => {
+      const active = e.target;
+      const withinAny = Array.from(dropdowns).some((d) => d.contains(active));
+      if (!withinAny) closeAll();
+    });
+  })();
+</script>
