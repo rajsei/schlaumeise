@@ -1,7 +1,6 @@
 ---
 title: KI-gestützte Bioakustik
 description: Tiere erkennen mit KI.
-next: false
 sidebar:
   order: 7
 ---

@@ -1,0 +1,295 @@
+---
+title: Audio samples
+description: What can you hear here?
+next: false
+sidebar:
+  order: 8
+---
+import RevealImage from "../../../../components/RevealImage.astro";
+
+import bluejayImage from "../../../../assets/birds/bluejay.jpg";
+import chipmunkImage from "../../../../assets/birds/chipmunk.jpg";
+import lyrebirdImage from "../../../../assets/birds/lyrebird.jpg";
+import mockingbirdImage from "../../../../assets/birds/mockingbird.jpg";
+
+import HighlightSection from "../../../../components/HighlightSection.astro";
+import weidengelbkehlchenLied from "../../../../assets/audio/WeidengelbkehlchenLied.wav";
+import weidengelbkehlchenRuf from "../../../../assets/audio/WeidengelbkehlchenRuf.wav";
+
+import WeißkehlammerÜbungslied from "../../../../assets/audio/WeißkehlammerÜbungslied.wav";
+import WeißkehlammerErwachsenenlied from "../../../../assets/audio/WeißkehlammerErwachsenenlied.wav";
+
+import DachsammerDialekt1 from "../../../../assets/audio/DachsammerDialekt1.wav";
+import DachsammerDialekt2 from "../../../../assets/audio/DachsammerDialekt2.wav";
+
+import Dunenspecht from "../../../../assets/audio/Dunenspecht.wav";
+import Haarspecht from "../../../../assets/audio/Haarspecht.wav";
+import Blauhaeher from "../../../../assets/audio/Blauhaeher.mp3";
+import Spottdrossel from "../../../../assets/audio/Spottdrossel.mp3";
+import Leierschwanz from "../../../../assets/audio/Leierschwanz.wav";
+import Streifenhoernchen from "../../../../assets/audio/Streifenhoernchen.mp3";
+
+
+
+## How do birds communicate with each other?
+
+Birds use their voices to communicate with each other. 
+Different sounds fulfill different social functions—similar to language in humans. 
+There are two main types of sounds:
+
+### 1. Songs
+
+What are songs?
+
+Songs are longer, melodic, and often complex sequences of sounds. They are mainly performed by males, especially during the breeding season.
+
+What are songs used for?
+
+Songs have several important functions:
+
+*Territory marking:*
+The bird shows: “This area belongs to me!” – this keeps other males away.
+
+*Attracting females:*
+A beautiful or varied song can increase the chances of finding a mate.
+
+*Species recognition:*
+Each bird species has its own distinctive song. This is how birds find mates of the same species.
+
+**Songs are primarily used to find mates and defend their territory.**
+
+<HighlightSection
+  title="How does the song of a common yellowthroat sound?"
+  color="blue">
+  <div slot="body">
+    <p>The common yellowthroat (Geothlypis trichas) is a songbird from the wood-warbler family, whose males can be recognized by their black facial mask with yellow throat area, while the females lack this mask. </p>
+  </div>
+  <br />
+    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenLied}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+
+
+### 2. Calls
+
+What are calls?
+
+Calls are short, simple sounds that are often repeated several times in succession. They are used by both males and females throughout the year.
+
+What are the functions of calls?
+
+Calls are particularly important in everyday life:
+
+*Contact and social calls:* 
+Help to keep groups together – for example, families or migratory birds.
+
+*Warning calls:* 
+Alert others to dangers, such as birds of prey or cats.
+
+*Aggression or threat calls:* 
+Used in disputes, such as when two birds get too close to each other.
+
+**Calls help birds stay in contact and react quickly to danger.**
+
+<HighlightSection
+    title="How does the call of a common yellowthroat sound?"
+    color="blue">
+    <br />
+    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenRuf}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## Singing must be learned
+Many real songbirds are not born with their full song, but must first learn it—similar to how children learn to speak. 
+They listen to adult birds of the same species and practice until their own song sounds right.
+
+<HighlightSection
+  title="How does the song of a white-throated sparrow differ, depending on whether it is a juvenile or an adult?"
+  color="green">
+  <div>
+    <p>This is how a juvenile bird sings:</p>
+  </div>
+  <br />
+    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerÜbungslied}>
+        Your browser does not support the audio element.
+    </audio>
+      <div>
+    <p>This is how an adult bird sings:</p>
+  </div>
+  <br />
+    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerErwachsenenlied}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## “Dialects” in bird songs
+
+Bird songs can change depending on the region and over time—similar to dialects among humans. 
+If you record the songs of adult birds of the same species in two different locations, they often sound slightly different, even though they have the same basic pattern.
+
+<HighlightSection
+  title="How does the song of a white-crowned sparrow vary across different regions?"
+  color="purple">
+  <div>
+    <p>This is how two individuals in different locations sound:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt1}>
+        Your browser does not support the audio element.
+    </audio>
+      <div>
+
+  </div>
+  <br />
+    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt2}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## More than singing
+
+Birds don't just use their voices to communicate with each other. 
+Can you guess which bird is heard particularly often without actually singing?
+
+It's the woodpecker! 
+
+When a woodpecker taps its beak on a tree, it creates a loud drum sound. 
+It often chooses hollow tree trunks because they amplify the sound. 
+This drumming serves primarily to mark its territory and attract females – much like the song of songbirds.
+They also use pecking when searching for food, but when they search for insects as prey in tree trunks and branches, their pecking is usually quieter.
+
+Each species of woodpecker has its own “rhythm”: 
+the length, tempo, number of beats, and pauses between beats differ, making the species recognizable to trained ears.
+
+<HighlightSection
+  title="How does the sound of drumming differ between different woodpecker species?"
+  color="red">
+  <div>
+    <p>This is what a downy woodpecker sounds like:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Dunenspecht}>
+        Your browser does not support the audio element.
+    </audio>
+    <div>
+        <p>This is what a hairy woodpecker sounds like:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Haarspecht}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## Mysterious birds—what's chirping here?
+
+Let's listen to some bird calls together and see what kind of birds they are!
+
+<HighlightSection
+  title="Which bird is that?"
+  color="green">
+    <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Blauhaeher}>
+        Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={bluejayImage.src}
+      alt="Blue Jay"
+      overlayText="Blue Jay"
+      revealLabel="Solution"
+      >
+      <p>
+        It's a blue jay! The blue jay originates from North America and is considered a particularly intelligent bird. 
+        It belongs to the corvid family, which is known for its high learning ability.
+
+        Blue jays are sometimes referred to as the “police of the forest” because they warn other animals of danger with loud calls. At the same time, they also use their cunning to their advantage: 
+        they can mimic the calls of birds of prey to drive other birds away from their territory or keep them away from feeding grounds.
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="And the next bird?"
+  color="blue">
+    <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Spottdrossel}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={mockingbirdImage.src}
+      alt="Mockingbird"
+      overlayText="Mockingbird"
+      revealLabel="Solution"
+      >
+      <p>
+      It's a blue jay? No – it's a mockingbird!
+
+      Even though the beginning of the song sounds like a blue jay, this is actually a mockingbird. 
+      This North American songbird is famous for imitating the voices of other birds.
+
+      The mockingbird sings long, loud, and very complex songs, imitating not only other bird species, but also sounds from its environment—
+      for example, frogs, crickets, cats, or even artificial sounds such as squealing wheels or car alarms. 
+      To us humans, these imitations often sound deceptively real, but not every bird is fooled by them.
+
+      The mockingbird is also considered fearless and assertive: 
+      it vigorously defends its breeding and wintering grounds and sometimes calls on other birds of its species for help when danger threatens, so that together they can drive away larger predators.
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="And what can you hear here?"
+  color="purple">
+    <br />
+    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Leierschwanz}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={lyrebirdImage.src}
+      alt="Lyrebird"
+      overlayText="Lyrebird"
+      revealLabel="Solution"
+      >
+      <p>
+      It's getting crazier and crazier! 
+
+      The lyrebird is a very special bird from Australia. Its vocal organ (known as the syrinx) is one of the most highly developed among songbirds. 
+      This enables it to imitate an astonishing variety of sounds from its environment—from other bird species to environmental and everyday noises.
+
+      Lyrebirds are very shy. Often, the only way to notice their presence is when many different bird songs seem to be coming from the same place.
+      
+      Could you hear what it was imitating? 
+      The lyrebird often imitates chainsaws, camera shutters, car horns, and even human voices!
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="Who could that be?"
+  color="red">
+    <br />
+    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Streifenhoernchen}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={chipmunkImage.src}
+      alt="Chipmunk"
+      overlayText="Chipmunk"
+      revealLabel="Solution"
+      >
+      <p>
+      That's not a bird at all. It's not just birds that make sounds that can sound like bird calls—
+      other animals surprise us with them too.
+      A good example is the chipmunk.
+
+      The English name comes from the loud “chip” call that these animals often make, in addition to a trilling sound. 
+      That's why their noises can sometimes be easily confused with bird calls.
+      </p>
+    </RevealImage>
+    
+</HighlightSection>
+
+
+

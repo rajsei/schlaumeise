@@ -6,40 +6,67 @@ import arrow1 from '../assets/arrows/1.svg';
  * Props:
  * - title: string (section heading)
  * - text: string (Markdown-compatible text)
- * - color?: 'yellow' | 'blue' | 'green'
+ * - color?: 'red' | 'blue' | 'green' | 'purple'
  */
 
 interface Props {
-  title: string
-  text: string
-  color?: 'yellow' | 'blue' | 'green'
+  title?: string
+  text?: string
+  color?: 'red' | 'blue' | 'green' | 'purple'
 }
 
-const { title, text, color = 'yellow' } = Astro.props as Props;
+const { title, text, color = 'red' } = Astro.props as Props;
+const hasDefaultSlot = Astro.slots.has("default");
+const hasHeaderSlot = Astro.slots.has("header");
+const hasBodySlot = Astro.slots.has("body");
+const hasFooterSlot = Astro.slots.has("footer");
 
 // Convert inline Markdown to HTML safely for display
-const html = marked.parseInline(text)
+const html = text ? marked.parseInline(text) : ""
 
 const bgColor =
   color === 'blue'
-    ? 'bg-blue-100'
+    ? 'bg-blue'
     : color === 'green'
-    ? 'bg-green-100'
-    : 'bg-yellow-100'
+    ? 'bg-green'
+    : color === 'purple'
+    ? 'bg-purple'
+    : 'bg-red'
 ---
 
 <div class={`pastel-box ${bgColor}`}>
   <img src={arrow1.src} class="arrow" alt="" />
-  <h3 class="title">{title}</h3>
-  <p class="content" set:html={html} />
+  <div class="content-stack">
+    {hasDefaultSlot || hasHeaderSlot || hasBodySlot || hasFooterSlot ? (
+      <>
+        {(hasHeaderSlot || title) && (
+          <div class="slot-header">
+            {hasHeaderSlot ? <slot name="header" /> : <h3 class="title">{title}</h3>}
+          </div>
+        )}
+        {(hasBodySlot || text) && (
+          <div class="slot-body">
+            {hasBodySlot ? <slot name="body" /> : <p class="content" set:html={html} />}
+          </div>
+        )}
+        {hasDefaultSlot && <div class="slot-default"><slot /></div>}
+        {hasFooterSlot && <div class="slot-footer"><slot name="footer" /></div>}
+      </>
+    ) : (
+      <>
+        <h3 class="title">{title}</h3>
+        <p class="content" set:html={html} />
+      </>
+    )}
+  </div>
 </div>
 
 <style>
   .pastel-box {
     padding: 1rem 1.25rem;
-    border-radius: 0.1rem;
+    border-radius: 0.15rem;
     /* subtle elevation */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--global-shadow);
     transition: background 0.3s ease;
     position: relative;
     justify-content: space-between; /* text left, icon to the right */
@@ -47,11 +74,15 @@ const bgColor =
     margin-right: 3rem;
   }
 
+  .content-stack > * + * {
+    margin-top: 0.5rem;
+  }
+
   .title {
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #2d2d2d;
+    color: var(--sl-color-white);
     font-size: 1.1rem;
   }
 
@@ -66,19 +97,20 @@ const bgColor =
 
   .content {
     margin: 0;
-    color: #333;
+    color: var(--sl-color-white);
     line-height: 1.5;
     font-size: 0.95rem;
   }
 
-  /* Hover effects */
-  .bg-yellow-100:hover { background-color: #fff4b5; }
+  /* Hover effects 
+  .bg-red-100:hover { background-color: #fff4b5; }
   .bg-blue-100:hover   { background-color: #d9ecff; }
-  .bg-green-100:hover  { background-color: #e0f8d8; }
+  .bg-green-100:hover  { background-color: #e0f8d8; }*/
 
   /* Pastel background variants */
-  .bg-yellow-100 { background-color: #fff9c4; }
-  .bg-blue-100   { background-color: #dbeafe; }
-  .bg-green-100  { background-color: #dcfce7; }
+  .bg-red    { background-color: var(--color-highlight-red) }
+  .bg-blue   { background-color: var(--color-highlight-blue) }
+  .bg-green  { background-color: var(--color-highlight-green) } 
+  .bg-purple { background-color: var(--color-highlight-purple) }
 </style>
 

@@ -1,7 +1,6 @@
 ---
 title: AI-supported bioacoustics
 description: Recognizing animals with AI.
-next: false
 sidebar:
   order: 7
 ---
