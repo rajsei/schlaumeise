@@ -203,6 +203,7 @@
   .quiz-button--primary {
     background: var(--sl-color-accent);
     border-color: var(--sl-color-accent);
+    color: white;
   }
 
   .quiz-button--primary:hover {

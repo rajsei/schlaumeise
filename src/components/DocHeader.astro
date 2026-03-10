@@ -111,7 +111,7 @@ const primaryNavItems = [
 ];
 
 const dropdownLabel = isEnglish ? "More" : "Mehr";
-const dropdownItems = [
+const dropdownContent = [
   { label: isEnglish ? "Projects" : "Projekte", slug: "projects" },
   { label: isEnglish ? "Knowledge Base" : "Wissenssammlung", slug: "knowledge_collection/biology" },
   { label: isEnglish ? "Quiz" : "Quiz", slug: "quiz" },
@@ -128,7 +128,7 @@ const mapNavItems = (items) =>
   });
 
 const primaryItemsWithState = mapNavItems(primaryNavItems);
-const dropdownItemsWithState = mapNavItems(dropdownItems);
+const dropdownItemsWithState = mapNavItems(dropdownContent);
 const tailItemsWithState = mapNavItems(tailNavItems);
 const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
 ---
@@ -147,7 +147,7 @@ const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
         <li>
           <a
             href={item.href}
-            class={["global-nav__link", item.isActive && "is-active"].filter(Boolean).join(" ")}
+            class={["button-nav", item.isActive && "is-active"].filter(Boolean).join(" ")}
             aria-current={item.isActive ? "page" : undefined}
           >
             {item.label}
@@ -157,15 +157,15 @@ const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
       <li class="dropdown__button_more">
         <DropdownNavItem
           label={dropdownLabel}
-          buttonClass="global-nav__link"
+          buttonClass="button-nav"
           isActive={dropdownIsActive}
         >
           {dropdownItemsWithState.map((item) => (
             <a
               href={item.href}
               class={[
-                "global-nav__link",
-                "dropdown__item",
+                "button-nav",
+                "dropdown-item",
                 item.isActive && "is-active",
               ]
                 .filter(Boolean)
@@ -182,7 +182,7 @@ const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
         <li>
           <a
             href={item.href}
-            class={["global-nav__link", item.isActive && "is-active"].filter(Boolean).join(" ")}
+            class={["button-nav", item.isActive && "is-active"].filter(Boolean).join(" ")}
             aria-current={item.isActive ? "page" : undefined}
           >
             {item.label}
@@ -354,8 +354,10 @@ const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
     flex-wrap: wrap;
   }
 
-  .global-nav__link {
-    display:inline;
+  :global(.button-nav) {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
     padding: 0.38rem 0.8rem;
     border-radius: 999px;
 
@@ -369,13 +371,13 @@ const dropdownIsActive = dropdownItemsWithState.some((item) => item.isActive);
       background 150ms ease; 
   }
 
-  .global-nav__link:hover,
-  .global-nav__link:focus-visible {
+  :global(.button-nav:hover),
+  :global(.button-nav:focus-visible) {
     color: var(--sl-color-white);
     background: color-mix(in srgb, var(--sl-color-accent), transparent 70%);
   }
 
-  .global-nav__link.is-active {
+  :global(.button-nav.is-active) {
     color: var(--sl-color-white);
     background: var(--sl-color-accent-low);
   }
