@@ -1,0 +1,286 @@
+---
+title: Setting up the Raspberry Pi
+description: ...
+sidebar:
+  order: 2
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+import { Accordion, AccordionItem } from "free-astro-components";
+
+## Starting Point
+
+The Raspberry Pi OS has already been installed on the SD card.
+
+Typically, this is done using the Raspberry Pi Imager, which allows configuration of settings such as Wi-Fi credentials, hostname, and passwords during the setup process.
+
+In our case, these steps have already been completed for you, so the system is ready to use.
+
+
+## Instructions
+
+<Steps>
+  1. **Insert the SD card into the Raspberry Pi** and **connect the Raspberry Pi to the power supply** using the power adapter.
+   An LED on the Raspberry Pi should light up or flash. It is best to wait a few minutes for it to boot up.
+
+  2. Ensure that the computer is connected to the Wi-Fi network.
+
+  3. Open the console.
+</Steps>
+
+<div class="step-code">
+  <LinkCard
+    title="More information about the console"
+    href="../../glossary/console/"
+    description="Instructions for opening and operating the console."
+  />
+</div>
+
+<Steps>
+  4. Connect to the Pi using the following command. **Replace 'user' and 'hostname'** with those of your Raspberry Pi.
+</Steps>
+
+<div class="step-code">
+
+```sh
+ssh user@hostname.local
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="PS C:\Users\Name> ssh user@hostname.local 
+  The authenticity of host 'hostname.local (2a02:4454:c122:2000:15gc:24b7:f06a:f322)' can't be established. 
+  ED25519 key fingerprint is SHA256:kfRttaVIh+Z/FbSq9g6adalVfIsgvUtk4o. 
+  This key is not known by any other names. 
+  Are you sure you want to continue connecting (yes/no/[fingerprint])?"
+/>
+
+<Aside type="caution" title="Troubleshooting"> 
+  <Accordion>
+    <AccordionItem title="What if no connection can be established? (The specified host is unknown.)">
+
+      If the following message appears:
+      <Code
+      lang="plaintext" title="Terminal" class="terminal-code"
+      code="PS C:\Users\Name> ssh user@hostname.local
+      ssh: Could not resolve hostname hostname.local: The specified host is unknown."
+      />
+      this means that no connection can be established to your Raspberry Pi.
+
+      Check the following points:
+      <Steps>
+        1. Power supply: Make sure that the Raspberry Pi is turned on, the SD card is inserted correctly,
+        and the status LEDs are flashing or lit.
+        2. Network: Make sure that your PC and Raspberry Pi are on the same network—i.e., connected to the same Wi-Fi or hotspot.
+        (Make sure that the Wi-Fi data in the Raspberry Pi OS matches your current Wi-Fi.)
+        3. Reinstallation: If the connection still fails, reinstall Raspberry Pi OS on the SD card
+        and carefully re-enter the Wi-Fi access data.
+        4. Direct connection: Experienced users can connect a keyboard and screen directly to the Raspberry Pi
+        to manually check the connection and network settings.
+      </Steps>
+    </AccordionItem>
+    <AccordionItem title="What if ‘WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!’ is displayed?">
+
+      Don't worry—this is normal if you have previously connected to a
+      Raspberry Pi with the same name via SSH. Here's how to fix the problem:
+
+      <Steps>
+        1. Open the file: C:\Users\username\\.ssh\known_hosts (the exact path is also in the warning) with a text editor.
+
+        2. Find all lines that start with hostname.local and delete them.
+        There may be several entries spanning multiple lines.
+
+        3. If you have never used SSH for other connections, you can also delete the entire contents of the file. 4. Save the file, close the editor, and then try the connection again.
+
+     </Steps>
+
+   </AccordionItem>
+
+  </Accordion>
+</Aside>
+</div>
+
+<Steps>
+  5. Confirm the connection.
+</Steps>
+
+<div class="step-code">
+
+```sh
+yes
+```
+
+{" "}
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+  Warning: Permanently added 'hostname.local' (ED25529) to the list of known hosts.
+  Connection closed by 2a02:4454:c122:2000:15gc:24b7:f06a:f322 port 23
+  user@hostname.local's password:"
+/>
+
+</div>
+
+<Steps>
+
+  6. A **password prompt** should then appear.
+   Enter the password. Note that the password will **remain invisible** as you type it.
+   If you are no longer prompted to enter a password, restart the process by entering the command from step 4.
+
+</Steps>
+
+<div class="step-code">
+
+  <Code lang='plaintext' title='Terminal'  class="terminal-code" 
+  code="user@hostname.local's password:
+  Linux birdnetpi 6.12.47+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.12.47-1+rpt1~bookworm (2025-09-01) aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/\*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Oct 01 00:00:00 2025 from 2a02:4454:c122:2000:15gc:24b7:f06a:f322" />
+
+</div>
+<Steps>
+
+7. These steps are only for the Raspberry Pi Zero 2 W, wich we are working with.
+  
+
+</Steps>
+<div class="step-code">
+Due to its limited RAM (512 MB) of the Raspberry Pi Zero 2 W, the installation of BirdNET-Pi will fail without increasing the swap size.
+  Increasing swap allows part of the SD card to be used as additional virtual memory.
+  In addition, the Wi-Fi power options must be adjusted for later use of the BirdNET-Pi.
+```sh
+sudo sed -i 's/CONF_SWAPSIZE=512/CONF_SWAPSIZE=2048/g' /etc/dphys-swapfile &&
+sudo sed -i 's/#CONF_MAXSWAP=2048/CONF_MAXSWAP=4096/g' /etc/dphys-swapfile
+```
+
+<Aside type="caution" title="Verify changes"> 
+<Accordion>
+  <AccordionItem title="Check the ‘swap size’.">
+
+    To ensure that the changes have actually been applied, you can open the appropriate file with the following command.
+
+    ```sh
+    sudo nano /etc/dphys-swapfile
+    ```
+    It is important that the lines `CONF_SWAPSIZE=2048` and `CONF_MAXSWAP=4096` are correct. If not, adjust the numbers.
+
+    <Code lang='plaintext' title='Terminal'  class="terminal-code" mark={[16,30]}
+    code="  GNU nano 7.2                  /etc/dphys-swapfile                           # /etc/dphys-swapfile - user settings for dphys-swapfile package
+    # author Neil Franklin, last modification 2010.05.05
+    # copyright ETH Zuerich Physics Departement
+    #   use under either modified/non-advertising BSD or GPL license
+
+    # this file is sourced with . so full normal sh syntax applies
+
+    # the default settings are added as commented out CONF\__=_ lines
+
+    # where we want the swapfile to be, this is the default
+
+    #CONF_SWAPFILE=/var/swap
+
+    # set size to absolute value, leaving empty (default) then uses computed value# you most likely don't want this, unless you have an special disk situation
+
+    CONF_SWAPSIZE=2048
+
+    # set size to computed value, this times RAM size, dynamically adapts,
+
+    # guarantees that there is enough swap without wasting disk space on excess
+
+    #CONF_SWAPFACTOR=2
+
+    # restrict size (computed and absolute!) to maximally this limit
+
+    # can be set to empty for no limit, but beware of filled partitions!
+
+    # this is/was a (outdated?) 32bit kernel limit (in MBytes), do not overrun ># but is also sensible on 64bit to prevent filling /var or even / partition
+
+    CONF_MAXSWAP=4096
+    [ Read 26 lines ]
+    ^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute
+    ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify" />
+
+    Press <Kbd windows="Ctrl+s" /> and then <Kbd windows="Ctrl+x" /> to **save and close** the file.
+
+  </AccordionItem>
+</Accordion>
+</Aside>
+
+</div>
+
+<Steps>
+  8. To adjust the **Wi-Fi power options**, open the corresponding file using the following command.
+</Steps>
+
+<div class="step-code">
+  ```sh
+  sudo nano /etc/rc.local
+  ```
+
+  <Code lang='plaintext' title='Terminal'  class="terminal-code" mark={2}
+  code="  GNU nano 7.2                     /etc/rc.local
+
+      [ New File ]
+  ^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+  ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify" />
+</div>
+
+<Steps>
+  9. Insert the following content:
+</Steps>
+
+<div class="step-code">
+  ```sh
+  #!/bin/bash
+  sudo iw wlan0 set power_save off
+  exit 0
+  ```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[2,3,4]}
+  code="  GNU nano 7.2                     /etc/rc.local
+  #!/bin/bash
+  sudo iw wlan0 set power_save off
+  exit 0
+        [ New File ]
+  ^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+  ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify"
+  />
+</div>
+
+<Steps>
+10. Press <Kbd windows="Ctrl+s" /> and then <Kbd windows="Ctrl+x" /> to **save and close** the file.
+
+11. Now we will edit the **Wi-Fi** and **hotspot settings**, so navigate to **“Change the Wi-Fi settings”**.  
+(Alternatively, you can **reboot the system** and skip to **“Installing BirdNET-Pi”**. 
+You can still **change the Wi-Fi settings later**.)
+</Steps>
+
+<div class="step-code">
+```sh
+sudo reboot
+```
+</div>
+
+
+
+
+

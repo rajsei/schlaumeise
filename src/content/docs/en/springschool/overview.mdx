@@ -1,0 +1,40 @@
+---
+title: Let’s Create a BirdNET-Pi!
+description: “This is a workshop for the Spring School 2026.”
+sidebar:
+  order: 1
+---
+
+Welcome to our **BirdNET-Pi workshop**. In this workshop, we will guide you step by step through the process of setting up your own **BirdNET-Pi**.
+
+This is a fun and educational project that allows you to **automatically monitor and identify birds** singing in your **backyard, garden, or balcony**.  
+By the end of the workshop, you will have a fully working system that can record bird sounds, analyze them locally, and display detected species through a web interface.
+
+## What is BirdNET-Pi?
+
+**BirdNET-Pi** is a **lightweight, open-source system** that brings AI-based bird sound recognition to **small, affordable hardware** such as a **Raspberry Pi**.  
+It enables continuous acoustic monitoring by automatically detecting and identifying bird species from audio recordings.
+
+At its core, BirdNET-Pi runs a **machine learning model locally on the device**, meaning all audio processing and species classification happen directly on the Raspberry Pi.  
+A key advantage of BirdNET-Pi is that no internet connection is required. The system works **fully offline**.
+
+Although BirdNET-Pi continuously analyzes audio, it is **not strictly real-time**.  
+Audio is processed in **segments (e.g., 6–60 seconds)** and analyzed **sequentially**, which introduces a **short delay** between recording and detection.  
+This behavior is configurable, allowing users to adjust recording length and processing intervals to balance speed and performance.
+
+All results and system information are available through a **web-based interface**, where users can:
+
+- View **detected species** and **timestamps**
+- Access **spectrograms** and **audio snippets**
+- Monitor **system status**
+- Adjust **settings and parameters**
+
+BirdNET-Pi is a **community-driven, open-source project** available on **GitHub**, enabling researchers, educators, and developers to use, modify, and extend the system.
+Are you interrested in the project? Check out the [GitHub repository](https://github.com/Nachtzuster/BirdNET-Pi/blob/main/README.md).
+
+To address privacy concerns, BirdNET-Pi includes human detection, which helps filter recordings containing human voices.
+
+
+
+
+

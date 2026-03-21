@@ -1,0 +1,536 @@
+---
+title: Change the Wi-Fi settings
+description: ...
+sidebar:
+  order: 3
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+
+
+The following instructions explain how to add your **home Wi-Fi** and configure a **fallback hotspot on your BirdNET-Pi**. 
+This ensures that the system can be accessed both within your local network and in the field.
+
+When the BirdNET-Pi is within range of a configured Wi-Fi network (e.g., your home network), it will automatically connect to it. 
+If no known network is available, the device will switch to hotspot mode and create its own network. 
+This hotspot does not provide internet access but allows direct connection to the Raspberry Pi.
+
+## Instructions (Network Manager)
+
+<Steps>
+  0. If you are no longer connected via SSH, reconnect and enter your password. 
+  **Replace 'user' and 'hostname'** with those of your Raspberry Pi.
+</Steps>
+
+<div class="step-code">
+
+```sh
+ssh user@hostname.local
+```
+
+</div>
+
+<Steps>
+  1. First, we need to open the Network Manager:
+</Steps>
+
+<div class="step-code">
+
+```sh
+sudo nmtui
+```
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+
+<Steps>
+  2. In Network Manager, you can move the selected item using the <Kbd windows="arrow-keys+←"/><Kbd windows="↑"/><Kbd windows="→"/><Kbd windows="↓"/> and confirm with <Kbd windows="Enter+↵" />.
+
+  3. Select `Edit a connection`.
+</Steps>
+
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
+
+</div>
+<Steps>
+
+4. Select `Add`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui02.jpg)
+
+</div>
+<Steps>
+
+5. Select `Wi-Fi` as the connection type.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui03.jpg)
+
+</div>
+<Steps>
+
+6. Select `Create`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui04.jpg)
+
+</div>
+<Steps>
+7. Now you need to add your **network configuration**. Let us start with the **hotspot settings**.
+</Steps>
+<div class="step-code">
+- **Profile Name:** Used for identification only. It is recommended to use the name `Hotspot`, otherwise make sure to **replace `Hotspot` with your chosen name** in the following commands.
+- **Device:** Write `wlan0`. This is the name of the Wi-Fi interface on the Raspberry Pi.  
+- **SSID:** This is the **name of the Wi-Fi network** that will be created. You can choose it freely. 
+Since there are many Raspberry Pis in the workshop, make it **unique** so you can easily identify your device. 
+Make sure to **remember it**.
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
+
+</div>
+<Steps>
+
+8. Select `Access Point` for `Mode`. (`Client` is for adding a Wifi network, which we will do later.)
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui06.jpg)
+
+</div>
+<Steps>
+
+9. Select `B/G (2.4 GHz)` for `Channel`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui08.jpg)
+
+</div>
+<Steps>
+
+10. Under `Security`, select `WPA & WPA2 Personal`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui09.jpg)
+
+</div>
+<Steps>
+
+11. Under `Password`, enter a password for the hotspot. **Remember it!**
+    This password will be required to connect to the hotspot later.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
+
+</div>
+<Steps>
+
+12. Configure the **IP settings** as follows:
+
+</Steps>
+<div class="step-code">
+- IPv4 Configuration: `Shared`
+- IPv6 Configuration: `Disabled`
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui20.png)
+
+</div>
+<Steps>
+
+13. Select `OK` at the bottom.
+14. Optional: Add your home Wi-Fi network by repeating steps 4 to 12.
+
+</Steps>
+<div class="step-code">
+
+In this case, enter the credentials of your home network:
+
+- **Profile Name:** Used for identification only. It is recommended to use the name `Home`, otherwise make sure to **replace `Home` with your chosen name** in the following commands.
+- **Device**: `wlan0`
+- **SSID**: Name of your home Wi-Fi network
+- **Mode**: Client (leave as default)
+- **Security**: `WPA & WPA2 Personal`
+- **Password**: Password of your home Wi-Fi network
+- **IPv4 Configuration**: `Automatic` (leave as default)
+- **IPv6 Configuration**: `Automatic` (leave as default)
+
+This allows the BirdNET-Pi to automatically connect to your home Wi-Fi when it is available.
+
+</div>
+
+<Steps>
+
+15. Select `Back`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui11.jpg)
+
+</div>
+<Steps>
+
+16. Select `Quit`.
+
+</Steps>
+<div class="step-code">
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui12.jpg)
+
+</div>
+
+## Instructions (Set connection priorities)
+
+<Steps>
+17. Now we will set the **connection priorities** for the Wi-Fi and hotspot connections.
+    This means that the Raspberry Pi will first attempt to connect to the known Wi-Fi network.
+    Only if no connection is possible will it automatically create its own hotspot so that a
+    connection to the device can still be established.
+    First, we need to navigate to the correct folder using the `cd` command.
+</Steps>
+<div class="step-code">
+
+```
+cd /etc/NetworkManager/system-connections
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="birder@birdnetpi:~ $ cd /etc/NetworkManager/system-connections
+  birder@birdnetpi:/etc/NetworkManager/system-connections $"
+/>
+
+</div>
+<Steps>
+
+18. Let's open the file for the **hotspot** connection. 
+(If you did coose another profile name for the hotspot, replace `Hotspot` with your chosen name in the following commands.)
+
+</Steps>
+<div class="step-code">
+
+```
+sudo nano Hotspot.nmconnection
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="  GNU nano 7.2                     Hotspot.nmconnection                               [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Here is your password for the hotspot
+
+[ipv4]
+method=shared
+
+[ipv6]
+addr-gen-mode=default
+method=disabled
+
+[proxy]
+
+                                  [ Read 23 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+19. Insert the following code snippet into the first part of the file.
+    The entry `autoconnect=true` activates automatic connection establishment.
+    The value `autoconnect-priority=0` sets the priority of the network.
+    The higher the number, the more preferred this network is when connecting automatically.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=0
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  code="  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
+id=Hotspot
+uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
+type=wifi
+interface-name=wlan0
+
+autoconnect=true
+autoconnect-priority=0
+
+[wifi]
+band=bg
+mode=ap
+ssid=BirdNET Pi Hotspot
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=Here is your password
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+20. Press <Kbd windows="Ctrl+s" /> and then <Kbd windows="Ctrl+x" /> to **save and close** the file.
+21. Now let's open the file for the **preconfigured Wi-Fi** connection. (This is the workshop Wi-Fi.)
+
+</Steps>
+<div class="step-code">
+
+```
+sudo nano preconfigured.nmconnection
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code='  GNU nano 7.2              preconfigured.nmconnection                  [connection]
+id=preconfigured
+uuid=fh6c02n6-5th7-4911-9g5c-d356zh245
+type=wifi
+timestamp=27604593
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9ed4tg67fd672c6876d1ec9e1g885a61f4th322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Read 23 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line'
+/>
+
+</div>
+<Steps>
+
+22. Insert the following code snippet into the first part of the file.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=10
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  mark={['autoconnect=true', 'autoconnect-priority=10']}
+  code="  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
+id=preconfigured
+uuid=fh6c02n6-j705-4911-9g5c-d36127245
+type=wifi
+timestamp=27604593
+
+autoconnect=true
+autoconnect-priority=10
+
+[wifi]
+mode=infrastructure
+ssid=Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Wrote 27 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+23. Press <Kbd windows="Ctrl+s" /> and then <Kbd windows="Ctrl+x" /> to **save and close** the file.
+24. **Optional:** If you did configure your **home Wi-Fi** network, open the file for the 'Home' Wi-Fi connection. If you didn't, skip to the last step.
+
+
+
+</Steps>
+<div class="step-code">
+(If you did coose another profile name for the Wi-Fi network, replace `Home` with your chosen name in the following command.)
+
+```
+sudo nano Home.nmconnection
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code='  GNU nano 7.2              Home.nmconnection                  [connection]
+id=Home
+uuid=fh6c02n6-5th7-4911-9g5c-d356zh245
+type=wifi
+timestamp=27604593
+
+[wifi]
+mode=infrastructure
+ssid=Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9ed4tg67fd672c6876d1ec9e1g885a61f4th322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Read 23 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line'
+/>
+
+</div>
+<Steps>
+
+25. Insert the following code snippet into the first part of the file.
+
+</Steps>
+<div class="step-code">
+
+```
+autoconnect=true
+autoconnect-priority=9
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  ins={[7,8]}
+  mark={['autoconnect=true', 'autoconnect-priority=10']}
+  code="  GNU nano 7.2                  Home.nmconnection                            [connection]
+id=Home
+uuid=fh6c02n6-j705-4911-9g5c-d36127245
+type=wifi
+timestamp=27604593
+
+autoconnect=true
+autoconnect-priority=9
+
+[wifi]
+hidden=true
+mode=infrastructure
+ssid=Wlan_Name
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=4c9efd672c68947g4884e4f62744756d1ec9e1g885a61f322be
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+                                  [ Wrote 27 lines ]
+
+^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute ^C Location
+^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
+/>
+
+</div>
+<Steps>
+
+26. Press <Kbd windows="Ctrl+s" /> and then <Kbd windows="Ctrl+x" /> to **save and close** the file.
+27. Now **restart** the Raspberry Pi.
+
+</Steps>
+<div class="step-code">
+
+```sh
+sudo reboot
+```
+
+</div>

@@ -1,5 +1,5 @@
 ---
-title: Set up a hotspot (Optional)
+title: Set up hotspot (optional)
 description: ...
 sidebar:
   order: 4
@@ -14,16 +14,16 @@ import { Icon } from "@astrojs/starlight/components";
 
 ## When should I do this?
 
-If your BirdNET Pi is only going to be set up within range of your Wi-Fi, you can skip the following steps.
-In this section, we will configure settings so that if your Birdnet Pi is outside your Wi-Fi range, it will function as a hotspot and transmit its own Wi-Fi signal (which does not have internet access). This allows you to connect to the Birdnet Pi via Wi-Fi with your cell phone, for example, and access the Birdnet Pi's data.
-Here, you can also add additional Wi-Fi connections or change Wi-Fi data already entered in the Raspberry Pi OS setup.
+If your BirdNET Pi is only set up inside your Wi-Fi network, you can skip the following steps.
+In this section we will make settings so that if your BirdNET Pi is outside your Wi-Fi network, it works as a hotspot and emits its own Wi-Fi network (this has no internet access), so you can connect from your phone to the BirdNET Pi via Wi-Fi and access the data of the BirdNET Pi.
+You can also e.g. add other Wi-Fi connections here or change Wi-Fi data already entered in Raspberry Pi OS setup.
 
 ## Instructions
 
 <Steps>
 
-0. Connect via SSH
-1. Now we will edit the Wi-Fi and hotspot settings. To do this, we first need to open the Network Manager:
+0. Connect via ssh.
+1. Now we edit the Wi-Fi and hotspot settings. For this we first have to open the NetworkManager:
 
 </Steps>
 <div class="step-code">
@@ -37,7 +37,7 @@ sudo nmtui
 </div>
 <Steps>
 
-2. In Network Manager, you can move the selected item using the <Kbd windows="arrow keys" /> and confirm with <Kbd windows="Enter" />.
+2. In NetworkManager you can move the selected item with the <Kbd windows="Arrow keys" /> and confirm with <Kbd windows="Enter" />.
 
 3. Select `Edit a connection`.
 
@@ -59,7 +59,7 @@ sudo nmtui
 </div>
 <Steps>
 
-5. Select `Wi-Fi` as the connection type.
+5. Select `Wi-Fi` as connection type.
 
 </Steps>
 <div class="step-code">
@@ -79,13 +79,13 @@ sudo nmtui
 </div>
 <Steps>
 
-7. Now you need to add your network data.
-   `Profile Name` is for identification purposes only; you can enter any name you like here. However, make sure to replace Hotspot with your chosen name in the following commands.
-   `Device` (check wlan0 if necessary)
-   `SSID` is the name of the Wi-Fi network that is created. You can choose this freely, but make sure to remember it!
-
+7. Now you have to add the data of your network.
 </Steps>
 <div class="step-code">
+- `Profile Name` is only for identification, you can enter any name here. But make sure to replace Hotspot with your chosen name in the following commands.
+- `Device` is wlan0
+- `SSID` is the name of the Wi-Fi network created, you can also choose this freely, but remember it!
+
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
 
@@ -112,7 +112,7 @@ sudo nmtui
 </div>
 <Steps>
 
-10. Under `Security`, select `WPA & WPA2 Personal`.
+10. For `Security`, select `WPA & WPA2 Personal`.
 
 </Steps>
 <div class="step-code">
@@ -122,7 +122,7 @@ sudo nmtui
 </div>
 <Steps>
 
-11. Under “Password”, enter the password for the hotspot. Remember it!
+11. Enter the hotspot password under `Password`. Remember it!
 
 </Steps>
 <div class="step-code">
@@ -130,10 +130,26 @@ sudo nmtui
 ![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
 
 </div>
+
+
 <Steps>
 
-12. Now we can close the program. To do this, select `OK` at the bottom.
-13. Select `Back`.
+12. Configure the **IP settings** as follows:
+
+</Steps>
+<div class="step-code">
+- IPv4 Configuration: `Shared`
+- IPv6 Configuration: `Disabled`
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui20.png)
+
+</div>
+
+
+<Steps>
+
+13. Now we can close the program. Go down to `OK`.
+14. Go to `Back`.
 
 </Steps>
 <div class="step-code">
@@ -143,7 +159,7 @@ sudo nmtui
 </div>
 <Steps>
 
-14. Select `Quit`.
+15. Go to `Quit`.
 
 </Steps>
 <div class="step-code">
@@ -153,11 +169,10 @@ sudo nmtui
 </div>
 <Steps>
 
-15. Now we will set the connection priorities for the Wi-Fi and hotspot connections.
-    This means that the Raspberry Pi will first attempt to connect to the known Wi-Fi network.
-    Only if no connection is possible will it automatically create its own hotspot so that a
-    connection to the device can still be established.
-    First, we need to navigate to the correct folder using the `cd` command.
+16. Now set the connection priorities for Wi-Fi and hotspot connection.
+    This way the Raspberry Pi will try to connect to the known Wi-Fi network first.
+    Only if no connection is possible, it will automatically create its own hotspot so that a connection to the device can still be made.
+    First we need to navigate to the correct folder with the `cd` command.
 
 </Steps>
 <div class="step-code">
@@ -177,7 +192,7 @@ cd /etc/NetworkManager/system-connections
 </div>
 <Steps>
 
-16. Let's now open the file for the hotspot connection.
+17. Now open the file for the hotspot connection.
 
 </Steps>
 <div class="step-code">
@@ -203,7 +218,7 @@ ssid=BirdNET Pi Hotspot
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk=Here is your password for the hotspot
+psk=Hier steht dein Passwort f�r den Hotspot
 
 [ipv4]
 method=auto
@@ -223,10 +238,10 @@ method=auto
 </div>
 <Steps>
 
-17. Insert the following code snippet into the first part of the file.
-    The entry `autoconnect=true` activates automatic connection establishment.
+18. Add the following code snippet in the first part of the file.
+    The entry `autoconnect=true` activates automatic connection.
     The value `autoconnect-priority=0` sets the priority of the network.
-    The higher the number, the more preferred this network is when connecting automatically.
+    The higher the number, the more preferred that network is during auto-connect.
 
 </Steps>
 <div class="step-code">
@@ -260,11 +275,11 @@ key-mgmt=wpa-psk
 psk=Den Eltern mal den Vogel zeigen!
 
 [ipv4]
-method=auto
+method=shared
 
 [ipv6]
 addr-gen-mode=default
-method=auto
+method=disabled
 
 [proxy]
 
@@ -275,8 +290,8 @@ method=auto
 </div>
 <Steps>
 
-18. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, and finally <Kbd windows="Enter" /> to save the file.
-19. Now let's open the file for the Wi-Fi connection.
+19. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, finally <Kbd windows="Enter" /> to save the file.
+20. Now open the file for the Wi-Fi connection.
 
 </Steps>
 <div class="step-code">
@@ -298,7 +313,7 @@ timestamp=27604593
 [wifi]
 hidden=true
 mode=infrastructure
-ssid=Dein_Wlan_Name
+ssid=Your_Wi-Fi_Name
 
 [wifi-security]
 key-mgmt=wpa-psk
@@ -322,7 +337,7 @@ method=auto
 </div>
 <Steps>
 
-20. Insert the following code snippet into the first part of the file.
+21. Add the following code snippet in the first part of the file.
 
 </Steps>
 <div class="step-code">
@@ -350,7 +365,7 @@ autoconnect-priority=10
 [wifi]
 hidden=true
 mode=infrastructure
-ssid=Dein_Wlan_Name
+ssid=Your_Wi-Fi_Name
 
 [wifi-security]
 key-mgmt=wpa-psk
@@ -373,9 +388,8 @@ method=auto
 
 </div>
 <Steps>
-
-21. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, and finally <Kbd windows="Enter" /> to save the file.
-22. Now restart the Raspberry Pi.
+22. Press <Kbd windows="Ctrl+x" />, then <Kbd windows="y" />, finally <Kbd windows="Enter" /> to save the file.
+23. Reboot the Raspberry Pi now.
 
 </Steps>
 <div class="step-code">

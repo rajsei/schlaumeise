@@ -1,49 +1,60 @@
-# Starlight Starter Kit: Basics
+# Schlaumeise
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Schlaumeise ist eine interaktive Lernplattform, die Kindern und Jugendlichen mithilfe von KI und Projekten rund um heimische Vögel Natur, Umwelt, Informatik und Akustik näherbringt.
 
+## Tech-Stack
+
+- Astro 5 + Starlight
+- Tailwind CSS (via Vite)
+- Starlight-Plugins: Image Zoom, KBD, Full View Mode, GitHub Alerts
+- Mehrsprachigkeit: Deutsch (default) und Englisch
+
+## Projektstruktur
+
+- `src/content/docs/` enthält die Starlight-Dokumentation (Live-Inhalte).
+- `src/pages/` enthält eigenständige Astro-Routen (z. B. Quiz).
+- `src/components/` enthält wiederverwendbare Astro-Komponenten.
+- `src/styles/` enthält globale und projektbezogene Styles.
+- `astro.config.mjs` bündelt Starlight- und Build-Konfiguration.
+
+## Entwicklung
+
+Alle Befehle im Projekt-Root ausführen:
+
+```bash
+npm install
+npm run dev
 ```
-npm create astro@latest -- --template starlight
+
+Lokaler Dev-Server: `http://localhost:4321`
+
+## Build & Preview
+
+```bash
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deployment
 
-## 🚀 Project Structure
+Die Site ist für GitHub Pages mit Basis-Pfad `/schlaumeise/` konfiguriert.
+URL: `https://rajsei.github.io/schlaumeise/`
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+## TODO
+Formular:
+- Kontaktformular (für Ideen, Wünsche, Fragen)
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
+Quiz: 
+- Englische Version
+- zufällige Antwortreihenfolge
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Soundscape-Generator:
+- zur Veranschaulichung von Lärmbelästigung, in welchem Bereich liegen Verkehrsgeräusche, menschliche Stimmen und Vögel (Eulen, Singvögel)?
+- mit Spektrogramm
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+Technische Funktionen:
+- Spektrogramm für Dateien und Live-Audio
+- PDF-Dateien herunterladen
 
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+Allgemeine Anforderungen:
+- Die Inhalte sollen altersspezifisch gefiltert werden.

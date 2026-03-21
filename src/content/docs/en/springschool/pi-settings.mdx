@@ -1,0 +1,71 @@
+---
+title: BirdNET-Pi Settings
+description: ...
+sidebar:
+  order: 5
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+import { Accordion, AccordionItem } from "free-astro-components";
+
+## Connect to your BirdNET-Pi
+
+Connect your **phone or computer** to the **workshop Wi-Fi network** (or later your **home Wi-Fi**).  
+If the network is not available, search for the **hotspot created by your BirdNET-Pi** and connect to it instead.
+
+If your Raspberry Pi is connected to the same network as your computer or phone, you can access the BirdNET-Pi interface by entering the following address in your browser:
+```
+http://hostname.local
+```
+This is the website where you can access the BirdNET-Pi settings and results.
+
+## Settings
+
+
+Next step is to change some settings.
+
+When you click on `Tools`, you will be prompted to enter credentials:
+- **Username:** `birdnet`  
+- **Password:** *(leave empty)*  
+
+### Tools > Settings: 
+<div class="step-code">
+</div>
+
+Under `Localization`, you can set the **database language** for the species detection.
+
+And dont forget to click the **`Update Settings` Button** at the end!
+
+### Tools > Settings > Advanced Settings
+
+At the end of the settings page, you can find the **`Advanced Settings`**.
+
+Under `Audio Settings`, you can set the **`Recording Length`**. It is recommended to increase to 30 to 60 seconds for better detection performance.
+
+And dont forget to click the **`Update Settings` Button** at the end!
+
+### Tools > Services
+
+Here you can control the **services** for a better Performance you can disabele some services like the `Live Audio Stream` and `Web Terminal`.
+
+### Tools > Sytem Info
+
+Here you can find some **system information** about your BirdNET-Pi, such as the current CPU and RAM usage, the available disk space, and the system uptime.
+
+## Citizen cience with BirdWeather
+
+If you would like to contribute your **detections** to a **citizen science project**, you can submit your data to **BirdWeather**. 
+You can follow the BirdWeather setup instructions directly in the BirdNET-Pi settings.
+
+**[BirdWeather.com](https://app.birdweather.com/)** is a **global platform for bird sound monitoring**. 
+Stations around the world upload audio (and sometimes video) data, which is then analyzed using BirdNET and compared with eBird grid data.
+
+BirdWeather catalogues the bird audio and spectrogram visualizations so that you can listen to, view, and read about birds throughout the world.
+
+This makes it a powerful tool for research, education, and global biodiversity monitoring.
+

@@ -1,0 +1,43 @@
+---
+title: Installing BirdNET-Pi
+description: ...
+sidebar:
+  order: 4
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
+import { Accordion, AccordionItem } from "free-astro-components";
+
+
+## Instructions
+
+<Steps>
+  0. If you are no longer connected via SSH, reconnect and enter your password. **Replace 'user' and 'hostname'** with those of your Raspberry Pi.
+</Steps>
+
+<div class="step-code">
+
+```sh
+ssh user@hostname.local
+```
+
+</div>
+
+<Steps>
+
+1. Use this command to **start the BirdNET-Pi installation**.
+  The process may take around an hour, depending on your internet connection and system performance.
+  Leave the terminal open until the installation is complete.
+
+</Steps>
+
+<div class="step-code">
+```sh
+curl -s https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh | bash
+```
+</div>

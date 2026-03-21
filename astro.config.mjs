@@ -54,6 +54,11 @@ export default defineConfig({
 
       sidebar: [
         {
+          label: "Spring School 2026",
+          translations: { en: "Spring School 2026" },
+          autogenerate: { directory: "springschool" },
+        },
+        {
           label: "Das lauschende Vogelhaus",
           translations: { en: "The Listening Birdhouse" },
           autogenerate: { directory: "project01" },

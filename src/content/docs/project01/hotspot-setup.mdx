@@ -15,14 +15,14 @@ import { Icon } from "@astrojs/starlight/components";
 ## Wann sollte ich das tun?
 
 Sollte dein BirdNET Pi nur im bereich deines WLANs aufgestellt werden, kannst du die folgenden Schritte überspringen.
-In diesem Teil werden wir Einstellungen treffen damit, sollte dein Birdnet Pi außerhalb deines WLANs sein, als ein Hotspot funktioniert und ein eigenes wlan aussendet (dieses hat kein Internetzugang), dadurch kannst du dich zb mit deinem Handy mit dem Birdnet Pi über wlan verbinden und auf die daten des Birdnet pis zugreifen.
+In diesem Teil werden wir Einstellungen treffen damit, sollte dein Birdnet Pi außerhalb deines WLANs sein, als ein Hotspot funktioniert und ein eigenes wlan aussendet (dieses hat kein Internetzugang), dadurch kannst du dich zb mit deinem Handy mit dem Birdnet Pi über Wlan verbinden und auf die daten des Birdnet pis zugreifen.
 Du kannst hier auch Beispielsweise weitere Wlan verbindungen hinzufügen oder bereits im Raspberry pi os setup eingegeben Wlan daten ändern.
 
 ## Anleitung
 
 <Steps>
 
-0. verbinde dich per ssh
+0. Verbinde dich per ssh.
 1. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
 
 </Steps>
@@ -81,7 +81,7 @@ sudo nmtui
 
 7. Nun müssen die Daten deines Netzwerkes hinzugefügt werden.
    `Profile Name` ist nur zur identifikation, hier kannst du einen beliebigen Namen eingeben. Achte aber inden folgenden befehlen Hotspot mitdeinem gewählten Namen ersetzt.
-   `Device` (wlan0 überprüfen ob notwendig)
+   `Device` ist wlan0
    `SSID` Ist der Name des WLANs das erzeugt wird, auch das kannst du frei wählen, merke es dir aber!
 
 </Steps>
@@ -125,15 +125,31 @@ sudo nmtui
 11. Bei `Password` gib nun das Passwort für den Hotspot eingeben. Merke es dir!
 
 </Steps>
+
+
 <div class="step-code">
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
 
 </div>
+
 <Steps>
 
-12. Nun können wir das Programm schließen. Gehe dafür unten auf `OK`.
-13. Gehe auf `Back`.
+12. Configure the **IP settings** as follows:
+
+</Steps>
+<div class="step-code">
+- IPv4 Configuration: `Shared`
+- IPv6 Configuration: `Disabled`
+
+![](/schlaumeise//images/project01/pi-setup2/nmtui20.png)
+
+</div>
+
+<Steps>
+
+13. Nun können wir das Programm schließen. Gehe dafür unten auf `OK`.
+14. Gehe auf `Back`.
 
 </Steps>
 <div class="step-code">
@@ -143,7 +159,7 @@ sudo nmtui
 </div>
 <Steps>
 
-14. Gehe auf `Quit`.
+15. Gehe auf `Quit`.
 
 </Steps>
 <div class="step-code">
@@ -153,7 +169,7 @@ sudo nmtui
 </div>
 <Steps>
 
-15. Nun werden die Verbindungsprioritäten der WLAN- und Hotspot-Verbindung festgelegt.
+16. Nun werden die Verbindungsprioritäten der WLAN- und Hotspot-Verbindung festgelegt.
     Dadurch versucht der Raspberry Pi zuerst, sich mit dem bekannten WLAN zu verbinden.
     Nur wenn keine Verbindung möglich ist, erstellt er automatisch einen eigenen Hotspot,
     damit weiterhin eine Verbindung zum Gerät hergestellt werden kann.
@@ -177,7 +193,7 @@ cd /etc/NetworkManager/system-connections
 </div>
 <Steps>
 
-16. Öffnen wir nun zunächst die Datei für die Hotspot-Verbindung.
+17. Öffnen wir nun zunächst die Datei für die Hotspot-Verbindung.
 
 </Steps>
 <div class="step-code">
@@ -223,7 +239,7 @@ method=auto
 </div>
 <Steps>
 
-17. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
+18. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
     Der Eintrag `autoconnect=true` aktiviert die automatische Verbindungsherstellung.
     Der Wert `autoconnect-priority=0` legt die Priorität des Netzwerks fest.
     Je höher die Zahl, desto bevorzugter wird dieses Netzwerk beim automatischen Verbinden ausgewählt.
@@ -260,11 +276,11 @@ key-mgmt=wpa-psk
 psk=Den Eltern mal den Vogel zeigen!
 
 [ipv4]
-method=auto
+method=shared
 
 [ipv6]
 addr-gen-mode=default
-method=auto
+method=disabled
 
 [proxy]
 
@@ -275,8 +291,8 @@ method=auto
 </div>
 <Steps>
 
-18. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
-19. Öffnen wir nun zunächst die Datei für die Wlan-Verbindung.
+19. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+20. Öffnen wir nun zunächst die Datei für die Wlan-Verbindung.
 
 </Steps>
 <div class="step-code">
@@ -322,7 +338,7 @@ method=auto
 </div>
 <Steps>
 
-20. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
+21. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
 
 </Steps>
 <div class="step-code">
@@ -373,8 +389,8 @@ method=auto
 
 </div>
 <Steps>
-21. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
-22. Starte jetzt den Raspberry pi neu.
+22. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+23. Starte jetzt den Raspberry pi neu.
 
 </Steps>
 <div class="step-code">
