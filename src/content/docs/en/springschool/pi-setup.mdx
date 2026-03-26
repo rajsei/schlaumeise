@@ -26,9 +26,11 @@ In our case, these steps have already been completed for you, so the system is r
 
 <Steps>
   1. **Insert the SD card into the Raspberry Pi** and **connect the Raspberry Pi to the power supply** using the power adapter.
-   An LED on the Raspberry Pi should light up or flash. It is best to wait a few minutes for it to boot up.
+   An LED on the Raspberry Pi should light up or flash. 
+   It is best to wait a few minutes for it to boot up; the initial boot process takes longer. 
+   Do not disconnect it from the power supply during this time.
 
-  2. Ensure that the computer is connected to the Wi-Fi network.
+  2. Ensure that the computer is connected to the Wi-Fi network. *Wifi:* `birdnet-wifi`, *Password:* `birdnet2026`.
 
   3. Open the console.
 </Steps>
@@ -42,21 +44,22 @@ In our case, these steps have already been completed for you, so the system is r
 </div>
 
 <Steps>
-  4. Connect to the Pi using the following command. **Replace 'user' and 'hostname'** with those of your Raspberry Pi.
+  4. Connect to the Pi using the following command. 
+  **Replace '00' with the number on your Raspberry Pi.**
 </Steps>
 
 <div class="step-code">
 
 ```sh
-ssh user@hostname.local
+ssh birdnet-admin@birdnet-rpi00.local
 ```
 
 <Code
   lang="plaintext"
   title="Terminal"
   class="terminal-code"
-  code="PS C:\Users\Name> ssh user@hostname.local 
-  The authenticity of host 'hostname.local (2a02:4454:c122:2000:15gc:24b7:f06a:f322)' can't be established. 
+  code="PS C:\Users\Name> ssh birdnet-admin@birdnet-rpi00.local 
+  The authenticity of host 'birdnet-rpi00.local (2a02:4454:c122:2000:15gc:24b7:f06a:f322)' can't be established. 
   ED25519 key fingerprint is SHA256:kfRttaVIh+Z/FbSq9g6adalVfIsgvUtk4o. 
   This key is not known by any other names. 
   Are you sure you want to continue connecting (yes/no/[fingerprint])?"
@@ -69,8 +72,8 @@ ssh user@hostname.local
       If the following message appears:
       <Code
       lang="plaintext" title="Terminal" class="terminal-code"
-      code="PS C:\Users\Name> ssh user@hostname.local
-      ssh: Could not resolve hostname hostname.local: The specified host is unknown."
+      code="PS C:\Users\Name> ssh birdnet-admin@birdnet-rpi00.local
+      ssh: Could not resolve hostname birdnet-rpi00.local: The specified host is unknown."
       />
       this means that no connection can be established to your Raspberry Pi.
 
@@ -94,7 +97,7 @@ ssh user@hostname.local
       <Steps>
         1. Open the file: C:\Users\username\\.ssh\known_hosts (the exact path is also in the warning) with a text editor.
 
-        2. Find all lines that start with hostname.local and delete them.
+        2. Find all lines that start with birdnet-rpi00.local and delete them.
         There may be several entries spanning multiple lines.
 
         3. If you have never used SSH for other connections, you can also delete the entire contents of the file. 4. Save the file, close the editor, and then try the connection again.
@@ -124,9 +127,9 @@ yes
   title="Terminal"
   class="terminal-code"
   code="Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-  Warning: Permanently added 'hostname.local' (ED25529) to the list of known hosts.
+  Warning: Permanently added 'birdnet-rpi00.local' (ED25529) to the list of known hosts.
   Connection closed by 2a02:4454:c122:2000:15gc:24b7:f06a:f322 port 23
-  user@hostname.local's password:"
+  birdnet-admin@birdnet-rpi00.local's password:"
 />
 
 </div>
@@ -142,7 +145,7 @@ yes
 <div class="step-code">
 
   <Code lang='plaintext' title='Terminal'  class="terminal-code" 
-  code="user@hostname.local's password:
+  code="birdnet-admin@birdnet-rpi00.local's password:
   Linux birdnetpi 6.12.47+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.12.47-1+rpt1~bookworm (2025-09-01) aarch64
 
 The programs included with the Debian GNU/Linux system are free software;
@@ -154,6 +157,20 @@ permitted by applicable law.
 Last login: Thu Oct 01 00:00:00 2025 from 2a02:4454:c122:2000:15gc:24b7:f06a:f322" />
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <Steps>
 
 7. These steps are only for the Raspberry Pi Zero 2 W, wich we are working with.
