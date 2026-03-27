@@ -1,0 +1,71 @@
+---
+title: Data Sheet
+description: ...
+sidebar:
+  order: 6
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Kbd } from "starlight-kbd/components";
+import { Code } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+
+
+*All information and passwords in one place*
+
+<Aside>Replace '00' with the number on your Raspberry Pi.</Aside>
+
+|                     | Username / Command / URL                   | Password        |
+|---------------------|--------------------------------------------|-----------------|
+| **Local Website**   | `http://birdnet-rpi00.local`               |                 |
+| **Tools**           | birdnet                                    | (leave empty)   |
+| **Preconfigured Wi-Fi** | birdnet-wifi                           | rotkehlchen     |
+| **SSH**             | `ssh birdnet-admin@birdnet-rpi00.local`    | mauersegler     |
+
+---
+
+## How to connect to the BirdNET-Pi
+
+### Use your home network
+
+If you have configured your **home Wi-Fi**, simply start your Raspberry Pi. It should automatically connect to your network.
+
+If your Raspberry Pi is connected to the **same network** as your computer or phone, you can access the BirdNET-Pi interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
+
+---
+
+### Use the hotspot of your BirdNET-Pi
+
+If neither the **preconfigured Wi-Fi** nor your **home Wi-Fi** is available, search for the **hotspot created by your BirdNET-Pi** and connect to it using your computer or phone.
+
+Then access the interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
+
+---
+
+### Use the preconfigured Wi-Fi network
+
+You can create a **hotspot** from your computer, using the preconfigured Wi-Fi credentials:
+
+- **Wi-Fi name:** `birdnet-wifi`  
+- **Password:** `rotkehlchen`
+
+Restart your Raspberry Pi. It should automatically connect to this network.
+
+If you are using your **phone as a hotspot**, make sure your **computer is connected to the same hotspot**.
+
+If your **BirdNET-Pi** does not connect to this Wi-Fi, check whether it has created its own **configured hotspot** instead.
+
+Then access the interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
