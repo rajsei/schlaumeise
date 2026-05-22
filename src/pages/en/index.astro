@@ -1,0 +1,10 @@
+---
+import HomeContent from "../../components/pages/HomeContent.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const locale = "en" as const;
+---
+
+<MainLayout locale={locale} title="smartfinch">
+  <HomeContent locale={locale} />
+</MainLayout>

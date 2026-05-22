@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
+
+/* Default (dark theme) color tokens */
+:root {  
+  --line-height: 1.75;
+
+  --color-accent-low: #1f1e46;
+  --color-accent: #5c4ae2;
+  --color-accent-high: #bfc4f8;
+  --color-white: #ffffff;
+  --color-gray-1: #eaeef5;
+  --color-gray-2: #c3c9d1;
+  --color-gray-3: #9aa5b4;
+  --color-gray-4: #505966;
+  --color-gray-5: #303945;
+  --color-gray-6: #1f2733;
+  --color-black: #15181e;
+
+  --color-highlight-blue: #313b53;
+  --color-highlight-red: #582f3a;
+  --color-highlight-purple: #413654;
+  --color-highlight-green: #294432;
+  
+  --global-shadow-inset: 
+    rgba(0, 0, 0, 0.394) 1px 2px 4px 1px inset,
+    rgba(105, 105, 105, 0.1) 0px -1px 3px 2px;
+  --global-shadow: 
+    rgba(0, 0, 0, 0.4) 2px 2px 2px 2px, 
+    rgba(0, 0, 0, 0.65) 0px 4px 6px -1px, 
+    rgba(255, 255, 255, 0.08) 0px 8px 0px inset;
+  --global-header-bg: rgb(8 8 16 / 0.85);
+  --global-header-border: color-mix(
+    in srgb,
+    var(--color-gray-4),
+    transparent 25%
+  );
+}
+/* Light theme overrides */
+:root[data-theme="light"] {
+  --color-accent-low: #d0d3fb;
+  --color-accent: #4a2fc9;
+  --color-accent-high: #2b2768;
+  --color-white: #15181e;
+  --color-gray-1: #1f2733;
+  --color-gray-2: #303945;
+  --color-gray-3: #505966;
+  --color-gray-4: #828c9b;
+  --color-gray-5: #bdc2ca;
+  --color-gray-6: #eaeef5;
+  --color-gray-7: #f4f6fa;
+  --color-black: #ffffff;
+
+  --color-highlight-blue: #e9f4fc;
+  --color-highlight-red:  #fce3e2;
+  --color-highlight-purple: #e5e2f6;
+  --color-highlight-green: #e4f6e1;
+  
+  --global-shadow-inset: 
+    rgba(0, 0, 0, 0.339) 1px 2px 4px 1px inset,
+    rgba(255, 255, 255, 0.1) 0px -1px 3px 2px;
+  --global-shadow: 
+    rgba(0, 0, 0, 0.051) 2px 2px 2px 2px, 
+    rgba(0, 0, 0, 0.137) 0px 4px 6px -1px, 
+    rgba(255, 255, 255, 0.438) 0px 8px 0px inset;
+
+  --global-header-bg: rgb(244 246 250 / 0.9);
+  --global-header-border: color-mix(
+    in srgb,
+    var(--color-gray-4),
+    transparent 45%
+  );
+}
+
+.body {
+  margin: 2rem;
+  padding: 2rem;
+}

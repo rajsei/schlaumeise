@@ -1,0 +1,250 @@
+---
+/**
+ * DropdownNavItem.astro
+ * Minimal, framework-free dropdown toggle for a navbar.
+ *
+ * Usage:
+ * <DropdownNavItem label="Resources">
+ *   <a href="/documentation/">Documentation</a>
+ *   <a href="/blog/">Blog</a>
+ * </DropdownNavItem>
+ *
+ * You can also pass custom markup as children (e.g. list items).
+ */
+const {
+  label = "Resources",
+  buttonId,
+  menuId,
+  buttonClass = "",
+  menuClass = "",
+  isActive = false,
+} = Astro.props;
+
+const idSeed =
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
+const resolvedButtonId = buttonId ?? `dropdown-btn-${idSeed}`;
+const resolvedMenuId = menuId ?? `dropdown-menu-${idSeed}`;
+const triggerClass = ["button-nav", buttonClass, isActive && "is-active"]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class="dropdown" data-dropdown>
+  <button
+    type="button"
+    id={resolvedButtonId}
+    class={triggerClass}
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls={resolvedMenuId}
+    data-dropdown-button
+  >
+    <span>{label}</span>
+
+    <!-- Arrow icon; rotates when open -->
+    <span class="dropdown_arrow" aria-hidden="true">
+      <svg
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 22 22"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+  </button>
+
+  <!-- Submenu (positioned under button) -->
+  <div
+    id={resolvedMenuId}
+    class={["dropdown__menu", menuClass].filter(Boolean).join(" ")}
+    role="menu"
+    aria-labelledby={resolvedButtonId}
+    hidden
+    data-dropdown-menu
+  >
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Minimal functional styling only (positioning + arrow rotation + basic menu behavior). */
+  .dropdown {
+    position: relative;
+    display: inline-flex;
+    width: fit-content;
+  }
+
+
+  .dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /* optional spacing */
+    margin-top: 0.25rem;
+    /* keep it on top of other nav items */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--sl-color-gray-3), transparent 35%);
+    border-radius: 0.75rem;
+    padding: 0.35rem;
+    min-width: 12rem;
+    box-shadow: 0 12px 24px rgb(0 0 0 / 0.18);
+  }
+
+  .dropdown__menu :global(.dropdown-item) {
+    display: inline-flex;
+    width: 100%;
+    text-align: left;
+  }
+
+  .dropdown_arrow {
+    display: inline-flex;
+    
+    align-self: center;
+    width: 16px;
+    height: 16px;
+  
+    flex: 0 0 16px;
+    line-height: 0;
+    margin-left: 0%;
+    transform: rotate(0deg);
+    transform-origin: calc(50% - 0px) calc(50% + 1px);
+    transition: transform 150ms linear;
+  }
+
+  .dropdown_arrow svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+
+  .dropdown[data-open="true"] .dropdown_arrow {
+    transform: rotate(90deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown_arrow {
+      transition: none;
+    }
+  }
+
+  :global(script[data-dropdown-script]) {
+    display: none !important;
+  }
+</style>
+
+<script data-dropdown-script>
+  
+  (() => {
+    if (window.__schlaumeiseDropdownInit) return;
+    window.__schlaumeiseDropdownInit = true;
+
+    function getDropdownRoots() {
+      return Array.from(document.querySelectorAll("[data-dropdown]"));
+    }
+
+    function isOpen(root) {
+      return root.dataset.open === "true";
+    }
+
+    function closeAll(except = null) {
+      getDropdownRoots().forEach((root) => {
+        if (except && root === except) return;
+        setOpen(root, false);
+      });
+    }
+
+    function setOpen(root, open) {
+      const button = root.querySelector("[data-dropdown-button]");
+      const menu = root.querySelector("[data-dropdown-menu]");
+      if (!button || !menu) return;
+
+      root.dataset.open = open ? "true" : "false";
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+      menu.hidden = !open;
+    }
+
+    function initRoot(root) {
+      if (root.dataset.dropdownInitialized === "true") return;
+
+      const button = root.querySelector("[data-dropdown-button]");
+      const menu = root.querySelector("[data-dropdown-menu]");
+      if (!button || !menu) return;
+      root.dataset.dropdownInitialized = "true";
+
+      // Safety: sync initial DOM + ARIA state.
+      const shouldStartOpen =
+        button.getAttribute("aria-expanded") === "true" && !menu.hidden;
+      setOpen(root, shouldStartOpen);
+
+      // Toggle on button click
+      button.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const currentlyOpen = isOpen(root);
+        closeAll(root);
+        setOpen(root, !currentlyOpen);
+      });
+
+      // Explicit key handling for robust button behavior across browsers.
+      button.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        e.stopPropagation();
+        const currentlyOpen = isOpen(root);
+        closeAll(root);
+        setOpen(root, !currentlyOpen);
+      });
+
+      // Close when clicking inside menu links/buttons (optional, common nav behavior)
+      menu.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target && target.closest && target.closest("a, button")) {
+          setOpen(root, false);
+        }
+      });
+
+      // Keyboard: Escape closes and returns focus to button
+      root.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          setOpen(root, false);
+          button.focus();
+        }
+      });
+    }
+
+    // Close on outside click
+    document.addEventListener("click", () => closeAll());
+
+    // Close when focus moves outside (helps keyboard users)
+    document.addEventListener("focusin", (e) => {
+      const active = e.target;
+      const withinAny = getDropdownRoots().some((d) => d.contains(active));
+      if (!withinAny) closeAll();
+    });
+
+    // Initialize existing roots and keep support for later DOM additions.
+    getDropdownRoots().forEach(initRoot);
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof HTMLElement)) return;
+          if (node.matches?.("[data-dropdown]")) initRoot(node);
+          node.querySelectorAll?.("[data-dropdown]").forEach(initRoot);
+        });
+      }
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>

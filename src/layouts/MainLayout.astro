@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getBrandConfig, siteConfig } from "../config/site.config";
+import { getDictionary } from "../i18n";
+import { defaultLocale, type Locale } from "../i18n/config";
+import { getLocaleFromPathname, switchLocalePath, withBase } from "../i18n/routing";
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: Locale;
+}
+
+const {
+  title = getBrandConfig(getLocaleFromPathname(Astro.url.pathname)),
+  description = "",
+  locale: localeProp,
+} = Astro.props;
+
+const locale = localeProp ?? getLocaleFromPathname(Astro.url.pathname);
+const dictionary = getDictionary(locale);
+const brand = getBrandConfig(locale);
+
+const alternateLocale: Locale = locale === defaultLocale ? "en" : defaultLocale;
+const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alternateLocale));
+---
+
+<!doctype html>
+<html lang={locale} data-theme={siteConfig.defaultTheme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    {description && <meta name="description" content={description} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header
+      locale={locale}
+      dictionary={dictionary}
+      brand={brand}
+      languageSwitchHref={languageSwitchHref}
+    />
+    <main>
+      <slot />
+    </main>
+    <Footer locale={locale} dictionary={dictionary} brand={brand} />
+  </body>
+</html>
