@@ -11,7 +11,7 @@ export default defineConfig({
   base: "/schlaumeise",
   i18n: {
     defaultLocale: "de",
-    locales: ["de" , "en"],
+    locales: ["de", "en"],
     routing: {
       prefixDefaultLocale: false,
     },

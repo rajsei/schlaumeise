@@ -11,9 +11,10 @@ interface Props {
   dictionary: Dictionary;
   brand: BrandConfig;
   languageSwitchHref: string;
+  showSidebarToggle?: boolean;
 }
 
-const { locale, dictionary, brand, languageSwitchHref } = Astro.props;
+const { locale, dictionary, brand, languageSwitchHref, showSidebarToggle = false } = Astro.props;
 
 const homeHref = buildLocalizedUrl(locale, "/");
 const homeLabel = formatMessage(dictionary.a11y.brandHome, {
@@ -61,6 +62,34 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
 <div class="navbar bg-base-100 shadow-sm">
   <div class="navbar-start">
+    {
+      showSidebarToggle && (
+        <button
+          type="button"
+          class="btn btn-outline mr-2"
+          data-docs-sidebar-toggle
+          aria-controls="docs-sidebar"
+          aria-expanded="false"
+          aria-label={dictionary.docs.toggleSidebar}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 6h18M3 12h18M3 18h12"
+            ></path>
+          </svg>
+          <span>{dictionary.docs.toggleSidebar}</span>
+        </button>
+      )
+    }
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-outline lg:hidden">
         <svg

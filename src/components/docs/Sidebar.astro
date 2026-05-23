@@ -1,0 +1,305 @@
+---
+import type {
+  ResolvedDocsNavigation,
+} from "../../lib/docs/navigation";
+import SidebarItems from "./SidebarItems.astro";
+import TopicIcon from "./TopicIcon.astro";
+
+interface Props {
+  navigation: ResolvedDocsNavigation;
+  heading: string;
+  topicsHeading: string;
+  globalHeading: string;
+}
+
+const { navigation, heading, topicsHeading, globalHeading } = Astro.props;
+---
+
+<nav class="docs-nav" aria-label={heading} data-topic-nav>
+  <section>
+    <h2 class="docs-nav__section_heading">{topicsHeading}</h2>
+    <ul class="docs-nav__topics" role="radiogroup" aria-label={topicsHeading}>
+      {
+        navigation.topics.map((topic, index) => (
+          <li>
+            {topic.hasItems ? (
+              <button
+                type="button"
+                class:list={["docs-topic", "docs-topic--button", topic.isActive && "is-active"]}
+                role="radio"
+                aria-checked={topic.isActive ? "true" : "false"}
+                tabindex={
+                  topic.isActive
+                    ? 0
+                    : navigation.activeTopicId
+                      ? -1
+                      : index === 0
+                        ? 0
+                        : -1
+                }
+                data-topic-button
+                data-topic-id={topic.id}
+              >
+                {topic.icon && <TopicIcon name={topic.icon} />}
+                <span>{topic.label}</span>
+              </button>
+            ) : topic.href ? (
+              <a
+                href={topic.href}
+                class:list={["docs-topic", topic.isActive && "is-active"]}
+                aria-current={topic.isActive ? "page" : undefined}
+              >
+                {topic.icon && <TopicIcon name={topic.icon} />}
+                <span>{topic.label}</span>
+              </a>
+            ) : (
+              <span
+                class:list={[
+                  "docs-topic",
+                  "is-static",
+                  topic.isActive && "is-active",
+                ]}
+                aria-current={topic.isActive ? "page" : undefined}
+              >
+                {topic.icon && <TopicIcon name={topic.icon} />}
+                <span>{topic.label}</span>
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    navigation.topics
+      .filter((topic) => topic.hasItems)
+      .map((topic) => (
+        <section data-topic-panel data-topic-id={topic.id} hidden={!topic.isActive}>
+          <ul class="docs-nav__items">
+            <SidebarItems items={topic.items} />
+          </ul>
+        </section>
+      ))
+  }
+
+  {navigation.globalItems.length > 0 && (
+    <section>
+      <h2 class="docs-nav__section_heading">{globalHeading}</h2>
+      <ul class="docs-nav__items">
+        <SidebarItems items={navigation.globalItems} />
+      </ul>
+    </section>
+  )}
+</nav>
+
+<script>
+  const topicNavRoots = document.querySelectorAll<HTMLElement>("[data-topic-nav]");
+
+  for (const root of topicNavRoots) {
+    const topicButtons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-topic-button]"),
+    );
+    const topicPanels = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-topic-panel]"),
+    );
+
+    if (topicButtons.length === 0 || topicPanels.length === 0) {
+      continue;
+    }
+
+    const activeButton =
+      topicButtons.find((button) => button.getAttribute("aria-checked") === "true") ?? null;
+
+    function setActiveTopic(topicId: string, focusSelected = false) {
+      for (const button of topicButtons) {
+        const isSelected = button.dataset.topicId === topicId;
+        button.setAttribute("aria-checked", isSelected ? "true" : "false");
+        button.tabIndex = isSelected ? 0 : -1;
+        button.classList.toggle("is-active", isSelected);
+        if (isSelected && focusSelected) {
+          button.focus();
+        }
+      }
+
+      for (const panel of topicPanels) {
+        panel.hidden = panel.dataset.topicId !== topicId;
+      }
+    }
+
+    function moveSelection(currentIndex: number, direction: number) {
+      const nextIndex = (currentIndex + direction + topicButtons.length) % topicButtons.length;
+      const nextButton = topicButtons[nextIndex];
+      const nextId = nextButton.dataset.topicId;
+      if (!nextId) {
+        return;
+      }
+      setActiveTopic(nextId, true);
+    }
+
+    for (const [index, button] of topicButtons.entries()) {
+      button.addEventListener("click", () => {
+        const topicId = button.dataset.topicId;
+        if (!topicId) {
+          return;
+        }
+        setActiveTopic(topicId);
+      });
+
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+          event.preventDefault();
+          moveSelection(index, 1);
+        } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+          event.preventDefault();
+          moveSelection(index, -1);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          const firstId = topicButtons[0]?.dataset.topicId;
+          if (firstId) {
+            setActiveTopic(firstId, true);
+          }
+        } else if (event.key === "End") {
+          event.preventDefault();
+          const lastId = topicButtons[topicButtons.length - 1]?.dataset.topicId;
+          if (lastId) {
+            setActiveTopic(lastId, true);
+          }
+        } else if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          const topicId = button.dataset.topicId;
+          if (topicId) {
+            setActiveTopic(topicId);
+          }
+        }
+      });
+    }
+
+    const initialId = activeButton?.dataset.topicId;
+    if (initialId) {
+      setActiveTopic(initialId);
+    }
+  }
+</script>
+
+<style>
+  .docs-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .docs-nav__section_heading {
+    margin: 0 0 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.78;
+  }
+
+  .docs-nav__topics,
+  .docs-nav__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .docs-topic {
+    display: inline-flex;
+    width: 100%;
+    gap: 0.45rem;
+    align-items: center;
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .docs-topic--button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .docs-topic.is-static {
+    cursor: default;
+  }
+
+  .docs-topic:hover,
+  .docs-topic:focus-visible {
+    background: color-mix(in srgb, var(--color-accent), transparent 76%);
+    color: var(--color-white);
+    outline: none;
+  }
+
+  .docs-topic.is-active {
+    background: var(--color-accent-low);
+    color: var(--color-white);
+  }
+
+  .docs-nav__link {
+    display: inline-flex;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.93rem;
+  }
+
+  .docs-nav__link:hover,
+  .docs-nav__link:focus-visible {
+    background: color-mix(in srgb, var(--color-accent), transparent 78%);
+    color: var(--color-white);
+    outline: none;
+  }
+
+  .docs-nav__link.is-active {
+    background: var(--color-accent-low);
+    color: var(--color-white);
+    font-weight: 700;
+  }
+
+  .docs-nav__divider {
+    padding: 0.15rem 0.4rem;
+  }
+
+  .docs-nav__divider hr {
+    border: none;
+    border-top: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 30%);
+  }
+
+  .docs-nav__group {
+    margin: 0;
+  }
+
+  .docs-nav__group_label {
+    cursor: pointer;
+    list-style: none;
+    border-radius: 0.5rem;
+    padding: 0.34rem 0.6rem;
+    font-weight: 600;
+  }
+
+  .docs-nav__group_label:hover,
+  .docs-nav__group_label:focus-visible {
+    background: color-mix(in srgb, var(--color-accent), transparent 82%);
+    color: var(--color-white);
+    outline: none;
+  }
+
+  .docs-nav__group_label.is-active {
+    color: var(--color-white);
+  }
+
+  .docs-nav__group > .docs-nav__items {
+    margin-top: 0.15rem;
+    padding-left: 0.55rem;
+  }
+</style>

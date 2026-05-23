@@ -1,0 +1,50 @@
+---
+interface Props {
+  name?: string;
+}
+
+const { name } = Astro.props;
+
+function getIconPath(iconName?: string): string | null {
+  switch (iconName) {
+    case "open-book":
+      return "M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 7H20V19H6.5A2.5 2.5 0 0 0 4 21V4.5ZM12 7V19";
+    case "information":
+      return "M12 16V12M12 8H12.01M22 12A10 10 0 1 1 2 12A10 10 0 0 1 22 12Z";
+    case "starlight":
+      return "M12 3L14.8 9.2L21 12L14.8 14.8L12 21L9.2 14.8L3 12L9.2 9.2L12 3Z";
+    default:
+      return null;
+  }
+}
+
+const path = getIconPath(name);
+---
+
+{
+  path && (
+    <svg
+      class="topic-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d={path}
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}
+
+<style>
+  .topic-icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+  }
+</style>

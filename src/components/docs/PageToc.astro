@@ -1,0 +1,79 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+  headingLabel: string;
+  maxDepth?: number;
+}
+
+const { headings, headingLabel, maxDepth = 3 } = Astro.props;
+const filtered = headings.filter((entry) => entry.depth >= 2 && entry.depth <= maxDepth);
+---
+
+{filtered.length > 0 && (
+  <nav class="docs-toc" aria-label={headingLabel}>
+    <h2 class="docs-toc__heading">{headingLabel}</h2>
+    <ul class="docs-toc__list">
+      {
+        filtered.map((entry) => (
+          <li>
+            <a
+              href={`#${entry.slug}`}
+              class:list={["docs-toc__link", entry.depth > 2 && "is-child"]}
+            >
+              {entry.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+)}
+
+<style>
+  .docs-toc {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .docs-toc__heading {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.78;
+  }
+
+  .docs-toc__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .docs-toc__link {
+    display: inline-flex;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 0.2rem 0.42rem;
+    color: var(--color-text);
+    font-size: 0.9rem;
+  }
+
+  .docs-toc__link.is-child {
+    margin-left: 0.65rem;
+    opacity: 0.87;
+  }
+
+  .docs-toc__link:hover,
+  .docs-toc__link:focus-visible {
+    background: color-mix(in srgb, var(--color-accent), transparent 80%);
+    color: var(--color-white);
+    outline: none;
+  }
+</style>
