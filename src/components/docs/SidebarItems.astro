@@ -31,7 +31,7 @@ const { items } = Astro.props;
           <summary class:list={["docs-nav__group_label", item.isActive && "is-active"]}>
             {item.label}
           </summary>
-          <ul class="docs-nav__items">
+          <ul class="docs-nav__items docs-nav__subitems menu menu-md">
             <Astro.self items={item.items} />
           </ul>
         </details>

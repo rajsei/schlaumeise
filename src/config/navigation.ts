@@ -95,7 +95,6 @@ export const navigation: NavigationConfig = {
 
   ],
   globalItems: [
-    { divider: true },
     {
       label: "Meteor Store",
       translations: {
