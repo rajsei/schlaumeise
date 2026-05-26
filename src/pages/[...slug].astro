@@ -1,0 +1,30 @@
+---
+import DocsLayout from "../layouts/DocsLayout.astro";
+import { defaultLocale } from "../i18n/config";
+import {
+  createSlugParam,
+  getDefaultLocaleDocsEntries,
+} from "../lib/docs-content";
+import type { DocsEntry } from "../types/docs";
+
+interface Props {
+  entry: DocsEntry;
+  entries: DocsEntry[];
+}
+
+export async function getStaticPaths() {
+  const entries = await getDefaultLocaleDocsEntries();
+
+  return entries.map((entry) => ({
+    params: { slug: createSlugParam(entry) },
+    props: { entry, entries },
+  }));
+}
+
+const { entry, entries } = Astro.props;
+const { Content, headings } = await entry.render();
+---
+
+<DocsLayout locale={defaultLocale} entry={entry} entries={entries} headings={headings}>
+  <Content />
+</DocsLayout>

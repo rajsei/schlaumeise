@@ -1,0 +1,49 @@
+[2m13:10:43[22m [34m[types][39m Generated [2m1ms[22m
+[2m13:10:43[22m [34m[content][39m Syncing content
+[2m13:10:43[22m [34m[content][39m Astro config changed
+[2m13:10:43[22m [34m[content][39m Clearing content store
+[2m13:10:43[22m [34m[content][39m Synced content
+
+[42m[1m astro [22m[49m [32mv5.16.12[39m [2mready in[22m 684 [2mms[22m
+
+[2m┃[22m Local    [36mhttp://localhost:4459/schlaumeise[39m
+[2m┃[22m Network  [2muse --host to expose[22m
+
+[2m13:10:43[22m [32mwatching for file changes...[39m
+/*! 🌼 daisyUI 5.5.14 */
+[docs][locale] entries en [
+  { id: 'en/guides/concepts.mdx', slug: 'guides/concepts.mdx' },
+  { id: 'en/guides/courses.mdx', slug: 'guides/courses.mdx' },
+  { id: 'en/guides/index.mdx', slug: 'guides/index.mdx' },
+  { id: 'en/reference/api.mdx', slug: 'reference/api.mdx' },
+  { id: 'en/reference/faq.mdx', slug: 'reference/faq.mdx' },
+  {
+    id: 'en/reference/components.mdx',
+    slug: 'reference/components.mdx'
+  },
+  { id: 'en/reference/index.mdx', slug: 'reference/index.mdx' },
+  {
+    id: 'en/guides/recipes/quickstart.mdx',
+    slug: 'guides/recipes/quickstart.mdx'
+  }
+]
+[docs][default] entries [
+  { id: 'de/reference/api.mdx', slug: 'reference/api.mdx' },
+  { id: 'de/reference/faq.mdx', slug: 'reference/faq.mdx' },
+  { id: 'de/reference/index.mdx', slug: 'reference/index.mdx' },
+  {
+    id: 'de/reference/components.mdx',
+    slug: 'reference/components.mdx'
+  },
+  { id: 'de/guides/concepts.mdx', slug: 'guides/concepts.mdx' },
+  { id: 'de/guides/index.mdx', slug: 'guides/index.mdx' },
+  { id: 'de/guides/courses.mdx', slug: 'guides/courses.mdx' },
+  {
+    id: 'de/guides/recipes/quickstart.mdx',
+    slug: 'guides/recipes/quickstart.mdx'
+  }
+]
+[33m[1m13:10:45[22m [WARN] [router][39m A `getStaticPaths()` route pattern was matched, but no matching static path was found for requested path `/guides/`.
+
+Possible dynamic routes being matched: src/pages/[locale]/[...slug].astro, src/pages/[...slug].astro.
+[2m13:10:45[22m [33m[404][39m /guides/ [2m6ms[22m

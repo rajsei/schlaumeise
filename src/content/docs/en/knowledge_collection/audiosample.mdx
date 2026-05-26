@@ -1,0 +1,294 @@
+---
+title: Höhrbeispiele
+description: Was kann man hier hören?
+next: false
+sidebar:
+  order: 8
+---
+import RevealImage from "../../../components/RevealImage.astro";
+
+import bluejayImage from "../../../assets/birds/bluejay.jpg";
+import chipmunkImage from "../../../assets/birds/chipmunk.jpg";
+import lyrebirdImage from "../../../assets/birds/lyrebird.jpg";
+import mockingbirdImage from "../../../assets/birds/mockingbird.jpg";
+
+import HighlightSection from "../../../components/HighlightSection.astro";
+import weidengelbkehlchenLied from "../../../assets/audio/WeidengelbkehlchenLied.wav";
+import weidengelbkehlchenRuf from "../../../assets/audio/WeidengelbkehlchenRuf.wav";
+
+import WeißkehlammerÜbungslied from "../../../assets/audio/WeißkehlammerÜbungslied.wav";
+import WeißkehlammerErwachsenenlied from "../../../assets/audio/WeißkehlammerErwachsenenlied.wav";
+
+import DachsammerDialekt1 from "../../../assets/audio/DachsammerDialekt1.wav";
+import DachsammerDialekt2 from "../../../assets/audio/DachsammerDialekt2.wav";
+
+import Dunenspecht from "../../../assets/audio/Dunenspecht.wav";
+import Haarspecht from "../../../assets/audio/Haarspecht.wav";
+
+import Blauhaeher from "../../../assets/audio/Blauhaeher.mp3";
+import Spottdrossel from "../../../assets/audio/Spottdrossel.mp3";
+import Leierschwanz from "../../../assets/audio/Leierschwanz.wav";
+import Streifenhoernchen from "../../../assets/audio/Streifenhoernchen.mp3";
+
+
+
+## Wie kommunizieren Vögel miteinander?
+
+Vögel nutzen ihre Stimmen, um miteinander zu kommunizieren. Dabei erfüllen unterschiedliche Laute verschiedene soziale Funktionen – ähnlich wie Sprache bei uns Menschen. Grundsätzlich unterscheidet man zwei Hauptformen:
+
+### 1. Lieder/Gesänge
+
+Was sind Gesänge?
+
+Gesänge sind längere, melodische und oft komplexe Lautfolgen. Sie werden vor allem von Männchen vorgetragen – besonders in der Brutzeit.
+
+Wofür werden Gesänge genutzt?
+
+Gesänge haben mehrere wichtige Aufgaben:
+
+*Revierabgrenzung:*
+Der Vogel zeigt: „Dieses Gebiet gehört mir!“ – so werden andere Männchen ferngehalten.
+
+*Anlocken von Weibchen:*
+Ein schöner oder abwechslungsreicher Gesang kann die Chancen auf einen Partner erhöhen.
+
+*Arterkennung:*
+Jede Vogelart hat ihren eigenen typischen Gesang. So finden Vögel Partner der gleichen Art.
+
+**Gesänge dienen vor allem der Partnersuche und der Verteidigung des eigenen Reviers.**
+
+<HighlightSection
+  title="Wie höhrt sich das Lied eines Weidengelbkehlchens an?"
+  color="blue">
+  <div slot="body">
+    <p>Das Weidengelbkehlchen (Geothlypis trichas) ist ein Singvogel aus der Familie der Waldsänger, dessen Männchen an der schwarzen Gesichtsmaske mit gelbem Kehlbereich zu erkennen ist, während den Weibchen diese Maske fehlt.</p>
+  </div>
+  <br />
+    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenLied}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+
+
+### 2. Rufe
+
+Was sind Rufe?
+
+Rufe sind kurze, einfache Laute, die oft mehrfach hintereinander erklingen. Sie werden von Männchen und Weibchen genutzt – das ganze Jahr über.
+
+Welche Funktionen haben Rufe?
+
+Rufe sind vor allem für den Alltag wichtig:
+
+*Kontakt- und Sozialrufe:* 
+Helfen, Gruppen zusammenzuhalten – zum Beispiel bei Familien oder Zugvögeln.
+
+*Warnrufe:* 
+Machen andere auf Gefahren aufmerksam, etwa auf Greifvögel oder Katzen.
+
+*Aggressions- oder Drohrufe:* 
+Werden bei Streitigkeiten eingesetzt, etwa wenn sich zwei Vögel zu nahe kommen.
+
+**Rufe helfen Vögeln, in Kontakt zu bleiben und schnell auf Gefahren zu reagieren.**
+
+<HighlightSection
+    title="Wie höhrt sich der Ruf eines Weidengelbkehlchens an?"
+    color="blue">
+    <br />
+    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenRuf}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## Singen will gelernt sein
+Viele echte Singvögel werden nicht mit ihrem vollständigen Gesang geboren, sondern müssen ihn erst lernen – ähnlich wie Kinder sprechen lernen. 
+Sie hören erwachsene Artgenossen und üben so lange, bis ihr eigener Gesang richtig klingt.
+
+<HighlightSection
+  title="Wie unterscheidet sich der Klang des Liedes einer Weißkehlammer, je nachdem ob sie ein Jungtier ist oder bereits erwachsen?"
+  color="green">
+  <div>
+    <p>So klingt das Lied eines Jungvogels:</p>
+  </div>
+  <br />
+    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerÜbungslied}>
+        Your browser does not support the audio element.
+    </audio>
+      <div>
+    <p>So klingt das Lied eines erwachsenen Vogels:</p>
+  </div>
+  <br />
+    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerErwachsenenlied}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## „Dialekte“ bei Vogelstimmen
+
+Vogelstimmen können sich je nach Region und über die Zeit verändern – ähnlich wie Dialekte bei uns Menschen. 
+Nimmt man das Lied erwachsener Vögel derselben Art an zwei verschiedenen Orten auf, klingen sie oft leicht unterschiedlich, obwohl sie das gleiche Grundmuster haben.
+
+<HighlightSection
+  title="Wie unterscheidet sich der Klang des Liedes einer  white-crowned sparrow aus verschiedenen Regionen?"
+  color="purple">
+  <div>
+    <p>So klingen zwei Individuen an unterschiedlichen Orten:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt1}>
+        Your browser does not support the audio element.
+    </audio>
+      <div>
+
+  </div>
+  <br />
+    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt2}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## Mehr als singen
+
+Vögel nutzen nicht nur ihre Stimmen, um miteinander zu kommunizieren. 
+Hast du schon eine Idee, welcher Vogel besonders oft gehört wird, ohne überhaupt zu singen?
+
+Es ist der Specht! 
+
+Wenn ein Specht mit seinem Schnabel auf einen Baum klopft, entsteht ein lauter Trommelwirbel. 
+Häufig wählt er hohle Baumstämme, weil sie den Klang verstärken. 
+Dieses Trommeln dient vor allem dazu, das Revier zu markieren und Weibchen anzulocken – ganz ähnlich wie der Gesang bei Singvögeln.
+Sie picken auch bei der Nahrungssuche, aber wenn sie in Baumstämmen und Ästen nach Insekten als Beute suchen, ist ihr Picken in der Regel leiser.
+
+Dabei hat jede Spechtart ihren eigenen „Rhythmus“: 
+Länge, Tempo, Schlagzahl und Pausen zwischen den Schlägen unterscheiden sich und machen die Arten für geübte Ohren erkennbar.
+
+<HighlightSection
+  title="Wie unterscheidet sich der Klang des Trommelns verschiedener Spechtarten?"
+  color="red">
+  <div>
+    <p>So klinget ein Dunenspecht:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Dunenspecht}>
+        Your browser does not support the audio element.
+    </audio>
+    <div>
+        <p>Und so klinget ein Haarspecht:</p>
+  </div>
+  <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Haarspecht}>
+        Your browser does not support the audio element.
+    </audio>
+</HighlightSection>
+
+## Mysteriöse Vögel - Was zwitschert hier?
+
+Lass und doch mal gemeinsam einige Vogelstimmen anhören und anschauen, um welche Vogelart es sich handelt!
+
+<HighlightSection
+  title="Welcher Vogel ist das nur?"
+  color="green">
+    <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Blauhaeher}>
+        Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={bluejayImage.src}
+      alt="Blauhäher"
+      overlayText="Blauhäher"
+      revealLabel="Lösung"
+      >
+      <p>
+        Es ist ein Blauhäher! Der Blauhäher stammt aus Nordamerika und gilt als besonders intelligenter Vogel. 
+        Er ist mit unserem europäischen Eichelhäher verwandt – beide zeigen ähnliche Verhaltensweisen und gehören zur Familie der Rabenvögel, die für ihre hohe Lernfähigkeit bekannt sind.
+
+        Blauhäher und Eichelhäher werden manchmal als „Polizei des Waldes“ bezeichnet, weil sie andere Tiere mit lauten Warnrufen vor Gefahren informieren. Gleichzeitig nutzen sie ihre Schlauheit auch zu ihrem Vorteil: 
+        Sie können die Rufe von Raubvögeln nachahmen, um andere Vögel aus ihrem Revier zu vertreiben oder von Futterstellen fernzuhalten.
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="Und der nächste Vogel?"
+  color="blue">
+    <br />
+    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Spottdrossel}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={mockingbirdImage.src}
+      alt="Spottdrossel"
+      overlayText="Spottdrossel"
+      revealLabel="Lösung"
+      >
+      <p>
+      Es ist ein Blauhäher? Nein – es ist eine Spottdrossel!
+
+      Auch wenn der Anfang des Gesangs wie ein Blauhäher klingt, handelt es sich hier um eine Spottdrossel. 
+      Dieser nordamerikanische Singvogel ist berühmt dafür, die Stimmen anderer Vögel zu imitieren.
+
+      Die Spottdrossel singt lange, laute und sehr komplexe Lieder und ahmt dabei nicht nur andere Vogelarten nach, sondern auch Geräusche aus ihrer Umgebung – 
+      zum Beispiel Frösche, Grillen, Katzen oder sogar künstliche Klänge wie quietschende Räder oder Autowarnanlagen. 
+      Für uns Menschen klingen diese Nachahmungen oft täuschend echt, doch nicht jeder Vogel lässt sich damit täuschen.
+
+      Außerdem gilt die Spottdrossel als furchtlos und durchsetzungsstark: 
+      Sie verteidigt ihr Brut- und Winterrevier energisch und ruft bei Gefahr manchmal Artgenossen zur Hilfe, um gemeinsam größere Räuber zu vertreiben.
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="Und was hört man hier?"
+  color="purple">
+    <br />
+    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Leierschwanz}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={lyrebirdImage.src}
+      alt="Leierschwanz"
+      overlayText="Leierschwanz"
+      revealLabel="Lösung"
+      >
+      <p>
+      Es wird immer verrückter! 
+
+      Der Leierschwanz ist ein ganz besonderer Vogel aus Australien. Sein Stimmorgan (die sogenannte Syrinx) zählt zu den am stärksten ausgeprägten unter den Singvögeln. 
+      Dadurch kann er eine erstaunliche Vielfalt an Geräuschen aus seiner Umgebung imitieren – von anderen Vogelarten bis hin zu Umwelt- und Alltagsgeräuschen.
+
+      Leierschwänze sind sehr scheu. Oft bemerkt man ihre Anwesenheit nur daran, dass scheinbar viele verschiedene Vogelgesänge aus ein und derselben Stelle kommen.
+      
+      Konntest du heraushören, was er alles nachmacht? 
+      Der Leierschwanz imitiert oft Kettensägen, Kameraverschlüsse, Autohupen und sogar menschliche Stimmen.
+      </p>
+    </RevealImage>
+</HighlightSection>
+
+<HighlightSection
+  title="Wer könnte das denn sein?"
+  color="red">
+    <br />
+    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Streifenhoernchen}>
+      Your browser does not support the audio element.
+    </audio>
+    <RevealImage
+      imageSrc={chipmunkImage.src}
+      alt="Streifenhörnchen"
+      overlayText="Streifenhörnchen"
+      revealLabel="Lösung"
+      >
+      <p>
+      Das ist ja gar kein Vogel. Nicht nur Vögel machen Geräusche, die wie Vogelstimmen klingen können – 
+      auch andere Tiere überraschen uns damit. 
+      Ein gutes Beispiel ist das Streifenhörnchen, auf Englisch Chipmunk genannt.
+
+      Der englische Name stammt von dem lauten „chip“-Ruf, den diese Tiere oft ausstoßen, zusätzlich zu einem trillenden Laut. 
+      Deshalb kann man ihre Geräusche manchmal leicht mit Vogelrufen verwechseln.
+      </p>
+    </RevealImage>
+    
+</HighlightSection>
+
+
+

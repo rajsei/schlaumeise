@@ -1,0 +1,282 @@
+---
+import type { MarkdownHeading } from "astro";
+import Sidebar from "../components/ui-elements/Sidebar.astro";
+import DocsTOC from "../components/docs/DocsTOC.astro";
+import DocsPagination from "../components/docs/DocsPagination.astro";
+import MainLayout from "./MainLayout.astro";
+import type { Locale } from "../i18n/config";
+import { getDictionary } from "../i18n";
+import type { DocsEntry } from "../types/docs";
+import { resolveDocsPagination } from "../lib/docs-navigation";
+
+interface Props {
+  locale: Locale;
+  entry: DocsEntry;
+  entries: DocsEntry[];
+  headings: MarkdownHeading[];
+}
+
+const { locale, entry, entries, headings } = Astro.props;
+const dictionary = getDictionary(locale);
+const desktopMenuOpen = entry.data.menu !== false;
+const showContentToc = entry.data.content !== false;
+const pagination = resolveDocsPagination({
+  locale,
+  currentPathname: Astro.url.pathname,
+  docsEntries: entries,
+  currentEntry: entry,
+  prevFallbackLabel: dictionary.docs.prevLabel,
+  nextFallbackLabel: dictionary.docs.nextLabel,
+});
+---
+
+<MainLayout
+  locale={locale}
+  title={entry.data.title}
+  description={entry.data.description}
+>
+  <section
+    class="docs-shell drawer lg:drawer-open"
+    data-docs-shell
+    data-desktop-open={desktopMenuOpen ? "true" : "false"}
+    data-mobile-open="false"
+  >
+    <input
+      id="docs-sidebar-drawer"
+      type="checkbox"
+      class="drawer-toggle"
+      data-docs-sidebar-input
+    />
+
+    <div class="drawer-content">
+      <div class="docs-content-layout" data-show-content-toc={showContentToc ? "true" : "false"}>
+        <main class="docs-main">
+          <article class="docs-article">
+            <header class="docs-article__header">
+              <h1>{entry.data.title}</h1>
+              {entry.data.description && <p>{entry.data.description}</p>}
+            </header>
+
+            {
+              showContentToc && (
+                <details class="docs-toc-mobile xl:hidden">
+                  <summary>{dictionary.docs.tocHeading}</summary>
+                  <DocsTOC locale={locale} headings={headings} />
+                </details>
+              )
+            }
+
+            <div class="docs-article__body">
+              <slot />
+            </div>
+
+            <DocsPagination
+              ariaLabel={dictionary.docs.paginationLabel}
+              prevLabel={dictionary.docs.prevLabel}
+              nextLabel={dictionary.docs.nextLabel}
+              prev={pagination.prev}
+              next={pagination.next}
+            />
+          </article>
+        </main>
+
+        {
+          showContentToc && (
+            <aside class="docs-toc-rail">
+              <div class="docs-toc-rail__inner">
+                <DocsTOC locale={locale} headings={headings} />
+              </div>
+            </aside>
+          )
+        }
+      </div>
+    </div>
+
+    <aside
+      id="docs-sidebar"
+      class="docs-sidebar drawer-side"
+      data-docs-sidebar
+      aria-label={dictionary.docs.navLabel}
+    >
+      <label
+        for="docs-sidebar-drawer"
+        aria-label={dictionary.docs.closeNav}
+        class="drawer-overlay lg:hidden"
+      />
+
+      <div class="docs-sidebar__inner">
+        <Sidebar locale={locale} entries={entries} currentPathname={Astro.url.pathname} />
+      </div>
+    </aside>
+  </section>
+
+  <script>
+    const shell = document.querySelector<HTMLElement>("[data-docs-shell]");
+
+    if (shell) {
+      const sidebar = shell.querySelector<HTMLElement>("[data-docs-sidebar]");
+      const drawerInput = shell.querySelector<HTMLInputElement>(
+        "[data-docs-sidebar-input]",
+      );
+      const overlay = shell.querySelector<HTMLElement>(".drawer-overlay");
+      const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
+        "[data-docs-sidebar-toggle]",
+      );
+      const desktopQuery = window.matchMedia("(min-width: 1024px)");
+
+      if (!drawerInput) {
+        throw new Error("Missing docs sidebar drawer input");
+      }
+
+      let lastFocusedElement: HTMLElement | null = null;
+
+      const isDesktop = () => desktopQuery.matches;
+      const focusFirstSidebarElement = () => {
+        if (!sidebar) return;
+        const focusable = sidebar.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
+        );
+        focusable[0]?.focus();
+      };
+
+      const setToggleVisual = (open: boolean) => {
+        for (const button of toggleButtons) {
+          button.setAttribute("aria-expanded", String(open));
+          button.classList.toggle("is-open", open);
+        }
+      };
+
+      const setMobileState = (open: boolean) => {
+        shell.dataset.mobileOpen = open ? "true" : "false";
+        if (isDesktop()) {
+          document.body.style.overflow = "";
+          return;
+        }
+        document.body.style.overflow = open ? "hidden" : "";
+      };
+
+      const setDesktopState = (open: boolean) => {
+        shell.dataset.desktopOpen = open ? "true" : "false";
+      };
+
+      const openMobileDrawer = () => {
+        lastFocusedElement =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+        drawerInput.checked = true;
+        setMobileState(true);
+        setToggleVisual(true);
+        focusFirstSidebarElement();
+      };
+
+      const closeMobileDrawer = (restoreFocus = true) => {
+        drawerInput.checked = false;
+        setMobileState(false);
+        setToggleVisual(false);
+        if (restoreFocus) {
+          lastFocusedElement?.focus();
+        }
+      };
+
+      const toggleDesktopSidebar = () => {
+        const open = shell.dataset.desktopOpen !== "true";
+        setDesktopState(open);
+        drawerInput.checked = open;
+        setToggleVisual(open);
+      };
+
+      const toggleSidebar = () => {
+        if (isDesktop()) {
+          toggleDesktopSidebar();
+          return;
+        }
+
+        if (shell.dataset.mobileOpen === "true") {
+          closeMobileDrawer();
+        } else {
+          openMobileDrawer();
+        }
+      };
+
+      const onExternalToggle = () => {
+        toggleSidebar();
+      };
+
+      drawerInput.addEventListener("change", () => {
+        if (isDesktop()) {
+          return;
+        }
+        const open = drawerInput.checked;
+        setMobileState(open);
+        setToggleVisual(open);
+        if (open) {
+          lastFocusedElement =
+            document.activeElement instanceof HTMLElement
+              ? document.activeElement
+              : null;
+          focusFirstSidebarElement();
+        } else {
+          lastFocusedElement?.focus();
+        }
+      });
+
+      overlay?.addEventListener("click", (event) => {
+        event.preventDefault();
+        closeMobileDrawer();
+      });
+      document.addEventListener("docs-sidebar:toggle", onExternalToggle);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && shell.dataset.mobileOpen === "true") {
+          closeMobileDrawer();
+        }
+
+        if (event.key !== "Tab" || shell.dataset.mobileOpen !== "true" || !sidebar) {
+          return;
+        }
+
+        const focusable = sidebar.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
+        );
+        if (focusable.length === 0) {
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+
+      desktopQuery.addEventListener("change", (event) => {
+        if (event.matches) {
+          closeMobileDrawer(false);
+          drawerInput.checked = shell.dataset.desktopOpen === "true";
+          setToggleVisual(shell.dataset.desktopOpen === "true");
+          return;
+        }
+
+        drawerInput.checked = false;
+        setMobileState(false);
+        setToggleVisual(false);
+      });
+
+      if (isDesktop()) {
+        drawerInput.checked = shell.dataset.desktopOpen === "true";
+        setToggleVisual(shell.dataset.desktopOpen === "true");
+      } else {
+        drawerInput.checked = false;
+        setMobileState(false);
+        setToggleVisual(false);
+      }
+    }
+  </script>
+</MainLayout>

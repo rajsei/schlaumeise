@@ -10,6 +10,18 @@ export const de = {
     contact: "Kontakt",
     switchTo: "English",
   },
+  docs: {
+    toggleNav: "Navigation",
+    closeNav: "Schliessen",
+    navLabel: "Dokumentationsnavigation",
+    paginationLabel: "Dokumentationsseitenwechsel",
+    prevLabel: "Zurueck",
+    nextLabel: "Weiter",
+    topicsHeading: "Themen",
+    globalHeading: "Allgemein",
+    tocHeading: "Inhalt",
+    noTocItems: "Keine Abschnittstitel vorhanden.",
+  },
   home: {
     title: "Willkommen bei {brand}",
     intro: "Deutsch ist die Standardsprache ohne Sprachpraefix.",

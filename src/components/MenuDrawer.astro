@@ -1,0 +1,167 @@
+---
+import type { Locale } from "../i18n/config";
+import { getDictionary } from "../i18n";
+import type { DocsEntry } from "../types/docs";
+import Sidebar from "./ui-elements/Sidebar.astro";
+
+interface Props {
+  locale: Locale;
+  entries: DocsEntry[];
+}
+
+const { locale, entries } = Astro.props;
+const dictionary = getDictionary(locale);
+---
+
+<section class="global-docs-drawer drawer" data-global-docs-shell data-mobile-open="false">
+  <input
+    id="global-docs-sidebar-drawer"
+    type="checkbox"
+    class="drawer-toggle"
+    data-global-docs-sidebar-input
+  />
+
+  <aside
+    id="global-docs-sidebar"
+    class="docs-sidebar drawer-side"
+    data-global-docs-sidebar
+    aria-label={dictionary.docs.navLabel}
+  >
+    <label
+      for="global-docs-sidebar-drawer"
+      aria-label={dictionary.docs.closeNav}
+      class="drawer-overlay"
+    />
+
+    <div class="docs-sidebar__inner">
+      <Sidebar locale={locale} entries={entries} currentPathname={Astro.url.pathname} />
+    </div>
+  </aside>
+</section>
+
+<script>
+  const shell = document.querySelector<HTMLElement>("[data-global-docs-shell]");
+  const hasDocsShell = Boolean(document.querySelector("[data-docs-shell]"));
+
+  if (shell && !hasDocsShell) {
+    const sidebar = shell.querySelector<HTMLElement>("[data-global-docs-sidebar]");
+    const drawerInput = shell.querySelector<HTMLInputElement>(
+      "[data-global-docs-sidebar-input]",
+    );
+    const overlay = shell.querySelector<HTMLElement>(".drawer-overlay");
+    const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
+      "[data-docs-sidebar-toggle]",
+    );
+
+    if (!drawerInput) {
+      throw new Error("Missing global docs sidebar drawer input");
+    }
+
+    let lastFocusedElement: HTMLElement | null = null;
+
+    const focusFirstSidebarElement = () => {
+      if (!sidebar) return;
+      const focusable = sidebar.querySelectorAll<HTMLElement>(
+        'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
+      );
+      focusable[0]?.focus();
+    };
+
+    const setToggleVisual = (open: boolean) => {
+      for (const button of toggleButtons) {
+        button.setAttribute("aria-expanded", String(open));
+        button.classList.toggle("is-open", open);
+      }
+    };
+
+    const setMobileState = (open: boolean) => {
+      shell.dataset.mobileOpen = open ? "true" : "false";
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+
+    const openDrawer = () => {
+      lastFocusedElement =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+      drawerInput.checked = true;
+      setMobileState(true);
+      setToggleVisual(true);
+      focusFirstSidebarElement();
+    };
+
+    const closeDrawer = (restoreFocus = true) => {
+      drawerInput.checked = false;
+      setMobileState(false);
+      setToggleVisual(false);
+      if (restoreFocus) {
+        lastFocusedElement?.focus();
+      }
+    };
+
+    const toggleDrawer = () => {
+      if (shell.dataset.mobileOpen === "true") {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    };
+
+    const onExternalToggle = () => {
+      toggleDrawer();
+    };
+
+    drawerInput.addEventListener("change", () => {
+      const open = drawerInput.checked;
+      setMobileState(open);
+      setToggleVisual(open);
+      if (open) {
+        lastFocusedElement =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+        focusFirstSidebarElement();
+      } else {
+        lastFocusedElement?.focus();
+      }
+    });
+
+    overlay?.addEventListener("click", (event) => {
+      event.preventDefault();
+      closeDrawer();
+    });
+
+    document.addEventListener("docs-sidebar:toggle", onExternalToggle);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && shell.dataset.mobileOpen === "true") {
+        closeDrawer();
+      }
+
+      if (event.key !== "Tab" || shell.dataset.mobileOpen !== "true" || !sidebar) {
+        return;
+      }
+
+      const focusable = sidebar.querySelectorAll<HTMLElement>(
+        'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    setToggleVisual(false);
+  }
+</script>

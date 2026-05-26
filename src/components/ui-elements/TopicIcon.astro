@@ -1,0 +1,48 @@
+---
+import type { TopicIconName } from "../../config/docs-navigation";
+
+interface Props {
+  icon?: TopicIconName;
+}
+
+const { icon } = Astro.props;
+---
+
+{
+  icon === "open-book" && (
+    <svg
+      class="topic-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 7H20V19H6.5A2.5 2.5 0 0 0 4 21V4.5ZM12 7V19"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}
+{
+  icon === "information" && (
+    <svg
+      class="topic-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 16V12M12 8H12.01M22 12A10 10 0 1 1 2 12A10 10 0 0 1 22 12Z"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}

@@ -1,0 +1,50 @@
+---
+import type { ResolvedNavItem } from "../../lib/docs-navigation";
+
+interface Props {
+  items: ResolvedNavItem[];
+  nested?: boolean;
+}
+
+const { items, nested = false } = Astro.props;
+---
+
+<ul class:list={["menu menu-md", nested ? "docs-nav__subitems" : "docs-nav__menu"]}>
+  {
+    items.map((item) => {
+      if (item.type === "link") {
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "docs-nav__link",
+                item.active && "menu-active is-active",
+                item.emphasis && "docs-nav__top-level",
+              ]}
+              aria-current={item.active ? "page" : undefined}
+              {...(item.attrs ?? {})}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      }
+
+      return (
+        <li>
+          <details
+            class:list={[
+              "docs-nav__group",
+              item.emphasis && "docs-nav__top-level_group",
+            ]}
+            open={item.expanded}
+          >
+            <summary class="docs-nav__group_label">{item.label}</summary>
+            <Astro.self items={item.items} nested />
+          </details>
+        </li>
+      );
+    })
+  }
+</ul>
