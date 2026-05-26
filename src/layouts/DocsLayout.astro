@@ -30,58 +30,74 @@ const {
 ---
 
 <section
-  class="docs-shell"
+  class="docs-shell drawer lg:drawer-open"
   data-docs-shell
   data-desktop-open={showSidebarDefault ? "true" : "false"}
   data-mobile-open="false"
 >
-  <div class="docs-backdrop" data-docs-backdrop hidden></div>
+  <input
+    id="docs-sidebar-drawer"
+    type="checkbox"
+    class="drawer-toggle"
+    data-docs-sidebar-input
+  />
+
+  <div class="drawer-content">
+    <div class="docs-content-layout">
+      <main class="docs-main">
+        <article class="docs-article">
+          <header class="docs-article__header">
+            <h1>{title}</h1>
+            {description && <p>{description}</p>}
+          </header>
+
+          <details class="docs-toc-mobile">
+            <summary>{labels.tableOfContents}</summary>
+            <PageToc headings={headings} headingLabel={labels.tableOfContents} />
+          </details>
+
+          <div class="docs-article__body">
+            <slot />
+          </div>
+        </article>
+      </main>
+
+      <aside class="docs-toc-rail">
+        <div class="docs-toc-rail__inner">
+          <PageToc headings={headings} headingLabel={labels.tableOfContents} />
+        </div>
+      </aside>
+    </div>
+  </div>
 
   <aside
     id="docs-sidebar"
-    class="docs-sidebar"
+    class="docs-sidebar drawer-side"
     data-docs-sidebar
     aria-label={labels.navigation}
   >
-    <div class="docs-sidebar__close_row">
-      <button
-        type="button"
-        class="btn btn-sm btn-outline"
-        data-docs-sidebar-close
-      >
-        {labels.closeSidebar}
-      </button>
-    </div>
-
-    <Sidebar
-      navigation={navigation}
-      heading={labels.navigation}
-      topicsHeading={labels.topics}
-      globalHeading={labels.global}
-    />
-  </aside>
-
-  <main class="docs-main">
-    <article class="docs-article">
-      <header class="docs-article__header">
-        <h1>{title}</h1>
-        {description && <p>{description}</p>}
-      </header>
-
-      <details class="docs-toc-mobile">
-        <summary>{labels.tableOfContents}</summary>
-        <PageToc headings={headings} headingLabel={labels.tableOfContents} />
-      </details>
-
-      <div class="docs-article__body">
-        <slot />
+    <label
+      for="docs-sidebar-drawer"
+      aria-label={labels.closeSidebar}
+      class="drawer-overlay lg:hidden"
+    ></label>
+    <div class="docs-sidebar__inner">
+      <div class="docs-sidebar__close_row">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline"
+          data-docs-sidebar-close
+        >
+          {labels.closeSidebar}
+        </button>
       </div>
-    </article>
-  </main>
 
-  <aside class="docs-toc-rail">
-    <div class="docs-toc-rail__inner">
-      <PageToc headings={headings} headingLabel={labels.tableOfContents} />
+      <Sidebar
+        navigation={navigation}
+        heading={labels.navigation}
+        topicsHeading={labels.topics}
+        globalHeading={labels.global}
+      />
     </div>
   </aside>
 </section>
@@ -90,7 +106,9 @@ const {
   const docsShell = document.querySelector<HTMLElement>("[data-docs-shell]");
   if (docsShell) {
     const sidebar = docsShell.querySelector<HTMLElement>("[data-docs-sidebar]");
-    const backdrop = docsShell.querySelector<HTMLElement>("[data-docs-backdrop]");
+    const sidebarInput = docsShell.querySelector<HTMLInputElement>(
+      "[data-docs-sidebar-input]",
+    );
     const closeButton = docsShell.querySelector<HTMLButtonElement>(
       "[data-docs-sidebar-close]",
     );
@@ -98,6 +116,10 @@ const {
       "[data-docs-sidebar-toggle]",
     );
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
+
+    if (!sidebarInput) {
+      throw new Error("Missing docs sidebar drawer input");
+    }
 
     let previouslyFocused: HTMLElement | null = null;
 
@@ -111,53 +133,68 @@ const {
       }
     }
 
-    function openMobileSidebar() {
-      docsShell.dataset.mobileOpen = "true";
-      if (backdrop) {
-        backdrop.hidden = false;
+    function setMobileState(open: boolean) {
+      docsShell.dataset.mobileOpen = open ? "true" : "false";
+      setToggleExpanded(open);
+      if (isDesktop()) {
+        document.body.style.overflow = "";
+      } else {
+        document.body.style.overflow = open ? "hidden" : "";
       }
-      previouslyFocused =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      setToggleExpanded(true);
-      closeButton?.focus();
-      document.body.style.overflow = "hidden";
     }
 
-    function closeMobileSidebar() {
-      docsShell.dataset.mobileOpen = "false";
-      if (backdrop) {
-        backdrop.hidden = true;
+    function openMobileSidebar() {
+      previouslyFocused =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      sidebarInput.checked = true;
+      setMobileState(true);
+      closeButton?.focus();
+    }
+
+    function closeMobileSidebar(restoreFocus = true) {
+      sidebarInput.checked = false;
+      setMobileState(false);
+      if (restoreFocus) {
+        previouslyFocused?.focus();
       }
-      setToggleExpanded(false);
-      document.body.style.overflow = "";
-      previouslyFocused?.focus();
     }
 
     function toggleDesktopSidebar() {
       const nextOpen = docsShell.dataset.desktopOpen !== "true";
       docsShell.dataset.desktopOpen = nextOpen ? "true" : "false";
       setToggleExpanded(nextOpen);
+      sidebarInput.checked = nextOpen;
     }
 
     function handleToggleButtonClick() {
       if (isDesktop()) {
         toggleDesktopSidebar();
+      } else if (docsShell.dataset.mobileOpen === "true") {
+        closeMobileSidebar();
       } else {
-        const mobileOpen = docsShell.dataset.mobileOpen === "true";
-        if (mobileOpen) {
-          closeMobileSidebar();
-        } else {
-          openMobileSidebar();
-        }
+        openMobileSidebar();
       }
     }
+
+    sidebarInput.addEventListener("change", () => {
+      if (isDesktop()) {
+        return;
+      }
+      const isOpen = sidebarInput.checked;
+      setMobileState(isOpen);
+      if (isOpen) {
+        previouslyFocused =
+          document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      } else {
+        previouslyFocused?.focus();
+      }
+    });
 
     for (const button of toggleButtons) {
       button.addEventListener("click", handleToggleButtonClick);
     }
 
-    closeButton?.addEventListener("click", closeMobileSidebar);
-    backdrop?.addEventListener("click", closeMobileSidebar);
+    closeButton?.addEventListener("click", () => closeMobileSidebar());
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && docsShell.dataset.mobileOpen === "true") {
@@ -192,46 +229,47 @@ const {
 
     desktopQuery.addEventListener("change", (event) => {
       if (event.matches) {
-        closeMobileSidebar();
+        closeMobileSidebar(false);
+        sidebarInput.checked = docsShell.dataset.desktopOpen === "true";
+        setToggleExpanded(docsShell.dataset.desktopOpen === "true");
       } else {
-        setToggleExpanded(docsShell.dataset.mobileOpen === "true");
+        sidebarInput.checked = false;
+        setMobileState(false);
       }
     });
 
-    setToggleExpanded(isDesktop() ? docsShell.dataset.desktopOpen === "true" : false);
+    if (isDesktop()) {
+      sidebarInput.checked = docsShell.dataset.desktopOpen === "true";
+      setToggleExpanded(docsShell.dataset.desktopOpen === "true");
+    } else {
+      sidebarInput.checked = false;
+      setMobileState(false);
+    }
   }
 </script>
 
 <style>
   .docs-shell {
     position: relative;
-    display: block;
     padding: 1.25rem 1rem 2rem;
+    align-items: start;
   }
 
-  .docs-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 59;
-    background: rgb(0 0 0 / 45%);
+  .docs-shell > .drawer-content {
+    min-width: 0;
   }
 
   .docs-sidebar {
-    position: fixed;
-    inset-block: 0;
-    left: 0;
     z-index: 60;
+  }
+
+  .docs-sidebar__inner {
     width: min(22rem, 86vw);
+    min-height: 100%;
     padding: 0.8rem;
     overflow-y: auto;
     background: color-mix(in srgb, var(--color-black), transparent 5%);
     border-right: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 42%);
-    transform: translateX(-102%);
-    transition: transform 220ms ease;
-  }
-
-  .docs-shell[data-mobile-open="true"] .docs-sidebar {
-    transform: translateX(0);
   }
 
   .docs-sidebar__close_row {
@@ -247,6 +285,10 @@ const {
   }
 
   .docs-main {
+    width: 100%;
+  }
+
+  .docs-content-layout {
     width: 100%;
   }
 
@@ -299,24 +341,23 @@ const {
   @media (min-width: 1024px) {
     .docs-shell {
       display: grid;
-      grid-template-columns: 18rem minmax(0, 1fr);
       gap: 1.25rem;
       padding: 1.25rem 1.1rem 2.2rem;
-      align-items: start;
     }
 
-    .docs-backdrop {
-      display: none;
+    .docs-shell[data-desktop-open="false"] {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .docs-sidebar {
       position: sticky;
       top: 5.3rem;
-      inset: auto;
       z-index: 1;
-      width: 100%;
       max-height: calc(100vh - 6rem);
-      transform: none;
+    }
+
+    .docs-sidebar__inner {
+      width: 100%;
       border-radius: 0.8rem;
     }
 
@@ -324,12 +365,13 @@ const {
       display: none;
     }
 
-    .docs-shell[data-desktop-open="false"] {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
     .docs-shell[data-desktop-open="false"] .docs-sidebar {
       display: none;
+    }
+
+    .docs-content-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .docs-article {
@@ -343,11 +385,12 @@ const {
   }
 
   @media (min-width: 1280px) {
-    .docs-shell {
-      grid-template-columns: 18rem minmax(0, 1fr) 15rem;
+    .docs-content-layout {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      gap: 1.25rem;
     }
 
-    .docs-shell[data-desktop-open="false"] {
+    .docs-shell[data-desktop-open="false"] .docs-content-layout {
       grid-template-columns: minmax(0, 1fr) 15rem;
     }
 
