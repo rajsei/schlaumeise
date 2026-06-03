@@ -1,36 +1,38 @@
 ---
 title: Netzwerk, WLAN und Hotspot
-description: Was ist ein Betriebssystem?
+description: Was sind Netzwerk, WLAN und Hotspot?
+sidebar:
+  order: 2
 ---
 
 ## Netzwerk
 
-Ein **Netzwerk** ist ein **Verbund von mindestens zwei Geräten**, die Daten austauschen können. Netzwerke können kabelgebunden (LAN) oder kabellos (WLAN) sein. Sie dienen der gemeinsamen Nutzung von Ressourcen wie Dateien, Druckern oder Internetzugang.
+Ein **Netzwerk** ist ein **Verbund aus mindestens zwei Geräten**, die Daten austauschen. Netzwerke können kabelgebunden (LAN) oder kabellos (WLAN) sein. Sie ermöglichen die gemeinsame Nutzung von Ressourcen wie Dateien, Druckern und Internetzugang.
 
 ## WLAN (Wireless Local Area Network / Drahtloses lokales Netzwerk)
 
-Ein **WLAN** ist **ein kabelloses Netzwerk**, das Geräte innerhalb eines begrenzten Bereichs (z. B. Wohnung, Büro, Café) miteinander verbindet. Es ermöglicht die Kommunikation und Datenübertragung zwischen Geräten ohne Kabel. WLAN kann mit oder ohne Internetzugang betrieben werden.
+Ein **WLAN** ist **ein kabelloses lokales Netzwerk**, das Geräte in einem begrenzten Bereich (z. B. Wohnung, Büro oder Café) verbindet. Es ermöglicht Kommunikation und Datenaustausch ohne Kabel. Ein WLAN kann mit oder ohne Internetzugang bestehen.
 
-### Beispiel eines Netzwerks über WLAN:
+### Beispiel für ein WLAN-Netzwerk
 
-Ein Computer und ein Drucker sind über **dasselbe WLAN** verbunden. Der Computer kann dem Drucker Befehle senden, um Dokumente zu drucken, ohne dass ein Kabel nötig ist. Das entstandene Netzwerk ermöglicht die **Kommunikation zwischen den Geräten** und stellt sicher, dass sie Daten austauschen können. Wenn das WLAN mit dem Internet verbunden ist, können beide Geräte zusätzlich online-Dienste nutzen; ohne Internet funktioniert die Verbindung nur lokal.
+Ein Computer und ein Drucker sind mit **demselben WLAN** verbunden. So kann der Computer Druckaufträge senden, ohne dass ein Kabel nötig ist. Das Netzwerk ermöglicht den Datenaustausch zwischen den Geräten. Ist das WLAN zusätzlich mit dem Internet verbunden, können beide Geräte auch Onlinedienste nutzen. Ohne Internet bleibt die Verbindung auf das lokale Netzwerk beschränkt.
 
 ## Hotspot
 
-Ein **Hotspot** ist **ein Gerät oder ein Ort**, der ein **WLAN bereitstellt**, damit andere Geräte eine Verbindung herstellen können.
+Ein **Hotspot** ist **ein Gerät oder ein Ort**, das/der ein **WLAN bereitstellt**, damit andere Geräte eine Verbindung aufbauen können.
 
-**Mit Internetzugang:** Die verbundenen Geräte können auf das Internet zugreifen.
+**Mit Internetzugang:** Verbundene Geräte können auf das Internet zugreifen.
 
-**Ohne Internetzugang:** Die Geräte können nur lokal miteinander kommunizieren (z. B. Dateien austauschen, Drucker nutzen), aber nicht online gehen.
+**Ohne Internetzugang:** Geräte können nur lokal kommunizieren (z. B. Dateien austauschen oder Drucker nutzen), aber nicht online gehen.
 
-### Beispiel Hotspot:
+### Beispiel für einen Hotspot
 
-Ein **Smartphone stellt einen Hotspot bereit**, also ein WLAN, das andere Geräte nutzen können. Ein **Tablet verbindet sich** mit diesem Hotspot, **um Internetzugang über das Mobilfunknetz des Handys zu erhalten**. Das Tablet kann so online gehen, auch wenn kein reguläres WLAN verfügbar ist. Ohne Internetzugang des Handys funktioniert die Verbindung nur lokal, z. B. zum Austausch von Dateien zwischen Geräten.
+Ein **Smartphone stellt einen Hotspot bereit**, also ein WLAN, das andere Geräte nutzen können. Ein **Tablet verbindet sich** damit und nutzt den Internetzugang über das Mobilfunknetz des Smartphones. So bleibt das Tablet online, auch wenn kein anderes WLAN verfügbar ist. Hat das Smartphone selbst keinen Internetzugang, funktioniert die Verbindung nur lokal, z. B. für den Dateiaustausch zwischen Geräten.
 
-## Abgrenzung:
+## Abgrenzung
 
-**Netzwerk** ist der allgemeine Begriff für verbundene Geräte.
+**Netzwerk** ist der Oberbegriff für verbundene Geräte.
 
-**WLAN** ist ein kabelloser Typ von Netzwerk.
+**WLAN** ist eine kabellose Form eines lokalen Netzwerks.
 
-**Hotspot** ist ein Gerät oder Ort, der ein WLAN bereitstellt, oft mit dem Fokus auf den Internetzugang.
+**Hotspot** ist ein Gerät oder Ort, das/der ein WLAN bereitstellt, meist mit Fokus auf Internetzugang.

@@ -6,20 +6,24 @@ import { getDictionary } from "../../i18n";
 interface Props {
   locale: Locale;
   headings: MarkdownHeading[];
+  showHeading?: boolean;
 }
 
-const { locale, headings } = Astro.props;
+const { locale, headings, showHeading = true } = Astro.props;
 const dictionary = getDictionary(locale);
-const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
+const visibleHeadings = headings.filter((heading) => heading.depth <= 4);
 ---
 
 <nav class="docs-toc" aria-label={dictionary.docs.tocHeading}>
-  <h2 class="docs-toc__heading">{dictionary.docs.tocHeading}</h2>
+  {showHeading && <h2 class="docs-toc__heading">{dictionary.docs.tocHeading}</h2>}
   {
     visibleHeadings.length > 0 ? (
       <ul class="docs-toc__list">
         {visibleHeadings.map((heading) => (
-          <li>
+          <li
+            class="docs-toc__item"
+            style={`--toc-level:${Math.max(1, heading.depth - 1)};`}
+          >
             <a
               href={`#${heading.slug}`}
               class:list={["docs-toc__link", heading.depth > 2 && "docs-toc__link--nested"]}

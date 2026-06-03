@@ -5,13 +5,6 @@ sidebar:
   order: 4
 ---
 
-import { Steps } from "@astrojs/starlight/components";
-import { Kbd } from "starlight-kbd/components";
-import { Code } from "@astrojs/starlight/components";
-import { Aside } from "@astrojs/starlight/components";
-import { LinkCard } from "@astrojs/starlight/components";
-import { Icon } from "@astrojs/starlight/components";
-
 ## Wann sollte ich das tun?
 
 Sollte dein BirdNET Pi nur im bereich deines WLANs aufgestellt werden, kannst du die folgenden Schritte überspringen.
@@ -25,158 +18,74 @@ Du kannst hier auch Beispielsweise weitere Wlan verbindungen hinzufügen oder be
 0. Verbinde dich per ssh.
 1. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
 
-</Steps>
-<div class="step-code">
-
 ```sh
 sudo nmtui
 ```
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
 
-</div>
-<Steps>
 
-2. Im Network Manager kannst du das Ausgewählte Element über die <Kbd windows="Pfeiltasten" /> verschieben und mit <Kbd windows="Enter" /> bestätigen.
+2. Im Network Manager kannst du das Ausgewählte Element über die <kbd class="kbd">Pfeiltasten</kbd> verschieben und mit <kbd class="kbd">Enter</kbd> bestätigen.
 
 3. Wähle `Edit a connection`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
-
-</div>
-<Steps>
 
 4. Wähle `Add`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui02.jpg)
-
-</div>
-<Steps>
 
 5. Wähle `Wi-Fi` als Typ der Verbindung.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui03.jpg)
-
-</div>
-<Steps>
 
 6. Wähle `Create`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui04.jpg)
-
-</div>
-<Steps>
 
 7. Nun müssen die Daten deines Netzwerkes hinzugefügt werden.
    `Profile Name` ist nur zur identifikation, hier kannst du einen beliebigen Namen eingeben. Achte aber inden folgenden befehlen Hotspot mitdeinem gewählten Namen ersetzt.
    `Device` ist wlan0
    `SSID` Ist der Name des WLANs das erzeugt wird, auch das kannst du frei wählen, merke es dir aber!
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
-
-</div>
-<Steps>
 
 8. Bei `Mode` wird `Access Point` ausgewählt.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui06.jpg)
-
-</div>
-<Steps>
 
 9. Bei `Channel` wird `B/G (2.4 GHz)` ausgewählt.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui08.jpg)
-
-</div>
-<Steps>
 
 10. Bei `Security` wähle `WPA & WPA2 Personal`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui09.jpg)
-
-</div>
-<Steps>
 
 11. Bei `Password` gib nun das Passwort für den Hotspot eingeben. Merke es dir!
 
-</Steps>
-
-
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui10.jpg)
-
-</div>
-
-<Steps>
 
 12. Configure the **IP settings** as follows:
 
-</Steps>
-<div class="step-code">
 - IPv4 Configuration: `Shared`
 - IPv6 Configuration: `Disabled`
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui20.png)
 
-</div>
-
-<Steps>
-
 13. Nun können wir das Programm schließen. Gehe dafür unten auf `OK`.
 14. Gehe auf `Back`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui11.jpg)
-
-</div>
-<Steps>
 
 15. Gehe auf `Quit`.
 
-</Steps>
-<div class="step-code">
-
 ![](/schlaumeise//images/project01/pi-setup2/nmtui12.jpg)
-
-</div>
-<Steps>
 
 16. Nun werden die Verbindungsprioritäten der WLAN- und Hotspot-Verbindung festgelegt.
     Dadurch versucht der Raspberry Pi zuerst, sich mit dem bekannten WLAN zu verbinden.
     Nur wenn keine Verbindung möglich ist, erstellt er automatisch einen eigenen Hotspot,
     damit weiterhin eine Verbindung zum Gerät hergestellt werden kann.
     Zunächst müssen wir mit dem `cd` Befehl in den richtigen Ordner navigieren.
-
-</Steps>
-<div class="step-code">
 
 ```
 cd /etc/NetworkManager/system-connections
@@ -190,13 +99,7 @@ cd /etc/NetworkManager/system-connections
   birder@birdnetpi:/etc/NetworkManager/system-connections $"
 />
 
-</div>
-<Steps>
-
 17. Öffnen wir nun zunächst die Datei für die Hotspot-Verbindung.
-
-</Steps>
-<div class="step-code">
 
 ```
 sudo nano Hotspot.nmconnection
@@ -236,16 +139,10 @@ method=auto
 ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
 />
 
-</div>
-<Steps>
-
 18. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
     Der Eintrag `autoconnect=true` aktiviert die automatische Verbindungsherstellung.
     Der Wert `autoconnect-priority=0` legt die Priorität des Netzwerks fest.
     Je höher die Zahl, desto bevorzugter wird dieses Netzwerk beim automatischen Verbinden ausgewählt.
-
-</Steps>
-<div class="step-code">
 
 ```
 autoconnect=true
@@ -288,14 +185,8 @@ method=disabled
 ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
 />
 
-</div>
-<Steps>
-
-19. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+19. Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
 20. Öffnen wir nun zunächst die Datei für die Wlan-Verbindung.
-
-</Steps>
-<div class="step-code">
 
 ```
 sudo nano preconfigured.nmconnection
@@ -335,13 +226,7 @@ method=auto
 ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line'
 />
 
-</div>
-<Steps>
-
 21. Füge den folgenden Code-Schnipsel in den ersten Teil der Datei ein.
-
-</Steps>
-<div class="step-code">
 
 ```
 autoconnect=true
@@ -387,16 +272,13 @@ method=auto
 ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify ^/ Go To Line"
 />
 
-</div>
-<Steps>
-22. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+22. Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
 23. Starte jetzt den Raspberry pi neu.
-
-</Steps>
-<div class="step-code">
 
 ```sh
 sudo reboot
 ```
 
-</div>
+</Steps>
+
+

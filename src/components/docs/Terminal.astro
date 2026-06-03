@@ -1,0 +1,271 @@
+---
+import { parseLineSelection } from "../../plugins/code-block-meta.mjs";
+
+interface Props {
+  title?: string;
+  code?: string;
+  copy?: boolean;
+  prompt?: string;
+  showPrompt?: boolean;
+  showLineNumbers?: boolean;
+  highlightLines?: string | number[];
+  highlightWords?: string[];
+  class?: string;
+}
+
+const {
+  title = "Terminal",
+  code,
+  copy = true,
+  prompt = "$",
+  showPrompt = false,
+  showLineNumbers = false,
+  highlightLines,
+  highlightWords = [],
+  class: className = "",
+} = Astro.props;
+
+const slotHtml = Astro.slots.has("default") ? await Astro.slots.render("default") : "";
+
+const decodeEntities = (value: string) =>
+  value
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+
+const stripTags = (value: string) =>
+  value
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>\s*<p>/gi, "\n")
+    .replace(/<[^>]+>/g, "");
+
+const fromSlot = decodeEntities(stripTags(slotHtml));
+const rawInput = code ?? fromSlot;
+const normalizedCode = rawInput.replace(/\r\n/g, "\n").replace(/^\n+|\n+$/g, "");
+const lines = normalizedCode ? normalizedCode.split("\n") : [""];
+
+const lineHighlights = Array.isArray(highlightLines)
+  ? [...new Set(highlightLines.filter((line) => Number.isInteger(line) && line > 0))].sort((a, b) => a - b)
+  : parseLineSelection(highlightLines ?? "");
+
+const escapedWords = highlightWords.filter(Boolean).map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+const highlightRegex = escapedWords.length > 0 ? new RegExp(`(${escapedWords.join("|")})`, "g") : null;
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const renderedLines = lines.map((line) => {
+  const escaped = escapeHtml(line);
+
+  if (!highlightRegex) {
+    return escaped;
+  }
+
+  return escaped.replace(highlightRegex, '<mark class="docs-terminal__word">$1</mark>');
+});
+
+const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<figure class={classes}>
+  <figcaption class="docs-terminal__header">
+    <span class="docs-terminal__title">{title}</span>
+  </figcaption>
+
+  <div
+    class="docs-terminal__body"
+    data-docs-copy-surface={copy ? "true" : undefined}
+    data-copy-source={copy ? normalizedCode : undefined}
+  >
+    <pre class="docs-terminal__pre"><code>
+      {
+        renderedLines.map((line, index) => {
+          const lineNumber = index + 1;
+          const isHighlighted = lineHighlights.includes(lineNumber);
+          return (
+            <span
+              class:list={["docs-terminal__line", isHighlighted && "is-highlighted"]}
+              data-line={showLineNumbers ? lineNumber : undefined}
+            >
+              {showPrompt && <span class="docs-terminal__prompt" aria-hidden="true">{prompt}</span>}
+              <span set:html={line}></span>
+            </span>
+          );
+        })
+      }
+    </code></pre>
+
+    {
+      copy && (
+        <button
+          type="button"
+          class="docs-code-block__copy docs-code-block__copy--terminal"
+          data-docs-copy-button
+          data-copy-label="Copy"
+          data-copied-label="Copied"
+          data-copy-source={normalizedCode}
+          aria-label="Copy terminal snippet to clipboard"
+        >
+          <span class="sr-only">Copy</span>
+        </button>
+      )
+    }
+  </div>
+</figure>
+
+<script>
+  import "../../scripts/docs-code-copy";
+</script>
+
+<style>
+  .docs-terminal {
+    margin: 1rem 0;
+    border: 1px solid #2f3a4d;
+    border-radius: 0.75rem;
+    background: #0d1117;
+    color: #d2d9e6;
+    overflow: hidden;
+  }
+
+  .docs-terminal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.25rem;
+    padding: 0.45rem 0.8rem;
+    border-bottom: 1px solid #2f3a4d;
+    background: #131a25;
+  }
+
+  .docs-terminal__title {
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #aab4c6;
+  }
+
+  .docs-terminal__body {
+    position: relative;
+  }
+
+  .docs-terminal__pre {
+    margin: 0;
+    padding: 0.95rem 1rem 0.95rem 1.2rem;
+    overflow-x: auto;
+    background: #0d1117;
+  }
+
+  .docs-terminal__pre code {
+    display: block;
+    white-space: pre;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .docs-terminal__line {
+    display: block;
+  }
+
+  .docs-terminal.has-line-numbers .docs-terminal__line {
+    padding-left: 2.25rem;
+    position: relative;
+  }
+
+  .docs-terminal.has-line-numbers .docs-terminal__line::before {
+    content: attr(data-line);
+    position: absolute;
+    left: 0;
+    width: 1.7rem;
+    text-align: right;
+    color: #7e8da4;
+    user-select: none;
+  }
+
+  .docs-terminal__line.is-highlighted {
+    background: color-mix(in srgb, #2f81f7, transparent 78%);
+  }
+
+  .docs-terminal__prompt {
+    color: #73b7ff;
+    margin-right: 0.55rem;
+    user-select: none;
+  }
+
+  .docs-terminal__word {
+    background: color-mix(in srgb, #f59e0b, transparent 70%);
+    color: #fff;
+    border-radius: 0.2rem;
+    padding: 0 0.14rem;
+  }
+
+  .docs-code-block__copy--terminal {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    border: 1px solid #3b4b66;
+    border-radius: 0.45rem;
+    background: #121a28;
+    color: #d2d9e6;
+    width: 2rem;
+    height: 2rem;
+    display: inline-grid;
+    place-items: center;
+    font-size: 0;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-2px);
+    transition: border-color 120ms ease, transform 120ms ease, opacity 120ms ease;
+  }
+
+  .docs-code-block__copy--terminal::before {
+    content: "⧉";
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .docs-code-block__copy--terminal[data-copied="true"]::before {
+    content: "✓";
+    font-size: 0.95rem;
+  }
+
+  .docs-terminal__body:hover .docs-code-block__copy--terminal,
+  .docs-terminal__body:focus-within .docs-code-block__copy--terminal {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .docs-code-block__copy--terminal:hover,
+  .docs-code-block__copy--terminal:focus-visible {
+    border-color: #73b7ff;
+    transform: translateY(-1px);
+  }
+
+  .docs-code-block__copy--terminal:focus-visible {
+    outline: 2px solid color-mix(in srgb, #73b7ff, transparent 45%);
+    outline-offset: 1px;
+  }
+
+  @media (max-width: 640px) {
+    .docs-terminal__pre {
+      padding: 0.8rem;
+    }
+
+    .docs-terminal__pre code {
+      font-size: 0.8rem;
+    }
+  }
+</style>

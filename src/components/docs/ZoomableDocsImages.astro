@@ -1,0 +1,121 @@
+<dialog class="docs-image-lightbox" data-docs-image-lightbox aria-label="Bildvorschau">
+  <img class="docs-image-lightbox__image" data-docs-image-lightbox-image alt="" />
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-docs-image-lightbox]");
+  const dialogImage = dialog?.querySelector<HTMLImageElement>(
+    "[data-docs-image-lightbox-image]",
+  );
+
+  if (dialog && dialogImage) {
+    let lastFocused: HTMLElement | null = null;
+    let previousBodyOverflow = "";
+
+    const openDialog = (img: HTMLImageElement) => {
+      dialogImage.src = img.currentSrc || img.src;
+      dialogImage.alt = img.alt || "Screenshot";
+      lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      dialog.showModal();
+    };
+
+    const closeDialog = () => {
+      dialog.close();
+    };
+
+    dialogImage.addEventListener("click", closeDialog);
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        closeDialog();
+      }
+    });
+
+    dialog.addEventListener("close", () => {
+      dialogImage.removeAttribute("src");
+      document.body.style.overflow = previousBodyOverflow;
+      if (lastFocused) {
+        lastFocused.focus();
+      }
+    });
+
+    const images = document.querySelectorAll<HTMLImageElement>(
+      ".docs-article__body .mdx-interpreter img:not(.arrow)",
+    );
+
+    for (const image of images) {
+      if (image.dataset.docsZoomReady === "true") {
+        continue;
+      }
+      if (image.closest("a,button,[data-no-zoom]")) {
+        continue;
+      }
+
+      image.dataset.docsZoomReady = "true";
+      image.dataset.docsZoomable = "true";
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-haspopup", "dialog");
+      image.setAttribute(
+        "aria-label",
+        image.alt ? `Bild vergroessern: ${image.alt}` : "Bild vergroessern",
+      );
+
+      image.addEventListener("click", () => openDialog(image));
+      image.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openDialog(image);
+        }
+      });
+    }
+  }
+</script>
+
+<style is:global>
+  .docs-article__body .mdx-interpreter img:not(.arrow) {
+    max-width: 580px;
+    max-height: 350px;
+    height: auto;
+    border-radius: 7px;
+    border: var(--sl-color-gray-5, var(--color-gray-5)) 0.5px solid;
+    margin: 1rem 1rem auto;
+    width: auto;
+  }
+
+  .docs-article__body .mdx-interpreter img[data-docs-zoomable="true"] {
+    cursor: zoom-in;
+  }
+
+  .docs-image-lightbox {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: min(96vw, 1400px);
+    max-height: 94vh;
+    margin: auto;
+    overflow: visible;
+    position: relative;
+  }
+
+  .docs-image-lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .docs-image-lightbox::backdrop {
+    background: rgb(0 0 0 / 0.78);
+  }
+
+  .docs-image-lightbox__image {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-gray-5), transparent 28%);
+    display: block;
+    margin: 0;
+    cursor: zoom-out;
+  }
+</style>

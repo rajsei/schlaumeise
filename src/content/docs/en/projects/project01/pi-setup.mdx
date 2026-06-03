@@ -5,11 +5,8 @@ sidebar:
   order: 3
 ---
 
-import { Steps } from "@astrojs/starlight/components";
-import { Kbd } from "starlight-kbd/components";
 import { Code } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
-import { LinkCard } from "@astrojs/starlight/components";
 import { Icon } from "@astrojs/starlight/components";
 import { Accordion, AccordionItem } from "free-astro-components";
 
@@ -213,7 +210,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
     ^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute
     ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify" />
 
-    Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+    Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
 
   </AccordionItem>
   <AccordionItem title="Überprüfen der WLAN-Energieoptionen.">
@@ -275,7 +272,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
 
     <Steps>
 
-      3. Drücke <Kbd windows="Strg+x" />, dann <Kbd windows="y" />, abschließend <Kbd windows="Enter" />, um die Datei zu speichern.
+      3. Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
 
     </Steps>
 
@@ -306,3 +303,6 @@ curl -s https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstall
 ```
 
 </div>
+
+
+

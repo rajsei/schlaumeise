@@ -3,6 +3,9 @@ import type { MarkdownHeading } from "astro";
 import Sidebar from "../components/ui-elements/Sidebar.astro";
 import DocsTOC from "../components/docs/DocsTOC.astro";
 import DocsPagination from "../components/docs/DocsPagination.astro";
+import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
+import ZoomableDocsImages from "../components/docs/ZoomableDocsImages.astro";
+
 import MainLayout from "./MainLayout.astro";
 import type { Locale } from "../i18n/config";
 import { getDictionary } from "../i18n";
@@ -19,7 +22,8 @@ interface Props {
 const { locale, entry, entries, headings } = Astro.props;
 const dictionary = getDictionary(locale);
 const desktopMenuOpen = entry.data.menu !== false;
-const showContentToc = entry.data.content !== false;
+const hasVisibleHeadings = headings.some((heading) => heading.depth <= 4);
+const showContentToc = entry.data.content !== false && hasVisibleHeadings;
 const pagination = resolveDocsPagination({
   locale,
   currentPathname: Astro.url.pathname,
@@ -61,13 +65,17 @@ const pagination = resolveDocsPagination({
               showContentToc && (
                 <details class="docs-toc-mobile xl:hidden">
                   <summary>{dictionary.docs.tocHeading}</summary>
-                  <DocsTOC locale={locale} headings={headings} />
+                  <DocsTOC locale={locale} headings={headings} showHeading={false} />
                 </details>
               )
             }
 
             <div class="docs-article__body">
-              <slot />
+              <MdxInterpreter>
+                <slot />
+              </MdxInterpreter>
+              <ZoomableDocsImages />
+              
             </div>
 
             <DocsPagination

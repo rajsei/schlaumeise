@@ -1,0 +1,135 @@
+---
+interface Props {
+  imageSrc: string;
+  alt: string;
+  overlayText?: string;
+  revealLabel?: string;
+}
+
+const {
+  imageSrc,
+  alt,
+  overlayText = "",
+  revealLabel = "Lösung",
+} = Astro.props as Props;
+---
+
+<section class="reveal" data-no-zoom>
+  <details class="collapse collapse-arrow border border-base-300 bg-base-100 reveal-collapse">
+    <summary class="collapse-title reveal-summary">
+      <div class="reveal-frame">
+        <img src={imageSrc} alt={alt} class="reveal-image" data-no-zoom loading="lazy" />
+        <div class="reveal-placeholder" aria-hidden="true">
+          <span class="reveal-label badge badge-neutral badge-outline badge-xl">{revealLabel}</span>
+        </div>
+        {overlayText && <div class="reveal-overlay badge badge-soft badge-primary badge-lg">{overlayText}</div>}
+      </div>
+    </summary>
+    <div class="collapse-content reveal-content">
+      <div class="reveal-slot">
+        <slot />
+      </div>
+    </div>
+  </details>
+</section>
+
+<style>
+  .reveal {
+    display: block;
+    margin-block: 1rem;
+  }
+
+  .reveal-collapse {
+    box-shadow: var(--global-shadow-inset);
+  }
+
+  .reveal-summary {
+    list-style: none;
+    padding: 0.75rem 3.25rem 0.75rem 0.75rem;
+  }
+
+  .reveal-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .reveal-frame {
+    position: relative;
+    width: min(20rem, 100%);
+    aspect-ratio: 16 / 9;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-black), transparent 6%);
+  }
+
+  .reveal .reveal-summary .reveal-frame .reveal-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 240ms ease;
+  }
+
+  .reveal-overlay {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.6rem;
+    z-index: 2;
+  }
+
+  .reveal-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--color-black), transparent 15%);
+    transition: opacity 200ms ease;
+  }
+
+  .reveal-label {
+    color: var(--color-white);
+    font-weight: 800;
+  }
+
+  .reveal-content {
+    padding-top: 0;
+  }
+
+  .reveal-slot {
+    margin-top: 0.25rem;
+  }
+
+  .reveal details:not([open]) .reveal-image {
+    opacity: 0;
+  }
+
+  .reveal details:not([open]) .reveal-overlay {
+    display: none;
+  }
+
+  .reveal details[open] .reveal-placeholder {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-image,
+    .reveal-placeholder {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .reveal-summary {
+      padding-right: 2.75rem;
+    }
+  }
+</style>
+
+
+

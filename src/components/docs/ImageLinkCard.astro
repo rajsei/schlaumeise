@@ -1,0 +1,126 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"a">, "title" | "href"> {
+  title: string;
+  href: string;
+  description?: string;
+  imgSrc?: string;
+  imgAlt?: string;
+  isExternal?: boolean;
+}
+
+const {
+  title,
+  href,
+  description,
+  imgSrc,
+  imgAlt = "",
+  isExternal = false,
+  class: className = "",
+  ...attributes
+} = Astro.props;
+
+const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Boolean).join(" ");
+---
+
+<a class={rootClass} href={href} {...attributes}>
+  {imgSrc && <img src={imgSrc} alt={imgAlt} class="sl-link-card__image" loading="lazy" decoding="async" />}
+
+  <span class="sl-flex stack">
+    <span class="title">{title}</span>
+    {description && <span class="description">{description}</span>}
+  </span>
+
+  {
+    isExternal ? (
+      <svg aria-hidden="true" class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z" />
+      </svg>
+    ) : (
+      <svg aria-hidden="true" class="icon rtl:flip" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"
+        />
+      </svg>
+    )
+  }
+</a>
+
+<style>
+  .sl-link-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--sl-color-gray-5, var(--color-gray-5));
+    border-radius: 0.5rem;
+    padding: 0.85rem;
+    box-shadow: var(--sl-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.18));
+    position: relative;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .sl-link-card:hover {
+    border-color: var(--sl-color-gray-3, var(--color-gray-3));
+    background: color-mix(in srgb, var(--color-gray-6), transparent 72%);
+  }
+
+  .sl-link-card__image {
+    width: 9.5rem;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: 0 0 6px rgb(0 0 0 / 0.2);
+  }
+
+  .sl-flex {
+    display: flex;
+  }
+
+  .stack {
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .title {
+    color: var(--sl-color-white, var(--color-white));
+    font-weight: 600;
+    font-size: var(--sl-text-lg, 1.125rem);
+    line-height: var(--sl-line-height-headings, 1.3);
+  }
+
+  .description {
+    color: var(--sl-color-gray-3, var(--color-gray-3));
+    line-height: 1.5;
+  }
+
+  .icon {
+    color: var(--sl-color-gray-3, var(--color-gray-3));
+    width: 1em;
+    height: 1em;
+    font-size: var(--sl-icon-size, 1.333em);
+    align-self: start;
+    margin-top: 0.2rem;
+  }
+
+  .sl-link-card:hover .icon {
+    color: var(--sl-color-white, var(--color-white));
+  }
+
+  @media (max-width: 640px) {
+    .sl-link-card {
+      grid-template-columns: 1fr auto;
+      gap: 0.65rem;
+    }
+
+    .sl-link-card__image {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+</style>

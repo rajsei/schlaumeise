@@ -109,6 +109,15 @@ export const navigation: NavigationConfig = {
       icon: "open-book",
       items: [{ autogenerate: { directory: "knowledge_collection" } }],
     },
+    {
+      id: "glossary",
+      label: "Glossary",
+      translations: {
+        de: "Begriffsverzeichnis",
+      },
+      icon: "open-book",
+      items: [{ autogenerate: { directory: "glossary" } }],
+    },
   ],
   globalItems: [
     {

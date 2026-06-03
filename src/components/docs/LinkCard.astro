@@ -1,0 +1,67 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  description?: string;
+}
+
+const { title, href, description } = Astro.props;
+---
+
+<a class="sl-link-card" href={href}>
+  <span class="sl-flex stack">
+    <span class="title">{title}</span>
+    {description && <span class="description">{description}</span>}
+  </span>
+  <svg aria-hidden="true" class="icon rtl:flip" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path
+      d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"
+    />
+  </svg>
+</a>
+
+<style>
+  .sl-link-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    border: 1px solid var(--sl-color-gray-5, var(--color-gray-5));
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: var(--sl-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.18));
+    position: relative;
+  }
+
+  .sl-flex {
+    display: flex;
+  }
+
+  .stack {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  a {
+    text-decoration: none;
+    line-height: var(--sl-line-height-headings, 1.3);
+  }
+
+  .title {
+    color: var(--sl-color-white, var(--color-white));
+    font-weight: 600;
+    font-size: var(--sl-text-lg, 1.125rem);
+  }
+
+  .description {
+    color: var(--sl-color-gray-3, var(--color-gray-3));
+    line-height: 1.5;
+  }
+
+  .icon {
+    color: var(--sl-color-gray-3, var(--color-gray-3));
+    align-self: center;
+    width: 1em;
+    height: 1em;
+    font-size: var(--sl-icon-size, 1.333em);
+  }
+</style>

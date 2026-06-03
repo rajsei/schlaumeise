@@ -1,0 +1,288 @@
+<div class="mdx-interpreter">
+  <slot />
+</div>
+
+<script>
+  import "../../scripts/docs-code-copy";
+</script>
+
+<style is:global>
+  .mdx-interpreter > :first-child {
+    margin-top: 0;
+  }
+
+  .mdx-interpreter > :last-child {
+    margin-bottom: 0;
+  }
+
+  .mdx-interpreter :where(h1, h2, h3, h4, h5, h6) {
+    color: var(--color-white);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .mdx-interpreter :where(h2) {
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 45%);
+    padding-bottom: 0.35rem;
+  }
+
+  .mdx-interpreter :where(h3) {
+    font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  }
+
+  .mdx-interpreter :where(h4, h5, h6) {
+    font-size: 1rem;
+  }
+
+  .mdx-interpreter :where(p, ul, ol, blockquote, table, hr) {
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .mdx-interpreter :where(pre) {
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .mdx-interpreter :where(ul, ol) {
+    padding-left: 1.4rem;
+  }
+
+  .mdx-interpreter :where(ul) {
+    list-style: disc;
+  }
+
+  .mdx-interpreter :where(ol) {
+    list-style: decimal;
+  }
+
+  .mdx-interpreter :where(li) {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .mdx-interpreter :where(li > ul, li > ol) {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .mdx-interpreter :where(a) {
+    color: var(--color-accent-high);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .mdx-interpreter :where(strong) {
+    color: var(--color-white);
+    font-weight: 700;
+  }
+
+  .mdx-interpreter :where(code):not(pre code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+    background: color-mix(in srgb, var(--color-accent), transparent 82%);
+    border: 1px solid color-mix(in srgb, var(--color-accent), transparent 68%);
+    border-radius: 0.35rem;
+    padding: 0.1rem 0.35rem;
+  }
+
+  .mdx-interpreter :where(pre):not(.astro-code):not(.docs-terminal__pre) {
+    border-radius: 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 42%);
+    padding: 0.8rem;
+    overflow-x: auto;
+    background: color-mix(in srgb, var(--color-black), black 18%);
+  }
+
+  .mdx-interpreter :where(pre):not(.astro-code):not(.docs-terminal__pre) code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .mdx-interpreter :where(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding: 0.2rem 0 0.2rem 0.85rem;
+    color: var(--color-gray-2);
+    font-style: italic;
+  }
+
+  .mdx-interpreter :where(table) {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .mdx-interpreter :where(th, td) {
+    border: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 40%);
+    padding: 0.5rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .mdx-interpreter :where(th) {
+    color: var(--color-white);
+    background: color-mix(in srgb, var(--color-accent), transparent 84%);
+  }
+
+  .mdx-interpreter :where(hr) {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 35%);
+  }
+
+  .mdx-interpreter :where(.docs-code-block) {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--docs-code-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-black), black 6%);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    min-height: 2.25rem;
+    padding: 0.45rem 0.8rem;
+    border-bottom: 1px solid var(--docs-code-border);
+    background: var(--docs-code-header-bg);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__title) {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--docs-code-title-text);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__language) {
+    margin-left: auto;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--docs-code-header-text);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__language.is-secondary) {
+    margin-left: 0.4rem;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__body) {
+    position: relative;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__pre) {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__pre code) {
+    display: block;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+  }
+
+  .mdx-interpreter :where(.docs-code-block.is-wrap .docs-code-block__pre code) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .mdx-interpreter :where(.docs-code-block .line.is-highlighted) {
+    background: var(--docs-code-highlight);
+  }
+
+  .mdx-interpreter :where(.docs-code-block.has-line-numbers .line) {
+    position: relative;
+    display: block;
+    padding-left: 2.2rem;
+  }
+
+  .mdx-interpreter :where(.docs-code-block.has-line-numbers .line::before) {
+    content: attr(data-line);
+    position: absolute;
+    left: 0;
+    width: 1.65rem;
+    text-align: right;
+    color: var(--docs-code-line-number);
+    user-select: none;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy) {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    border: 1px solid var(--docs-copy-btn-border);
+    border-radius: 0.45rem;
+    background: var(--docs-copy-btn-bg);
+    color: var(--docs-copy-btn-text);
+    width: 2rem;
+    height: 2rem;
+    display: inline-grid;
+    place-items: center;
+    font-size: 0;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-2px);
+    transition: border-color 120ms ease, transform 120ms ease, opacity 120ms ease;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy::before) {
+    content: "⧉";
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy[data-copied="true"]::before) {
+    content: "✓";
+    font-size: 0.95rem;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__body:hover .docs-code-block__copy, .docs-code-block__body:focus-within .docs-code-block__copy) {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy:hover, .docs-code-block__copy:focus-visible) {
+    border-color: color-mix(in srgb, var(--color-accent), transparent 35%);
+    transform: translateY(-1px);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy:focus-visible) {
+    outline: 2px solid color-mix(in srgb, var(--color-accent), transparent 30%);
+    outline-offset: 1px;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy[data-copied="true"]) {
+    border-color: color-mix(in srgb, var(--color-highlight-green), transparent 30%);
+  }
+
+  .mdx-interpreter :where(.docs-code-block .astro-code) {
+    overflow-x: auto;
+  }
+
+  @media (max-width: 640px) {
+    .mdx-interpreter :where(ul, ol) {
+      padding-left: 1.1rem;
+    }
+
+    .mdx-interpreter :where(.docs-code-block__copy) {
+      top: 0.45rem;
+      right: 0.45rem;
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+</style>
