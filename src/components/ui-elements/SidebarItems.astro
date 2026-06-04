@@ -40,7 +40,24 @@ const { items, nested = false } = Astro.props;
             ]}
             open={item.expanded}
           >
-            <summary class="docs-nav__group_label">{item.label}</summary>
+            <summary class="docs-nav__group_label summary-btn">{item.label}</summary>
+            {
+              item.overview && (
+                <a
+                  href={item.overview.href}
+                  class:list={[
+                    "docs-nav__overview btn btn-m overview-btn",
+                    "justify-start w-full h-auto min-h-0",
+                    "py-2 px-3 mt-1 text-left normal-case",
+                    item.overview.active && "btn-active menu-active is-active",
+                  ]}
+                  aria-current={item.overview.active ? "page" : undefined}
+                  {...(item.overview.attrs ?? {})}
+                >
+                  {item.overview.label}
+                </a>
+              )
+            }
             <Astro.self items={item.items} nested />
           </details>
         </li>
@@ -48,3 +65,36 @@ const { items, nested = false } = Astro.props;
     })
   }
 </ul>
+
+<style>
+  .overview-btn {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    margin-top: 0px;
+  }
+  .summary-btn {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  :global(:root[data-theme="light"] .docs-nav__overview.is-active),
+  :global(:root[data-theme="light"] .docs-nav__overview.is-active:hover),
+  :global(:root[data-theme="light"] .docs-nav__overview.is-active:focus-visible) {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  :global(:root[data-theme="dark"] .docs-nav__link.is-active),
+  :global(:root[data-theme="dark"] .docs-nav__overview.is-active) {
+    background: var(--color-accent-high);
+    color: var(--color-black);
+  }
+
+  :global(:root[data-theme="dark"] .docs-nav__link.is-active:hover),
+  :global(:root[data-theme="dark"] .docs-nav__link.is-active:focus-visible),
+  :global(:root[data-theme="dark"] .docs-nav__overview.is-active:hover),
+  :global(:root[data-theme="dark"] .docs-nav__overview.is-active:focus-visible) {
+    background: var(--color-accent-high);
+    color: var(--color-black);
+  }
+</style>

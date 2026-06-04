@@ -93,6 +93,12 @@
   --docs-code-line-number: color-mix(in srgb, var(--color-gray-4), transparent 15%);
 }
 
+.color-bg {
+  background: var(--color-black);
+}
+.color-fg {
+  color: var(--color-white);
+}
 .body {
   margin: 2rem;
   padding: 2rem;
