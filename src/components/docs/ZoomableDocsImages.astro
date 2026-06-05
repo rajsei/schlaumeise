@@ -11,13 +11,41 @@
   if (dialog && dialogImage) {
     let lastFocused: HTMLElement | null = null;
     let previousBodyOverflow = "";
+    let previousHtmlOverflow = "";
+    let previousBodyPosition = "";
+    let previousBodyTop = "";
+    let previousBodyWidth = "";
+    let lockedScrollY = 0;
+
+    const lockPageScroll = () => {
+      lockedScrollY = window.scrollY;
+      previousBodyOverflow = document.body.style.overflow;
+      previousHtmlOverflow = document.documentElement.style.overflow;
+      previousBodyPosition = document.body.style.position;
+      previousBodyTop = document.body.style.top;
+      previousBodyWidth = document.body.style.width;
+
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockedScrollY}px`;
+      document.body.style.width = "100%";
+    };
+
+    const unlockPageScroll = () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.width = previousBodyWidth;
+      window.scrollTo(0, lockedScrollY);
+    };
 
     const openDialog = (img: HTMLImageElement) => {
       dialogImage.src = img.currentSrc || img.src;
       dialogImage.alt = img.alt || "Screenshot";
       lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      previousBodyOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      lockPageScroll();
       dialog.showModal();
     };
 
@@ -35,9 +63,9 @@
 
     dialog.addEventListener("close", () => {
       dialogImage.removeAttribute("src");
-      document.body.style.overflow = previousBodyOverflow;
+      unlockPageScroll();
       if (lastFocused) {
-        lastFocused.focus();
+        lastFocused.focus({ preventScroll: true });
       }
     });
 
@@ -97,7 +125,8 @@
     max-height: 94vh;
     margin: auto;
     overflow: visible;
-    position: relative;
+    position: fixed;
+    inset: 0;
   }
 
   .docs-image-lightbox[open] {
