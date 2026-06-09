@@ -1,17 +1,28 @@
 ---
-import arrow1 from "../../assets/arrows/1.svg";
+import arrowAsset from "../../assets/arrows/1.svg";
+
+type HighlightColor = "red" | "blue" | "green" | "purple";
 
 interface Props {
   title?: string;
   text?: string;
-  color?: "red" | "blue" | "green" | "purple";
+  color?: HighlightColor;
 }
 
 const { title, text, color = "red" } = Astro.props as Props;
+
 const hasDefaultSlot = Astro.slots.has("default");
 const hasHeaderSlot = Astro.slots.has("header");
 const hasBodySlot = Astro.slots.has("body");
 const hasFooterSlot = Astro.slots.has("footer");
+const hasCustomContent = hasDefaultSlot || hasHeaderSlot || hasBodySlot || hasFooterSlot;
+
+const colorClassByName: Record<HighlightColor, string> = {
+  red: "bg-red",
+  blue: "bg-blue",
+  green: "bg-green",
+  purple: "bg-purple",
+};
 
 const escapeHtml = (value: string) =>
   value
@@ -21,8 +32,9 @@ const escapeHtml = (value: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 
-const toInlineHtml = (value: string) => {
+const renderInlineMarkdown = (value: string) => {
   const escaped = escapeHtml(value);
+
   return escaped
     .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
@@ -32,21 +44,13 @@ const toInlineHtml = (value: string) => {
     .replace(/`([^`]+)`/g, "<code>$1</code>");
 };
 
-const html = text ? toInlineHtml(text) : "";
-
-const bgColor =
-  color === "blue"
-    ? "bg-blue"
-    : color === "green"
-      ? "bg-green"
-      : color === "purple"
-        ? "bg-purple"
-        : "bg-red";
+const html = text ? renderInlineMarkdown(text) : "";
+const bgColor = colorClassByName[color];
 ---
 
 <div class={`pastel-box ${bgColor}`}>
   <img
-    src={arrow1.src}
+    src={arrowAsset.src}
     class="arrow"
     alt=""
     width="64"
@@ -55,7 +59,7 @@ const bgColor =
   />
   <div class="content-stack">
     {
-      hasDefaultSlot || hasHeaderSlot || hasBodySlot || hasFooterSlot ? (
+      hasCustomContent ? (
         <>
           {(hasHeaderSlot || title) && (
             <div class="slot-header">

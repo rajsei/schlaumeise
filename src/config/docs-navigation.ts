@@ -2,7 +2,7 @@ import type { Locale } from "../i18n/config";
 
 export type TranslationMap = Partial<Record<Locale, string>>;
 
-export type TopicIconName = "open-book" | "information";
+export type TopicIconName = "open-book" | "information" | "books" | "memo";
 
 export interface NavigationAutogenerateItem {
   autogenerate: {
@@ -91,7 +91,7 @@ export const navigation: NavigationConfig = {
       translations: {
         de: "Projekte",
       },
-      icon: "information",
+      icon: "memo",
       items: [{
         label: "The Listening Birdhouse",
         translations: {
@@ -106,7 +106,7 @@ export const navigation: NavigationConfig = {
       translations: {
         de: "Wissenssammlung",
       },
-      icon: "open-book",
+      icon: "books",
       items: [{ autogenerate: { directory: "knowledge_collection" } }],
     },
     {
@@ -115,7 +115,7 @@ export const navigation: NavigationConfig = {
       translations: {
         de: "Begriffsverzeichnis",
       },
-      icon: "open-book",
+      icon: "information",
       items: [{ autogenerate: { directory: "glossary" } }],
     },
   ],

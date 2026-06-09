@@ -34,14 +34,12 @@ const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Bool
 
   {
     isExternal ? (
-      <svg aria-hidden="true" class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z" />
+      <svg aria-hidden="true" class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4L12 12M20 4V8.5M20 4H15.5M19 12.5V16.8C19 17.9201 19 18.4802 18.782 18.908C18.5903 19.2843 18.2843 19.5903 17.908 19.782C17.4802 20 16.9201 20 15.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V8.2C4 7.0799 4 6.51984 4.21799 6.09202C4.40973 5.71569 4.71569 5.40973 5.09202 5.21799C5.51984 5 6.07989 5 7.2 5H11.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     ) : (
-      <svg aria-hidden="true" class="icon rtl:flip" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"
-        />
+      <svg aria-hidden="true" class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)">
+        <path d="M5 12H19M5 12L11 6M5 12L11 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     )
   }
@@ -50,7 +48,7 @@ const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Bool
 <style>
   .sl-link-card {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 60%) minmax(0, 1fr) auto;
     align-items: center;
     gap: 0.75rem;
     border: 1px solid var(--sl-color-gray-5, var(--color-gray-5));
@@ -68,7 +66,8 @@ const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Bool
   }
 
   .sl-link-card__image {
-    width: 9.5rem;
+    display: block;
+    width: 100%;
     max-width: 100%;
     height: auto;
     border-radius: 0.5rem;
@@ -91,11 +90,13 @@ const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Bool
     font-weight: 600;
     font-size: var(--sl-text-lg, 1.125rem);
     line-height: var(--sl-line-height-headings, 1.3);
+    overflow-wrap: anywhere;
   }
 
   .description {
     color: var(--sl-color-gray-3, var(--color-gray-3));
     line-height: 1.5;
+    overflow-wrap: anywhere;
   }
 
   .icon {
@@ -111,9 +112,9 @@ const rootClass = ["sl-link-card", "sl-link-card--image", className].filter(Bool
     color: var(--sl-color-white, var(--color-white));
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 900px) {
     .sl-link-card {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 0.65rem;
     }
 

@@ -4,7 +4,7 @@
   exclude: rootscrollgutter, rootscrolllock;
 }
 
-/* Default (dark theme) color tokens */
+/* Default (dark theme) color tokens --color-accent: #5c4ae2;*/
 :root {  
   --line-height: 1.75;
 
@@ -24,6 +24,8 @@
   --color-highlight-red: #582f3a;
   --color-highlight-purple: #413654;
   --color-highlight-green: #294432;
+
+  --color-highlight-yellow: #3b372f;
   
   --global-shadow-inset: 
     rgba(0, 0, 0, 0.394) 1px 2px 4px 1px inset,
@@ -67,6 +69,8 @@
   --color-highlight-red:  #fce3e2;
   --color-highlight-purple: #e5e2f6;
   --color-highlight-green: #e4f6e1;
+
+  --color-highlight-yellow: #FFFAEF;
   
   --global-shadow-inset: 
     rgba(0, 0, 0, 0.339) 1px 2px 4px 1px inset,
@@ -92,6 +96,12 @@
   --docs-code-highlight: color-mix(in srgb, var(--color-accent), transparent 50%);
   --docs-code-line-number: color-mix(in srgb, var(--color-gray-4), transparent 15%);
 }
+
+:root .bg-alert-soft {
+  background: var(--color-highlight-yellow);
+  color: var(--color-gray-1); /* may change to yellow */
+}
+
 
 .color-bg {
   background: var(--color-black);

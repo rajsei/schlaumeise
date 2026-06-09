@@ -1,12 +1,13 @@
 ---
 title: Vogelstation zusammenbauen
-description: "."
+description: Stelle deine BirdNET-Pi-Station sicher auf und schütze Raspberry Pi, Mikrofon und Zubehör vor Wetter und Feuchtigkeit.
 next: false
 sidebar:
   order: 6
 ---
 
 import ImageLinkCard from "../../../../../components/docs/ImageLinkCard.astro";
+import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
 
 Wie bringe ich jetzt den BirdNET-Pi in den Garten?
 
@@ -16,11 +17,33 @@ Es gibt verschiedene Möglichkeiten, den BirdNET-Pi im Freien zu platzieren:
 
 ### Vogelhaus: 
 Du kannst den Pi in ein Holzvogelhaus einbauen. Achte darauf, dass es nicht wetterfest ist. 
-Stelle es daher geschützt auf und hole es bei starkem Regen oder Frost ins Haus.
+Stelle es daher geschützt auf und hole es bei Regen oder Frost ins Haus.
+
+<ImageCarousel
+  label="Bilder der Projektkomponenten"
+  images={[
+    {
+      src: "/schlaumeise/images/project01/overview/parts1.jpg",
+      alt: "Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: "/schlaumeise/images/project01/overview/parts3.jpg",
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: "/schlaumeise/images/project01/overview/parts4.jpg",
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: "/schlaumeise/images/project01/overview/vogelhaus1.jpg",
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+  ]}
+/>
 
 ### Abzweigdose: 
 Im Baumarkt findest du Abzweigkästen für Elektroinstallationen. Diese eignen sich gut, um den Pi wetterfest zu schützen.
-
+<br />
 <ImageLinkCard
   title="BirdNET Pi in der Natur"
   description="Ein Outdoor BirdNET Pi Setup."
@@ -29,7 +52,7 @@ Im Baumarkt findest du Abzweigkästen für Elektroinstallationen. Diese eignen s
   imgAlt="BirdNET Pi in einem wetterfesten Gehäuse im Garten."
   isExternal
 />
-
+<br />
 <ImageLinkCard
   title="BirdNET Pi in deinem Garten"
   description="Ein Outdoor BirdNET Pi Setup."
@@ -42,7 +65,7 @@ Im Baumarkt findest du Abzweigkästen für Elektroinstallationen. Diese eignen s
 ### Nur Mikrofon nach draußen führen: 
 Du kannst auch nur das Mikrofon nach draußen führen. 
 So bleibt der Pi im Trockenen, und du kannst das Gehäuse frei gestalten.
-
+<br />
 <ImageLinkCard
   title="BirdNET Pi auf der Fensterbank"
   description="BirdNET Pi Setup mit dem Mikrofon 
@@ -52,7 +75,7 @@ So bleibt der Pi im Trockenen, und du kannst das Gehäuse frei gestalten.
   imgAlt="BirdNET Pi auf einer Fensterbank mit dem Mikrofon das aus dem Fenster herausgeführt wird."
   isExternal
 />
-
+<br />
 <ImageLinkCard
   title="BirdNET Pi am Fenster"
   description="BirdNET Pi Setup mit dem Mikrofon 
@@ -66,8 +89,7 @@ So bleibt der Pi im Trockenen, und du kannst das Gehäuse frei gestalten.
 ## Hilfreiche Materialien:
 
 3D-Druck: Für eine saubere Montage lassen sich 3D-gedruckte Halterungen verwenden, um Pi sicher zu befestigen.
-
-
+<br />
 <ImageLinkCard
   title="Rasberry Pi Zero Mount"
   description="Eine kostenlose digitale Datei für den 3D-Drucker."
@@ -76,7 +98,7 @@ So bleibt der Pi im Trockenen, und du kannst das Gehäuse frei gestalten.
   imgAlt="Minimaler Rasberry Pi Zero Mount"
   isExternal
 />
-
+<br />
 <ImageLinkCard
   title="BirdNET-Pi-Gehäuse für Orange Pi Zero2"
   description="Eine kostenlose digitale Datei für den 3D-Drucker."

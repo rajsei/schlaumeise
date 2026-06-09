@@ -40,7 +40,16 @@ const { images, label = "Bildergalerie" } = Astro.props;
             {images.map((_, index) => (
               <button
                 type="button"
-                class:list={["btn", "btn-xs btn-circle", { "btn-primary": index === 0 }]}
+                class:list={[
+                  "btn",
+                  "btn-xs",
+                  "btn-circle",
+                  "docs-image-carousel__dot",
+                  {
+                    "btn-primary": index === 0,
+                    "docs-image-carousel__dot--active": index === 0,
+                  },
+                ]}
                 data-carousel-dot
                 data-carousel-slide-to={index}
                 aria-label={`Bild ${index + 1} anzeigen`}
@@ -82,6 +91,7 @@ const { images, label = "Bildergalerie" } = Astro.props;
       dots.forEach((dot, index) => {
         const isActive = index === activeIndex;
         dot.classList.toggle("btn-primary", isActive);
+        dot.classList.toggle("docs-image-carousel__dot--active", isActive);
         dot.setAttribute("aria-current", isActive ? "true" : "false");
       });
     };
@@ -109,9 +119,7 @@ const { images, label = "Bildergalerie" } = Astro.props;
     position: relative;
     max-width: 100%;
     overflow: hidden;
-    border-radius: 7px;
-    
-    border-radius: var(--radius-box, 0.5rem);
+
   }
 
   .docs-image-carousel__slides {
@@ -153,15 +161,25 @@ const { images, label = "Bildergalerie" } = Astro.props;
   }
 
   .docs-image-carousel__dots {
-
-
     position: absolute;
     left: 50%;
-    bottom: 0.75rem;
+    bottom: 2rem;
     z-index: 2;
     display: flex;
-    justify-content: center;
     gap: 0.5rem;
     transform: translateX(-50%);
+  }
+
+  .docs-image-carousel__dot {
+    transition:
+      transform 160ms ease,
+      opacity 160ms ease;
+      transform: scale(0.8);
+  }
+
+  .docs-image-carousel__dot--active {
+    transform: scale(1.2);
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
   }
 </style>

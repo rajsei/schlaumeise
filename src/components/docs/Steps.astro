@@ -187,7 +187,7 @@ const initialCompleted = completed
       item.classList.toggle("is-complete", isDone);
       item.setAttribute("data-step-complete", isDone ? "true" : "false");
 
-      const toggle = item.querySelector<HTMLButtonElement>("[data-step-toggle]");
+      const toggle = item.querySelector<HTMLButtonElement>(":scope > [data-step-toggle]");
       if (toggle) {
         toggle.setAttribute("aria-pressed", isDone ? "true" : "false");
         toggle.setAttribute(
@@ -289,13 +289,6 @@ const initialCompleted = completed
     min-width: 0;
   }
 
-  [data-steps-root] > :is(ol, ul) > .steps__item:focus-visible,
-  [data-steps-root] > :is(ol, ul) > .steps__item:focus-within {
-    outline: 2px solid color-mix(in srgb, var(--color-accent), transparent 25%);
-    outline-offset: 2px;
-    border-radius: 0.45rem;
-  }
-
   [data-steps-root] > :is(ol, ul) > .steps__item::before {
     content: "";
     position: absolute;
@@ -344,10 +337,10 @@ const initialCompleted = completed
     background: var(--color-accent);
   }
 
-  [data-steps-root] .steps__item[data-step-complete="true"] .steps__toggle {
+  [data-steps-root] > :is(ol, ul) > .steps__item[data-step-complete="true"] > .steps__toggle {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-white);
+    color: var(--color-black);
   }
 
   [data-steps-root] > :is(ol, ul) > .steps__item > :first-child {

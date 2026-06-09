@@ -17,10 +17,10 @@ export const en = {
     paginationLabel: "Documentation pagination",
     prevLabel: "Previous",
     nextLabel: "Next",
-    topicsHeading: "Topics",
+    topicsHeading: "",
     globalHeading: "Global",
     tocHeading: "Contents",
-    noTocItems: "No section headings available.",
+    noTocItems: "No headings available.",
   },
   home: {
     title: "Welcome to {brand}",

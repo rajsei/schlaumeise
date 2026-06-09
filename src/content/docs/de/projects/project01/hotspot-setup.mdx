@@ -1,6 +1,6 @@
 ---
 title: Hotspot einrichten (Optional)
-description: ...
+description: Richte einen WLAN-Hotspot für deinen BirdNET-Pi ein, damit die Vogelstation auch außerhalb deines Heimnetzwerks erreichbar bleibt.
 sidebar:
   order: 5
 ---
@@ -18,7 +18,7 @@ Du kannst hier auch Beispielsweise weitere Wlan verbindungen hinzufügen oder be
 0. Verbinde dich per ssh.
 1. Nun bearbeiten wir die Wlan und Hotspot Einstellungen. Dafür müssen wir zunächst den Network Manager öffnen:
 
-```sh
+```
 sudo nmtui
 ```
 ![](/schlaumeise//images/project01/pi-setup2/nmtui01.jpg)
@@ -43,9 +43,12 @@ sudo nmtui
 ![](/schlaumeise//images/project01/pi-setup2/nmtui04.jpg)
 
 7. Nun müssen die Daten deines Netzwerkes hinzugefügt werden.
-   `Profile Name` ist nur zur identifikation, hier kannst du einen beliebigen Namen eingeben. Achte aber inden folgenden befehlen Hotspot mitdeinem gewählten Namen ersetzt.
-   `Device` ist wlan0
-   `SSID` Ist der Name des WLANs das erzeugt wird, auch das kannst du frei wählen, merke es dir aber!
+
+   - `Profile Name` ist nur zur identifikation, hier kannst du einen beliebigen Namen eingeben. Achte aber inden folgenden befehlen Hotspot mit deinem gewählten Namen ersetzt.
+   
+   - `Device` ist wlan0.
+
+   - `SSID` ist der Name des WLANs das erzeugt wird, auch das kannst du frei wählen, merke es dir aber!
 
 ![](/schlaumeise//images/project01/pi-setup2/nmtui05.jpg)
 
@@ -153,7 +156,7 @@ autoconnect-priority=0
   lang="plaintext"
   title="Terminal"
   class="terminal-code"
-  ins={[7,8]}
+  highlight={[7,8]}
   code="  GNU nano 7.2                     Hotspot.nmconnection *                             [connection]
 id=Hotspot
 uuid=4cc09b40-6ef0-4caf-bbf6-600fe2121122
@@ -237,7 +240,7 @@ autoconnect-priority=10
   lang="plaintext"
   title="Terminal"
   class="terminal-code"
-  ins={[7,8]}
+  highlight={[7,8]}
   mark={['autoconnect=true', 'autoconnect-priority=10']}
   code="  GNU nano 7.2                  preconfigured.nmconnection                            [connection]
 id=preconfigured
@@ -275,7 +278,7 @@ method=auto
 22. Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
 23. Starte jetzt den Raspberry pi neu.
 
-```sh
+```
 sudo reboot
 ```
 

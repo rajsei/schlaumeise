@@ -486,7 +486,12 @@ export function resolveSidebarNavigation(
 
 function flattenResolvedLinks(items: ResolvedNavItem[]): ResolvedNavLinkItem[] {
   return items.flatMap((item) =>
-    item.type === "link" ? [item] : flattenResolvedLinks(item.items),
+    item.type === "link"
+      ? [item]
+      : [
+          ...(item.overview ? [item.overview] : []),
+          ...flattenResolvedLinks(item.items),
+        ],
   );
 }
 

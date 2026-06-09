@@ -1,6 +1,6 @@
 ﻿---
 title: Raspberry Pi einrichten
-description: ...
+description:  Verbinde dich mit deinem Raspberry Pi, bereite das System vor und installiere BirdNET-Pi über die Konsole.
 sidebar:
   order: 4
 ---
@@ -9,8 +9,8 @@ sidebar:
 
 ## Voraussetzungen
 
-Du benÃƒÂ¶tigst einen Computer, eine passende SD-Karte fÃƒÂ¼r deinen Raspberry Pi, auf der das richtige Betriebssystem installiert ist
-(siehe Ã¢â‚¬Å¾SD-Karte einrichtenÃ¢â‚¬Â), sowie eine Internetverbindung. Ã¢â‚¬Â¦
+Du benötigst einen Computer, eine passende SD-Karte für deinen Raspberry Pi mit dem richtigen Betriebssystem 
+(siehe [SD-Karte einrichten](../sd-setup/)) sowie eine Internetverbindung.
 
 ## BirdNET Pi installieren
 
@@ -25,13 +25,13 @@ Du benÃƒÂ¶tigst einen Computer, eine passende SD-Karte fÃƒÂ¼r deinen Ras
 
   <LinkCard
     title="Mehr Informationen zur Konsole"
-    href="../../glossary/console/"
-    description="Eine Anleitung zum Ãƒâ€“ffnen und Bedienen der Konsole."
+    href="../../../glossary/console/"
+    description="Eine Anleitung zum Öffnen und Bedienen der Konsole."
   />
 
-4. Verbinde dich mit dem Pi ÃƒÂ¼ber das folgende Kommando. Nutze dazu die von dir zuvor eingegebenen Daten.
+4. Verbinde dich mit dem Pi über das folgende Kommando. Nutze dazu die von dir zuvor eingegebenen Daten.
 
-```sh
+```
 ssh birder@birdnetpi.local
 ```
 
@@ -46,7 +46,7 @@ ssh birder@birdnetpi.local
   Are you sure you want to continue connecting (yes/no/[fingerprint])?"
 />
 
-<div role="alert" class="alert alert-warning alert-vertical !items-start !justify-items-start text-left">
+<div role="alert" class="alert alert-warning alert-vertical w-full [grid-template-columns:1fr] !items-start !justify-items-start text-left">
   <div class="flex items-start gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -54,9 +54,9 @@ ssh birder@birdnetpi.local
     <span class="font-semibold">Fehlerbehebung</span>
   </div>
   <div class="w-full self-stretch text-left">
-    <div class="collapse collapse-arrow bg-base-100 border-base-300 border w-full text-left">
+    <div class="collapse collapse-arrow w-full bg-alert-soft w-full text-left">
       <input type="checkbox" />
-      <div class="collapse-title font-semibold">Was wenn keine Verbindung hergestellt werden kann? (Der angegebene Host ist unbekannt.)</div>
+      <div class="collapse-title font-semibold">Was wenn keine Verbindung hergestellt werden kann? - **'Der angegebene Host ist unbekannt.'**</div>
       <div class="collapse-content text-sm">
         Wenn die Meldung erscheint:
         <Code
@@ -66,32 +66,35 @@ ssh birder@birdnetpi.local
         />
         bedeutet das, dass keine Verbindung zu deinem Raspberry Pi hergestellt werden kann.
 
-        ÃƒÅ“berprÃƒÂ¼fe folgende Punkte:
+        Überprüfe folgende Punkte:
         <Steps>
           1. Stromversorgung: Stelle sicher, dass der Raspberry Pi eingeschaltet ist, die SD-Karte korrekt eingesteckt ist
           und die Status-LEDs blinken oder leuchten.
-          2. Netzwerk: Vergewissere dich, dass PC und Raspberry Pi im selben Netzwerk sind Ã¢â‚¬â€œ also mit demselben WLAN oder Hotspot verbunden.
-          (Achte darauf, dass die WLAN-Daten im Raspberry Pi OS mit deinem aktuellen WLAN ÃƒÂ¼bereinstimmen.)
-          3. Neuinstallation: Wenn die Verbindung weiterhin fehlschlÃƒÂ¤gt, installiere Raspberry Pi OS neu auf der SD-Karte
-          und trage die WLAN-Zugangsdaten erneut sorgfÃƒÂ¤ltig ein.
-          4. Direkte Verbindung: Erfahrene Nutzer kÃƒÂ¶nnen eine Tastatur und einen Bildschirm direkt am Raspberry Pi anschlieÃƒÅ¸en,
-          um die Verbindung und Netzwerkeinstellungen manuell zu ÃƒÂ¼berprÃƒÂ¼fen.
+          2. Netzwerk: Vergewissere dich, dass PC und Raspberry Pi im selben Netzwerk sind - also mit demselben WLAN oder Hotspot verbunden.
+          (Achte darauf, dass die WLAN-Daten im Raspberry Pi OS mit deinem aktuellen WLAN übereinstimmen.)
+          3. Neuinstallation: Wenn die Verbindung weiterhin fehlschlägt, installiere Raspberry Pi OS neu auf der SD-Karte
+          und trage die WLAN-Zugangsdaten erneut sorgfältig ein.
+          4. Direkte Verbindung: Erfahrene Nutzer können eine Tastatur und einen Bildschirm direkt am Raspberry Pi anschließen,
+          um die Verbindung und Netzwerkeinstellungen manuell zu Überprüfen.
         </Steps>
       </div>
     </div>
-    <div class="collapse collapse-arrow bg-base-100 border-base-300 border w-full text-left">
+
+    <br />
+
+    <div class="collapse collapse-arrow bg-alert-soft w-full text-left">
       <input type="checkbox" />
-      <div class="collapse-title font-semibold">Was wenn 'WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!' angezeigt wird?</div>
+      <div class="collapse-title font-semibold">Was wenn **'WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!'** angezeigt wird?</div>
       <div class="collapse-content text-sm">
-        Keine Sorge Ã¢â‚¬â€œ das ist normal, wenn du bereits frÃƒÂ¼her per SSH mit einem
+        Keine Sorge, das ist normal, wenn du bereits früher per SSH mit einem
         Raspberry Pi gleichen Namens verbunden warst. So behebst du das Problem:
 
         <Steps>
-          1. Ãƒâ€“ffne die Datei: C:\Users\Benutzername\.ssh\known_hosts (der genaue Pfad steht auch in der Warnung) mit einem Texteditor.
-          2. Suche alle Zeilen, die mit birdnetpi.local beginnen, und lÃƒÂ¶sche sie.
-          Es kÃƒÂ¶nnen mehrere EintrÃƒÂ¤ge sein, die sich ÃƒÂ¼ber mehrere Zeilen erstrecken.
-          3. Wenn du SSH noch nie fÃƒÂ¼r andere Verbindungen genutzt hast, kannst du auch den gesamten Inhalt der Datei lÃƒÂ¶schen.
-          4. Speichere die Datei, schlieÃƒÅ¸e den Editor und versuche die Verbindung anschlieÃƒÅ¸end erneut.
+          1. Öffne die Datei: C:\Users\Benutzername\.ssh\known_hosts (der genaue Pfad steht auch in der Warnung) mit einem Texteditor.
+          2. Suche alle Zeilen, die mit birdnetpi.local beginnen, und lösche sie.
+          Es können mehrere Einträge sein, die sich über mehrere Zeilen erstrecken.
+          3. Wenn du SSH noch nie für andere Verbindungen genutzt hast, kannst du auch den gesamten Inhalt der Datei löschen.
+          4. Speichere die Datei, schließe den Editor und versuche die Verbindung anschließend erneut.
         </Steps>
       </div>
     </div>
@@ -101,12 +104,12 @@ ssh birder@birdnetpi.local
 
 
 
-5. BestÃƒÂ¤tige die Verbindung.
+5. Bestätige die Verbindung.
 
 
 
 
-```sh
+```
 yes
 ```
 
@@ -147,36 +150,41 @@ Last login: Thu Oct 01 00:00:00 2025 from 2a02:4454:c122:2000:15gc:24b7:f06a:f32
 
 
 
-7. Dieser Schritt ist nur fÃƒÂ¼r Raspberry Pi Zero 2 W:
+7. **Dieser Schritt ist nur für den *Raspberry Pi Zero 2 W*:**
+
    Der Arbeitsspeicher des Raspberry Pi Zero 2 W ist zu gering, um BirdNET-Pi ohne Anpassung zu installieren.
-   Daher muss die sogenannte Swapsize erhÃƒÂ¶ht werden. Sie sorgt dafÃƒÂ¼r, dass zusÃƒÂ¤tzlich zur physischen Hardware
+   Daher muss die sogenannte Swapsize erhöht werden. Sie sorgt dafür, dass zusätzlich zur physischen Hardware
    auch ein Teil der SD-Karte als Arbeitsspeicher genutzt wird.
-   Ohne diese Anpassung lÃƒÂ¤sst sich BirdNET-Pi auf dem Zero 2 W nicht installieren.
-   Zudem mÃƒÂ¼ssen die WLAN-Energieoptionen angepasst werden.
+   Ohne diese Anpassung lässt sich BirdNET-Pi auf dem Zero 2 W nicht installieren.
+   Zudem müssen die WLAN-Energieoptionen angepasst werden.
 
 
 
 
-```sh
+```
 sudo sed -i 's/CONF_SWAPSIZE=512/CONF_SWAPSIZE=2048/g' /etc/dphys-swapfile &&
 sudo sed -i 's/#CONF_MAXSWAP=2048/CONF_MAXSWAP=4096/g' /etc/dphys-swapfile &&
 sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
 ```
-<div role="alert" class="alert alert-warning alert-vertical !items-start !justify-items-start text-left">
+<div role="alert" class="alert alert-warning alert-vertical w-full [grid-template-columns:1fr] !items-start !justify-items-start text-left">
   <div class="flex gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
     </svg>
-    <span class="font-semibold">Ãƒâ€žnderungen prÃƒÂ¼fen</span>
+    <span class="font-semibold">Änderungen prüfen</span>
   </div>
-  <div class="w-full  text-left">
-    <div class="collapse collapse-arrow bg-base-100 border-base-300 border w-full text-left">
+  <div> 
+  Sollte die Insallation von BirdNET-Pi auf deinem ***Raspberry Pi Zero 2 W*** **fehlschlagen**, könnte es daran liegen, dass die Einstellungen nicht richtig übernommen wurden.
+  Überprüfe in diesem Fall die folgenden Punkte, um sicherzustellen, dass die Anpassungen korrekt vorgenommen wurden.
+  </div>
+  <div class="w-full text-left">
+    <div class="collapse collapse-arrow w-full bg-alert-soft w-full text-left">
       <input type="checkbox" />
-      <div class="collapse-title font-semibold">ÃƒÅ“berprÃƒÂ¼fen der 'Swapsize'.</div>
+      <div class="collapse-title font-semibold">Überprüfen der 'Swapsize'.</div>
       <div class="collapse-content text-sm">
-        Um sicherzustellen, dass die Ãƒâ€žnderungen tatsÃƒÂ¤chlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl ÃƒÂ¶ffnen.
+        Um sicherzustellen, dass die Änderungen tatsächlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl öffnen.
 
-        ```sh
+        ```
         sudo nano /etc/dphys-swapfile
         ```
         Wichtig ist, dass die Zeilen `CONF_SWAPSIZE=2048` und `CONF_MAXSWAP=4096` stimmen. Falls nicht, passe die Zahlen an.
@@ -216,18 +224,19 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
         ^G Help ^O Write Out ^W Where Is ^K Cut ^T Execute
         ^X Exit ^R Read File ^\ Replace ^U Paste ^J Justify" />
 
-        DrÃƒÂ¼cke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschlieÃƒÅ¸end <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
+        Drücke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
       </div>
     </div>
-    <div class="collapse collapse-arrow bg-base-100 border-base-300 border w-full text-left">
+    <br />
+    <div class="collapse collapse-arrow w-full bg-alert-soft w-full text-left">
       <input type="checkbox" />
-      <div class="collapse-title font-semibold">ÃƒÅ“berprÃƒÂ¼fen der WLAN-Energieoptionen.</div>
+      <div class="collapse-title font-semibold">Überprüfen der WLAN-Energieoptionen.</div>
       <div class="collapse-content text-sm">
         <Steps>
 
-          1. Um sicherzustellen, dass die Ãƒâ€žnderungen tatsÃƒÂ¤chlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl ÃƒÂ¶ffnen.
+          1. Um sicherzustellen, dass die Änderungen tatsächlich angewendet wurden, kannst du die passende Datei mit dem folgenden Befehl öffnen.
 
-          ```sh
+          ```
           sudo nano /etc/rc.local
           ```
 
@@ -238,12 +247,12 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
           ^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
           ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify" />
 
-          Sollte die Datei leer sein, fÃƒÂ¼hre die weiteren Schritte aus.
-          Sollte sie hingegen wie im folgenden Schritt zwei aussehen, kannst du die Datei wieder schlieÃƒÅ¸en.
+          Sollte die Datei leer sein, führe die weiteren Schritte aus.
+          Sollte sie hingegen wie im folgenden Schritt zwei aussehen, kannst du die Datei wieder schließen.
 
-          2. FÃƒÂ¼ge folgenden Inhalt ein:
+          2. Füge folgenden Inhalt ein:
 
-          ```sh
+          ```
           #!/bin/bash
           sudo iw wlan0 set power_save off
           exit 0
@@ -263,7 +272,7 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
             ^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify"
           />
 
-          3. DrÃƒÂ¼cke <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschlieÃƒÅ¸end <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
+          3. Drücken <kbd class="kbd">Strg+x</kbd>, dann <kbd class="kbd">y</kbd>, abschließend <kbd class="kbd">Enter</kbd>, um die Datei zu speichern.
         </Steps>
       </div>
     </div>
@@ -272,24 +281,24 @@ sudo sed -i '/^exit 0/i sudo iw wlan0 set power_save off' /etc/rc.local
 
 Starte den Raspberry Pi jetzt neu.
 
-```sh
+```
 sudo reboot
 ```
 
-Warte anschlieÃƒÅ¸end einige Minuten, bis das System vollstÃƒÂ¤ndig gestartet ist und sich mit dem WLAN verbunden hat.
+Warte anschließend einige Minuten, bis das System vollständig gestartet ist und sich mit dem WLAN verbunden hat.
 Verbinde dich danach erneut per SSH mit dem Pi (siehe Schritt 4 und 6).
 
 
 
 
 8. Mit diesem Befehl startest du die Installation von BirdNET-Pi.
-   Der Vorgang kann mehrere Minuten dauern Ã¢â‚¬â€œ je nach Internetverbindung und Systemleistung.
-   Lass das Terminal geÃƒÂ¶ffnet, bis die Installation vollstÃƒÂ¤ndig abgeschlossen ist.
+   Der Vorgang kann mehrere Minuten dauern - je nach Internetverbindung und Systemleistung.
+   Lass das Terminal geöffnet, bis die Installation vollständig abgeschlossen ist.
 
 
 
 
-```sh
+```
 curl -s https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh | bash
 ```
 </Steps>
