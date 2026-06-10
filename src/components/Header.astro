@@ -59,7 +59,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
 }
 ---
 
-<div class="navbar bg-base-100 shadow-sm">
+<div class="navbar site-navbar bg-base-100 shadow-sm">
   <div class="navbar-start">
     <button
       type="button"
@@ -204,6 +204,12 @@ function navLinkClass(href: string, extra: string[] = []): string {
 </script>
 
 <style>
+  .site-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+
   :global(.button-nav) {
     display: inline-flex;
 

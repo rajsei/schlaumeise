@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import "../styles/docs.css";
 import Sidebar from "../components/ui-elements/Sidebar.astro";
 import DocsTOC from "../components/docs/DocsTOC.astro";
 import DocsPagination from "../components/docs/DocsPagination.astro";
@@ -54,7 +55,7 @@ const pagination = resolveDocsPagination({
 
     <div class="drawer-content">
       <div class="docs-content-layout" data-show-content-toc={showContentToc ? "true" : "false"}>
-        <main class="docs-main">
+        <div class="docs-main">
           <article class="docs-article">
             <header class="docs-article__header">
               <h1>{entry.data.title}</h1>
@@ -86,7 +87,7 @@ const pagination = resolveDocsPagination({
               next={pagination.next}
             />
           </article>
-        </main>
+        </div>
 
         {
           showContentToc && (
@@ -119,172 +120,15 @@ const pagination = resolveDocsPagination({
   </section>
 
   <script>
-    const shell = document.querySelector<HTMLElement>("[data-docs-shell]");
+    import { initDocsDrawer } from "../scripts/docs-drawer";
 
-    if (shell) {
-      const sidebar = shell.querySelector<HTMLElement>("[data-docs-sidebar]");
-      const drawerInput = shell.querySelector<HTMLInputElement>(
-        "[data-docs-sidebar-input]",
-      );
-      const overlay = shell.querySelector<HTMLElement>(".drawer-overlay");
-      const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
-        "[data-docs-sidebar-toggle]",
-      );
-      const desktopQuery = window.matchMedia("(min-width: 1024px)");
-
-      if (!drawerInput) {
-        throw new Error("Missing docs sidebar drawer input");
-      }
-
-      let lastFocusedElement: HTMLElement | null = null;
-
-      const isDesktop = () => desktopQuery.matches;
-      const focusFirstSidebarElement = () => {
-        if (!sidebar) return;
-        const focusable = sidebar.querySelectorAll<HTMLElement>(
-          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
-        );
-        focusable[0]?.focus();
-      };
-
-      const setToggleVisual = (open: boolean) => {
-        for (const button of toggleButtons) {
-          button.setAttribute("aria-expanded", String(open));
-          button.classList.toggle("is-open", open);
-        }
-      };
-
-      const setMobileState = (open: boolean) => {
-        shell.dataset.mobileOpen = open ? "true" : "false";
-        if (isDesktop()) {
-          document.body.style.overflow = "";
-          return;
-        }
-        document.body.style.overflow = open ? "hidden" : "";
-      };
-
-      const setDesktopState = (open: boolean) => {
-        shell.dataset.desktopOpen = open ? "true" : "false";
-      };
-
-      const openMobileDrawer = () => {
-        lastFocusedElement =
-          document.activeElement instanceof HTMLElement
-            ? document.activeElement
-            : null;
-        drawerInput.checked = true;
-        setMobileState(true);
-        setToggleVisual(true);
-        focusFirstSidebarElement();
-      };
-
-      const closeMobileDrawer = (restoreFocus = true) => {
-        drawerInput.checked = false;
-        setMobileState(false);
-        setToggleVisual(false);
-        if (restoreFocus) {
-          lastFocusedElement?.focus();
-        }
-      };
-
-      const toggleDesktopSidebar = () => {
-        const open = shell.dataset.desktopOpen !== "true";
-        setDesktopState(open);
-        drawerInput.checked = open;
-        setToggleVisual(open);
-      };
-
-      const toggleSidebar = () => {
-        if (isDesktop()) {
-          toggleDesktopSidebar();
-          return;
-        }
-
-        if (shell.dataset.mobileOpen === "true") {
-          closeMobileDrawer();
-        } else {
-          openMobileDrawer();
-        }
-      };
-
-      const onExternalToggle = () => {
-        toggleSidebar();
-      };
-
-      drawerInput.addEventListener("change", () => {
-        if (isDesktop()) {
-          return;
-        }
-        const open = drawerInput.checked;
-        setMobileState(open);
-        setToggleVisual(open);
-        if (open) {
-          lastFocusedElement =
-            document.activeElement instanceof HTMLElement
-              ? document.activeElement
-              : null;
-          focusFirstSidebarElement();
-        } else {
-          lastFocusedElement?.focus();
-        }
-      });
-
-      overlay?.addEventListener("click", (event) => {
-        event.preventDefault();
-        closeMobileDrawer();
-      });
-      document.addEventListener("docs-sidebar:toggle", onExternalToggle);
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && shell.dataset.mobileOpen === "true") {
-          closeMobileDrawer();
-        }
-
-        if (event.key !== "Tab" || shell.dataset.mobileOpen !== "true" || !sidebar) {
-          return;
-        }
-
-        const focusable = sidebar.querySelectorAll<HTMLElement>(
-          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
-        );
-        if (focusable.length === 0) {
-          return;
-        }
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        const active = document.activeElement;
-
-        if (event.shiftKey && active === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && active === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      });
-
-      desktopQuery.addEventListener("change", (event) => {
-        if (event.matches) {
-          closeMobileDrawer(false);
-          drawerInput.checked = shell.dataset.desktopOpen === "true";
-          setToggleVisual(shell.dataset.desktopOpen === "true");
-          return;
-        }
-
-        drawerInput.checked = false;
-        setMobileState(false);
-        setToggleVisual(false);
-      });
-
-      if (isDesktop()) {
-        drawerInput.checked = shell.dataset.desktopOpen === "true";
-        setToggleVisual(shell.dataset.desktopOpen === "true");
-      } else {
-        drawerInput.checked = false;
-        setMobileState(false);
-        setToggleVisual(false);
-      }
-    }
+    initDocsDrawer({
+      shellSelector: "[data-docs-shell]",
+      sidebarSelector: "[data-docs-sidebar]",
+      inputSelector: "[data-docs-sidebar-input]",
+      toggleSelector: "[data-docs-sidebar-toggle]",
+      desktopBreakpoint: "(min-width: 1024px)",
+      missingInputMessage: "Missing docs sidebar drawer input",
+    });
   </script>
 </MainLayout>
