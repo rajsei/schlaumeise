@@ -70,14 +70,14 @@
     });
 
     const images = document.querySelectorAll<HTMLImageElement>(
-      ".docs-article__body .mdx-interpreter img:not(.arrow)",
+      ".docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable)",
     );
 
     for (const image of images) {
       if (image.dataset.docsZoomReady === "true") {
         continue;
       }
-      if (image.closest("a,button,[data-no-zoom]")) {
+      if (image.closest("a,button,[data-no-zoom],.not-zoomable")) {
         continue;
       }
 
@@ -103,7 +103,7 @@
 </script>
 
 <style is:global>
-  .docs-article__body .mdx-interpreter img:not(.arrow) {
+  .docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable) {
     box-sizing: border-box;
     display: block;
     width: auto;

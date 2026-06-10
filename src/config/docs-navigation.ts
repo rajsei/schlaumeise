@@ -81,7 +81,7 @@ export const navigation: NavigationConfig = {
           translations: {
             de: "BirdNET Live",
           },
-          items: [{ autogenerate: { directory: "guides" } }],
+          items: [{ autogenerate: { directory: "guides/birdnet_live" } }],
         },
       ],
     },
