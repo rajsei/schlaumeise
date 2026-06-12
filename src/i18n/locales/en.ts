@@ -29,12 +29,4 @@ export const en = {
     title: "Welcome to {brand}",
     intro: "English routes are always prefixed with /en/.",
   },
-  docs: {
-    toggleSidebar: "Navigation",
-    closeSidebar: "Close",
-    navigation: "Documentation navigation",
-    topics: "Topics",
-    global: "More",
-    tableOfContents: "On this page",
-  },
 } as const;

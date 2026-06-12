@@ -18,14 +18,12 @@ interface Props {
   title?: string;
   description?: string;
   locale?: Locale;
-  showSidebarToggle?: boolean;
 }
 
 const {
   title = getBrandConfig(getLocaleFromPathname(Astro.url.pathname)).name,
   description = "",
   locale: localeProp,
-  showSidebarToggle = false,
 } = Astro.props;
 
 const locale = localeProp ?? getLocaleFromPathname(Astro.url.pathname);
@@ -88,7 +86,6 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
       dictionary={dictionary}
       brand={brand}
       languageSwitchHref={languageSwitchHref}
-      showSidebarToggle={showSidebarToggle}
     />
     <main>
       <slot />

@@ -2,6 +2,14 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-13 — Artefakte eines fehlerhaften Merges entfernt (Agent)
+
+### Entfernt
+- `src/pages/en/[...slug].astro` und `src/lib/docs/navigation.ts`: Reste einer anderen, inkompatiblen Architektur (anderes `DocsLayout`-Props-Schema, `resolveDocsNavigation`, Loader-API-`render`). Die Route kollidierte mit `[locale]/[...slug].astro` (bedient `/en/…` bereits) und brach den Build bei `/en/impressum/`
+- Doppelte `docs`-Blöcke in `de.ts`/`en.ts` (Keys `toggleSidebar`, `closeSidebar` … gehörten zur entfernten Route; JS behält bei doppelten Keys den zweiten — die echten Labels `toggleNav`/`closeNav` wären zur Laufzeit verloren gegangen)
+- Weitere unreferenzierte Dateien derselben Fremd-Architektur: `components/docs/PageToc.astro`, `components/docs/Sidebar.astro`, `components/docs/SidebarItems.astro`, `components/docs/TopicIcon.astro`, `config/navigation.ts` (Duplikate zu `ui-elements/Sidebar*`, `DocsTOC`, `config/docs-navigation.ts`)
+- Totes Prop `showSidebarToggle` aus `Header.astro`/`MainLayout.astro` (wurde durchgereicht, aber nirgends ausgewertet; einziger Setzer war die entfernte Route)
+
 ## 2026-06-12 — Theme-System überarbeitet (Agent)
 
 ### Hinzugefügt
