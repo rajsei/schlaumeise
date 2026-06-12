@@ -1,0 +1,29 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+  copy?: boolean;
+  wrap?: boolean;
+  theme?: string | { light: string; dark: string };
+  class?: string;
+  showLineNumbers?: boolean;
+  highlight?: string | number[];
+  meta?: string;
+  mark?: string | number[];
+  ins?: string | number[];
+}
+
+const {
+  mark,
+  ins,
+  highlight,
+  ...rest
+} = Astro.props;
+
+const resolvedHighlight = highlight ?? mark ?? ins;
+---
+
+<CodeBlock {...rest} highlight={resolvedHighlight} />

@@ -1,0 +1,198 @@
+---
+import type { Locale } from "../../i18n/config";
+import { getDictionary } from "../../i18n";
+import { resolveSidebarNavigation } from "../../lib/docs-navigation";
+import type { DocsEntry } from "../../types/docs";
+import SidebarItems from "./SidebarItems.astro";
+import TopicIcon from "./TopicIcon.astro";
+
+interface Props {
+  locale: Locale;
+  entries: DocsEntry[];
+  currentPathname: string;
+}
+
+const { locale, entries, currentPathname } = Astro.props;
+const dictionary = getDictionary(locale);
+const resolved = resolveSidebarNavigation(locale, currentPathname, entries);
+---
+
+<nav
+  class="docs-nav"
+  aria-label={dictionary.docs.navLabel}
+  data-topic-nav
+  data-active-topic-id={resolved.activeTopicId ?? ""}
+>
+  <section>
+    <h2 class="docs-nav__section_heading">{dictionary.docs.topicsHeading}</h2>
+    <ul class="docs-nav__topics" role="radiogroup" aria-label={dictionary.docs.topicsHeading}>
+      {
+        resolved.topics.map((topic) => (
+          <li>
+            {topic.type === "items" && (
+              <button
+                type="button"
+                class:list={["docs-topic docs-topic--button", topic.id === resolved.activeTopicId && "is-active"]}
+                role="radio"
+                aria-checked={topic.id === resolved.activeTopicId ? "true" : "false"}
+                tabindex={topic.id === resolved.activeTopicId ? "0" : "-1"}
+                data-topic-button
+                data-topic-id={topic.id}
+              >
+                <TopicIcon icon={topic.icon} />
+                <span>{topic.label}</span>
+              </button>
+            )}
+            {topic.type === "link" && (
+              <a
+                href={topic.href}
+                class:list={["docs-topic docs-topic--link", topic.active && "is-active menu-active"]}
+                aria-current={topic.active ? "page" : undefined}
+              >
+                <TopicIcon icon={topic.icon} />
+                <span>{topic.label}</span>
+              </a>
+            )}
+            {topic.type === "static" && (
+              <span class="docs-topic docs-topic--static">
+                <TopicIcon icon={topic.icon} />
+                <span>{topic.label}</span>
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    resolved.topicPanels.map((panel) => (
+      <section data-topic-panel data-topic-id={panel.id} hidden={panel.id !== resolved.activeTopicId}>
+        <SidebarItems items={panel.items} />
+      </section>
+    ))
+  }
+
+  {resolved.globalItems.length > 0 && <div class="divider my-2" />}
+
+  {resolved.globalItems.length > 0 && (
+    <section>
+      <h2 class="docs-nav__section_heading">{dictionary.docs.globalHeading}</h2>
+      <SidebarItems items={resolved.globalItems} />
+    </section>
+  )}
+</nav>
+
+<script>
+  const topicRoots = document.querySelectorAll<HTMLElement>("[data-topic-nav]");
+
+  for (const root of topicRoots) {
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-topic-button]"),
+    );
+    const panels = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-topic-panel]"),
+    );
+
+    if (buttons.length === 0 || panels.length === 0) {
+      continue;
+    }
+
+    const panelIds = new Set(
+      panels
+        .map((panel) => panel.dataset.topicId)
+        .filter((id): id is string => Boolean(id)),
+    );
+
+    let activeTopicId = root.dataset.activeTopicId ?? "";
+    if (!panelIds.has(activeTopicId)) {
+      const preselected = buttons.find(
+        (button) =>
+          button.getAttribute("aria-checked") === "true" &&
+          panelIds.has(button.dataset.topicId ?? ""),
+      );
+      activeTopicId = preselected?.dataset.topicId ?? "";
+    }
+    if (!panelIds.has(activeTopicId)) {
+      activeTopicId = buttons[0]?.dataset.topicId ?? "";
+    }
+
+    if (!activeTopicId) {
+      continue;
+    }
+
+    const setActiveTopic = (topicId: string, moveFocus = false) => {
+      activeTopicId = topicId;
+      root.dataset.activeTopicId = topicId;
+
+      for (const button of buttons) {
+        const isActive = button.dataset.topicId === topicId;
+        button.setAttribute("aria-checked", isActive ? "true" : "false");
+        button.tabIndex = isActive ? 0 : -1;
+        button.classList.toggle("is-active", isActive);
+        if (isActive && moveFocus) {
+          button.focus();
+        }
+      }
+
+      for (const panel of panels) {
+        panel.hidden = panel.dataset.topicId !== topicId;
+      }
+    };
+
+    const moveByOffset = (fromIndex: number, offset: number) => {
+      const nextIndex = (fromIndex + offset + buttons.length) % buttons.length;
+      const nextId = buttons[nextIndex]?.dataset.topicId;
+      if (nextId) {
+        setActiveTopic(nextId, true);
+      }
+    };
+
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", () => {
+        const topicId = button.dataset.topicId;
+        if (topicId) {
+          setActiveTopic(topicId);
+        }
+      });
+
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          event.preventDefault();
+          moveByOffset(index, 1);
+          return;
+        }
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          event.preventDefault();
+          moveByOffset(index, -1);
+          return;
+        }
+        if (event.key === "Home") {
+          event.preventDefault();
+          const firstId = buttons[0]?.dataset.topicId;
+          if (firstId) {
+            setActiveTopic(firstId, true);
+          }
+          return;
+        }
+        if (event.key === "End") {
+          event.preventDefault();
+          const lastId = buttons[buttons.length - 1]?.dataset.topicId;
+          if (lastId) {
+            setActiveTopic(lastId, true);
+          }
+          return;
+        }
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          const topicId = button.dataset.topicId;
+          if (topicId) {
+            setActiveTopic(topicId);
+          }
+        }
+      });
+    });
+
+    setActiveTopic(activeTopicId);
+  }
+</script>

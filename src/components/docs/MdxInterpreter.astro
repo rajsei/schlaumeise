@@ -1,0 +1,202 @@
+---
+import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
+---
+
+<DocsCodeBlockStyles />
+
+<div class="mdx-interpreter">
+  <slot />
+</div>
+
+<script>
+  import "../../scripts/docs-code-copy";
+</script>
+
+<style is:global>
+  .mdx-interpreter > :first-child {
+    margin-top: 0;
+  }
+
+  .mdx-interpreter > :last-child {
+    margin-bottom: 0;
+  }
+
+  .mdx-interpreter :where(h1, h2, h3, h4, h5, h6) {
+    /* color: var(--color-white); */
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .mdx-interpreter :where(h2) {
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 45%);
+    padding-bottom: 0.35rem;
+  }
+
+  .mdx-interpreter :where(h3) {
+    font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  }
+
+  .mdx-interpreter :where(h4, h5, h6) {
+    font-size: 1rem;
+  }
+
+  .mdx-interpreter :where(p, ul, ol, blockquote, table, hr) {
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .mdx-interpreter :where(pre) {
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .mdx-interpreter :where(ul, ol) {
+    padding-left: 1.4rem;
+  }
+
+  .mdx-interpreter :where(ul) {
+    list-style: disc;
+  }
+
+  .mdx-interpreter :where(ol) {
+    list-style: decimal;
+  }
+
+  .mdx-interpreter :where(li) {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .mdx-interpreter :where(li > ul, li > ol) {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .mdx-interpreter :where(a) {
+    color: var(--color-accent-high);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .mdx-interpreter :where(strong) {
+    font-weight: 700;
+  }
+
+  .mdx-interpreter :where(code):not(pre code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+    background: color-mix(in srgb, var(--color-accent), transparent 82%);
+    border: 1px solid color-mix(in srgb, var(--color-accent), transparent 68%);
+    border-radius: 0.35rem;
+    padding: 0.1rem 0.35rem;
+  }
+
+  .mdx-interpreter :where(pre):not(.astro-code):not(.docs-terminal__pre) {
+    border-radius: 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 42%);
+    padding: 0.8rem;
+    overflow-x: auto;
+    background: color-mix(in srgb, var(--color-black), black 18%);
+  }
+
+  .mdx-interpreter :where(pre):not(.astro-code):not(.docs-terminal__pre) code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .mdx-interpreter :where(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding: 0.2rem 0 0.2rem 0.85rem;
+    color: var(--color-gray-2);
+    font-style: italic;
+  }
+
+  .mdx-interpreter :where(table) {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .mdx-interpreter :where(th, td) {
+    border: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 40%);
+    padding: 0.5rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .mdx-interpreter :where(th) {
+    color: var(--color-white);
+    background: color-mix(in srgb, var(--color-accent), transparent 84%);
+  }
+
+  .mdx-interpreter :where(hr) {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 35%);
+  }
+
+  .mdx-interpreter .docs-code-block__copy::before,
+  .mdx-interpreter .docs-code-block__copy::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy-icon-wrap) {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    display: inline-grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy-icon, .docs-code-block__copied-icon) {
+    position: absolute;
+    inset: 0;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy-icon) {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copied-icon) {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy[data-copied="true"] .docs-code-block__copy-icon) {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy[data-copied="true"] .docs-code-block__copied-icon) {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .mdx-interpreter :where(.docs-code-block .astro-code) {
+    overflow-x: auto;
+  }
+
+  @media (max-width: 640px) {
+    .mdx-interpreter :where(ul, ol) {
+      padding-left: 1.1rem;
+    }
+  }
+</style>

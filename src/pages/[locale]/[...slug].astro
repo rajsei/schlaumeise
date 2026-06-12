@@ -1,0 +1,51 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Steps from "../../components/docs/Steps.astro";
+import LinkCard from "../../components/docs/LinkCard.astro";
+import Code from "../../components/docs/Code.astro";
+import CodeBlock from "../../components/docs/CodeBlock.astro";
+import Terminal from "../../components/docs/Terminal.astro";
+
+import { defaultLocale, locales, type Locale } from "../../i18n/config";
+import { createSlugParam, getDocsEntriesForLocale } from "../../lib/docs-content";
+import type { DocsEntry } from "../../types/docs";
+
+interface Props {
+  locale: Locale;
+  entry: DocsEntry;
+  entries: DocsEntry[];
+}
+
+export async function getStaticPaths() {
+  const nonDefaultLocales = locales.filter((locale) => locale !== defaultLocale);
+  const paths = [];
+
+  for (const locale of nonDefaultLocales) {
+    const entries = await getDocsEntriesForLocale(locale);
+    for (const entry of entries) {
+      paths.push({
+        params: {
+          locale,
+          slug: createSlugParam(entry),
+        },
+        props: {
+          locale,
+          entry,
+          entries,
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { locale, entry, entries } = Astro.props;
+
+const { Content, headings } = await entry.render();
+const mdxComponents = { Steps, LinkCard, Code, CodeBlock, Terminal };
+---
+
+<DocsLayout locale={locale} entry={entry} entries={entries} headings={headings}>
+  <Content components={mdxComponents} />
+</DocsLayout>

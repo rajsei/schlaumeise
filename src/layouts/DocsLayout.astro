@@ -1,411 +1,134 @@
 ---
 import type { MarkdownHeading } from "astro";
-import Sidebar from "../components/docs/Sidebar.astro";
-import PageToc from "../components/docs/PageToc.astro";
-import type { ResolvedDocsNavigation } from "../lib/docs/navigation";
+import "../styles/docs.css";
+import Sidebar from "../components/ui-elements/Sidebar.astro";
+import DocsTOC from "../components/docs/DocsTOC.astro";
+import DocsPagination from "../components/docs/DocsPagination.astro";
+import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
+import ZoomableDocsImages from "../components/docs/ZoomableDocsImages.astro";
+
+import MainLayout from "./MainLayout.astro";
+import type { Locale } from "../i18n/config";
+import { getDictionary } from "../i18n";
+import type { DocsEntry } from "../types/docs";
+import { resolveDocsPagination } from "../lib/docs-navigation";
 
 interface Props {
-  title: string;
-  description?: string;
+  locale: Locale;
+  entry: DocsEntry;
+  entries: DocsEntry[];
   headings: MarkdownHeading[];
-  navigation: ResolvedDocsNavigation;
-  showSidebarDefault: boolean;
-  labels: {
-    navigation: string;
-    topics: string;
-    global: string;
-    closeSidebar: string;
-    tableOfContents: string;
-  };
 }
 
-const {
-  title,
-  description,
-  headings,
-  navigation,
-  showSidebarDefault,
-  labels,
-} = Astro.props;
+const { locale, entry, entries, headings } = Astro.props;
+const dictionary = getDictionary(locale);
+const desktopMenuOpen = entry.data.menu !== false;
+const hasVisibleHeadings = headings.some((heading) => heading.depth <= 4);
+const showContentToc = entry.data.content !== false && hasVisibleHeadings;
+const pagination = resolveDocsPagination({
+  locale,
+  currentPathname: Astro.url.pathname,
+  docsEntries: entries,
+  currentEntry: entry,
+  prevFallbackLabel: dictionary.docs.prevLabel,
+  nextFallbackLabel: dictionary.docs.nextLabel,
+});
 ---
 
-<section
-  class="docs-shell drawer lg:drawer-open"
-  data-docs-shell
-  data-desktop-open={showSidebarDefault ? "true" : "false"}
-  data-mobile-open="false"
+<MainLayout
+  locale={locale}
+  title={entry.data.title}
+  description={entry.data.description}
 >
-  <input
-    id="docs-sidebar-drawer"
-    type="checkbox"
-    class="drawer-toggle"
-    data-docs-sidebar-input
-  />
-
-  <div class="drawer-content">
-    <div class="docs-content-layout">
-      <main class="docs-main">
-        <article class="docs-article">
-          <header class="docs-article__header">
-            <h1>{title}</h1>
-            {description && <p>{description}</p>}
-          </header>
-
-          <details class="docs-toc-mobile">
-            <summary>{labels.tableOfContents}</summary>
-            <PageToc headings={headings} headingLabel={labels.tableOfContents} />
-          </details>
-
-          <div class="docs-article__body">
-            <slot />
-          </div>
-        </article>
-      </main>
-
-      <aside class="docs-toc-rail">
-        <div class="docs-toc-rail__inner">
-          <PageToc headings={headings} headingLabel={labels.tableOfContents} />
-        </div>
-      </aside>
-    </div>
-  </div>
-
-  <aside
-    id="docs-sidebar"
-    class="docs-sidebar drawer-side"
-    data-docs-sidebar
-    aria-label={labels.navigation}
+  <section
+    class="docs-shell drawer lg:drawer-open"
+    data-docs-shell
+    data-desktop-open={desktopMenuOpen ? "true" : "false"}
+    data-mobile-open="false"
   >
-    <label
-      for="docs-sidebar-drawer"
-      aria-label={labels.closeSidebar}
-      class="drawer-overlay lg:hidden"
-    ></label>
-    <div class="docs-sidebar__inner">
-      <div class="docs-sidebar__close_row">
-        <button
-          type="button"
-          class="btn btn-sm btn-outline"
-          data-docs-sidebar-close
-        >
-          {labels.closeSidebar}
-        </button>
+    <input
+      id="docs-sidebar-drawer"
+      type="checkbox"
+      class="drawer-toggle"
+      data-docs-sidebar-input
+    />
+
+    <div class="drawer-content">
+      <div class="docs-content-layout" data-show-content-toc={showContentToc ? "true" : "false"}>
+        <div class="docs-main">
+          <article class="docs-article">
+            <header class="docs-article__header">
+              <h1>{entry.data.title}</h1>
+              {entry.data.description && <p>{entry.data.description}</p>}
+            </header>
+
+            {
+              showContentToc && (
+                <details class="docs-toc-mobile xl:hidden">
+                  <summary>{dictionary.docs.tocHeading}</summary>
+                  <DocsTOC locale={locale} headings={headings} showHeading={false} />
+                </details>
+              )
+            }
+
+            <div class="docs-article__body">
+              <MdxInterpreter>
+                <slot />
+              </MdxInterpreter>
+              <ZoomableDocsImages />
+              
+            </div>
+
+            <DocsPagination
+              ariaLabel={dictionary.docs.paginationLabel}
+              prevLabel={dictionary.docs.prevLabel}
+              nextLabel={dictionary.docs.nextLabel}
+              prev={pagination.prev}
+              next={pagination.next}
+            />
+          </article>
+        </div>
+
+        {
+          showContentToc && (
+            <aside class="docs-toc-rail">
+              <div class="docs-toc-rail__inner">
+                <DocsTOC locale={locale} headings={headings} />
+              </div>
+            </aside>
+          )
+        }
       </div>
-
-      <Sidebar
-        navigation={navigation}
-        heading={labels.navigation}
-        topicsHeading={labels.topics}
-        globalHeading={labels.global}
-      />
     </div>
-  </aside>
-</section>
 
-<script>
-  const docsShell = document.querySelector<HTMLElement>("[data-docs-shell]");
-  if (docsShell) {
-    const sidebar = docsShell.querySelector<HTMLElement>("[data-docs-sidebar]");
-    const sidebarInput = docsShell.querySelector<HTMLInputElement>(
-      "[data-docs-sidebar-input]",
-    );
-    const closeButton = docsShell.querySelector<HTMLButtonElement>(
-      "[data-docs-sidebar-close]",
-    );
-    const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
-      "[data-docs-sidebar-toggle]",
-    );
-    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    <aside
+      id="docs-sidebar"
+      class="docs-sidebar drawer-side"
+      data-docs-sidebar
+      aria-label={dictionary.docs.navLabel}
+    >
+      <label
+        for="docs-sidebar-drawer"
+        aria-label={dictionary.docs.closeNav}
+        class="drawer-overlay lg:hidden"
+      />
 
-    if (!sidebarInput) {
-      throw new Error("Missing docs sidebar drawer input");
-    }
+      <div class="docs-sidebar__inner">
+        <Sidebar locale={locale} entries={entries} currentPathname={Astro.url.pathname} />
+      </div>
+    </aside>
+  </section>
 
-    let previouslyFocused: HTMLElement | null = null;
+  <script>
+    import { initDocsDrawer } from "../scripts/docs-drawer";
 
-    function isDesktop() {
-      return desktopQuery.matches;
-    }
-
-    function setToggleExpanded(expanded: boolean) {
-      for (const button of toggleButtons) {
-        button.setAttribute("aria-expanded", String(expanded));
-      }
-    }
-
-    function setMobileState(open: boolean) {
-      docsShell.dataset.mobileOpen = open ? "true" : "false";
-      setToggleExpanded(open);
-      if (isDesktop()) {
-        document.body.style.overflow = "";
-      } else {
-        document.body.style.overflow = open ? "hidden" : "";
-      }
-    }
-
-    function openMobileSidebar() {
-      previouslyFocused =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      sidebarInput.checked = true;
-      setMobileState(true);
-      closeButton?.focus();
-    }
-
-    function closeMobileSidebar(restoreFocus = true) {
-      sidebarInput.checked = false;
-      setMobileState(false);
-      if (restoreFocus) {
-        previouslyFocused?.focus();
-      }
-    }
-
-    function toggleDesktopSidebar() {
-      const nextOpen = docsShell.dataset.desktopOpen !== "true";
-      docsShell.dataset.desktopOpen = nextOpen ? "true" : "false";
-      setToggleExpanded(nextOpen);
-      sidebarInput.checked = nextOpen;
-    }
-
-    function handleToggleButtonClick() {
-      if (isDesktop()) {
-        toggleDesktopSidebar();
-      } else if (docsShell.dataset.mobileOpen === "true") {
-        closeMobileSidebar();
-      } else {
-        openMobileSidebar();
-      }
-    }
-
-    sidebarInput.addEventListener("change", () => {
-      if (isDesktop()) {
-        return;
-      }
-      const isOpen = sidebarInput.checked;
-      setMobileState(isOpen);
-      if (isOpen) {
-        previouslyFocused =
-          document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      } else {
-        previouslyFocused?.focus();
-      }
+    initDocsDrawer({
+      shellSelector: "[data-docs-shell]",
+      sidebarSelector: "[data-docs-sidebar]",
+      inputSelector: "[data-docs-sidebar-input]",
+      toggleSelector: "[data-docs-sidebar-toggle]",
+      desktopBreakpoint: "(min-width: 1024px)",
+      missingInputMessage: "Missing docs sidebar drawer input",
     });
-
-    for (const button of toggleButtons) {
-      button.addEventListener("click", handleToggleButtonClick);
-    }
-
-    closeButton?.addEventListener("click", () => closeMobileSidebar());
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && docsShell.dataset.mobileOpen === "true") {
-        closeMobileSidebar();
-      }
-
-      if (
-        event.key === "Tab" &&
-        docsShell.dataset.mobileOpen === "true" &&
-        sidebar
-      ) {
-        const focusable = sidebar.querySelectorAll<HTMLElement>(
-          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
-        );
-        if (focusable.length === 0) {
-          return;
-        }
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        const active = document.activeElement as HTMLElement | null;
-
-        if (event.shiftKey && active === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && active === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
-    });
-
-    desktopQuery.addEventListener("change", (event) => {
-      if (event.matches) {
-        closeMobileSidebar(false);
-        sidebarInput.checked = docsShell.dataset.desktopOpen === "true";
-        setToggleExpanded(docsShell.dataset.desktopOpen === "true");
-      } else {
-        sidebarInput.checked = false;
-        setMobileState(false);
-      }
-    });
-
-    if (isDesktop()) {
-      sidebarInput.checked = docsShell.dataset.desktopOpen === "true";
-      setToggleExpanded(docsShell.dataset.desktopOpen === "true");
-    } else {
-      sidebarInput.checked = false;
-      setMobileState(false);
-    }
-  }
-</script>
-
-<style>
-  .docs-shell {
-    position: relative;
-    padding: 1.25rem 1rem 2rem;
-    align-items: start;
-  }
-
-  .docs-shell > .drawer-content {
-    min-width: 0;
-  }
-
-  .docs-sidebar {
-    z-index: 60;
-  }
-
-  .docs-sidebar__inner {
-    width: min(22rem, 86vw);
-    min-height: 100%;
-    padding: 0.8rem;
-    overflow-y: auto;
-    background: color-mix(in srgb, var(--color-black), transparent 5%);
-    border-right: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 42%);
-  }
-
-  .docs-sidebar__close_row {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    margin: -0.8rem -0.8rem 0.8rem;
-    padding: 0.8rem;
-    display: flex;
-    justify-content: flex-end;
-    background: inherit;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 40%);
-  }
-
-  .docs-main {
-    width: 100%;
-  }
-
-  .docs-content-layout {
-    width: 100%;
-  }
-
-  .docs-article {
-    max-width: 70ch;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .docs-article__header h1 {
-    margin: 0;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    line-height: 1.15;
-  }
-
-  .docs-article__header p {
-    margin: 0.6rem 0 0;
-    opacity: 0.88;
-  }
-
-  .docs-article__body :global(h2),
-  .docs-article__body :global(h3),
-  .docs-article__body :global(h4) {
-    scroll-margin-top: 6rem;
-  }
-
-  .docs-toc-mobile {
-    display: block;
-    border: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 35%);
-    border-radius: 0.7rem;
-    padding: 0.5rem 0.65rem;
-  }
-
-  .docs-toc-mobile > summary {
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .docs-toc-mobile[open] > summary {
-    margin-bottom: 0.45rem;
-  }
-
-  .docs-toc-rail {
-    display: none;
-  }
-
-  @media (min-width: 1024px) {
-    .docs-shell {
-      display: grid;
-      gap: 1.25rem;
-      padding: 1.25rem 1.1rem 2.2rem;
-    }
-
-    .docs-shell[data-desktop-open="false"] {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .docs-sidebar {
-      position: sticky;
-      top: 5.3rem;
-      z-index: 1;
-      max-height: calc(100vh - 6rem);
-    }
-
-    .docs-sidebar__inner {
-      width: 100%;
-      border-radius: 0.8rem;
-    }
-
-    .docs-sidebar__close_row {
-      display: none;
-    }
-
-    .docs-shell[data-desktop-open="false"] .docs-sidebar {
-      display: none;
-    }
-
-    .docs-content-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .docs-article {
-      max-width: 78ch;
-      margin: 0;
-    }
-
-    .docs-toc-mobile {
-      display: none;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .docs-content-layout {
-      grid-template-columns: minmax(0, 1fr) 15rem;
-      gap: 1.25rem;
-    }
-
-    .docs-shell[data-desktop-open="false"] .docs-content-layout {
-      grid-template-columns: minmax(0, 1fr) 15rem;
-    }
-
-    .docs-toc-rail {
-      display: block;
-      position: sticky;
-      top: 5.3rem;
-      max-height: calc(100vh - 6rem);
-      overflow: auto;
-      padding-right: 0.45rem;
-    }
-
-    .docs-toc-rail__inner {
-      border-left: 1px solid color-mix(in srgb, var(--color-gray-4), transparent 45%);
-      padding-left: 0.9rem;
-    }
-  }
-</style>
+  </script>
+</MainLayout>

@@ -1,0 +1,54 @@
+---
+import "../styles/docs.css";
+import type { Locale } from "../i18n/config";
+import { getDictionary } from "../i18n";
+import type { DocsEntry } from "../types/docs";
+import Sidebar from "./ui-elements/Sidebar.astro";
+
+interface Props {
+  locale: Locale;
+  entries: DocsEntry[];
+}
+
+const { locale, entries } = Astro.props;
+const dictionary = getDictionary(locale);
+---
+
+<section class="global-docs-drawer drawer" data-global-docs-shell data-mobile-open="false">
+  <input
+    id="global-docs-sidebar-drawer"
+    type="checkbox"
+    class="drawer-toggle"
+    data-global-docs-sidebar-input
+  />
+
+  <aside
+    id="global-docs-sidebar"
+    class="docs-sidebar drawer-side"
+    data-global-docs-sidebar
+    aria-label={dictionary.docs.navLabel}
+  >
+    <label
+      for="global-docs-sidebar-drawer"
+      aria-label={dictionary.docs.closeNav}
+      class="drawer-overlay"
+    />
+
+    <div class="docs-sidebar__inner">
+      <Sidebar locale={locale} entries={entries} currentPathname={Astro.url.pathname} />
+    </div>
+  </aside>
+</section>
+
+<script>
+  import { initDocsDrawer } from "../scripts/docs-drawer";
+
+  initDocsDrawer({
+    shellSelector: "[data-global-docs-shell]",
+    sidebarSelector: "[data-global-docs-sidebar]",
+    inputSelector: "[data-global-docs-sidebar-input]",
+    toggleSelector: "[data-docs-sidebar-toggle]",
+    skipIfSelector: "[data-docs-shell]",
+    missingInputMessage: "Missing global docs sidebar drawer input",
+  });
+</script>

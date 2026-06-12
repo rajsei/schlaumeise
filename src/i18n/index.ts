@@ -2,7 +2,11 @@ import { defaultLocale, type Locale } from "./config";
 import { de } from "./locales/de";
 import { en } from "./locales/en";
 
-export type Dictionary = typeof de;
+export type Dictionary = {
+  [Section in keyof typeof de]: {
+    [Key in keyof (typeof de)[Section]]: string;
+  };
+};
 
 const dictionaries = {
   de,

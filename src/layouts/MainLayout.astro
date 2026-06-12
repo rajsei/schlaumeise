@@ -2,10 +2,17 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import MenuDrawer from "../components/MenuDrawer.astro";
 import { getBrandConfig, siteConfig } from "../config/site.config";
 import { getDictionary } from "../i18n";
 import { defaultLocale, type Locale } from "../i18n/config";
-import { getLocaleFromPathname, switchLocalePath, withBase } from "../i18n/routing";
+import { getDocsEntriesForLocale } from "../lib/docs-content";
+import {
+  getLocaleFromPathname,
+  stripLocaleFromPathname,
+  switchLocalePath,
+  withBase,
+} from "../i18n/routing";
 
 interface Props {
   title?: string;
@@ -15,7 +22,7 @@ interface Props {
 }
 
 const {
-  title = getBrandConfig(getLocaleFromPathname(Astro.url.pathname)),
+  title = getBrandConfig(getLocaleFromPathname(Astro.url.pathname)).name,
   description = "",
   locale: localeProp,
   showSidebarToggle = false,
@@ -24,6 +31,13 @@ const {
 const locale = localeProp ?? getLocaleFromPathname(Astro.url.pathname);
 const dictionary = getDictionary(locale);
 const brand = getBrandConfig(locale);
+const docsEntries = await getDocsEntriesForLocale(locale);
+const pathWithoutLocale = stripLocaleFromPathname(Astro.url.pathname);
+const isDocsPage =
+  pathWithoutLocale === "/guides" ||
+  pathWithoutLocale.startsWith("/guides/") ||
+  pathWithoutLocale === "/reference" ||
+  pathWithoutLocale.startsWith("/reference/");
 
 const alternateLocale: Locale = locale === defaultLocale ? "en" : defaultLocale;
 const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alternateLocale));
@@ -33,6 +47,35 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
 <html lang={locale} data-theme={siteConfig.defaultTheme}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      /* Setzt das Theme VOR dem ersten Paint (kein Aufblitzen).
+         Speicherformat "schlaumeise:theme:v1": { mode: "light"|"dark", contrast: "normal"|"high" }.
+         contrast wird bereits gespeichert, aber erst mit den geplanten
+         High-Contrast-Themes ausgewertet (siehe global.css, Dateiende). */
+      (function () {
+        var theme = null;
+        try {
+          var stored = JSON.parse(localStorage.getItem("schlaumeise:theme:v1") || "null");
+          if (stored && (stored.mode === "light" || stored.mode === "dark")) {
+            theme = stored.mode;
+          }
+          if (!theme) {
+            var legacy = localStorage.getItem("theme");
+            if (legacy === "light" || legacy === "dark") theme = legacy;
+          }
+        } catch (e) {
+          /* localStorage nicht verfügbar: Systempräferenz nutzen */
+        }
+        if (!theme) {
+          theme =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
@@ -50,6 +93,7 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
     <main>
       <slot />
     </main>
+    {!isDocsPage && <MenuDrawer locale={locale} entries={docsEntries} />}
     <Footer locale={locale} dictionary={dictionary} brand={brand} />
   </body>
 </html>

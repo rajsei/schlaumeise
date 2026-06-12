@@ -13,13 +13,13 @@ export interface BrandConfig {
 
 interface SiteConfig {
   basePath: string;
-  defaultTheme: "cupcake";
+  defaultTheme: "light" | "dark";
   brandByLocale: Record<Locale, BrandConfig>;
 }
 
 export const siteConfig: SiteConfig = {
   basePath: "/schlaumeise",
-  defaultTheme: "cupcake",
+  defaultTheme: "light",
   brandByLocale: {
     de: {
       key: "schlaumeise",

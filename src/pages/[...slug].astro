@@ -1,75 +1,37 @@
 ---
-import { getCollection, render, type CollectionEntry } from "astro:content";
 import DocsLayout from "../layouts/DocsLayout.astro";
-import MainLayout from "../layouts/MainLayout.astro";
-import { resolveDocsNavigation } from "../lib/docs/navigation";
-import { getDictionary } from "../i18n";
+import Steps from "../components/docs/Steps.astro";
+import LinkCard from "../components/docs/LinkCard.astro";
+import Code from "../components/docs/Code.astro";
+import CodeBlock from "../components/docs/CodeBlock.astro";
+import Terminal from "../components/docs/Terminal.astro";
 
-export async function getStaticPaths() {
-  const docs = await getCollection("docs", ({ id }) => id.startsWith("de/"));
-
-  return docs
-    .map((entry) => {
-      const slug = entry.id
-        .slice("de/".length)
-        .replace(/\.(md|mdx)$/i, "")
-        .replace(/\/index$/i, "")
-        .replace(/^\/+|\/+$/g, "");
-
-      if (!slug) {
-        return null;
-      }
-
-      return {
-        params: { slug },
-        props: { entry },
-      };
-    })
-    .filter(Boolean);
-}
+import { defaultLocale } from "../i18n/config";
+import {
+  createSlugParam,
+  getDefaultLocaleDocsEntries,
+} from "../lib/docs-content";
+import type { DocsEntry } from "../types/docs";
 
 interface Props {
-  entry: CollectionEntry<"docs">;
+  entry: DocsEntry;
+  entries: DocsEntry[];
 }
 
-const { entry } = Astro.props;
-const locale = "de" as const;
-const dictionary = getDictionary(locale);
-const allDocs = await getCollection("docs");
-const { Content, headings } = await render(entry);
+export async function getStaticPaths() {
+  const entries = await getDefaultLocaleDocsEntries();
 
-const navigation = resolveDocsNavigation({
-  locale,
-  currentPathname: Astro.url.pathname,
-  docs: allDocs,
-  currentTopicId: entry.data.topicId,
-});
+  return entries.map((entry) => ({
+    params: { slug: createSlugParam(entry) },
+    props: { entry, entries },
+  }));
+}
 
-const showSidebarDefault =
-  entry.data.showSidebar ??
-  (typeof entry.data.sidebar === "boolean" ? entry.data.sidebar : true);
+const { entry, entries } = Astro.props;
+const { Content, headings } = await entry.render();
+const mdxComponents = { Steps, LinkCard, Code, CodeBlock, Terminal };
 ---
 
-<MainLayout
-  locale={locale}
-  title={entry.data.title}
-  description={entry.data.description}
-  showSidebarToggle={true}
->
-  <DocsLayout
-    title={entry.data.title}
-    description={entry.data.description}
-    headings={headings}
-    navigation={navigation}
-    showSidebarDefault={showSidebarDefault}
-    labels={{
-      navigation: dictionary.docs.navigation,
-      topics: dictionary.docs.topics,
-      global: dictionary.docs.global,
-      closeSidebar: dictionary.docs.closeSidebar,
-      tableOfContents: dictionary.docs.tableOfContents,
-    }}
-  >
-    <Content />
-  </DocsLayout>
-</MainLayout>
+<DocsLayout locale={defaultLocale} entry={entry} entries={entries} headings={headings}>
+  <Content components={mdxComponents} />
+</DocsLayout>

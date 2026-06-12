@@ -1,0 +1,122 @@
+---
+title: Vogelstation zusammenbauen
+description: Stelle deine BirdNET-Pi-Station sicher auf und schütze Raspberry Pi, Mikrofon und Zubehör vor Wetter und Feuchtigkeit.
+next: false
+sidebar:
+  order: 6
+---
+
+import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
+
+import parts1 from "../../../../../assets/images/project01/overview/parts1.jpg";
+import parts3 from "../../../../../assets/images/project01/overview/parts3.jpg";
+import parts4 from "../../../../../assets/images/project01/overview/parts4.jpg";
+import vogelhaus1 from "../../../../../assets/images/project01/overview/vogelhaus1.jpg";
+import extern01 from "../../../../../assets/images/project01/extern/01.jpg";
+import extern02 from "../../../../../assets/images/project01/extern/02.png";
+import extern03 from "../../../../../assets/images/project01/extern/03.png";
+import extern04 from "../../../../../assets/images/project01/extern/04.png";
+import extern05 from "../../../../../assets/images/project01/extern/05.png";
+import extern06 from "../../../../../assets/images/project01/extern/06.png";
+
+Wie bringe ich jetzt den BirdNET-Pi in den Garten?
+
+## Möglichkeiten
+
+Es gibt verschiedene Möglichkeiten, den BirdNET-Pi im Freien zu platzieren:
+
+### Vogelhaus: 
+Du kannst den Pi in ein Holzvogelhaus einbauen. Achte darauf, dass es nicht wetterfest ist. 
+Stelle es daher geschützt auf und hole es bei Regen oder Frost ins Haus.
+
+<ImageCarousel
+  label="Bilder der Projektkomponenten"
+  images={[
+    {
+      src: parts1,
+      alt: "Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: parts3,
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: parts4,
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+    {
+      src: vogelhaus1,
+      alt: "Weitere Bauteile für das lauschende Vogelhaus",
+    },
+  ]}
+/>
+
+### Abzweigdose: 
+Im Baumarkt findest du Abzweigkästen für Elektroinstallationen. Diese eignen sich gut, um den Pi wetterfest zu schützen.
+<br />
+<LinkCard
+  title="BirdNET Pi in der Natur"
+  description="Ein Outdoor BirdNET Pi Setup."
+  href="https://pixcams.com/building-a-birdnet-pi-real-time-acoustic-bird-id-station/"
+  imgSrc={extern03}
+  imgAlt="BirdNET Pi in einem wetterfesten Gehäuse im Garten."
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET Pi in deinem Garten"
+  description="Ein Outdoor BirdNET Pi Setup."
+  href="https://becausebirds.com/fun-raspberry-pi-project-identify-backyard-birds-24-7/"
+  imgSrc={extern05}
+  imgAlt="BirdNET Pi in einem wetterfesten Gehäuse im Garten."
+  isExternal
+/>
+
+### Nur Mikrofon nach draußen führen: 
+Du kannst auch nur das Mikrofon nach draußen führen. 
+So bleibt der Pi im Trockenen, und du kannst das Gehäuse frei gestalten.
+<br />
+<LinkCard
+  title="BirdNET Pi auf der Fensterbank"
+  description="BirdNET Pi Setup mit dem Mikrofon 
+  das aus dem Fenster herausgeführt wird."
+  href="https://anconafamily.com/tech/birdnet/"
+  imgSrc={extern02}
+  imgAlt="BirdNET Pi auf einer Fensterbank mit dem Mikrofon das aus dem Fenster herausgeführt wird."
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET Pi am Fenster"
+  description="BirdNET Pi Setup mit dem Mikrofon 
+  das aus dem Fenster herausgeführt wird."
+  href="https://stickyhat.com/automated-bird-detection-with-a-raspberry-pi-getting-started/"
+  imgSrc={extern06}
+  imgAlt="BirdNET Pi am Fenster mit dem Mikrofon das aus dem Fenster herausgeführt wird."
+  isExternal
+/>
+
+## Hilfreiche Materialien:
+
+3D-Druck: Für eine saubere Montage lassen sich 3D-gedruckte Halterungen verwenden, um Pi sicher zu befestigen.
+<br />
+<LinkCard
+  title="Rasberry Pi Zero Mount"
+  description="Eine kostenlose digitale Datei für den 3D-Drucker."
+  href="https://www.printables.com/model/115161-rasberry-pi-zero-minimalist-mount"
+  imgSrc={extern01}
+  imgAlt="Minimaler Rasberry Pi Zero Mount"
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET-Pi-Gehäuse für Orange Pi Zero2"
+  description="Eine kostenlose digitale Datei für den 3D-Drucker."
+  href="https://www.thingiverse.com/thing:6059867/files "
+  imgSrc={extern04}
+  imgAlt="BirdNET-Pi-Gehäuse für Orange Pi Zero2"
+  isExternal
+/>
+
+
+

@@ -1,43 +1,57 @@
-# Astro Starter Kit: Minimal
+# Schlaumeise / Smartfinch
+
+Interaktive Lernplattform, die Kindern und Jugendlichen mit KI-Projekten rund um heimische Vögel Natur, Umwelt, Informatik und (Bio-)Akustik näherbringt. Gefördert durch EFRE/ESF und den Freistaat Sachsen.
+
+Zweisprachig: Deutsch (Standard, ohne Präfix) und Englisch (`/en/`-Präfix, Marke „Smartfinch“).
+
+## Tech-Stack
+
+- [Astro 5](https://astro.build) (statischer Build, MDX, Sitemap)
+- Tailwind CSS 4 + daisyUI 5 (Theme: hell/dunkel mit `localStorage`-Persistenz)
+- Inhalte als Markdown/MDX in Content Collections (`src/content/docs/`)
+- Eigene Shiki-/Rehype-Plugins für Codeblöcke mit Copy-Button
+
+## Schnellstart
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev       # http://localhost:4321/schlaumeise/
+npm run build     # Produktions-Build nach ./dist/
+npm run preview   # Build lokal testen
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Hinweis: Die Seite läuft unter dem Basis-Pfad `/schlaumeise` (siehe `astro.config.mjs`).
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Projektstruktur (Kurzfassung)
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── assets/          # Logos, Vogelbilder, Audiodateien (vom Build verarbeitet)
+├── components/
+│   ├── docs/        # Komponenten für Doku-/Lernseiten (Steps, Terminal, CodeBlock …)
+│   ├── pages/       # Seiten-spezifische Bausteine (HomeContent)
+│   └── ui-elements/ # Allgemeine UI (Sidebar, ThemeController …)
+├── config/          # site.config.ts, docs-navigation.ts (Sidebar-Struktur)
+├── content/docs/    # Inhalte: de/ und en/, gegliedert nach Themenbereichen
+├── data/            # Strukturierte Daten (z. B. Quiz-JSON)
+├── i18n/            # Locales, Dictionaries, Routing-Helfer
+├── layouts/         # MainLayout (Rahmen), DocsLayout (Doku-Shell)
+├── lib/             # Logik: docs-content, docs-navigation, Schemas
+├── pages/           # Routen: index, [...slug], [locale]/[...slug]
+├── plugins/         # Markdown-/Shiki-Plugins
+├── scripts/         # Client-Skripte (Drawer, Copy-Button)
+└── styles/          # global.css, docs.css
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Ausführliche Dokumentation: siehe [`docs/`](./docs/) — insbesondere
+[Architektur](./docs/architecture.md), [Conventions](./docs/conventions.md),
+[Content-Handbuch](./docs/content-handbook.md), [Quiz-Handbuch](./docs/quiz-handbook.md),
+[Features](./docs/features.md), [Roadmap](./docs/roadmap.md) und [TODO](./docs/todo.md).
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Regeln für KI-Agenten: [`AGENTS.md`](./AGENTS.md).
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Inhalte pflegen
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Neue Lerninhalte sind Markdown/MDX-Dateien unter `src/content/docs/de/<themenbereich>/`.
+Pflicht-Frontmatter: `title`. Sidebar-Reihenfolge über `sidebar.order`.
+Details: [Content-Handbuch](./docs/content-handbook.md).

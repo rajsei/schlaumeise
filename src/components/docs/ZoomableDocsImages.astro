@@ -1,0 +1,159 @@
+<dialog class="docs-image-lightbox" data-docs-image-lightbox aria-label="Bildvorschau">
+  <img class="docs-image-lightbox__image" data-docs-image-lightbox-image alt="" />
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-docs-image-lightbox]");
+  const dialogImage = dialog?.querySelector<HTMLImageElement>(
+    "[data-docs-image-lightbox-image]",
+  );
+
+  if (dialog && dialogImage) {
+    let lastFocused: HTMLElement | null = null;
+    let previousBodyOverflow = "";
+    let previousHtmlOverflow = "";
+    let previousBodyPosition = "";
+    let previousBodyTop = "";
+    let previousBodyWidth = "";
+    let lockedScrollY = 0;
+
+    const lockPageScroll = () => {
+      lockedScrollY = window.scrollY;
+      previousBodyOverflow = document.body.style.overflow;
+      previousHtmlOverflow = document.documentElement.style.overflow;
+      previousBodyPosition = document.body.style.position;
+      previousBodyTop = document.body.style.top;
+      previousBodyWidth = document.body.style.width;
+
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockedScrollY}px`;
+      document.body.style.width = "100%";
+    };
+
+    const unlockPageScroll = () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.width = previousBodyWidth;
+      window.scrollTo(0, lockedScrollY);
+    };
+
+    const openDialog = (img: HTMLImageElement) => {
+      dialogImage.src = img.currentSrc || img.src;
+      dialogImage.alt = img.alt || "Screenshot";
+      lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      lockPageScroll();
+      dialog.showModal();
+    };
+
+    const closeDialog = () => {
+      dialog.close();
+    };
+
+    dialogImage.addEventListener("click", closeDialog);
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        closeDialog();
+      }
+    });
+
+    dialog.addEventListener("close", () => {
+      dialogImage.removeAttribute("src");
+      unlockPageScroll();
+      if (lastFocused) {
+        lastFocused.focus({ preventScroll: true });
+      }
+    });
+
+    const images = document.querySelectorAll<HTMLImageElement>(
+      ".docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable)",
+    );
+
+    for (const image of images) {
+      if (image.dataset.docsZoomReady === "true") {
+        continue;
+      }
+      if (image.closest("a,button,[data-no-zoom],.not-zoomable")) {
+        continue;
+      }
+
+      image.dataset.docsZoomReady = "true";
+      image.dataset.docsZoomable = "true";
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-haspopup", "dialog");
+      image.setAttribute(
+        "aria-label",
+        image.alt ? `Bild vergroessern: ${image.alt}` : "Bild vergroessern",
+      );
+
+      image.addEventListener("click", () => openDialog(image));
+      image.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openDialog(image);
+        }
+      });
+    }
+  }
+</script>
+
+<style is:global>
+  .docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable) {
+    box-sizing: border-box;
+    display: block;
+    width: auto;
+    max-width: min(100%, 580px);
+    height: auto;
+    max-height: min(70dvh, 350px);
+    object-fit: contain;
+    border-radius: 7px;
+    border: var(--sl-color-gray-5, var(--color-gray-5)) 0.5px solid;
+    margin: 1rem auto;
+  }
+
+  .docs-article__body .mdx-interpreter img[data-docs-zoomable="true"] {
+    cursor: zoom-in;
+  }
+
+  .docs-image-lightbox {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    width: min(calc(100vw - 2rem), 1400px);
+    height: calc(100dvh - 2rem);
+    max-width: none;
+    max-height: none;
+    margin: auto;
+    overflow: visible;
+    position: fixed;
+    inset: 0;
+  }
+
+  .docs-image-lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .docs-image-lightbox::backdrop {
+    background: rgb(0 0 0 / 0.78);
+  }
+
+  .docs-image-lightbox__image {
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-gray-5), transparent 28%);
+    display: block;
+    margin: 0;
+    cursor: zoom-out;
+  }
+</style>

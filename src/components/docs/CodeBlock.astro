@@ -1,0 +1,202 @@
+---
+import { Code } from "astro:components";
+import { parseLineSelection } from "../../plugins/code-block-meta.mjs";
+import { createDocsCodeTransformer } from "../../plugins/shiki-transformer-docs-code.mjs";
+import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
+
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+  copy?: boolean;
+  wrap?: boolean;
+  theme?: string | { light: string; dark: string };
+  class?: string;
+  showLineNumbers?: boolean;
+  highlight?: string | number[];
+  meta?: string;
+}
+
+const {
+  code,
+  lang = "text",
+  title,
+  copy = true,
+  wrap = false,
+  theme,
+  class: className = "",
+  showLineNumbers = false,
+  highlight,
+  meta = "",
+} = Astro.props;
+
+const isTerminalStyle = /\bterminal-code\b/.test(className);
+const neutralLanguages = new Set(["text", "plaintext", "txt", "console"]);
+const hasUsefulLanguage = Boolean(lang) && !neutralLanguages.has(lang.toLowerCase());
+const showHeader = Boolean(title) || hasUsefulLanguage;
+
+const aliases = {
+  js: "JavaScript",
+  ts: "TypeScript",
+  sh: "Shell",
+  bash: "Bash",
+  yml: "YAML",
+  md: "Markdown",
+  html: "HTML",
+  css: "CSS",
+  json: "JSON",
+  py: "Python",
+  text: "Text",
+  plaintext: "Text",
+};
+
+const langKey = lang.toLowerCase();
+const languageLabel = aliases[langKey as keyof typeof aliases]
+  ?? (lang.toUpperCase() === lang ? lang : `${lang.charAt(0).toUpperCase()}${lang.slice(1)}`);
+
+const highlightedLines = Array.isArray(highlight)
+  ? [...new Set(highlight.filter((line) => Number.isInteger(line) && line > 0))].sort((a, b) => a - b)
+  : parseLineSelection(highlight ?? "");
+
+const escapeAttribute = (value: string) => value.replace(/"/g, "\\\"");
+
+const metaParts = [meta.trim()];
+if (title) {
+  metaParts.push(`title="${escapeAttribute(title)}"`);
+}
+metaParts.push(copy ? "copy" : "nocopy");
+if (wrap) {
+  metaParts.push("wrap");
+}
+if (showLineNumbers) {
+  metaParts.push("showLineNumbers");
+}
+if (highlightedLines.length > 0) {
+  metaParts.push(`highlight={${highlightedLines.join(",")}}`);
+}
+
+const resolvedMeta = metaParts.filter(Boolean).join(" ");
+const resolvedTheme = theme ?? (isTerminalStyle ? "github-dark" : { light: "github-light", dark: "github-dark" });
+
+const wrapperClass = [
+  "docs-code-block",
+  "docs-code-block--component",
+  wrap ? "is-wrap" : "",
+  showLineNumbers ? "has-line-numbers" : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<DocsCodeBlockStyles />
+
+<figure class={wrapperClass}>
+  {
+    showHeader && (
+      <figcaption class="docs-code-block__header">
+        {title && <span class="docs-code-block__title">{title}</span>}
+        {!title && hasUsefulLanguage && <span class="docs-code-block__language">{languageLabel}</span>}
+        {title && hasUsefulLanguage && <span class="docs-code-block__language is-secondary">{languageLabel}</span>}
+      </figcaption>
+    )
+  }
+
+  <div
+    class="docs-code-block__body"
+    data-docs-copy-surface={copy ? "true" : undefined}
+    data-copy-source={copy ? code : undefined}
+  >
+    <Code
+      code={code}
+      lang={lang}
+      theme={resolvedTheme}
+      meta={resolvedMeta}
+      transformers={[createDocsCodeTransformer()]}
+    />
+
+    {
+      copy && (
+        <button
+          type="button"
+          class="docs-code-block__copy"
+          data-docs-copy-button
+          data-copy-label="Copy"
+          data-copied-label="Copied"
+          data-copy-source={code}
+          aria-label="Copy code to clipboard"
+        >
+          <span class="sr-only">Copy</span>
+        </button>
+      )
+    }
+  </div>
+</figure>
+
+<script>
+  import "../../scripts/docs-code-copy";
+</script>
+
+<style is:global>
+  .docs-code-block__copy::before {
+    content: "⧉";
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .docs-code-block__copy[data-copied="true"]::before {
+    content: "✓";
+    font-size: 0.95rem;
+  }
+
+  .docs-code-block.terminal-code {
+    border-color: #2f3a4d;
+    background: #0d1117;
+    color: #d2d9e6;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__header {
+    border-bottom-color: #2f3a4d;
+    background: #131a25;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__title {
+    color: #d2d9e6;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__language {
+    color: #aab4c6;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__pre,
+  .docs-code-block.terminal-code .docs-code-block__pre code,
+  .docs-code-block.terminal-code .astro-code {
+    background: #0d1117 !important;
+    color: #d2d9e6;
+  }
+
+  .docs-code-block.terminal-code pre.astro-code,
+  .docs-code-block.terminal-code pre.docs-code-pre {
+    padding: 0.95rem 1rem 0.95rem 1.2rem !important;
+  }
+
+  .docs-code-block.terminal-code pre.astro-code code,
+  .docs-code-block.terminal-code pre.docs-code-pre code {
+    padding: 0 !important;
+  }
+
+  .docs-code-block.terminal-code.has-line-numbers .line::before {
+    color: #7e8da4;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__copy {
+    border-color: #3b4b66;
+    background: #121a28;
+    color: #d2d9e6;
+  }
+
+  .docs-code-block.terminal-code .docs-code-block__copy:hover,
+  .docs-code-block.terminal-code .docs-code-block__copy:focus-visible {
+    border-color: #73b7ff;
+  }
+</style>

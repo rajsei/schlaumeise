@@ -1,0 +1,382 @@
+---
+interface Props {
+  id?: string;
+  persist?: boolean;
+  completed?: number[];
+  ariaLabel?: string;
+}
+
+const {
+  id,
+  persist = true,
+  completed = [],
+  ariaLabel = "Schritte",
+} = Astro.props;
+
+const initialCompleted = completed
+  .filter((value) => Number.isInteger(value) && value > 0)
+  .join(",");
+---
+
+<section
+  class="docs-steps"
+  data-steps-root
+  data-steps-id={id ?? ""}
+  data-steps-persist={persist ? "true" : "false"}
+  data-steps-completed={initialCompleted}
+  aria-label={ariaLabel}
+>
+  <slot />
+</section>
+
+<script>
+  interface StepsState {
+    done: Set<number>;
+    key: string | null;
+    persist: boolean;
+  }
+
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-steps-root]"),
+  );
+
+  const interactiveSelector =
+    "a,button,input,select,textarea,label,summary,[role='button'],[role='link']";
+  const noToggleContentSelector =
+    `${interactiveSelector},pre,code,img,video,audio,iframe,table`;
+
+  const parseCsvNumbers = (value: string | undefined): number[] => {
+    if (!value) return [];
+    return value
+      .split(",")
+      .map((part) => Number.parseInt(part.trim(), 10))
+      .filter((num) => Number.isFinite(num) && num > 0);
+  };
+
+  const readStoredState = (key: string): number[] => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .map((value) => Number(value))
+        .filter((num) => Number.isFinite(num) && num > 0);
+    } catch {
+      return [];
+    }
+  };
+
+  const persistState = (state: StepsState): void => {
+    if (!state.persist || !state.key) return;
+    try {
+      const sorted = Array.from(state.done).sort((a, b) => a - b);
+      localStorage.setItem(state.key, JSON.stringify(sorted));
+    } catch {
+      // Ignore quota and private-mode storage failures.
+    }
+  };
+
+  roots.forEach((root, rootIndex) => {
+    const topLevelBlocks = Array.from(root.children).filter(
+      (node): node is HTMLElement => node instanceof HTMLElement,
+    );
+    const firstList = topLevelBlocks.find(
+      (node): node is HTMLOListElement | HTMLUListElement =>
+        node.tagName === "OL" || node.tagName === "UL",
+    );
+    const list =
+      firstList ??
+      (() => {
+        const created = document.createElement("ol");
+        root.prepend(created);
+        return created;
+      })();
+
+    const ensureAttachmentsContainer = (item: HTMLLIElement): HTMLDivElement => {
+      const existing = item.querySelector<HTMLDivElement>(":scope > .steps__attachments");
+      if (existing) return existing;
+      const container = document.createElement("div");
+      container.className = "steps__attachments";
+      item.append(container);
+      return container;
+    };
+
+    const getListItems = (targetList: HTMLOListElement | HTMLUListElement): HTMLLIElement[] =>
+      Array.from(targetList.children).filter(
+        (node): node is HTMLLIElement => node instanceof HTMLLIElement,
+      );
+
+    const extractStepItemFromParagraph = (block: HTMLElement): HTMLLIElement | null => {
+      if (block.tagName !== "P") return null;
+
+      const firstTextNode = Array.from(block.childNodes).find(
+        (node): node is Text => node.nodeType === Node.TEXT_NODE && node.textContent !== null,
+      );
+      if (!firstTextNode) return null;
+
+      const match = firstTextNode.textContent.match(/^\s*\d+\.\s+/);
+      if (!match) return null;
+
+      firstTextNode.textContent = firstTextNode.textContent.replace(/^\s*\d+\.\s+/, "");
+
+      const li = document.createElement("li");
+      li.append(block);
+      return li;
+    };
+
+    let currentItem = getListItems(list).at(-1) ?? null;
+
+    for (const block of topLevelBlocks) {
+      if (block === list) {
+        continue;
+      }
+
+      if (block.tagName === "OL" || block.tagName === "UL") {
+        const siblingList = block as HTMLOListElement | HTMLUListElement;
+        for (const li of getListItems(siblingList)) {
+          list.append(li);
+          currentItem = li;
+        }
+        siblingList.remove();
+        continue;
+      }
+
+      const maybeStepItem = extractStepItemFromParagraph(block);
+      if (maybeStepItem) {
+        list.append(maybeStepItem);
+        currentItem = maybeStepItem;
+        continue;
+      }
+
+      if (!currentItem) {
+        continue;
+      }
+
+      ensureAttachmentsContainer(currentItem).append(block);
+    }
+
+    const items = getListItems(list);
+    if (items.length === 0) return;
+
+    const persist = root.dataset.stepsPersist !== "false";
+    const providedId = root.dataset.stepsId?.trim();
+    const stateKey = persist
+      ? providedId
+        ? `steps:${providedId}`
+        : `steps:${location.pathname}:${rootIndex}`
+      : null;
+
+    const initialDone = new Set(parseCsvNumbers(root.dataset.stepsCompleted));
+    if (persist && stateKey) {
+      for (const value of readStoredState(stateKey)) {
+        initialDone.add(value);
+      }
+    }
+
+    const state: StepsState = {
+      done: initialDone,
+      key: stateKey,
+      persist,
+    };
+
+    list.classList.add("steps__list");
+    const updateItem = (item: HTMLLIElement, index: number): void => {
+      const stepNumber = index + 1;
+      const isDone = state.done.has(stepNumber);
+      item.classList.toggle("is-complete", isDone);
+      item.setAttribute("data-step-complete", isDone ? "true" : "false");
+
+      const toggle = item.querySelector<HTMLButtonElement>(":scope > [data-step-toggle]");
+      if (toggle) {
+        toggle.setAttribute("aria-pressed", isDone ? "true" : "false");
+        toggle.setAttribute(
+          "aria-label",
+          isDone
+            ? `Schritt ${stepNumber} als offen markieren`
+            : `Schritt ${stepNumber} als erledigt markieren`,
+        );
+      }
+    };
+
+    const toggleItem = (item: HTMLLIElement, index: number): void => {
+      const stepNumber = index + 1;
+      if (state.done.has(stepNumber)) {
+        state.done.delete(stepNumber);
+      } else {
+        state.done.add(stepNumber);
+      }
+      updateItem(item, index);
+      persistState(state);
+    };
+
+    const isEventFromNestedStep = (item: HTMLLIElement, target: Element): boolean => {
+      const nearestStepItem = target.closest(".steps__item");
+      return !!nearestStepItem && nearestStepItem !== item;
+    };
+
+    items.forEach((item, index) => {
+      item.classList.add("steps__item");
+      item.setAttribute("data-step-index", String(index + 1));
+      item.tabIndex = 0;
+
+      const toggleButton = document.createElement("button");
+      toggleButton.type = "button";
+      toggleButton.className = "steps__toggle";
+      toggleButton.setAttribute("data-step-toggle", "");
+      toggleButton.setAttribute("aria-pressed", "false");
+      const numberBadge = document.createElement("span");
+      numberBadge.className = "steps__number";
+      numberBadge.setAttribute("aria-hidden", "true");
+      numberBadge.textContent = String(index + 1);
+      toggleButton.append(numberBadge);
+
+      item.prepend(toggleButton);
+
+      toggleButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleItem(item, index);
+      });
+
+      item.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (isEventFromNestedStep(item, target)) return;
+        if (target.closest(noToggleContentSelector)) return;
+        toggleItem(item, index);
+      });
+
+      item.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        if (!(event.target instanceof Element)) return;
+        if (isEventFromNestedStep(item, event.target)) return;
+        if (event.target.closest(noToggleContentSelector)) {
+          return;
+        }
+        event.preventDefault();
+        toggleItem(item, index);
+      });
+
+      updateItem(item, index);
+    });
+  });
+</script>
+
+<style is:global>
+  .docs-steps {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  [data-steps-root] > :is(ol, ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item {
+    position: relative;
+    padding: 0 0 0.6rem 2.7rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item::before {
+    content: "";
+    position: absolute;
+    left: 1.2rem;
+    top: 2rem;
+    bottom: -0.65rem;
+    width: 2px;
+    background: color-mix(in srgb, var(--color-gray-4), transparent 28%);
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item:last-child::before {
+    display: none;
+  }
+
+  [data-steps-root] .steps__toggle {
+    position: absolute;
+    top: 0.05rem;
+    left: 0.34rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    border: 2px solid color-mix(in srgb, var(--color-gray-3), transparent 28%);
+    color: var(--color-gray-2);
+    background: var(--color-black);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    padding: 0;
+  }
+
+  [data-steps-root] .steps__toggle .steps__number {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  [data-steps-root] .steps__item[data-step-complete="true"]::before {
+    background: var(--color-accent);
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item[data-step-complete="true"] > .steps__toggle {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-black);
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item > :first-child {
+    margin-top: 0;
+  }
+
+  [data-steps-root] > :is(ol, ul) > .steps__item > :last-child {
+    margin-bottom: 0;
+  }
+
+  [data-steps-root] .steps__attachments {
+    margin-top: 0.75rem;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  [data-steps-root] .steps__attachments > :first-child {
+    margin-top: 0;
+  }
+
+  [data-steps-root] .steps__attachments > :last-child {
+    margin-bottom: 0;
+  }
+
+  [data-steps-root] .steps__item > *,
+  [data-steps-root] .steps__attachments > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  [data-steps-root] .steps__item :where(pre, table) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+</style>
+
