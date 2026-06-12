@@ -66,7 +66,7 @@ Bewusst minimal, keine Framework-Islands:
 
 - `scripts/docs-drawer.ts` — Sidebar-Drawer (mobil/desktop), über Custom Event `docs-sidebar:toggle` vom Header-Button entkoppelt.
 - `scripts/docs-code-copy.ts` — Copy-Buttons der Codeblöcke (Event-Delegation).
-- `ThemeController` (inline) — hell/dunkel mit `localStorage`-Persistenz und `prefers-color-scheme`-Fallback.
+- Theme-Head-Skript (inline in `MainLayout`) — löst das Theme vor dem ersten Paint auf (`schlaumeise:theme:v1` in `localStorage`, sonst `prefers-color-scheme`); `ThemeController` ist nur Toggle-UI + Speichern.
 
 ## Markdown-Pipeline
 
@@ -74,4 +74,4 @@ Bewusst minimal, keine Framework-Islands:
 
 ## Styling
 
-Drei Schichten: Tailwind 4 + daisyUI (Themes hell/dunkel) → globale Stylesheets (`styles/global.css`, `styles/docs.css` mit CSS-Variablen `--color-*`, `--docs-*`) → komponenten-scoped `<style>`-Blöcke. Markdown-Typografie zentral in `MdxInterpreter`.
+Drei Schichten: Tailwind 4 + daisyUI mit zwei **Custom-Themes** „light“/„dark“ aus Markenfarben (definiert via `@plugin "daisyui/theme"` in `global.css`; Namen sind fix, da Komponenten und `localStorage` darauf referenzieren) → globale Stylesheets (`styles/global.css`, `styles/docs.css` mit Projekt-Tokens `--color-*`, `--docs-*`; Light auf `:root`, Dark via `[data-theme="dark"]`) → komponenten-scoped `<style>`-Blöcke. Markdown-Typografie zentral in `MdxInterpreter`. High-Contrast-Varianten sind vorbereitet (Vorlage am Ende von `global.css`).

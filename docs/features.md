@@ -40,10 +40,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Theme-Umschaltung (hell/dunkel)
 
-**Beschreibung:** daisyUI-Theme-Toggle mit `localStorage`-Persistenz und `prefers-color-scheme`-Fallback.
-**Status:** 🟡 teilweise umgesetzt — funktional, aber `defaultTheme: "cupcake"` (site.config) passt nicht zu `light`/`dark` (Controller) und das Skript läuft erst im Body (kurzes Theme-Aufblitzen möglich).
-**Betroffene Bereiche:** `src/components/ui-elements/ThemeController.astro`, `src/layouts/MainLayout.astro`, `src/config/site.config.ts`
-**Erweiterungsmöglichkeiten:** Inline-Skript im `<head>`; Theme-Namen vereinheitlichen.
+**Beschreibung:** Zwei Custom-daisyUI-Themes („light" Standard / „dark") mit Markenfarben (Meisen-Blau `#2558a0`/`#499bff`, Meisen-Gelb `#f9d15b`, Violett-Akzent). Theme-Auflösung per Inline-Skript im `<head>` vor dem ersten Paint (kein Aufblitzen); Persistenz im versionierten Format `schlaumeise:theme:v1` (`{mode, contrast}`), Migration vom alten `theme`-Key; `prefers-color-scheme`-Fallback; `color-scheme` pro Theme (Scrollbars/Formulare wechseln mit). Der `ThemeController` ist nur noch Toggle-UI.
+**Status:** ✅ umgesetzt
+**Betroffene Bereiche:** `src/styles/global.css` (Theme-Definitionen), `src/layouts/MainLayout.astro` (Head-Skript), `src/components/ui-elements/ThemeController.astro`, `src/config/site.config.ts`
+**Erweiterungsmöglichkeiten:** High-Contrast-Varianten `light-contrast`/`dark-contrast` (Vorlage am Ende von `global.css`, Speicherformat bereits vorbereitet, `prefers-contrast: more` als Default beachten) — todo #6b.
 
 ## Codeblöcke
 
@@ -103,4 +103,4 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Reservierte Komponenten
 
-`DropdownNavItem.astro` (`src/components/ui-elements/`): generisches, framework-freies Navbar-Dropdown mit Tastatursteuerung — derzeit ohne Verwendung, reserviert für künftiges Themen-Dropdown im Header. Nicht löschen, ohne diese Zeile zu aktualisieren.
+`DropdownNavItem.astro` (`src/components/ui-elements/`): generisches, framework-freies Navbar-Dropdown mit Tastatursteuerung — derzeit ohne Verwendung, reserviert für ein künftiges Themen-Dropdown im Header. Nicht löschen, ohne diese Zeile zu aktualisieren.

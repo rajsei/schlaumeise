@@ -12,7 +12,7 @@ Abgeleitet aus [analysis.md](./analysis.md). Konkrete Aufgaben mit Aufwand und A
 ## Vor dem nächsten Release (Qualität)
 
 - **EN-404-Strategie:** Sprachumschalter nur anzeigen, wenn die Übersetzung existiert — oder Astro-i18n-Fallback aktivieren.
-- **Theme-Konsistenz:** `defaultTheme` vs. `light`/`dark` vereinheitlichen; Theme-Skript als Inline-Skript in den `<head>` (kein Aufblitzen).
+- ~~Theme-Konsistenz~~ **erledigt (2026-06-12)** — Custom-daisyUI-Themes mit Markenfarben, Head-Skript gegen Aufblitzen, versioniertes Speicherformat. Folgeaufgabe: High-Contrast-Themes (todo #6b).
 - ~~Bilder zu `astro:assets` migrieren~~ **erledigt (2026-06-12)** — alle 64 Inhaltsbilder nach `src/assets/images/` migriert, Komponenten akzeptieren `ImageMetadata`.
 - **Audio komprimieren:** WAV → Opus/MP3 in `src/assets/audio/`.
 - **A11y-Audit:** Kontraste beider Themes, Tastaturnavigation des Drawers, `aria-current` auf aktiven Links.

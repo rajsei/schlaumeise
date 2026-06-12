@@ -1,57 +1,103 @@
 @import "tailwindcss";
+
+/*
+ * Theming-Architektur (siehe docs/architecture.md, "Styling"):
+ * - Zwei Custom-daisyUI-Themes ("light" = Standard, "dark") mit Markenfarben
+ *   der Schlaumeise/Blaumeise: Meisen-Blau (#2558a0 / #499bff), Meisen-Gelb (#f9d15b),
+ *   Violett-Akzent (#4a2fc9 / #5c4ae2).
+ * - Die Theme-Namen "light"/"dark" sind fix: Komponenten selektieren darauf
+ *   (z. B. SidebarItems.astro) und localStorage speichert sie.
+ * - Das aktive Theme setzt ein Inline-Skript im <head> von MainLayout
+ *   VOR dem ersten Paint (kein Aufblitzen).
+ * - Geplant: High-Contrast-Varianten "light-contrast"/"dark-contrast"
+ *   (Template am Dateiende, todo.md #6b).
+ */
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: false;
   exclude: rootscrollgutter, rootscrolllock;
 }
 
-/* Default (dark theme) color tokens --color-accent: #5c4ae2;*/
-:root {  
-  --line-height: 1.75;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  color-scheme: light;
 
-  --color-accent-low: #1f1e46;
-  --color-accent: #5c4ae2;
-  --color-accent-high: #bfc4f8;
-  --color-white: #ffffff;
-  --color-gray-1: #eaeef5;
-  --color-gray-2: #c3c9d1;
-  --color-gray-3: #9aa5b4;
-  --color-gray-4: #505966;
-  --color-gray-5: #303945;
-  --color-gray-6: #1f2733;
-  --color-black: #15181e;
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f6fa;
+  --color-base-300: #e6ebf3;
+  --color-base-content: #1f2733;
+  --color-primary: #2558a0;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f9d15b;
+  --color-secondary-content: #3b2f04;
+  --color-accent: #4a2fc9;
+  --color-accent-content: #ffffff;
+  --color-neutral: #303945;
+  --color-neutral-content: #eaeef5;
+  --color-info: #0f6cbd;
+  --color-info-content: #ffffff;
+  --color-success: #1a7f37;
+  --color-success-content: #ffffff;
+  --color-warning: #f5a623;
+  --color-warning-content: #3d2a05;
+  --color-error: #c92a2a;
+  --color-error-content: #ffffff;
 
-  --color-highlight-blue: #313b53;
-  --color-highlight-red: #582f3a;
-  --color-highlight-purple: #413654;
-  --color-highlight-green: #294432;
-
-  --color-highlight-yellow: #3b372f;
-  
-  --global-shadow-inset: 
-    rgba(0, 0, 0, 0.394) 1px 2px 4px 1px inset,
-    rgba(105, 105, 105, 0.1) 0px -1px 3px 2px;
-  --global-shadow: 
-    rgba(0, 0, 0, 0.4) 2px 2px 2px 2px, 
-    rgba(0, 0, 0, 0.65) 0px 4px 6px -1px, 
-    rgba(255, 255, 255, 0.08) 0px 8px 0px inset;
-  --global-header-bg: rgb(8 8 16 / 0.85);
-  --global-header-border: color-mix(
-    in srgb,
-    var(--color-gray-4),
-    transparent 25%
-  );
-  --docs-code-border: color-mix(in srgb, var(--color-gray-4), transparent 40%);
-  --docs-code-header-bg: color-mix(in srgb, var(--color-gray-6), transparent 38%);
-  --docs-code-header-text: var(--color-gray-2);
-  --docs-code-title-text: var(--color-white);
-  --docs-copy-btn-bg: color-mix(in srgb, var(--color-black), transparent 14%);
-  --docs-copy-btn-border: color-mix(in srgb, var(--color-gray-3), transparent 44%);
-  --docs-copy-btn-text: var(--color-gray-1);
-  --docs-code-highlight: color-mix(in srgb, var(--color-accent), transparent 50%);
-  --docs-code-line-number: color-mix(in srgb, var(--color-gray-3), transparent 20%);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
-/* Light theme overrides */
-:root[data-theme="light"] {
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: #1c222c;
+  --color-base-200: #181d26;
+  --color-base-300: #15181e;
+  --color-base-content: #eaeef5;
+  --color-primary: #499bff;
+  --color-primary-content: #0c1c33;
+  --color-secondary: #f9d15b;
+  --color-secondary-content: #3b2f04;
+  --color-accent: #5c4ae2;
+  --color-accent-content: #ffffff;
+  --color-neutral: #2a3340;
+  --color-neutral-content: #eaeef5;
+  --color-info: #6cb6ff;
+  --color-info-content: #0c1c33;
+  --color-success: #57d077;
+  --color-success-content: #062b14;
+  --color-warning: #f6c453;
+  --color-warning-content: #3d2a05;
+  --color-error: #ff7a70;
+  --color-error-content: #330a07;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/*
+ * Projekt-Tokens — Light (Standard).
+ * Eigene Variablen der Docs-Oberfläche; Light liegt auf :root,
+ * damit es ohne JavaScript und bei unbekanntem Theme-Wert greift.
+ */
+:root {
+  --line-height: 1.75;
+  --navbar-height: 4rem;
+
   --color-accent-low: #d0d3fb;
   --color-accent: #4a2fc9;
   --color-accent-high: #2b2768;
@@ -66,20 +112,18 @@
   --color-black: #ffffff;
 
   --color-highlight-blue: #e9f4fc;
-  --color-highlight-red:  #fce3e2;
+  --color-highlight-red: #fce3e2;
   --color-highlight-purple: #e5e2f6;
   --color-highlight-green: #e4f6e1;
+  --color-highlight-yellow: #fffaef;
 
-  --color-highlight-yellow: #FFFAEF;
-  
-  --global-shadow-inset: 
+  --global-shadow-inset:
     rgba(0, 0, 0, 0.339) 1px 2px 4px 1px inset,
     rgba(255, 255, 255, 0.1) 0px -1px 3px 2px;
-  --global-shadow: 
-    rgba(0, 0, 0, 0.051) 2px 2px 2px 2px, 
-    rgba(0, 0, 0, 0.137) 0px 4px 6px -1px, 
+  --global-shadow:
+    rgba(0, 0, 0, 0.051) 2px 2px 2px 2px,
+    rgba(0, 0, 0, 0.137) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.438) 0px 8px 0px inset;
-
   --global-header-bg: rgb(244 246 250 / 0.9);
   --global-header-border: color-mix(
     in srgb,
@@ -97,11 +141,55 @@
   --docs-code-line-number: color-mix(in srgb, var(--color-gray-4), transparent 15%);
 }
 
-:root .bg-alert-soft {
-  background: var(--color-highlight-yellow);
-  color: var(--color-gray-1); /* may change to yellow */
+/* Projekt-Tokens — Dark */
+:root[data-theme="dark"] {
+  --color-accent-low: #1f1e46;
+  --color-accent: #5c4ae2;
+  --color-accent-high: #bfc4f8;
+  --color-white: #ffffff;
+  --color-gray-1: #eaeef5;
+  --color-gray-2: #c3c9d1;
+  --color-gray-3: #9aa5b4;
+  --color-gray-4: #505966;
+  --color-gray-5: #303945;
+  --color-gray-6: #1f2733;
+  --color-gray-7: #1a202b;
+  --color-black: #15181e;
+
+  --color-highlight-blue: #313b53;
+  --color-highlight-red: #582f3a;
+  --color-highlight-purple: #413654;
+  --color-highlight-green: #294432;
+  --color-highlight-yellow: #3b372f;
+
+  --global-shadow-inset:
+    rgba(0, 0, 0, 0.394) 1px 2px 4px 1px inset,
+    rgba(105, 105, 105, 0.1) 0px -1px 3px 2px;
+  --global-shadow:
+    rgba(0, 0, 0, 0.4) 2px 2px 2px 2px,
+    rgba(0, 0, 0, 0.65) 0px 4px 6px -1px,
+    rgba(255, 255, 255, 0.08) 0px 8px 0px inset;
+  --global-header-bg: rgb(8 8 16 / 0.85);
+  --global-header-border: color-mix(
+    in srgb,
+    var(--color-gray-4),
+    transparent 25%
+  );
+  --docs-code-border: color-mix(in srgb, var(--color-gray-4), transparent 40%);
+  --docs-code-header-bg: color-mix(in srgb, var(--color-gray-6), transparent 38%);
+  --docs-code-header-text: var(--color-gray-2);
+  --docs-code-title-text: var(--color-white);
+  --docs-copy-btn-bg: color-mix(in srgb, var(--color-black), transparent 14%);
+  --docs-copy-btn-border: color-mix(in srgb, var(--color-gray-3), transparent 44%);
+  --docs-copy-btn-text: var(--color-gray-1);
+  --docs-code-highlight: color-mix(in srgb, var(--color-accent), transparent 50%);
+  --docs-code-line-number: color-mix(in srgb, var(--color-gray-3), transparent 20%);
 }
 
+:root .bg-alert-soft {
+  background: var(--color-highlight-yellow);
+  color: var(--color-gray-1);
+}
 
 .color-bg {
   background: var(--color-black);
@@ -114,10 +202,6 @@
   padding: 2rem;
 }
 
-:root {
-  --navbar-height: 4rem;
-}
-
 .audio {
   width: min(100%, 36rem);
   margin-bottom: 1rem;
@@ -128,3 +212,15 @@
   box-shadow: var(--global-shadow-inset);
   color: var(--color-white);
 }
+
+/*
+ * Vorlage für die geplanten High-Contrast-Themes (todo.md #6b):
+ * 1. Zwei weitere Theme-Blöcke "light-contrast"/"dark-contrast" anlegen
+ *    (Basis: obige Blöcke, Farben auf >= 7:1 Kontrast anheben, --depth: 0).
+ * 2. Projekt-Tokens je Theme überschreiben:
+ *    :root[data-theme="light-contrast"] { ... } usw.
+ * 3. Theme-Auflösung im Head-Skript (MainLayout) erweitert das gespeicherte
+ *    contrast-Feld ("schlaumeise:theme:v1") bereits — dort den Suffix
+ *    "-contrast" aktivieren und prefers-contrast: more als Default beachten.
+ * 4. ThemeController um Kontrast-Schalter ergänzen.
+ */

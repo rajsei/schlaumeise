@@ -58,9 +58,9 @@ Da Umbenennungen URLs brechen, wurden sie **nicht** sofort umgesetzt, sondern al
 
 Solide Basis: Skip-fähige Struktur, `aria-label` auf Navigationselementen, `aria-expanded` am Sidebar-Toggle, sichtbarer Fokus-Stil bei Copy-Buttons, `prefers-color-scheme`-Erkennung. **[erledigt]:** Alt-Texte vereinheitlicht (Brand-Logos dekorativ → `alt=""`, EU-Logo → beschreibender Alt-Text); tote Links entfernt (Screenreader-Falle). Offen: durchgängiger A11y-Audit (Kontraste beider Themes, Tastaturnavigation des Drawers, `aria-current` für aktive Links) — siehe Roadmap. Responsivität: Drawer-Pattern mobil + `lg:drawer-open` Desktop, TOC als `<details>` mobil / Rail ab `xl` — gut gelöst.
 
-## 6. Theme-Inkonsistenz (offen)
+## 6. Theme-Inkonsistenz
 
-`site.config.ts` definiert `defaultTheme: "cupcake"`, der `ThemeController` schreibt aber `light`/`dark`. Das initiale `data-theme="cupcake"` wird beim Laden stets überschrieben; außerdem läuft das Theme-Skript erst im Body (kurzes Aufblitzen des falschen Themes möglich). Empfehlung: Inline-Skript im `<head>` von `MainLayout` + einheitliche Theme-Namen.
+`site.config.ts` definierte `defaultTheme: "cupcake"`, der `ThemeController` schrieb aber `light`/`dark`; zudem lief das Theme-Skript erst im Body (Aufblitzen des falschen Themes). **[erledigt 2026-06-12]** — Head-Inline-Skript, Custom-daisyUI-Themes mit Markenfarben, versioniertes Speicherformat (siehe changelog).
 
 ## 7. Verwaiste Inhalte (offen)
 

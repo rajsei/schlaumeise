@@ -9,7 +9,8 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 3 | ~~Bildpfade~~ erledigt via astro:assets-Migration (2026-06-12). Rest: hartkodierten Link in `springschool/overview.mdx` fixen; `rehype-base-path-assets.mjs` entfernen, falls obsolet | P2 | S | — |
 | 4 | ~~`ai+bioacoustic.md` umbenennen + Redirect~~ **erledigt 2026-06-12**: `ai-and-bioacoustic.md` | — | — | — |
 | 5 | Sprachumschalter nur bei existierender Übersetzung anzeigen (oder i18n-Fallback aktivieren) | P2 | M | — |
-| 6 | Theme: Inline-Skript in `<head>`, `defaultTheme` mit Controller-Werten vereinheitlichen | P2 | S | — |
+| 6 | ~~Theme-Fix + Custom-Themes~~ **erledigt 2026-06-12**: Head-Skript (kein FOUC), cupcake entfernt, Custom-daisyUI-Themes light/dark aus Markenfarben, versioniertes Speicherformat | — | — | — |
+| 6b | High-Contrast-Themes `light-contrast`/`dark-contrast` + Kontrast-Schalter im ThemeController (Vorlage am Ende von `global.css`; `prefers-contrast: more` als Default) | P3 | M | #6 ✅ |
 | 7 | ~~Inhaltsbilder zu `astro:assets`/`<Image>` migrieren~~ **erledigt 2026-06-12** (Build-Verifikation auf Windows ausstehend, siehe #1) | — | — | — |
 | 8 | WAV-Audio nach Opus/MP3 konvertieren, Referenzen anpassen | P2 | S | — |
 | 9 | A11y-Audit (Kontrast, Tastatur, `aria-current`) und Befunde beheben | P2 | M | — |

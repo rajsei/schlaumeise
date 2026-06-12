@@ -2,6 +2,19 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-12 — Theme-System überarbeitet (Agent)
+
+### Hinzugefügt
+- Zwei Custom-daisyUI-Themes „light“ (Standard) und „dark“ mit Markenfarben aus dem Schlaumeise-Logo (Meisen-Blau, Meisen-Gelb, Violett-Akzent) inkl. `color-scheme` pro Theme; eingebaute Themes deaktiviert (`themes: false`)
+- Inline-Skript im `<head>` von `MainLayout`: setzt das Theme vor dem ersten Paint — kein Aufblitzen des falschen Themes mehr
+- Versioniertes Speicherformat `schlaumeise:theme:v1` (`{mode, contrast}`) mit Migration vom alten `theme`-Key; Kontrast-Feld für die geplanten High-Contrast-Themes vorbereitet (Vorlage am Ende von `global.css`, todo #6b)
+
+### Geändert
+- `ThemeController`: nur noch Toggle-UI + Speichern (Auflösung übernimmt das Head-Skript)
+- `site.config.ts`: `defaultTheme` von „cupcake“ (war toter Wert, wurde immer überschrieben) auf „light“
+- Projekt-Tokens in `global.css` umgedreht: Light liegt jetzt auf `:root` (vorher Dark — dadurch mischten sich beim ersten Paint helle daisyUI- und dunkle Projekt-Farben), Dark via `[data-theme="dark"]`
+- `--color-gray-7` auch im Dark-Theme definiert (war nur in Light vorhanden — latenter Bug, betraf u. a. `.audio`)
+
 ## 2026-06-12 — Content-Datei umbenannt + Namenskonvention (Agent)
 
 ### Geändert

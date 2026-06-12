@@ -45,6 +45,35 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
 <html lang={locale} data-theme={siteConfig.defaultTheme}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      /* Setzt das Theme VOR dem ersten Paint (kein Aufblitzen).
+         Speicherformat "schlaumeise:theme:v1": { mode: "light"|"dark", contrast: "normal"|"high" }.
+         contrast wird bereits gespeichert, aber erst mit den geplanten
+         High-Contrast-Themes ausgewertet (siehe global.css, Dateiende). */
+      (function () {
+        var theme = null;
+        try {
+          var stored = JSON.parse(localStorage.getItem("schlaumeise:theme:v1") || "null");
+          if (stored && (stored.mode === "light" || stored.mode === "dark")) {
+            theme = stored.mode;
+          }
+          if (!theme) {
+            var legacy = localStorage.getItem("theme");
+            if (legacy === "light" || legacy === "dark") theme = legacy;
+          }
+        } catch (e) {
+          /* localStorage nicht verfügbar: Systempräferenz nutzen */
+        }
+        if (!theme) {
+          theme =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />

@@ -33,33 +33,32 @@ import "../../styles/global.css";
 </div>
 
 <script is:inline>
-  const STORAGE_KEY = "theme";
-  const THEME_LIGHT = "light";
-  const THEME_DARK = "dark";
-  const toggle = document.getElementById("theme-toggle");
-  const root = document.documentElement;
+  /* Nur Toggle-UI + Speichern. Die Theme-Auflösung (localStorage /
+     prefers-color-scheme) läuft im Head-Skript von MainLayout VOR dem
+     ersten Paint — hier wird der dort gesetzte Zustand nur übernommen. */
+  (function () {
+    var STORAGE_KEY = "schlaumeise:theme:v1";
+    var toggle = document.getElementById("theme-toggle");
+    var root = document.documentElement;
+    if (!toggle) return;
 
-  if (toggle) {
-    const applyTheme = (theme) => {
-      root.setAttribute("data-theme", theme);
-      toggle.checked = theme === THEME_DARK;
-      localStorage.setItem(STORAGE_KEY, theme);
-    };
+    toggle.checked = root.getAttribute("data-theme") === "dark";
 
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === THEME_LIGHT || stored === THEME_DARK) {
-        applyTheme(stored);
-      } else {
-        const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-        applyTheme(prefersDark ? THEME_DARK : THEME_LIGHT);
+    toggle.addEventListener("change", function () {
+      var mode = toggle.checked ? "dark" : "light";
+      root.setAttribute("data-theme", mode);
+      try {
+        var stored = {};
+        try {
+          stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {};
+        } catch (e) {}
+        stored.mode = mode;
+        if (!stored.contrast) stored.contrast = "normal";
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+        localStorage.removeItem("theme"); /* Altes Format aufräumen */
+      } catch (e) {
+        /* localStorage nicht verfügbar: Theme gilt nur für diese Seite */
       }
-    } catch {
-      // no-op: allow default theme when storage is unavailable
-    }
-
-    toggle.addEventListener("change", () => {
-      applyTheme(toggle.checked ? THEME_DARK : THEME_LIGHT);
     });
-  }
+  })();
 </script>
