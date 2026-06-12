@@ -1,65 +1,185 @@
 ---
-interface Props {
+import type { HTMLAttributes } from "astro/types";
+
+type CardIcon = "arrow" | "external" | "none";
+
+interface Props extends Omit<HTMLAttributes<"a">, "title" | "href"> {
   title: string;
   href: string;
   description?: string;
+  imgSrc?: string;
+  imgAlt?: string;
+  isExternal?: boolean;
+  icon?: CardIcon | false;
 }
 
-const { title, href, description } = Astro.props;
+const {
+  title,
+  href,
+  description,
+  imgSrc,
+  imgAlt = "",
+  isExternal = false,
+  icon,
+  class: className = "",
+  ...attributes
+} = Astro.props;
+
+const hasImage = Boolean(imgSrc);
+const resolvedIcon = icon === false ? "none" : icon ?? (isExternal ? "external" : "arrow");
+const rootClass = [
+  "sl-link-card",
+  "card",
+  "card-border",
+  "bg-base-100",
+  "text-base-content",
+  "shadow-sm",
+  hasImage ? "sl-link-card--image" : "",
+  resolvedIcon === "none" ? "sl-link-card--no-icon" : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
 ---
 
-<a class="sl-link-card" href={href}>
-  <span class="sl-flex stack">
-    <span class="title">{title}</span>
-    {description && <span class="description">{description}</span>}
+<a class={rootClass} href={href} {...attributes}>
+  {
+    imgSrc && (
+      <figure class="sl-link-card__media">
+        <img src={imgSrc} alt={imgAlt} class="sl-link-card__image" loading="lazy" decoding="async" />
+      </figure>
+    )
+  }
+
+  <span class="sl-link-card__body card-body">
+    <span class="sl-link-card__text">
+      <span class="sl-link-card__title card-title">{title}</span>
+      {description && <span class="sl-link-card__description">{description}</span>}
+    </span>
+
+    {
+      resolvedIcon === "external" && (
+        <svg aria-hidden="true" class="sl-link-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4L12 12M20 4V8.5M20 4H15.5M19 12.5V16.8C19 17.9201 19 18.4802 18.782 18.908C18.5903 19.2843 18.2843 19.5903 17.908 19.782C17.4802 20 16.9201 20 15.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V8.2C4 7.0799 4 6.51984 4.21799 6.09202C4.40973 5.71569 4.71569 5.40973 5.09202 5.21799C5.51984 5 6.07989 5 7.2 5H11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      )
+    }
+
+    {
+      resolvedIcon === "arrow" && (
+        <svg aria-hidden="true" class="sl-link-card__icon rtl:flip" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)">
+          <path d="M5 12H19M5 12L11 6M5 12L11 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      )
+    }
   </span>
-  <svg aria-hidden="true" class="icon rtl:flip" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)">
-    <path d="M5 12H19M5 12L11 6M5 12L11 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-  </svg>
 </a>
 
 <style>
   .sl-link-card {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.5rem;
-    border: 1px solid var(--sl-color-gray-5, var(--color-gray-5));
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: var(--sl-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.18));
-    position: relative;
-  }
-
-  .sl-flex {
-    display: flex;
-  }
-
-  .stack {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  a {
+    --card-p: 1rem;
+    display: block;
+    width: 100%;
+    color: var(--color-base-content);
     text-decoration: none;
     line-height: var(--sl-line-height-headings, 1.3);
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }
 
-  .title {
-    color: var(--sl-color-white, var(--color-white));
-    font-weight: 600;
-    font-size: var(--sl-text-lg, 1.125rem);
+  .sl-link-card:hover,
+  .sl-link-card:focus-visible {
+    border-color: color-mix(in oklab, var(--color-base-content) 28%, transparent);
+    background: var(--color-base-200);
+    outline: none;
   }
 
-  .description {
-    color: var(--sl-color-gray-3, var(--color-gray-3));
+  .sl-link-card:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .sl-link-card--image {
+    --card-p: 0.85rem;
+    display: grid;
+    grid-template-columns: minmax(0, 60%) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .sl-link-card__media {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .sl-link-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 7rem;
+    object-fit: cover;
+  }
+
+  .sl-link-card__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .sl-link-card--no-icon .sl-link-card__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sl-link-card--image .sl-link-card__body {
+    align-items: start;
+    gap: 0.75rem;
+  }
+
+  .sl-link-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .sl-link-card__title {
+    color: inherit;
+    overflow-wrap: anywhere;
+  }
+
+  .sl-link-card__description {
+    color: color-mix(in oklab, var(--color-base-content) 68%, transparent);
     line-height: 1.5;
+    overflow-wrap: anywhere;
   }
 
-  .icon {
-    color: var(--sl-color-gray-3, var(--color-gray-3));
+  .sl-link-card__icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: color-mix(in oklab, var(--color-base-content) 72%, transparent);
     align-self: center;
-    width: 1em;
-    height: 1em;
-    font-size: var(--sl-icon-size, 1.333em);
+    transition: color 0.15s ease;
+  }
+
+  .sl-link-card--image .sl-link-card__icon {
+    align-self: start;
+    margin-top: 0.15rem;
+  }
+
+  .sl-link-card:hover .sl-link-card__icon,
+  .sl-link-card:focus-visible .sl-link-card__icon {
+    color: var(--color-base-content);
+  }
+
+  @media (max-width: 900px) {
+    .sl-link-card--image {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sl-link-card__image {
+      height: auto;
+      min-height: 0;
+    }
   }
 </style>

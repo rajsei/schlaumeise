@@ -2,6 +2,7 @@
 import { Code } from "astro:components";
 import { parseLineSelection } from "../../plugins/code-block-meta.mjs";
 import { createDocsCodeTransformer } from "../../plugins/shiki-transformer-docs-code.mjs";
+import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
 
 interface Props {
   code: string;
@@ -88,6 +89,8 @@ const wrapperClass = [
   .join(" ");
 ---
 
+<DocsCodeBlockStyles />
+
 <figure class={wrapperClass}>
   {
     showHeader && (
@@ -135,106 +138,6 @@ const wrapperClass = [
 </script>
 
 <style is:global>
-  .docs-code-block {
-    margin: 1rem 0;
-    border: 1px solid var(--docs-code-border);
-    border-radius: 0.75rem;
-    overflow: hidden;
-    background: color-mix(in srgb, var(--color-black), black 6%);
-  }
-
-  .docs-code-block__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.65rem;
-    min-height: 2.25rem;
-    padding: 0.45rem 0.8rem;
-    border-bottom: 1px solid var(--docs-code-border);
-    background: var(--docs-code-header-bg);
-  }
-
-  .docs-code-block__title {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--docs-code-title-text);
-  }
-
-  .docs-code-block__language {
-    margin-left: auto;
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--docs-code-header-text);
-  }
-
-  .docs-code-block__language.is-secondary {
-    margin-left: 0.4rem;
-  }
-
-  .docs-code-block__body {
-    position: relative;
-  }
-
-  .docs-code-block__pre {
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-  }
-
-  .docs-code-block__pre code {
-    display: block;
-    padding: 0.9rem 1rem;
-    overflow-x: auto;
-  }
-
-  .docs-code-block.is-wrap .docs-code-block__pre code {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-  }
-
-  .docs-code-block .line.is-highlighted {
-    background: var(--docs-code-highlight);
-  }
-
-  .docs-code-block.has-line-numbers .line {
-    position: relative;
-    display: block;
-    padding-left: 2.2rem;
-  }
-
-  .docs-code-block.has-line-numbers .line::before {
-    content: attr(data-line);
-    position: absolute;
-    left: 0;
-    width: 1.65rem;
-    text-align: right;
-    color: var(--docs-code-line-number);
-    user-select: none;
-  }
-
-  .docs-code-block__copy {
-    position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
-    border: 1px solid var(--docs-copy-btn-border);
-    border-radius: 0.45rem;
-    background: var(--docs-copy-btn-bg);
-    color: var(--docs-copy-btn-text);
-    width: 2rem;
-    height: 2rem;
-    display: inline-grid;
-    place-items: center;
-    font-size: 0;
-    line-height: 1;
-    padding: 0;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-2px);
-    transition: border-color 120ms ease, transform 120ms ease, opacity 120ms ease;
-  }
-
   .docs-code-block__copy::before {
     content: "⧉";
     font-size: 1rem;
@@ -244,28 +147,6 @@ const wrapperClass = [
   .docs-code-block__copy[data-copied="true"]::before {
     content: "✓";
     font-size: 0.95rem;
-  }
-
-  .docs-code-block__body:hover .docs-code-block__copy,
-  .docs-code-block__body:focus-within .docs-code-block__copy {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .docs-code-block__copy:hover,
-  .docs-code-block__copy:focus-visible {
-    border-color: color-mix(in srgb, var(--color-accent), transparent 35%);
-    transform: translateY(-1px);
-  }
-
-  .docs-code-block__copy:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--color-accent), transparent 30%);
-    outline-offset: 1px;
-  }
-
-  .docs-code-block__copy[data-copied="true"] {
-    border-color: color-mix(in srgb, var(--color-highlight-green), transparent 30%);
   }
 
   .docs-code-block.terminal-code {
@@ -317,14 +198,5 @@ const wrapperClass = [
   .docs-code-block.terminal-code .docs-code-block__copy:hover,
   .docs-code-block.terminal-code .docs-code-block__copy:focus-visible {
     border-color: #73b7ff;
-  }
-
-  @media (max-width: 640px) {
-    .docs-code-block__copy {
-      top: 0.45rem;
-      right: 0.45rem;
-      width: 1.8rem;
-      height: 1.8rem;
-    }
   }
 </style>
