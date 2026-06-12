@@ -1,6 +1,5 @@
 ---
 import ThemeController from "./ui-elements/ThemeController.astro";
-import DropdownNavItem from "./ui-elements/DropdownNavItem.astro";
 import type { BrandConfig } from "../config/site.config";
 import { formatMessage, type Dictionary } from "../i18n";
 import type { Locale } from "../i18n/config";
@@ -28,17 +27,6 @@ const primaryNavItems = [
   },
 ];
 
-const dropdownContent = [
-  {
-    href: buildLocalizedUrl(locale, "/services"),
-    label: dictionary.nav.services,
-  },
-  {
-    href: buildLocalizedUrl(locale, "/contact"),
-    label: dictionary.nav.contact,
-  },
-];
-
 function normalizePathname(path: string): string {
   const pathname = new URL(path, Astro.url).pathname.replace(/\/+$/, "");
   return pathname === "" ? "/" : pathname;
@@ -47,10 +35,6 @@ function normalizePathname(path: string): string {
 function isActivePath(path: string): boolean {
   return normalizePathname(path) === normalizePathname(currentPathname);
 }
-
-const isParentActive = dropdownContent.some((entry) =>
-  isActivePath(entry.href),
-);
 
 function navLinkClass(href: string, extra: string[] = []): string {
   return ["button-nav", ...extra, isActivePath(href) && "is-active"]
@@ -75,64 +59,6 @@ function navLinkClass(href: string, extra: string[] = []): string {
         <span class="docs-toggle-line"></span>
       </span>
     </button>
-    <div class="dropdown">
-      <!-- <div tabindex="0" role="button" class="btn btn-outline lg:hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h8m-8 6h16"></path>
-        </svg>
-      </div> -->
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
-        {
-          primaryNavItems.map((item) => (
-            <li>
-              <a class={navLinkClass(item.href)} href={item.href}>
-                <span class="global-nav__link_text">{item.label}</span>
-              </a>
-            </li>
-          ))
-        }
-        <li class="dropdown-mobile-group">
-          <span class="dropdown-mobile-label">{dictionary.nav.parent}</span>
-          <ul class="dropdown-mobile-list">
-            {
-              dropdownContent.map((entry) => (
-                <li>
-                  <a
-                    class={navLinkClass(entry.href, ["dropdown-item"])}
-                    href={entry.href}
-                    role="menuitem"
-                  >
-                    <span class="global-nav__link_text">{entry.label}</span>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </li>
-        <li>
-          <a
-            class={navLinkClass(languageSwitchHref)}
-            href={languageSwitchHref}
-            aria-label={dictionary.a11y.switchLanguage}
-          >
-            <span class="global-nav__link_text">{dictionary.nav.switchTo}</span>
-          </a>
-        </li>
-      </ul>
-    </div>
     <div class="btn btn-link text-xl">
       <a class="brand" href={homeHref} aria-label={homeLabel}>
         <img
@@ -158,24 +84,6 @@ function navLinkClass(href: string, extra: string[] = []): string {
           </li>
         ))
       }
-      <li>
-        <DropdownNavItem
-          label={dictionary.nav.parent}
-          isActive={isParentActive}
-        >
-          {
-            dropdownContent.map((entry) => (
-              <a
-                class={navLinkClass(entry.href, ["dropdown-item"])}
-                href={entry.href}
-                role="menuitem"
-              >
-                <span class="global-nav__link_text">{entry.label}</span>
-              </a>
-            ))
-          }
-        </DropdownNavItem>
-      </li>
     </ul>
   </div>
   <div class="navbar-end">
@@ -258,26 +166,6 @@ function navLinkClass(href: string, extra: string[] = []): string {
     transition:
       color 150ms ease,
       background 150ms ease;
-  }
-
-  .dropdown-mobile-group {
-    padding: 0.2rem 0.3rem 0.4rem;
-  }
-
-  .dropdown-mobile-label {
-    display: block;
-    padding: 0.45rem 0.6rem 0.2rem;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    opacity: 0.8;
-  }
-
-  .dropdown-mobile-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding-left: 0.3rem;
   }
 
   .nav-list {

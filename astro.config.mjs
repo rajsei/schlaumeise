@@ -10,7 +10,12 @@ import { rehypeCodeBlockWrapper } from "./src/plugins/rehype-code-block-wrapper.
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://rajsei.github.io",
   base: "/schlaumeise",
+  redirects: {
+    // Alte URL mit "+" (Encoding-Risiko), umbenannt am 2026-06-12
+    "/knowledge_collection/ai+bioacoustic": "/knowledge_collection/ai-and-bioacoustic",
+  },
   i18n: {
     defaultLocale: "de",
     locales: ["de" , "en"],

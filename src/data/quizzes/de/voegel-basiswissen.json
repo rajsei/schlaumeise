@@ -1,0 +1,114 @@
+{
+  "id": "voegel-basiswissen",
+  "version": 1,
+  "locale": "de",
+  "title": "Vögel-Basiswissen",
+  "description": "Teste dein Wissen über heimische Vögel und ihre Stimmen. Beispiel-Quiz, das alle unterstützten Fragetypen demonstriert.",
+  "topicId": "knowledge_collection",
+  "relatedDoc": "knowledge_collection/birds",
+  "shuffleQuestions": false,
+  "questions": [
+    {
+      "id": "rolle-im-oekosystem",
+      "type": "single-choice",
+      "prompt": "Welche Aufgabe übernehmen Vögel in vielen Ökosystemen?",
+      "options": [
+        { "id": "samen", "text": "Sie verbreiten Samen und helfen Pflanzen bei der Vermehrung." },
+        { "id": "wurzeln", "text": "Sie lockern mit ihren Krallen den Boden für Regenwürmer auf." },
+        { "id": "regen", "text": "Sie erzeugen mit ihrem Gesang Regenwolken." }
+      ],
+      "correctOptionId": "samen",
+      "explanation": "Viele Vögel fressen Früchte und scheiden die Samen an anderer Stelle wieder aus — so verbreiten sie Pflanzen.",
+      "relatedDoc": "knowledge_collection/birds"
+    },
+    {
+      "id": "birdnet-eingaben",
+      "type": "multiple-choice",
+      "prompt": "Was braucht BirdNET, um einen Vogel zu erkennen? Wähle alle richtigen Antworten.",
+      "options": [
+        { "id": "audio", "text": "Eine Tonaufnahme des Vogelgesangs" },
+        { "id": "ki-modell", "text": "Ein trainiertes KI-Modell" },
+        { "id": "foto", "text": "Ein scharfes Foto des Vogels" },
+        { "id": "feder", "text": "Eine Feder des Vogels" }
+      ],
+      "correctOptionIds": ["audio", "ki-modell"],
+      "explanation": "BirdNET erkennt Vögel an ihrer Stimme: Eine Aufnahme wird von einem trainierten KI-Modell analysiert."
+    },
+    {
+      "id": "spottdrossel-imitation",
+      "type": "true-false",
+      "prompt": "Die Spottdrossel kann die Gesänge anderer Vogelarten nachahmen.",
+      "correctAnswer": true,
+      "explanation": "Spottdrosseln sind berühmte Imitatoren — sie bauen Rufe anderer Arten in ihren eigenen Gesang ein."
+    },
+    {
+      "id": "blauhaeher-bild",
+      "type": "single-choice",
+      "prompt": "Welcher Vogel ist auf dem Bild zu sehen?",
+      "media": {
+        "type": "image",
+        "src": "birds/bluejay.jpg",
+        "alt": "Ein blau-weißer Vogel mit Federhaube sitzt auf einem Ast."
+      },
+      "options": [
+        { "id": "blauhaeher", "text": "Blauhäher" },
+        { "id": "leierschwanz", "text": "Leierschwanz" },
+        { "id": "dachsammer", "text": "Dachsammer" }
+      ],
+      "correctOptionId": "blauhaeher",
+      "explanation": "Der Blauhäher ist an seinem blauen Gefieder und der markanten Federhaube gut zu erkennen."
+    },
+    {
+      "id": "blauhaeher-stimme",
+      "type": "single-choice",
+      "prompt": "Höre dir die Aufnahme an. Welcher Vogel ruft hier?",
+      "media": {
+        "type": "audio",
+        "src": "audio/Blauhaeher.mp3",
+        "alt": "Aufnahme eines kräftigen, krächzenden Vogelrufs."
+      },
+      "options": [
+        { "id": "blauhaeher", "text": "Blauhäher" },
+        { "id": "spottdrossel", "text": "Spottdrossel" },
+        { "id": "specht", "text": "Dunenspecht" }
+      ],
+      "correctOptionId": "blauhaeher",
+      "explanation": "Der laute, krächzende Ruf ist typisch für den Blauhäher."
+    },
+    {
+      "id": "birdnet-ablauf",
+      "type": "ordering",
+      "prompt": "Bringe die Schritte der Vogelerkennung mit BirdNET in die richtige Reihenfolge.",
+      "items": [
+        { "id": "aufnehmen", "text": "Mikrofon nimmt Vogelgesang auf" },
+        { "id": "analysieren", "text": "KI-Modell analysiert die Aufnahme" },
+        { "id": "ergebnis", "text": "Erkannte Art wird angezeigt" }
+      ],
+      "correctOrder": ["aufnehmen", "analysieren", "ergebnis"],
+      "explanation": "Erst die Aufnahme, dann die Analyse durch das Modell, zum Schluss das Ergebnis."
+    },
+    {
+      "id": "vogel-zuordnung",
+      "type": "matching",
+      "prompt": "Ordne jedem Vogel seine Besonderheit zu.",
+      "pairs": [
+        {
+          "id": "spottdrossel",
+          "left": { "text": "Spottdrossel" },
+          "right": { "text": "Imitiert die Gesänge anderer Arten" }
+        },
+        {
+          "id": "leierschwanz",
+          "left": { "text": "Leierschwanz" },
+          "right": { "text": "Ahmt sogar technische Geräusche nach" }
+        },
+        {
+          "id": "blauhaeher",
+          "left": { "text": "Blauhäher" },
+          "right": { "text": "Auffällig blaues Gefieder mit Federhaube" }
+        }
+      ],
+      "explanation": "Alle drei Arten kommen in unseren Lernmaterialien zur Bioakustik vor."
+    }
+  ]
+}

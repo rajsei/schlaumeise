@@ -28,6 +28,8 @@ const docs = defineCollection({
       ])
       .optional(),
     topicId: z.string().optional(),
+    category: z.string().optional(),
+    tags: z.array(z.string()).optional(),
     prev: paginationOverrideSchema.optional(),
     next: paginationOverrideSchema.optional(),
   }),

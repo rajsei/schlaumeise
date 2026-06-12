@@ -5,10 +5,13 @@ export const en = {
   },
   nav: {
     home: "Home",
-    parent: "Parent",
-    services: "Services",
-    contact: "Contact",
     switchTo: "Deutsch",
+  },
+  footer: {
+    navLabel: "Footer navigation",
+    imprint: "Imprint",
+    fundingAlt:
+      "Funded by the European Union (ERDF/ESF) and the Free State of Saxony",
   },
   docs: {
     toggleNav: "Navigation",

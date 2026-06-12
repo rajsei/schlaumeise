@@ -1,6 +1,10 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 interface CarouselImage {
-  src: string;
+  /** Importierte Bilddatei (ImageMetadata, wird optimiert) oder URL-String. */
+  src: string | ImageMetadata;
   alt: string;
 }
 
@@ -19,7 +23,17 @@ const { images, label = "Bildergalerie" } = Astro.props;
         <div class="docs-image-carousel__slides">
           {images.map((image, index) => (
             <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
-              <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              {typeof image.src === "string" ? (
+                <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              ) : (
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={Math.min(1024, image.src.width)}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+              )}
             </figure>
           ))}
         </div>

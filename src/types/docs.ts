@@ -21,6 +21,8 @@ export interface DocsEntryData {
   menu?: boolean;
   content?: boolean;
   topicId?: string;
+  category?: string;
+  tags?: string[];
   sidebar?: boolean | DocsSidebarMeta;
   prev?: DocsPaginationOverride;
   next?: DocsPaginationOverride;

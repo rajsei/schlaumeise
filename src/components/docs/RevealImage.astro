@@ -1,6 +1,10 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 interface Props {
-  imageSrc: string;
+  /** Importierte Bilddatei (ImageMetadata, wird optimiert) oder URL-String. */
+  imageSrc: string | ImageMetadata;
   alt: string;
   overlayText?: string;
   revealLabel?: string;
@@ -18,7 +22,18 @@ const {
   <details class="collapse collapse-arrow border border-base-300 bg-base-100 reveal-collapse">
     <summary class="collapse-title reveal-summary">
       <div class="reveal-frame">
-        <img src={imageSrc} alt={alt} class="reveal-image" data-no-zoom loading="lazy" />
+        {typeof imageSrc === "string" ? (
+          <img src={imageSrc} alt={alt} class="reveal-image" data-no-zoom loading="lazy" />
+        ) : (
+          <Image
+            src={imageSrc}
+            alt={alt}
+            width={Math.min(800, imageSrc.width)}
+            class="reveal-image"
+            data-no-zoom
+            loading="lazy"
+          />
+        )}
         <div class="reveal-placeholder" aria-hidden="true">
           <span class="reveal-label badge badge-neutral badge-outline badge-xl">{revealLabel}</span>
         </div>

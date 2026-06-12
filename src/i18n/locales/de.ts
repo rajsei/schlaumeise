@@ -5,10 +5,13 @@ export const de = {
   },
   nav: {
     home: "Startseite",
-    parent: "Themen",
-    services: "Leistungen",
-    contact: "Kontakt",
     switchTo: "English",
+  },
+  footer: {
+    navLabel: "Fußzeilennavigation",
+    imprint: "Impressum",
+    fundingAlt:
+      "Gefördert durch die Europäische Union (EFRE/ESF) und den Freistaat Sachsen",
   },
   docs: {
     toggleNav: "Navigation",
