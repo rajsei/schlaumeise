@@ -14,8 +14,7 @@ Mit Tastaturkürzeln kannst du Befehle schneller ausführen und Texte oder Datei
   - <kbd class="kbd">Strg</kbd>+<kbd class="kbd">C</kbd> drücken
 
 - **macOS:**
-  - <kbd class="kbd">Strg</kbd>+<kbd class="kbd">C</kbd> bzw. <kbd class="kbd">⌘</kbd>
-    <kbd class="kbd">C</kbd>
+  - <kbd class="kbd">⌘</kbd>+<kbd class="kbd">C</kbd>
 
 ## Einfügen
 
@@ -23,7 +22,7 @@ Mit Tastaturkürzeln kannst du Befehle schneller ausführen und Texte oder Datei
   - <kbd class="kbd">Strg</kbd>+<kbd class="kbd">V</kbd> drücken
 
 - **macOS:**
-  - <kbd class="kbd">Strg</kbd>+<kbd class="kbd">V</kbd> bzw. <kbd class="kbd">⌘</kbd>+<kbd class="kbd">V</kbd>
+  - <kbd class="kbd">⌘</kbd>+<kbd class="kbd">V</kbd>
 
 Hinweis: In manchen Linux-Terminals funktioniert Einfügen mit <kbd class="kbd">Strg</kbd>+<kbd class="kbd">Shift</kbd>+<kbd class="kbd">V</kbd>.
 

@@ -7,28 +7,30 @@ sidebar:
 ---
 import RevealImage from "../../../../components/docs/RevealImage.astro";
 import HighlightSection from "../../../../components/docs/HighlightSection.astro";
+import AudioSpectrogram from "../../../../components/docs/AudioSpectrogram.astro";
+import MicSpectrogram from "../../../../components/docs/MicSpectrogram.astro";
 
 import bluejayImage from "../../../../assets/birds/bluejay.jpg";
 import chipmunkImage from "../../../../assets/birds/chipmunk.jpg";
 import lyrebirdImage from "../../../../assets/birds/lyrebird.jpg";
 import mockingbirdImage from "../../../../assets/birds/mockingbird.jpg";
 
-import weidengelbkehlchenLied from "../../../../assets/audio/WeidengelbkehlchenLied.wav";
-import weidengelbkehlchenRuf from "../../../../assets/audio/WeidengelbkehlchenRuf.wav";
+import weidengelbkehlchenLied from "../../../../assets/audio/weidengelbkehlchen-lied.mp3";
+import weidengelbkehlchenRuf from "../../../../assets/audio/weidengelbkehlchen-ruf.mp3";
 
-import WeißkehlammerÜbungslied from "../../../../assets/audio/WeißkehlammerÜbungslied.wav";
-import WeißkehlammerErwachsenenlied from "../../../../assets/audio/WeißkehlammerErwachsenenlied.wav";
+import WeißkehlammerÜbungslied from "../../../../assets/audio/weisskehlammer-uebungslied.mp3";
+import WeißkehlammerErwachsenenlied from "../../../../assets/audio/weisskehlammer-erwachsenenlied.mp3";
 
-import DachsammerDialekt1 from "../../../../assets/audio/DachsammerDialekt1.wav";
-import DachsammerDialekt2 from "../../../../assets/audio/DachsammerDialekt2.wav";
+import DachsammerDialekt1 from "../../../../assets/audio/dachsammer-dialekt-1.mp3";
+import DachsammerDialekt2 from "../../../../assets/audio/dachsammer-dialekt-2.mp3";
 
-import Dunenspecht from "../../../../assets/audio/Dunenspecht.wav";
-import Haarspecht from "../../../../assets/audio/Haarspecht.wav";
+import Dunenspecht from "../../../../assets/audio/dunenspecht.mp3";
+import Haarspecht from "../../../../assets/audio/haarspecht.mp3";
 
-import Blauhaeher from "../../../../assets/audio/Blauhaeher.mp3";
-import Spottdrossel from "../../../../assets/audio/Spottdrossel.mp3";
-import Leierschwanz from "../../../../assets/audio/Leierschwanz.wav";
-import Streifenhoernchen from "../../../../assets/audio/Streifenhoernchen.mp3";
+import Blauhaeher from "../../../../assets/audio/blauhaeher.mp3";
+import Spottdrossel from "../../../../assets/audio/spottdrossel.mp3";
+import Leierschwanz from "../../../../assets/audio/leierschwanz.mp3";
+import Streifenhoernchen from "../../../../assets/audio/streifenhoernchen.mp3";
 
 
 ## Wie kommunizieren Vögel miteinander?
@@ -65,9 +67,7 @@ Gesänge haben mehrere **wichtige Aufgaben**:
   <div slot="body">
     <p>Das Weidengelbkehlchen (*Geothlypis trichas*) ist ein Singvogel aus der Familie der Waldsänger. Viele Männchen erkennt man an der schwarzen Gesichtsmaske mit gelbem Kehlbereich; Weibchen sind meist unauffälliger gefärbt.</p>
   </div>
-    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenLied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={weidengelbkehlchenLied} label="Lied des Weidengelbkehlchens" maxFrequency={10000} />
 </HighlightSection>
 
 
@@ -96,9 +96,10 @@ Rufe sind vor allem für den Alltag wichtig:
 <HighlightSection
     title="Wie hört sich der Ruf eines Weidengelbkehlchens an?"
     color="blue">
-    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenRuf}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={weidengelbkehlchenRuf} 
+     label="Ruf des Weidengelbkehlchens" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
 ## Singen will gelernt sein
@@ -111,15 +112,17 @@ Sie hören erwachsenen Artgenossen zu und üben so lange, bis ihr eigener Gesang
   <div>
     <p>So klingt das Lied eines Jungvogels:</p>
   </div>
-    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerÜbungslied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={WeißkehlammerÜbungslied} 
+     label="Übungslied einer jungen Weißkehlammer" 
+     maxFrequency={10000}/>
       <div>
     <p>So klingt das Lied eines erwachsenen Vogels:</p>
   </div>
-    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerErwachsenenlied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={WeißkehlammerErwachsenenlied} 
+     label="Lied einer erwachsenen Weißkehlammer" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
 ## „Dialekte“ bei Vogelstimmen
@@ -133,15 +136,17 @@ Nimmt man den Gesang erwachsener Vögel derselben Art an zwei verschiedenen Orte
   <div>
     <p>So klingen zwei Individuen an unterschiedlichen Orten:</p>
   </div>
-    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt1}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={DachsammerDialekt1} 
+     label="Dachsammer – Ort 1" 
+     maxFrequency={10000}/>
       <div>
 
   </div>
-    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt2}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={DachsammerDialekt2} 
+     label="Dachsammer – Ort 2" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
 ## Mehr als singen
@@ -165,15 +170,17 @@ Länge, Tempo, Schlagzahl und Pausen zwischen den Schlägen unterscheiden sich u
   <div>
     <p>So klingt ein Dunenspecht:</p>
   </div>
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Dunenspecht}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Dunenspecht} 
+     label="Dunenspecht (Trommeln)" 
+     maxFrequency={10000}/>
     <div>
         <p>Und so klingt ein Haarspecht:</p>
   </div>
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Haarspecht}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Haarspecht} 
+     label="Haarspecht (Trommeln)" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
 ## Mysteriöse Vögel – Was zwitschert hier?
@@ -183,9 +190,7 @@ Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art 
 <HighlightSection
   title="Welcher Vogel ist das nur?"
   color="green">
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Blauhaeher}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Blauhaeher} />
     <RevealImage
       imageSrc={bluejayImage}
       alt="Blauhäher"
@@ -206,9 +211,7 @@ Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art 
 <HighlightSection
   title="Und der nächste Vogel?"
   color="blue">
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Spottdrossel}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Spottdrossel} />
     <RevealImage
       imageSrc={mockingbirdImage}
       alt="Spottdrossel"
@@ -234,9 +237,9 @@ Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art 
 <HighlightSection
   title="Und was hört man hier?"
   color="purple">
-    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Leierschwanz}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Leierschwanz} 
+     maxFrequency={10000}/>
     <RevealImage
       imageSrc={lyrebirdImage}
       alt="Leierschwanz"
@@ -260,9 +263,7 @@ Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art 
 <HighlightSection
   title="Wer könnte das denn sein?"
   color="red">
-    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Streifenhoernchen}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Streifenhoernchen} />
     <RevealImage
       imageSrc={chipmunkImage}
       alt="Streifenhörnchen"
@@ -279,6 +280,18 @@ Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art 
       </p>
     </RevealImage>
     
+</HighlightSection>
+
+## Sieh deine eigene Stimme
+
+Ein **Spektrogramm** zeigt, welche Töne gerade zu hören sind: unten die tiefen, oben die hohen Frequenzen, und von links nach rechts vergeht die Zeit. Bei den Beispielen oben siehst du das Bild der ganzen Aufnahme mit einem Strich, der die aktuelle Stelle markiert.
+
+Probiere es mit deinem eigenen Mikrofon aus – sprich, pfeife oder singe und beobachte, wie sich das Bild verändert!
+
+<HighlightSection
+  title="Dein Live-Spektrogramm"
+  color="green">
+  <MicSpectrogram label="Dein Mikrofon (die letzten 5 Sekunden)" />
 </HighlightSection>
 
 
