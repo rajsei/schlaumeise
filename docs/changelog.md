@@ -2,6 +2,37 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-16 — Spektrogramm-Visualisierung umgesetzt (Agent)
+
+### Hinzugefügt
+- Datei-Modus `AudioSpectrogram.astro` und Live-Modus `MicSpectrogram.astro` (+ gemeinsamer `SpectrogramColorPicker.astro`) in `src/components/docs/`
+- Gemeinsamer Client-Kern `src/scripts/spectrogram/`: `config.ts` (SSOT), `colormap.ts` (5 Paletten), `core.ts`, `axes.ts` (lineare Frequenzachse 0–20 kHz + Zeitachse), `progress.ts` (3-Phasen-Strich 0→2/3→Ende), `settings.ts` (globale Palette via localStorage + Pub/Sub), `raster.ts`, `file.ts`, `mic.ts` (5-s-Fenster, zeitbasiertes Scrollen), `colors-ui.ts`
+- Build-Vorberechnung `scripts/spectrogram/`: `spectrogram-core.mjs` (eigene Radix-2-FFT/STFT, .spec-Rasterformat) + `precompute-spectrograms.mjs` (MP3→PCM→Raster, Hash-Cache; Decoder: mpg123-decoder → ffmpeg-Fallback → sauberes Überspringen)
+- `src/types/spectrogram.ts`; i18n-Section `spectrogram` in `de.ts`/`en.ts`
+- `package.json`: devDependency `mpg123-decoder`, npm pre-scripts (`predev`/`prebuild` → `spectrograms`); `.gitignore`: generiertes `src/assets/audio/spectrograms/`
+
+### Geändert
+- `audiosample.mdx` (de): alle 12 `<audio>` durch `<AudioSpectrogram>` ersetzt (behebt zugleich die doppelten `id`s), Rätsel-Vögel bewusst ohne Label; neue Sektion „Sieh deine eigene Stimme“ mit `<MicSpectrogram>`
+
+### Hinweis
+- FFT per Sinus-Test verifiziert (Peak im erwarteten Bin); TypeScript der Module typgeprüft. `npm run build` muss auf dem Zielsystem laufen (im Sandbox nicht möglich: Windows-`node_modules` ohne Linux-Rollup-Binary, Registry gesperrt). Zuvor einmal `npm install` (zieht `mpg123-decoder`).
+
+## 2026-06-16 — Planungsdokument Spektrogramm-Visualisierung (Agent)
+
+### Hinzugefügt
+- `docs/spectrogram-plan.md`: vollständiger Architektur-/Strukturplan (Live-Mikrofon + Datei-Modus). Festlegungen: zwei Komponenten + gemeinsamer TS-Kern; Datei-Modus als zur Build-Zeit vorberechnetes, farbneutrales dB-Raster (A2); JS-MP3-Decoder als Build-`devDependency`; lineare Frequenzachse 0–20 kHz (anpassbar); beschriftete Achsen; globaler Farb-Picker; Fortschrittsstrich in 3 Phasen
+- Einträge in `features.md` (📋 geplant), `roadmap.md`, `todo.md`
+
+## 2026-06-13 — Audio komprimiert, Workshops in Navigation, Pfad-Altlasten beseitigt (Agent)
+
+### Geändert
+- Alle 10 WAV-Dateien nach MP3 (160 kbps) konvertiert, alle Audiodateien auf kebab-case-ASCII-Namen (`WeißkehlammerÜbungslied.wav` → `weisskehlammer-uebungslied.mp3`): `src/assets/audio/` von 8,1 MB auf 3,7 MB; bestehende MP3s nur umbenannt (kein erneutes Enkodieren). Referenzen in `audiosample.mdx` und `voegel-basiswissen.json` angepasst
+- Neues Navigations-Topic „Workshops“ (Gruppe „Spring School 2026“, `workshop_materials/springschool`) — die Seite war zuvor verwaist
+- `workshop_materials/springschool/overview.mdx`: toter `hero:`-Frontmatter-Block (nicht im Schema, wurde verworfen — Seite war faktisch leer) durch echten Seiteninhalt ersetzt; hartkodierter `/schlaumeise/en/…`-Link auf nicht existierende EN-Seite entfernt
+
+### Entfernt
+- `src/plugins/rehype-base-path-assets.mjs`: war nie eingebunden; nach der astro:assets-Migration gibt es keine hartkodierten Basis-Pfade mehr, die es korrigieren könnte — damit ist src/ komplett frei von `/schlaumeise/…`-Hardcodes
+
 ## 2026-06-13 — Artefakte eines fehlerhaften Merges entfernt (Agent)
 
 ### Entfernt

@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# Vorberechnete Spektrogramm-Raster (werden bei dev/build aus den MP3s erzeugt)
+src/assets/audio/spectrograms/
+
 # Dependencies
 node_modules/
 

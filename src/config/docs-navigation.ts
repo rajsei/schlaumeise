@@ -118,6 +118,22 @@ export const navigation: NavigationConfig = {
       icon: "information",
       items: [{ autogenerate: { directory: "glossary" } }],
     },
+    {
+      id: "workshops",
+      label: "Workshops",
+      translations: {
+        de: "Workshops",
+      },
+      icon: "open-book",
+      items: [
+        {
+          label: "Spring School 2026",
+          items: [
+            { autogenerate: { directory: "workshop_materials/springschool" } },
+          ],
+        },
+      ],
+    },
   ],
   globalItems: [
     {

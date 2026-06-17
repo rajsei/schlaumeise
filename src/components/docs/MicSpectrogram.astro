@@ -1,0 +1,113 @@
+---
+/**
+ * MicSpectrogram — Live-Modus.
+ * Visualisiert das Mikrofon-Signal in Echtzeit als scrollendes Spektrogramm
+ * (festes Zeitfenster, Default 5 s). Start/Stop per Button.
+ *
+ * Verwendung (MDX):
+ *   import MicSpectrogram from ".../MicSpectrogram.astro";
+ *   <MicSpectrogram label="Sprich ins Mikrofon" />
+ */
+import type { MicSpectrogramProps } from "../../types/spectrogram";
+import {
+  DEFAULT_COLORMAP,
+  DEFAULT_HEIGHT,
+  DEFAULT_MAX_FREQUENCY,
+  DEFAULT_MIN_FREQUENCY,
+  DEFAULT_WINDOW_SECONDS,
+} from "../../scripts/spectrogram/config";
+import { getDictionary } from "../../i18n";
+import { getLocaleFromPathname } from "../../i18n/routing";
+import SpectrogramColorPicker from "./SpectrogramColorPicker.astro";
+
+const {
+  id,
+  label,
+  colormap = DEFAULT_COLORMAP,
+  height = DEFAULT_HEIGHT,
+  windowSeconds = DEFAULT_WINDOW_SECONDS,
+  minFrequency = DEFAULT_MIN_FREQUENCY,
+  maxFrequency = DEFAULT_MAX_FREQUENCY,
+  showAxes = true,
+} = Astro.props as MicSpectrogramProps;
+
+const locale = getLocaleFromPathname(Astro.url.pathname);
+const t = getDictionary(locale).spectrogram;
+const uid = id ?? `mic-spectrogram-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure
+  class="spectrogram spectrogram--mic"
+  data-spectrogram-mic
+  data-colormap={colormap}
+  data-window-seconds={windowSeconds}
+  data-min-frequency={minFrequency}
+  data-max-frequency={maxFrequency}
+  data-show-axes={String(showAxes)}
+  data-label-frequency={t.frequencyUnit}
+  data-label-seconds={t.timeUnit}
+  data-label-start={t.micStart}
+  data-label-stop={t.micStop}
+  data-label-error={t.micError}
+  aria-label={label}
+>
+  <div class="spectrogram__stage" style={`height:${height}px`}>
+    <canvas class="spectrogram-canvas" aria-hidden="true"></canvas>
+  </div>
+  <SpectrogramColorPicker label={t.colorsLabel} />
+  <div class="spectrogram__controls">
+    <button type="button" id={uid} class="btn btn-primary btn-sm spectrogram-mic-toggle" aria-pressed="false">
+      {t.micStart}
+    </button>
+    <p class="spectrogram-mic-status" role="status" aria-live="polite"></p>
+  </div>
+  {label && <figcaption class="spectrogram__caption">{label}</figcaption>}
+</figure>
+
+<style>
+  .spectrogram--mic {
+    position: relative;
+    margin: 1rem 0;
+  }
+
+  .spectrogram--mic .spectrogram__stage {
+    position: relative;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--color-base-300, #1a1a1a);
+  }
+
+  .spectrogram--mic .spectrogram-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--color-base-content, #ddd);
+  }
+
+  .spectrogram__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .spectrogram-mic-status {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-error, #e44);
+  }
+
+  .spectrogram__caption {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  import { initMicSpectrograms } from "../../scripts/spectrogram/mic";
+  import { initColorPickers } from "../../scripts/spectrogram/colors-ui";
+  initMicSpectrograms();
+  initColorPickers();
+</script>

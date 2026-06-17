@@ -8,7 +8,7 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 **Beschreibung:** Markdown/MDX-Inhalte aus der `docs`-Collection, gerendert über `DocsLayout` mit Sidebar, Inhalts-TOC und Prev/Next-Pagination. Themenbereiche: Anleitungen (BirdNET Live), Projekte, Wissenssammlung, Begriffsverzeichnis.
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/content/docs/`, `src/pages/[...slug].astro`, `src/pages/[locale]/[...slug].astro`, `src/layouts/DocsLayout.astro`, `src/lib/docs-content.ts`
-**Erweiterungsmöglichkeiten:** Verschlagwortung über `tags`/`category` sichtbar machen (Filter-/Übersichtsseiten); Workshop-Materialien als eigenes Topic einhängen.
+**Erweiterungsmöglichkeiten:** Verschlagwortung über `tags`/`category` sichtbar machen (Filter-/Übersichtsseiten). Workshop-Materialien sind seit 2026-06-13 als Topic „Workshops“ eingehängt.
 
 ## Projektseiten
 
@@ -65,6 +65,13 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/components/docs/`, `src/assets/images/`, `src/assets/arrows/`
 **Erweiterungsmöglichkeiten:** Responsive `srcset` über `widths`/`sizes`; AVIF-Format.
+
+## Spektrogramm-Visualisierung (Audio)
+
+**Beschreibung:** Spektrogramm-Darstellung zu Audioinhalten in zwei Modi — Live (Mikrofon, scrollendes 5-s-Fenster, Start/Stop) und Datei (zur Build-Zeit vorberechnetes dB-Raster pro MP3, scrollend mit Fortschrittsstrich in 3 Phasen: 0→2/3, Halt bei 2/3, 2/3→Ende). Lineare Frequenzachse (0–20 kHz, anpassbar), beschriftete x/y-Achsen, globaler Farb-Picker (Zahnrad). Gemeinsamer TS-Kern in `src/scripts/spectrogram/`, zwei dünne Komponenten.
+**Status:** 🟡 umgesetzt — Build-Verifikation auf dem Zielsystem ausstehend (im Agent-Sandbox kein `astro build`: Windows-`node_modules` ohne Linux-Rollup-Binary, npm-Registry gesperrt). Vollständiger Plan: [spectrogram-plan.md](./spectrogram-plan.md).
+**Betroffene Bereiche:** `src/components/docs/AudioSpectrogram.astro`, `MicSpectrogram.astro`, `SpectrogramColorPicker.astro`; `src/scripts/spectrogram/`; `scripts/spectrogram/` (Build-Vorberechnung); `src/types/spectrogram.ts`; `src/i18n/locales/de.ts`+`en.ts` (Section `spectrogram`); `src/assets/audio/spectrograms/` (generiert, gitignored); `audiosample.mdx`; `package.json` (devDependency `mpg123-decoder`, pre-scripts)
+**Erweiterungsmöglichkeiten:** logarithmische/Mel-Frequenzachse; variables Live-Zeitfenster; Zoom; EN-Übersetzung.
 
 ## Suchfunktion
 

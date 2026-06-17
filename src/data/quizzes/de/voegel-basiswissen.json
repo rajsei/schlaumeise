@@ -64,7 +64,7 @@
       "prompt": "Höre dir die Aufnahme an. Welcher Vogel ruft hier?",
       "media": {
         "type": "audio",
-        "src": "audio/Blauhaeher.mp3",
+        "src": "audio/blauhaeher.mp3",
         "alt": "Aufnahme eines kräftigen, krächzenden Vogelrufs."
       },
       "options": [

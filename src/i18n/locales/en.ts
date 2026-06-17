@@ -29,4 +29,14 @@ export const en = {
     title: "Welcome to {brand}",
     intro: "English routes are always prefixed with /en/.",
   },
+  spectrogram: {
+    frequencyUnit: "kHz",
+    timeUnit: "s",
+    colorsLabel: "Choose colours",
+    loading: "Loading spectrogram …",
+    noSupport: "Your browser does not support the audio element.",
+    micStart: "Start recording",
+    micStop: "Stop recording",
+    micError: "Microphone access unavailable.",
+  },
 } as const;

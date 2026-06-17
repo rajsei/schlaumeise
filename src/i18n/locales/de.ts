@@ -29,4 +29,14 @@ export const de = {
     title: "Willkommen bei {brand}",
     intro: "Deutsch ist die Standardsprache ohne Sprachpraefix.",
   },
+  spectrogram: {
+    frequencyUnit: "kHz",
+    timeUnit: "s",
+    colorsLabel: "Farben wählen",
+    loading: "Spektrogramm wird geladen …",
+    noSupport: "Dein Browser unterstützt das Audio-Element nicht.",
+    micStart: "Aufnahme starten",
+    micStop: "Aufnahme stoppen",
+    micError: "Kein Mikrofonzugriff möglich.",
+  },
 } as const;

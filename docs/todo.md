@@ -6,15 +6,15 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | --- | --- | --- | --- | --- |
 | 1 | ~~`npm run build` auf Windows ausführen~~ **erledigt 2026-06-12**: 23 Seiten, 44 optimierte Bilder (~29,5 MB → ~2,2 MB), keine Fehler | — | — | — |
 | 2 | ~~`site` in `astro.config.mjs` eintragen~~ **erledigt 2026-06-12**: `https://rajsei.github.io` (GitHub Pages, Base `/schlaumeise`) | — | — | — |
-| 3 | ~~Bildpfade~~ erledigt via astro:assets-Migration (2026-06-12). Rest: hartkodierten Link in `springschool/overview.mdx` fixen; `rehype-base-path-assets.mjs` entfernen, falls obsolet | P2 | S | — |
+| 3 | ~~Hartkodierte Basis-Pfade beseitigen~~ **vollständig erledigt 2026-06-13**: Link in `overview.mdx` gefixt, obsoletes `rehype-base-path-assets.mjs` entfernt — src/ ist frei von `/schlaumeise/`-Hardcodes | — | — | — |
 | 4 | ~~`ai+bioacoustic.md` umbenennen + Redirect~~ **erledigt 2026-06-12**: `ai-and-bioacoustic.md` | — | — | — |
 | 5 | Sprachumschalter nur bei existierender Übersetzung anzeigen (oder i18n-Fallback aktivieren) | P2 | M | — |
 | 6 | ~~Theme-Fix + Custom-Themes~~ **erledigt 2026-06-12**: Head-Skript (kein FOUC), cupcake entfernt, Custom-daisyUI-Themes light/dark aus Markenfarben, versioniertes Speicherformat | — | — | — |
 | 6b | High-Contrast-Themes `light-contrast`/`dark-contrast` + Kontrast-Schalter im ThemeController (Vorlage am Ende von `global.css`; `prefers-contrast: more` als Default) | P3 | M | #6 ✅ |
 | 7 | ~~Inhaltsbilder zu `astro:assets`/`<Image>` migrieren~~ **erledigt 2026-06-12** (Build-Verifikation auf Windows ausstehend, siehe #1) | — | — | — |
-| 8 | WAV-Audio nach Opus/MP3 konvertieren, Referenzen anpassen | P2 | S | — |
+| 8 | ~~WAV-Audio konvertieren~~ **erledigt 2026-06-13**: 10 WAV → MP3 160 kbps, alle Audio-Dateinamen kebab-case (8,1 → 3,7 MB) | — | — | — |
 | 9 | A11y-Audit (Kontrast, Tastatur, `aria-current`) und Befunde beheben | P2 | M | — |
-| 10 | `workshop_materials` in Navigation aufnehmen oder `sidebar.hidden` setzen | P2 | S | — |
+| 10 | ~~`workshop_materials` in Navigation aufnehmen~~ **erledigt 2026-06-13**: Topic „Workshops“ → „Spring School 2026“ | — | — | — |
 | 11 | Startseiten DE/EN in eine dictionary-getriebene `HomeContent` zusammenführen | P2 | M | — |
 | 12 | Quiz-UI: `QuizPlayer`, Fragetyp-Komponenten, Route `quiz/[id]` (+ en) | P3 | L | Datenmodell ✅ |
 | 13 | Quiz-Fortschritt in `localStorage` (`schlaumeise:quiz-progress:v1`) | P3 | M | #12 |
@@ -27,3 +27,6 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 20 | Eigene `Kbd`-MDX-Komponente | P4 | S | — |
 | 21 | ~~Platzhalter-Inhalte in `survey.mdx` ersetzen~~ **erledigt 2026-06-12**: echter Hero-Text, CTA-Link statt funktionslosem Button, h2 statt zweitem h1, kein Vollbild-Hero mehr | — | — | — |
 | 22 | Ungenutzte Bilder prüfen: `src/assets/images/springschool/` (5 Dateien) und `project01/pi-setup-en/` (16 Dateien, für EN-Übersetzung reserviert), `pi-setup/15.png`, `pi-setup2/nmtui07.jpg` | P4 | S | #19 |
+| 23 | ~~Build-`devDependency` (JS-MP3-Decoder) freigeben~~ **erledigt 2026-06-16**: `mpg123-decoder` (devDependency) | — | — | — |
+| 24 | ~~Spektrogramm-Visualisierung umsetzen (Live + Datei)~~ **umgesetzt 2026-06-16** (siehe changelog). Offen: `npm install` + `npm run build` auf dem Zielsystem verifizieren; Geräte-/A11y-Test im Browser | P2 | S | #23 ✅ |
+| 25 | EN-Übersetzung der Sektion „Sieh deine eigene Stimme“ + `AudioSpectrogram`-Umstellung in `en/.../audiosample.mdx` (sobald EN-Inhalte kommen) | P4 | M | #19 |

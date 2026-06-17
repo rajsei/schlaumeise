@@ -70,7 +70,7 @@ Bewusst minimal, keine Framework-Islands:
 
 ## Markdown-Pipeline
 
-`astro.config.mjs` registriert Shiki mit zwei Themes (`github-light`/`github-dark`) plus `createDocsCodeTransformer` (Zeilen-Highlighting, Metadaten) und `rehypeCodeBlockWrapper` (Header/Copy-Button-Markup um Codeblöcke). `plugins/code-block-meta.mjs` ist die gemeinsame Parser-Bibliothek. `plugins/rehype-base-path-assets.mjs` ist vorhanden, aber noch nicht eingebunden (siehe Roadmap).
+`astro.config.mjs` registriert Shiki mit zwei Themes (`github-light`/`github-dark`) plus `createDocsCodeTransformer` (Zeilen-Highlighting, Metadaten) und `rehypeCodeBlockWrapper` (Header/Copy-Button-Markup um Codeblöcke). `plugins/code-block-meta.mjs` ist die gemeinsame Parser-Bibliothek.
 
 ## Styling
 

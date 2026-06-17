@@ -3,7 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "spectrograms": "node scripts/spectrogram/precompute-spectrograms.mjs",
+    "predev": "npm run spectrograms",
     "dev": "astro dev",
+    "prebuild": "npm run spectrograms",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -16,6 +19,7 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "daisyui": "^5.5.14"
+    "daisyui": "^5.5.14",
+    "mpg123-decoder": "^1.0.5"
   }
 }

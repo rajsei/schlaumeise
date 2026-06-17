@@ -1,0 +1,71 @@
+---
+/**
+ * Zahnrad-Farbauswahl (oben rechts am Spektrogramm).
+ * Setzt die GLOBALE Palette aller Spektrogramme (Verdrahtung: scripts/spectrogram/colors-ui.ts).
+ *
+ * Props:
+ *   label – aria-Label des Zahnrads (i18n).
+ */
+import { COLORMAPS } from "../../scripts/spectrogram/config";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props as Props;
+const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+---
+
+<div class="dropdown dropdown-end spectrogram-colors">
+  <button
+    type="button"
+    class="btn btn-circle btn-xs spectrogram-colors__toggle"
+    aria-label={label}
+    tabindex="0"
+  >
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+  <ul
+    class="dropdown-content menu menu-sm bg-base-100 rounded-box shadow-lg spectrogram-colors__menu"
+    role="menu"
+  >
+    {
+      COLORMAPS.map((name) => (
+        <li role="none">
+          <button type="button" role="menuitemradio" aria-checked="false" data-colormap-option={name}>
+            {capitalize(name)}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .spectrogram-colors {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    z-index: 3;
+  }
+
+  .spectrogram-colors__toggle {
+    background: color-mix(in srgb, var(--color-base-100), transparent 15%);
+    color: var(--color-base-content);
+    border: none;
+    box-shadow: var(--global-shadow, 0 1px 3px rgb(0 0 0 / 0.3));
+  }
+
+  .spectrogram-colors__menu {
+    min-width: 8rem;
+    z-index: 4;
+  }
+
+  .spectrogram-colors__menu button.is-active {
+    font-weight: 700;
+    background: color-mix(in srgb, var(--color-primary), transparent 80%);
+  }
+</style>

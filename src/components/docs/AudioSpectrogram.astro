@@ -1,0 +1,157 @@
+---
+/**
+ * AudioSpectrogram — Datei-Modus.
+ * Zeigt das zur Build-Zeit vorberechnete Spektrogramm einer MP3 mit
+ * Fortschrittsstrich (3 Phasen) synchron zur Wiedergabe des eingebetteten <audio>.
+ *
+ * Verwendung (MDX):
+ *   import AudioSpectrogram from ".../AudioSpectrogram.astro";
+ *   import lied from ".../assets/audio/weidengelbkehlchen-lied.mp3";
+ *   <AudioSpectrogram src={lied} label="Lied des Weidengelbkehlchens" />
+ *
+ * Voraussetzung: `npm run dev/build` erzeugt vorab die .spec-Raster (siehe
+ * scripts/spectrogram/precompute-spectrograms.mjs). Fehlt ein Raster, wird nur das
+ * <audio> angezeigt.
+ */
+import type { AudioSpectrogramProps } from "../../types/spectrogram";
+import {
+  DEFAULT_COLORMAP,
+  DEFAULT_FOLLOW_THRESHOLD,
+  DEFAULT_HEIGHT,
+  DEFAULT_MAX_FREQUENCY,
+  DEFAULT_MIN_FREQUENCY,
+  DEFAULT_PIXELS_PER_SECOND,
+} from "../../scripts/spectrogram/config";
+import { getDictionary } from "../../i18n";
+import { getLocaleFromPathname } from "../../i18n/routing";
+import SpectrogramColorPicker from "./SpectrogramColorPicker.astro";
+
+const {
+  src,
+  id,
+  label,
+  colormap = DEFAULT_COLORMAP,
+  height = DEFAULT_HEIGHT,
+  pixelsPerSecond = DEFAULT_PIXELS_PER_SECOND,
+  followThreshold = DEFAULT_FOLLOW_THRESHOLD,
+  minFrequency = DEFAULT_MIN_FREQUENCY,
+  maxFrequency = DEFAULT_MAX_FREQUENCY,
+  showAxes = true,
+} = Astro.props as AudioSpectrogramProps;
+
+const locale = getLocaleFromPathname(Astro.url.pathname);
+const t = getDictionary(locale).spectrogram;
+
+// Basename aus der (ggf. gehashten) Asset-URL — kebab-case-Audionamen enthalten keine Punkte.
+const fileName = src.split("/").pop() ?? "";
+const name = fileName.split(".")[0];
+const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure
+  class="spectrogram"
+  data-spectrogram-file
+  data-name={name}
+  data-colormap={colormap}
+  data-px-per-second={pixelsPerSecond}
+  data-follow-threshold={followThreshold}
+  data-min-frequency={minFrequency}
+  data-max-frequency={maxFrequency}
+  data-show-axes={String(showAxes)}
+  data-label-frequency={t.frequencyUnit}
+  data-label-seconds={t.timeUnit}
+  aria-label={label}
+>
+  <div class="spectrogram__stage" style={`height:${height}px`}>
+    <canvas class="spectrogram-canvas" aria-hidden="true"></canvas>
+    <div class="spectrogram-progress" aria-hidden="true"></div>
+    <p class="spectrogram__loading">{t.loading}</p>
+  </div>
+  <SpectrogramColorPicker label={t.colorsLabel} />
+  <audio class="audio" id={uid} controls preload="metadata" src={src}>
+    {t.noSupport}
+  </audio>
+  {label && <figcaption class="spectrogram__caption">{label}</figcaption>}
+</figure>
+
+<style>
+  .spectrogram {
+    position: relative;
+    margin: 1rem 0;
+  }
+
+  .spectrogram__stage {
+    position: relative;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--color-gray-7);
+  }
+
+  .spectrogram-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--color-gray-1);
+  }
+
+  .spectrogram-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--color-primary, #ff5252);
+    box-shadow: 0 0 4px var(--color-primary, #ff5252);
+    transform: translateX(0);
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  .spectrogram__loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-base-content, #ddd);
+    opacity: 0.7;
+  }
+
+  /* Ladehinweis nur sichtbar, solange nicht bereit. */
+  .spectrogram[data-state="ready"] .spectrogram__loading,
+  .spectrogram[data-state="error"] .spectrogram__loading,
+  .spectrogram[data-state="unavailable"] .spectrogram__loading {
+    display: none;
+  }
+
+  .spectrogram[data-state="unavailable"] .spectrogram__stage,
+  .spectrogram[data-state="error"] .spectrogram__stage {
+    display: none;
+  }
+
+  .spectrogram .audio {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .spectrogram__caption {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spectrogram-progress {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initFileSpectrograms } from "../../scripts/spectrogram/file";
+  import { initColorPickers } from "../../scripts/spectrogram/colors-ui";
+  initFileSpectrograms();
+  initColorPickers();
+</script>

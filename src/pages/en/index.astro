@@ -1,10 +1,53 @@
 ---
-import HomeContent from "../../components/pages/HomeContent.astro";
+import smartfinchFull from "../../assets/SmartfinchFull.svg";
+import { buildLocalizedUrl } from "../../i18n/routing";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 const locale = "en" as const;
+
+const hero = {
+  tagline:
+    "Smartfinch is an interactive learning platform that uses AI and projects centered on native birds to teach children and teens about nature, the environment, computer science, and acoustics.",
+  image: {
+    file: smartfinchFull,
+  },
+  actions: [
+    {
+      text: "Our First Project",
+      link: "./projects/project01/",
+      icon: "right-arrow",
+    },
+  ],
+};
+
 ---
 
 <MainLayout locale={locale} title="smartfinch">
-  <HomeContent locale={locale} />
+  <section class="hero bg-base-200 py-10 md:py-16">
+    <div class="hero-content w-full max-w-6xl flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-2xl text-left">
+        <h1 class="text-4xl font-bold leading-tight md:text-5xl">Smartfinch</h1>
+        <p class="mt-6 text-lg leading-relaxed">{hero.tagline}</p>
+        <div class="mt-8">
+          {
+            hero.actions.map((action) => (
+              <a class="btn btn-primary btn-lg gap-2" href={action.link}>
+                <span>{action.text}</span>
+                {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="w-full max-w-md lg:max-w-lg">
+        <img
+          src={hero.image.file.src}
+          alt="Smartfinch Logo"
+          class="h-auto w-full drop-shadow-md"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
 </MainLayout>
