@@ -21,64 +21,57 @@ function niceStep(rough: number, candidates: number[]): number {
 }
 
 function clearGutters(ctx: CanvasRenderingContext2D, layout: PlotLayout, cssWidth: number, cssHeight: number): void {
-  ctx.clearRect(0, 0, layout.gutterLeft, cssHeight); // linker Steg
-  ctx.clearRect(0, layout.y + layout.h, cssWidth, layout.gutterBottom); // unterer Steg
+  ctx.clearRect(0, layout.y + layout.h, cssWidth, layout.gutterBottom); // unterer Steg (Zeitachse)
 }
 
-/** Zeichnet die statische Frequenzachse (links). */
+/**
+ * Zeichnet die Frequenzachse als Overlay am linken Bildrand.
+ * Weißer Text mit dunklem Saum (Schatten) bleibt auf jeder Farbpalette lesbar,
+ * unabhängig vom Light-/Dark-Theme.
+ */
 export function drawFrequencyAxis(
   ctx: CanvasRenderingContext2D,
   layout: PlotLayout,
   minFreq: number,
   maxFreq: number,
-  color: string,
   labels: AxisLabels,
 ): void {
-  if (layout.gutterLeft === 0) return;
   const range = maxFreq - minFreq;
   if (range <= 0) return;
   const step = niceStep(range / 4, [1000, 2000, 5000, 10000, 20000]);
 
+  const tickLen = 4; // Länge der Tick-Striche am linken Rand
+  const padX = 5; // Abstand des Texts vom Tick
+  const padY = 7; // hält oberste/unterste Beschriftung im sichtbaren Bereich
+
+  ctx.save();
   ctx.font = FONT;
-  ctx.fillStyle = color;
-  ctx.strokeStyle = color;
-  ctx.textAlign = "right";
+  ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.globalAlpha = 0.75;
+  ctx.lineJoin = "round";
+  ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
+  ctx.shadowBlur = 3;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+  ctx.lineWidth = 1;
 
-  // Layout oben: [Zahl maxFreq] bei y=5, [kHz] bei y=14, übrige Zahlen ab y=26.
-  const topNumberY = 5;
-  const unitY = 14;
-  const unitReserve = 26;
-
-  // Oberste Zahl (maxFreq) separat ganz oben
-  const topKhz = maxFreq / 1000;
-  ctx.textBaseline = "middle";
-  ctx.fillText(
-    `${Number.isInteger(topKhz) ? topKhz : topKhz.toFixed(1)}`,
-    layout.gutterLeft - 5,
-    topNumberY,
-  );
-
-  // Einheit "kHz" direkt darunter
-  ctx.textBaseline = "top";
-  ctx.fillText(labels.frequency, layout.gutterLeft - 5, unitY);
-
-  ctx.textBaseline = "middle";
   for (let f = minFreq; f <= maxFreq + 1; f += step) {
     const y = layout.y + layout.h * (1 - (f - minFreq) / range);
+    const labelY = Math.min(layout.y + layout.h - padY, Math.max(layout.y + padY, y));
+
+    // Tick am linken Bildrand
     ctx.beginPath();
-    ctx.moveTo(layout.gutterLeft - 3, y);
-    ctx.lineTo(layout.gutterLeft, y);
+    ctx.moveTo(layout.x, y);
+    ctx.lineTo(layout.x + tickLen, y);
     ctx.stroke();
-    // Obersten Tick überspringen — Zahl bereits separat oben gezeichnet.
-    if (f >= maxFreq) continue;
+
+    // Einheit nur an der obersten Beschriftung, damit die Achse selbsterklärend bleibt.
     const khz = f / 1000;
-    const text = `${Number.isInteger(khz) ? khz : khz.toFixed(1)}`;
-    const labelY = Math.min(layout.y + layout.h - 5, Math.max(unitReserve, y));
-    ctx.fillText(text, layout.gutterLeft - 5, labelY);
+    const num = Number.isInteger(khz) ? `${khz}` : khz.toFixed(1);
+    const text = f >= maxFreq ? `${num} ${labels.frequency}` : num;
+    ctx.fillText(text, layout.x + tickLen + padX, labelY);
   }
-  ctx.globalAlpha = 1;
+  ctx.restore();
 }
 
 function formatTime(sec: number): string {

@@ -33,23 +33,23 @@ export interface PlotLayout {
   y: number;
   w: number;
   h: number;
-  gutterLeft: number;
   gutterBottom: number;
 }
 
-export const GUTTER_LEFT = 40;
 export const GUTTER_BOTTOM = 18;
 
-/** Berechnet den Plotbereich und die Achsenstege. */
+/**
+ * Berechnet den Plotbereich und die Achsenstege.
+ * Die Frequenzachse (y) liegt als Overlay im Bild — daher kein linker Steg.
+ * Nur die Zeitachse (x) erhält unten einen eigenen Steg.
+ */
 export function computeLayout(cssWidth: number, cssHeight: number, showAxes: boolean): PlotLayout {
-  const gutterLeft = showAxes ? GUTTER_LEFT : 0;
   const gutterBottom = showAxes ? GUTTER_BOTTOM : 0;
   return {
-    gutterLeft,
     gutterBottom,
-    x: gutterLeft,
+    x: 0,
     y: 0,
-    w: Math.max(1, cssWidth - gutterLeft),
+    w: Math.max(1, cssWidth),
     h: Math.max(1, cssHeight - gutterBottom),
   };
 }

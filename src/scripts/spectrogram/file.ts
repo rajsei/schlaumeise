@@ -60,6 +60,7 @@ function readOptions(root: HTMLElement): InstanceOptions {
 function setupInstance(root: HTMLElement): void {
   const canvas = root.querySelector<HTMLCanvasElement>(".spectrogram-canvas");
   const playhead = root.querySelector<HTMLElement>(".spectrogram-progress");
+  const viewport = root.querySelector<HTMLElement>(".spectrogram__viewport");
   const audio = root.querySelector<HTMLAudioElement>("audio");
   const name = root.dataset.name ?? "";
   if (!canvas || !playhead || !audio) return;
@@ -97,6 +98,20 @@ function setupInstance(root: HTMLElement): void {
     layout = computeLayout(setup.cssWidth, setup.cssHeight, opts.showAxes);
   };
 
+  // Begrenzt die Anzeigebreite auf die tatsächliche Spektrogramm-Breite,
+  // damit bei kurzen Clips rechts kein leerer Hintergrund stehen bleibt.
+  // Passt das Audio nicht ins Fenster (es scrollt), bleibt die volle Breite.
+  const applySize = (): void => {
+    const duration = raster?.header.duration || audio.duration || 0;
+    const available = root.clientWidth;
+    if (viewport && duration > 0 && available > 0) {
+      const contentWidth = Math.ceil(duration * opts.pxPerSecond);
+      viewport.style.width = contentWidth < available ? `${contentWidth}px` : "";
+    }
+    rebuildLayout();
+    drawFrame();
+  };
+
   const drawFrame = (): void => {
     if (!raster || !offscreen) return;
     const { ctx } = setup;
@@ -131,7 +146,7 @@ function setupInstance(root: HTMLElement): void {
     if (opts.showAxes) {
       const color = axisColor();
       clearGutters(ctx, layout, setup.cssWidth, setup.cssHeight);
-      drawFrequencyAxis(ctx, layout, opts.minFrequency, opts.maxFrequency, color, opts.labels);
+      drawFrequencyAxis(ctx, layout, opts.minFrequency, opts.maxFrequency, opts.labels);
       drawTimeAxisFile(ctx, layout, view.sourceStartSec, drawEndSec, opts.pxPerSecond, color);
     }
 
@@ -167,7 +182,7 @@ function setupInstance(root: HTMLElement): void {
       raster = await fetchRaster(url);
       offscreen = renderRasterToOffscreen(raster, colormap);
       root.dataset.state = "ready";
-      drawFrame();
+      applySize();
     } catch (err) {
       root.dataset.state = "error";
       canvas.style.display = "none";
@@ -216,13 +231,12 @@ function setupInstance(root: HTMLElement): void {
     drawFrame();
   });
   audio.addEventListener("seeked", drawFrame);
-  audio.addEventListener("loadedmetadata", drawFrame);
+  audio.addEventListener("loadedmetadata", applySize);
 
-  const resizeObserver = new ResizeObserver(() => {
-    rebuildLayout();
-    drawFrame();
-  });
-  resizeObserver.observe(canvas);
+  // Auf Container-Breite reagieren (root = Figure in voller Breite). Das Begrenzen
+  // der Viewport-Breite ändert die Figure-Breite nicht -> keine Endlosschleife.
+  const resizeObserver = new ResizeObserver(applySize);
+  resizeObserver.observe(root);
 
   const themeObserver = new MutationObserver(drawFrame);
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });

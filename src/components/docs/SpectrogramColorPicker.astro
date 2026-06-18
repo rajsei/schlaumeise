@@ -60,8 +60,16 @@ const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slic
   }
 
   .spectrogram-colors__menu {
-    min-width: 8rem;
     z-index: 4;
+  }
+
+  /* DaisyUI macht Menü-Einträge zu einem 3-Spalten-Grid (Icon/Label/Badge).
+     Unsere Optionen haben nur Text -> auf schlichten, linksbündigen Block
+     zurücksetzen, damit kein Platz für die leeren Spalten reserviert wird. */
+  .spectrogram-colors__menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
   }
 
   .spectrogram-colors__menu button.is-active {

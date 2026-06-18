@@ -62,12 +62,14 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
   data-label-seconds={t.timeUnit}
   aria-label={label}
 >
-  <div class="spectrogram__stage" style={`height:${height}px`}>
-    <canvas class="spectrogram-canvas" aria-hidden="true"></canvas>
-    <div class="spectrogram-progress" aria-hidden="true"></div>
-    <p class="spectrogram__loading">{t.loading}</p>
+  <div class="spectrogram__viewport">
+    <div class="spectrogram__stage" style={`height:${height}px`}>
+      <canvas class="spectrogram-canvas" aria-hidden="true"></canvas>
+      <div class="spectrogram-progress" aria-hidden="true"></div>
+      <p class="spectrogram__loading">{t.loading}</p>
+    </div>
+    <SpectrogramColorPicker label={t.colorsLabel} />
   </div>
-  <SpectrogramColorPicker label={t.colorsLabel} />
   <audio class="audio" id={uid} controls preload="metadata" src={src}>
     {t.noSupport}
   </audio>
@@ -76,8 +78,15 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
 
 <style>
   .spectrogram {
-    position: relative;
     margin: 1rem 0;
+  }
+
+  /* Wird von file.ts auf die Inhaltsbreite begrenzt, wenn das Audio kürzer als
+     die Anzeige ist — so bleibt rechts kein leerer Hintergrund stehen.
+     Der Audio-Player darunter behält die volle Breite. */
+  .spectrogram__viewport {
+    position: relative;
+    width: 100%;
   }
 
   .spectrogram__stage {
@@ -85,7 +94,7 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
     width: 100%;
     border-radius: 0.5rem;
     overflow: hidden;
-    background: var(--color-gray-7);
+    background: var(--color-black, #1a1a1a);
   }
 
   .spectrogram-canvas {

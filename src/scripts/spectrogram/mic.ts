@@ -73,7 +73,7 @@ function setupInstance(root: HTMLElement): void {
     if (!showAxes) return;
     const color = axisColor();
     clearGutters(setup.ctx, layout, setup.cssWidth, setup.cssHeight);
-    drawFrequencyAxis(setup.ctx, layout, minFrequency, maxFrequency, color, labels);
+    drawFrequencyAxis(setup.ctx, layout, minFrequency, maxFrequency, labels);
     drawTimeAxisLive(setup.ctx, layout, windowSeconds, color, labels);
   };
 
