@@ -170,6 +170,11 @@
   --global-header-bg: rgb(244 246 250 / 0.9);
   --global-header-border: var(--color-border);
 
+  /* Docs-Panels (Artikel, Sidebar, TOC) — zentral steuerbar; passt sich pro Theme an */
+  --docs-panel-bg: var(--color-base-100);
+  --docs-panel-border: var(--border-sm);   /* = 1px solid var(--color-border) */
+  --docs-panel-radius: 1rem;
+
   /* Docs / Code-Bloecke */
   --docs-code-border: var(--color-border);
   --docs-code-header-bg: var(--color-base-100);
@@ -269,13 +274,17 @@
 /* ===========================================================================
  * Hilfsklassen
  * =========================================================================== */
+body {
+  background: var(--color-base-200);   /* Gesamt-Seitenhintergrund (Panels liegen darauf) */
+}
+
 :root .bg-alert-soft {
   background: var(--color-highlight-yellow);
   color: var(--color-base-content);
 }
 
 .color-bg {
-  background: var(--color-base-100);
+  background: var(--color-base-200);
 }
 .color-fg {
   color: var(--color-base-content);
@@ -283,6 +292,7 @@
 .body {
   margin: 2rem;
   padding: 2rem;
+  background: var(--color-base-200);
 }
 
 .audio {
