@@ -129,10 +129,10 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 <style>
   .docs-terminal {
     margin: 1rem 0;
-    border: 1px solid #2f3a4d;
+    border: 1px solid var(--docs-terminal-border);
     border-radius: 0.75rem;
-    background: #0d1117;
-    color: #d2d9e6;
+    background: var(--docs-terminal-bg);
+    color: var(--docs-terminal-fg);
     overflow: hidden;
   }
 
@@ -142,15 +142,15 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     justify-content: space-between;
     min-height: 2.25rem;
     padding: 0.45rem 0.8rem;
-    border-bottom: 1px solid #2f3a4d;
-    background: #131a25;
+    border-bottom: 1px solid var(--docs-terminal-border);
+    background: var(--docs-terminal-header-bg);
   }
 
   .docs-terminal__title {
     font-size: 0.76rem;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #aab4c6;
+    color: var(--docs-terminal-muted);
   }
 
   .docs-terminal__body {
@@ -161,7 +161,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     margin: 0;
     padding: 0.95rem 1rem 0.95rem 1.2rem;
     overflow-x: auto;
-    background: #0d1117;
+    background: var(--docs-terminal-bg);
   }
 
   .docs-terminal__pre code {
@@ -187,23 +187,23 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     left: 0;
     width: 1.7rem;
     text-align: right;
-    color: #7e8da4;
+    color: var(--docs-terminal-line-number);
     user-select: none;
   }
 
   .docs-terminal__line.is-highlighted {
-    background: color-mix(in srgb, #2f81f7, transparent 78%);
+    background: color-mix(in srgb, var(--docs-terminal-highlight-line), transparent 78%);
   }
 
   .docs-terminal__prompt {
-    color: #73b7ff;
+    color: var(--docs-terminal-prompt);
     margin-right: 0.55rem;
     user-select: none;
   }
 
   .docs-terminal__word {
-    background: color-mix(in srgb, #f59e0b, transparent 70%);
-    color: #fff;
+    background: color-mix(in srgb, var(--docs-terminal-word-bg), transparent 70%);
+    color: var(--docs-terminal-word-fg);
     border-radius: 0.2rem;
     padding: 0 0.14rem;
   }
@@ -212,10 +212,10 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
-    border: 1px solid #3b4b66;
+    border: 1px solid var(--docs-terminal-copy-border);
     border-radius: 0.45rem;
-    background: #121a28;
-    color: #d2d9e6;
+    background: var(--docs-terminal-copy-bg);
+    color: var(--docs-terminal-fg);
     width: 2rem;
     height: 2rem;
     display: inline-grid;
@@ -250,12 +250,12 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
   .docs-code-block__copy--terminal:hover,
   .docs-code-block__copy--terminal:focus-visible {
-    border-color: #73b7ff;
+    border-color: var(--docs-terminal-prompt);
     transform: translateY(-1px);
   }
 
   .docs-code-block__copy--terminal:focus-visible {
-    outline: 2px solid color-mix(in srgb, #73b7ff, transparent 45%);
+    outline: 2px solid color-mix(in srgb, var(--docs-terminal-prompt), transparent 45%);
     outline-offset: 1px;
   }
 

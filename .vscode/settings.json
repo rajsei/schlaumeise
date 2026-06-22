@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.colorDecorators": true,
+  "tailwindCSS.colorDecorators": true,
+  "tailwindCSS.experimental.configFile": "src/styles/global.css"
+}

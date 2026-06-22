@@ -13,6 +13,21 @@ export interface AxisLabels {
 
 const FONT = "10px system-ui, sans-serif";
 
+/* Overlay-Farben der Beschriftung kommen aus theme-invarianten CSS-Tokens
+ * (--spec-label-*, siehe global.css BLOCK C). Einmal gelesen + gecacht, da konstant. */
+let specColorsCache: { fill: string; stroke: string; shadow: string } | null = null;
+function getSpecColors(canvas: HTMLCanvasElement) {
+  if (specColorsCache) return specColorsCache;
+  const cs = getComputedStyle(canvas);
+  const read = (name: string, fb: string) => cs.getPropertyValue(name).trim() || fb;
+  specColorsCache = {
+    fill: read("--spec-label-fill", "rgba(255, 255, 255, 0.96)"),
+    stroke: read("--spec-label-stroke", "rgba(255, 255, 255, 0.85)"),
+    shadow: read("--spec-label-shadow", "rgba(0, 0, 0, 0.9)"),
+  };
+  return specColorsCache;
+}
+
 function niceStep(rough: number, candidates: number[]): number {
   for (const c of candidates) {
     if (rough <= c) return c;
@@ -49,10 +64,11 @@ export function drawFrequencyAxis(
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.lineJoin = "round";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
+  const spec = getSpecColors(ctx.canvas);
+  ctx.shadowColor = spec.shadow;
   ctx.shadowBlur = 3;
-  ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+  ctx.fillStyle = spec.fill;
+  ctx.strokeStyle = spec.stroke;
   ctx.lineWidth = 1;
 
   for (let f = minFreq; f <= maxFreq + 1; f += step) {

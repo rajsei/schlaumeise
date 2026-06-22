@@ -150,29 +150,29 @@ const wrapperClass = [
   }
 
   .docs-code-block.terminal-code {
-    border-color: #2f3a4d;
-    background: #0d1117;
-    color: #d2d9e6;
+    border-color: var(--docs-terminal-border);
+    background: var(--docs-terminal-bg);
+    color: var(--docs-terminal-fg);
   }
 
   .docs-code-block.terminal-code .docs-code-block__header {
-    border-bottom-color: #2f3a4d;
-    background: #131a25;
+    border-bottom-color: var(--docs-terminal-border);
+    background: var(--docs-terminal-header-bg);
   }
 
   .docs-code-block.terminal-code .docs-code-block__title {
-    color: #d2d9e6;
+    color: var(--docs-terminal-fg);
   }
 
   .docs-code-block.terminal-code .docs-code-block__language {
-    color: #aab4c6;
+    color: var(--docs-terminal-muted);
   }
 
   .docs-code-block.terminal-code .docs-code-block__pre,
   .docs-code-block.terminal-code .docs-code-block__pre code,
   .docs-code-block.terminal-code .astro-code {
-    background: #0d1117 !important;
-    color: #d2d9e6;
+    background: var(--docs-terminal-bg) !important;
+    color: var(--docs-terminal-fg);
   }
 
   .docs-code-block.terminal-code pre.astro-code,
@@ -186,17 +186,17 @@ const wrapperClass = [
   }
 
   .docs-code-block.terminal-code.has-line-numbers .line::before {
-    color: #7e8da4;
+    color: var(--docs-terminal-line-number);
   }
 
   .docs-code-block.terminal-code .docs-code-block__copy {
-    border-color: #3b4b66;
-    background: #121a28;
-    color: #d2d9e6;
+    border-color: var(--docs-terminal-copy-border);
+    background: var(--docs-terminal-copy-bg);
+    color: var(--docs-terminal-fg);
   }
 
   .docs-code-block.terminal-code .docs-code-block__copy:hover,
   .docs-code-block.terminal-code .docs-code-block__copy:focus-visible {
-    border-color: #73b7ff;
+    border-color: var(--docs-terminal-prompt);
   }
 </style>

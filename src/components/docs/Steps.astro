@@ -296,7 +296,7 @@ const initialCompleted = completed
     top: 2rem;
     bottom: -0.65rem;
     width: 2px;
-    background: color-mix(in srgb, var(--color-gray-4), transparent 28%);
+    background: var(--color-border-low);
     border-radius: 999px;
     transition: background-color 0.2s ease;
   }
@@ -312,9 +312,9 @@ const initialCompleted = completed
     width: 1.7rem;
     height: 1.7rem;
     border-radius: 999px;
-    border: 2px solid color-mix(in srgb, var(--color-gray-3), transparent 28%);
-    color: var(--color-gray-2);
-    background: var(--color-black);
+    border: var(--border-m);
+    color: var(--color-base-content);
+    background: var(--color-base-100);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -340,7 +340,7 @@ const initialCompleted = completed
   [data-steps-root] > :is(ol, ul) > .steps__item[data-step-complete="true"] > .steps__toggle {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-black);
+    color: var(--color-accent-content);
   }
 
   [data-steps-root] > :is(ol, ul) > .steps__item > :first-child {

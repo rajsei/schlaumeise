@@ -33,6 +33,10 @@ const hero = {
                 <span>{action.text}</span>
                 {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
               </a>
+              <a class="btn btn-secondary btn-lg gap-2" href={action.link}>
+                <span>{action.text}</span>
+                {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
+              </a>
             ))
           }
         </div>

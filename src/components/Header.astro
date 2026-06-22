@@ -129,7 +129,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     font-weight: 600;
     font-size: 0.95rem;
 
-    color: var(--color-text);
+    color: var(--color-base-content);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -137,12 +137,13 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
   :global(.button-nav:hover),
   :global(.button-nav:focus-visible) {
-    color: var(--color-white);
-    background: color-mix(in srgb, var(--color-accent), transparent 70%);
+    background: color-mix(in srgb, var(--color-accent-low), transparent 70%);
+    border-color: var(--color-accent-high);
+    border-width: 2px;
   }
 
   :global(.button-nav.is-active) {
-    color: var(--color-white);
+    color: var(--color-base-content);
     background: var(--color-accent-low);
   }
 
@@ -162,7 +163,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     font-weight: 600;
     font-size: 0.95rem;
 
-    color: var(--color-text);
+    color: var(--color-base-content);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -177,7 +178,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--color-white);
+    color: var(--color-base-content-strong);
     font-weight: 700;
     text-decoration: none;
     letter-spacing: -0.01em;

@@ -2,7 +2,7 @@ import type { Locale } from "../i18n/config";
 
 export type TranslationMap = Partial<Record<Locale, string>>;
 
-export type TopicIconName = "open-book" | "information" | "books" | "memo";
+export type TopicIconName = "open-book" | "information" | "books" | "memo" | "archive";
 
 export interface NavigationAutogenerateItem {
   autogenerate: {
@@ -124,7 +124,7 @@ export const navigation: NavigationConfig = {
       translations: {
         de: "Workshops",
       },
-      icon: "open-book",
+      icon: "archive",
       items: [
         {
           label: "Spring School 2026",

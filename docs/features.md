@@ -56,7 +56,7 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 **Beschreibung:** Tastenkombinationen als daisyUI-`kbd`-Elemente in Inhalten (z. B. Glossar „Shortcuts“).
 **Status:** ✅ umgesetzt
-**Betroffene Bereiche:** `src/content/docs/de/glossary/shortcuts.mdx`
+**Betroffene Bereiche:** `src/content/docs/de/glossary/shortcuts.md`
 **Erweiterungsmöglichkeiten:** Eigene `Kbd`-MDX-Komponente, um `class="kbd"`-Wiederholung zu vermeiden und OS-Varianten (Strg/⌘) zentral zu lösen.
 
 ## Bild-Features
