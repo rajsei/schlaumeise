@@ -2,6 +2,23 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-23 — Farb-Tokens auf `--color-`-Präfix vereinheitlicht (Agent)
+
+### Geändert
+- **Konvention (daisyUI):** alle eigenen Farb-Rollen-Tokens tragen jetzt das `--color-`-Präfix. Repo-weiter Rename (60 Dateien): `--text*`→`--color-text*`, `--accent-subtle/-strong`→`--color-accent-*`, `--border-base/-subtle`→`--color-border-*`, `--state-*`→`--color-state-*`, `--scrim-*`→`--color-scrim-*`, `--surface-*`→`--color-surface-*`, `--spec-*`→`--color-spec-*` (inkl. JS-Lesestellen in `scripts/spectrogram/{axes,file,mic}.ts`)
+- **`--accent`-Alias entfernt** — Komponenten nutzen direkt daisyUIs `var(--color-accent)`
+- **Surface-Merge:** `--color-surface-*` ist jetzt **kanonisch im `@theme`** (vorher doppelt: `--surface-*` in `:root` + Bridge); eine Definition, Utilities `bg-surface-*` bleiben
+- Nicht umbenannt (bewusst): Nicht-Farben (`--spacing-*`, `--font-*`, `--radius-*`, `--border-sm/-m`, `--shadow-*`) und der Komponenten-Namespace `--docs-*`
+- Guard-Meldung, `conventions.md`, `architecture.md` nachgezogen. Wertneutral, Build grün
+
+## 2026-06-23 — Radius-Tokens (Slice 3) + Token-Cleanup (Agent)
+
+### Hinzugefügt
+- `--radius-md: 0.75rem` (mittlerer Radius). `border-radius`-Literale migriert: `999px`→`--radius-pill`, `0.5rem`→`--radius-control`, `0.75rem`→`--radius-md` (wertneutral), `0.65rem`→`--radius-md` (Snap ~1,6 px). Mini-Radien (0.15–0.45 rem, 7px) bewusst bespoke
+
+### Entfernt
+- 4 tote Tokens aus `global.css`: `--global-header-bg`, `--global-header-border` (von `--surface-header` abgelöst), `--color-fixed-black`, `--border-strong` (Ex-`--color-border-high`)
+
 ## 2026-06-23 — Spacing- & Typografie-Tokens (Slices 6/7) (Agent)
 
 ### Hinzugefügt

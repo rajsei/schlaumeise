@@ -12,7 +12,9 @@
  *   SCHICHT 1 = Palette (--palette-n-*): neutrale Rampe, einmal definiert, themen-unabhaengig.
  *   BLOCK B   = eigene theme-abhaengige Tokens (:root = Light, [data-theme="dark"] = Dark):
  *               Text, Border, Akzent-Tints, Highlights, Schatten, Header, --docs-* Code-Tokens.
- *   BLOCK C   = theme-INVARIANTE Konstanten (--color-fixed-*, --spec-*, --docs-terminal-*).
+ *   BLOCK C   = theme-INVARIANTE Konstanten (--color-fixed-*, --color-scrim-*, --color-spec-*, --docs-terminal-*).
+ *   @THEME    = Surface-Rollen (--color-surface-*) + Spacing-Skala (--spacing-*); erzeugt Utilities.
+ *   KONVENTION: alle Farb-Tokens tragen das --color-Praefix (daisyUI-Konvention).
  */
 @plugin "daisyui" {
   themes: false;
@@ -148,32 +150,30 @@
   --font-weight-extrabold: 800;
 
   /* Text — semantische Rollen */
-  --text-strong: var(--palette-n-900);     /* kraeftiger als --text */
-  --text: var(--color-base-content);       /* = daisyUI --color-base-content */
-  --text-muted: var(--palette-n-600);      /* gedaempfter als --text */
-  --text-on-accent: var(--color-accent-content);
-  --text-inverted: var(--color-base-100);  /* Schrift auf --text-farbiger Flaeche (aktive Nav) */
-  --spec-axis: #1f2733;   /* Spektrogramm-Zeitachse (Literal, per getPropertyValue lesbar) */
+  --color-text-strong: var(--palette-n-900);     /* kraeftiger als --color-text */
+  --color-text: var(--color-base-content);       /* = daisyUI --color-base-content */
+  --color-text-muted: var(--palette-n-600);      /* gedaempfter als --color-text */
+  --color-text-on-accent: var(--color-accent-content);
+  --color-text-inverted: var(--color-base-100);  /* Schrift auf --color-text-farbiger Flaeche (aktive Nav) */
+  --color-spec-axis: #1f2733;   /* Spektrogramm-Zeitachse (Literal, per getPropertyValue lesbar) */
 
   /* Border */
-  --border-base: var(--palette-n-200);               /* custom: daisyUI hat keinen Border-Token */
-  --border-subtle: var(--palette-n-300);
-  --border-strong: var(--color-error);            /* derzeit ungenutzt */
-  --border-sm: 1px solid var(--border-base);
-  --border-m: 2px solid var(--border-subtle);
+  --color-border-base: var(--palette-n-200);               /* custom: daisyUI hat keinen Border-Token */
+  --color-border-subtle: var(--palette-n-300);
+  --border-sm: 1px solid var(--color-border-base);
+  --border-m: 2px solid var(--color-border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
 
   /* Neutraler Halbton (Scrollbars, TOC-Linien) */
   --color-gray-transparent: color-mix(in srgb, var(--palette-n-400), transparent 30%);
 
-  /* Akzent — semantische Rollen */
-  --accent: var(--color-accent);            /* = daisyUI --color-accent */
-  --accent-subtle: #d0d3fb;                 /* heller Akzent-Tint */
-  --accent-strong: #37327c;                 /* dunkler Akzent */
+  /* Akzent — Tints (Basis-Akzent = daisyUI --color-accent direkt) */
+  --color-accent-subtle: #d0d3fb;                 /* heller Akzent-Tint */
+  --color-accent-strong: #37327c;                 /* dunkler Akzent */
 
   /* Interaktions-States (kanonische Nav-Flaechen) */
-  --state-hover-bg: var(--accent-subtle);
-  --state-active-bg: color-mix(in srgb, var(--accent), transparent 20%);
+  --color-state-hover-bg: var(--color-accent-subtle);
+  --color-state-active-bg: color-mix(in srgb, var(--color-accent), transparent 20%);
 
   /* Highlights (Callouts) */
   --color-highlight-blue: #e9f4fc;
@@ -191,58 +191,48 @@
     rgba(0, 0, 0, 0.137) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.438) 0px 8px 0px inset;
 
-  /* Header */
-  --global-header-bg: rgb(244 246 250 / 0.9);
-  --global-header-border: var(--border-base);
-
-  /* Flaechen (surface) — semantische Rollen; passen sich pro Theme an */
-  --surface-page: var(--color-base-200);    /* Gesamt-Seitenhintergrund */
-  --surface-panel: var(--color-base-100);   /* Karten/Panels, Code-Container, Dropdown */
-  --surface-header: var(--color-base-300);  /* Navbar */
-  --surface-inset: var(--color-base-300);   /* versenkte Medienflaechen: Spektrogramm, RevealImage */
-
   /* Radius (Form) — themen-invariant; auf daisyUI-Radien gemappt */
   --radius-panel: var(--radius-box);       /* daisyUI 1rem; Karten/Panels */
   --radius-control: var(--radius-field);   /* daisyUI 0.5rem; Buttons/Felder */
+  --radius-md: 0.75rem;                    /* mittlerer Radius (Karten-Header, Bilder, Dropdown) */
   --radius-pill: 999px;                    /* runde Pillen/Badges */
 
   /* Docs-Panels (Artikel, Sidebar, TOC) — zentral steuerbar; passt sich pro Theme an */
-  --docs-panel-bg: var(--surface-panel);
-  --docs-panel-border: var(--border-sm);   /* = 1px solid var(--border-base) */
+  --docs-panel-bg: var(--color-surface-panel);
+  --docs-panel-border: var(--border-sm);   /* = 1px solid var(--color-border-base) */
   --docs-panel-radius: var(--radius-panel);
 
   /* Docs / Code-Bloecke */
-  --docs-code-border: var(--border-base);
+  --docs-code-border: var(--color-border-base);
   --docs-code-header-bg: var(--color-base-100);
-  --docs-code-header-text: var(--text-muted);
-  --docs-code-title-text: var(--text-strong);
+  --docs-code-header-text: var(--color-text-muted);
+  --docs-code-title-text: var(--color-text-strong);
   --docs-copy-btn-bg: var(--color-base-100);
-  --docs-copy-btn-border: var(--border-base);
-  --docs-copy-btn-text: var(--text);
-  --docs-code-highlight: var(--accent-subtle);
-  --docs-code-line-number: var(--text-muted);
+  --docs-copy-btn-border: var(--color-border-base);
+  --docs-copy-btn-text: var(--color-text);
+  --docs-code-highlight: var(--color-accent-subtle);
+  --docs-code-line-number: var(--color-text-muted);
 }
 
 :root[data-theme="dark"] {
   /* Text */
-  --text-strong: var(--palette-n-0);
-  --text-muted: var(--palette-n-300);
-  --spec-axis: #f4f6fa;   /* Spektrogramm-Zeitachse */
+  --color-text-strong: var(--palette-n-0);
+  --color-text-muted: var(--palette-n-300);
+  --color-spec-axis: #f4f6fa;   /* Spektrogramm-Zeitachse */
 
   /* Border */
-  --border-base: var(--palette-n-500);               /* custom: daisyUI hat keinen Border-Token */
-  --border-subtle: var(--palette-n-400);
-  --border-strong: var(--color-error);            /* derzeit ungenutzt */
-  --border-sm: 1px solid var(--border-base);
-  --border-m: 2px solid var(--border-subtle);
+  --color-border-base: var(--palette-n-500);               /* custom: daisyUI hat keinen Border-Token */
+  --color-border-subtle: var(--palette-n-400);
+  --border-sm: 1px solid var(--color-border-base);
+  --border-m: 2px solid var(--color-border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
 
   /* Neutraler Halbton (Scrollbars, TOC-Linien) */
   --color-gray-transparent: color-mix(in srgb, var(--palette-n-500), transparent 30%);
 
   /* Akzent */
-  --accent-subtle: #383669;                 /* heller Akzent-Tint (dunkel) */
-  --accent-strong: #bfc4f8;                 /* heller Akzent */
+  --color-accent-subtle: #383669;                 /* heller Akzent-Tint (dunkel) */
+  --color-accent-strong: #bfc4f8;                 /* heller Akzent */
 
   /* Highlights (Callouts) */
   --color-highlight-blue: #313b53;
@@ -260,20 +250,16 @@
     rgba(0, 0, 0, 0.65) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.08) 0px 8px 0px inset;
 
-  /* Header */
-  --global-header-bg: rgb(8 8 16 / 0.85);
-  --global-header-border: var(--border-base);
-
   /* Docs / Code-Bloecke */
-  --docs-code-border: var(--border-base);
+  --docs-code-border: var(--color-border-base);
   --docs-code-header-bg: var(--color-base-100);
-  --docs-code-header-text: var(--text-muted);
-  --docs-code-title-text: var(--text-strong);
+  --docs-code-header-text: var(--color-text-muted);
+  --docs-code-title-text: var(--color-text-strong);
   --docs-copy-btn-bg: var(--color-base-100);
-  --docs-copy-btn-border: var(--border-base);
-  --docs-copy-btn-text: var(--text);
-  --docs-code-highlight: var(--accent-subtle);
-  --docs-code-line-number: var(--text-muted);
+  --docs-copy-btn-border: var(--color-border-base);
+  --docs-copy-btn-text: var(--color-text);
+  --docs-code-highlight: var(--color-accent-subtle);
+  --docs-code-line-number: var(--color-text-muted);
 }
 
 /* ===========================================================================
@@ -283,20 +269,19 @@
 :root {
   /* Logo-/Markenflaechen, die immer weiss/schwarz sein muessen */
   --color-fixed-white: #ffffff;   /* z. B. Plattenhintergrund hinter Logos */
-  --color-fixed-black: #000000;
   --color-fixed-blue: #acceff;    /* z. B. Spektrogramm-Progressbar, muss immer lesbar sein */
 
   /* Overlays/Scrims — dimmen Inhalt, liegen ueber der Seite -> theme-unabhaengig */
-  --scrim-drawer: rgb(15 23 42 / 0.45);              /* Drawer-/Sidebar-Overlay */
-  --scrim-modal:  rgb(0 0 0 / 0.78);                 /* Vollbild-Lightbox-Backdrop */
+  --color-scrim-drawer: rgb(15 23 42 / 0.45);              /* Drawer-/Sidebar-Overlay */
+  --color-scrim-modal:  rgb(0 0 0 / 0.78);                 /* Vollbild-Lightbox-Backdrop */
   --shadow-dropdown: 0 12px 24px rgb(0 0 0 / 0.18);  /* schwebende Menues (Dropdown) */
 
   /* Spektrogramm-Overlays — ueber dem Colormap-Bild, daher theme-unabhaengig
      (weisser Text + dunkler Saum, lesbar auf jeder Palette). axes.ts liest sie
      per getComputedStyle(canvas).getPropertyValue(...). */
-  --spec-label-fill:   rgba(255, 255, 255, 0.96);
-  --spec-label-stroke: rgba(255, 255, 255, 0.85);
-  --spec-label-shadow: rgba(0, 0, 0, 0.9);
+  --color-spec-label-fill:   rgba(255, 255, 255, 0.96);
+  --color-spec-label-stroke: rgba(255, 255, 255, 0.85);
+  --color-spec-label-shadow: rgba(0, 0, 0, 0.9);
 
   /* Terminal/CodeBlock: bewusst immer dunkel (Code-Optik), theme-unabhaengig. */
   --docs-terminal-bg: #0d1117;
@@ -314,16 +299,16 @@
 }
 
 /* ===========================================================================
- * @THEME-BRIDGE — Surface-Rollen als Tailwind-Utilities (bg-surface-*)
- * Spiegelt die --surface-* Tokens in den --color-* Namespace, damit Tailwind
- * Utilities erzeugt (bg-surface-panel, bg-surface-inset, ...). Kanonische Quelle
- * bleiben die --surface-* oben; in <style>-Bloecken weiter var(--surface-*).
+ * @THEME — Surface-Rollen + Spacing-Skala im Tailwind-Namespace.
+ * Kanonische Quelle der Surface-Farben (passen sich pro Theme an, da auf die
+ * daisyUI base-* gemappt). Nutzbar als var(--color-surface-*) UND als Utility
+ * (bg-surface-panel, bg-surface-inset, p-md, gap-sm).
  * =========================================================================== */
 @theme {
-  --color-surface-page: var(--surface-page);
-  --color-surface-panel: var(--surface-panel);
-  --color-surface-header: var(--surface-header);
-  --color-surface-inset: var(--surface-inset);
+  --color-surface-page:   var(--color-base-200);  /* Gesamt-Seitenhintergrund */
+  --color-surface-panel:  var(--color-base-100);  /* Karten/Panels, Code-Container, Dropdown */
+  --color-surface-header: var(--color-base-300);  /* Navbar */
+  --color-surface-inset:  var(--color-base-300);  /* versenkte Medienflaechen */
 
   /* Spacing-Skala (4px-Basis) — als var(--spacing-md) und Utilities (p-md, gap-sm, m-lg). */
   --spacing-2xs: 0.25rem;
@@ -339,19 +324,19 @@
  * Hilfsklassen
  * =========================================================================== */
 body {
-  background: var(--surface-page);   /* Gesamt-Seitenhintergrund (Panels liegen darauf) */
+  background: var(--color-surface-page);   /* Gesamt-Seitenhintergrund (Panels liegen darauf) */
 }
 
 :root .bg-alert-soft {
   background: var(--color-highlight-yellow);
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .color-bg {
   background: var(--color-base-200);
 }
 .color-fg {
-  color: var(--text);
+  color: var(--color-text);
 }
 .body {
   margin: 2rem;
@@ -367,7 +352,7 @@ body {
   border: var(--border-sm);
   background: var(--color-base-200);
   box-shadow: var(--global-shadow-inset);
-  color: var(--text);
+  color: var(--color-text);
 }
 
 /*

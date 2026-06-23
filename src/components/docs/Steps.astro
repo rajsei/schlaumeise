@@ -296,8 +296,8 @@ const initialCompleted = completed
     top: 2rem;
     bottom: -0.65rem;
     width: 2px;
-    background: var(--border-subtle);
-    border-radius: 999px;
+    background: var(--color-border-subtle);
+    border-radius: var(--radius-pill);
     transition: background-color 0.2s ease;
   }
 
@@ -311,10 +311,10 @@ const initialCompleted = completed
     left: 0.34rem;
     width: 1.7rem;
     height: 1.7rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     border: var(--border-m);
-    color: var(--text);
-    background: var(--surface-panel);
+    color: var(--color-text);
+    background: var(--color-surface-panel);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -334,13 +334,13 @@ const initialCompleted = completed
   }
 
   [data-steps-root] .steps__item[data-step-complete="true"]::before {
-    background: var(--accent);
+    background: var(--color-accent);
   }
 
   [data-steps-root] > :is(ol, ul) > .steps__item[data-step-complete="true"] > .steps__toggle {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--text-on-accent);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-text-on-accent);
   }
 
   [data-steps-root] > :is(ol, ul) > .steps__item > :first-child {

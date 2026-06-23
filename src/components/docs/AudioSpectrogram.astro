@@ -92,16 +92,16 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
   .spectrogram__stage {
     position: relative;
     width: 100%;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-control);
     overflow: hidden;
-    background: var(--surface-panel);
+    background: var(--color-surface-panel);
   }
 
   .spectrogram-canvas {
     display: block;
     width: 100%;
     height: 100%;
-    color: var(--text-strong);
+    color: var(--color-text-strong);
   }
 
   .spectrogram-progress {
@@ -124,7 +124,7 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
     place-items: center;
     margin: 0;
     font-size: var(--font-size-sm);
-    color: var(--text);
+    color: var(--color-text);
     opacity: 0.7;
   }
 

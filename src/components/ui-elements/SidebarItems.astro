@@ -80,21 +80,21 @@ const { items, nested = false } = Astro.props;
   :global(:root[data-theme="light"] .docs-nav__overview.is-active),
   :global(:root[data-theme="light"] .docs-nav__overview.is-active:hover),
   :global(:root[data-theme="light"] .docs-nav__overview.is-active:focus-visible) {
-    background: var(--text);
-    color: var(--text-inverted);
+    background: var(--color-text);
+    color: var(--color-text-inverted);
   }
 
   :global(:root[data-theme="dark"] .docs-nav__link.is-active),
   :global(:root[data-theme="dark"] .docs-nav__overview.is-active) {
-    background: var(--text);
-    color: var(--text-inverted);
+    background: var(--color-text);
+    color: var(--color-text-inverted);
   }
 
   :global(:root[data-theme="dark"] .docs-nav__link.is-active:hover),
   :global(:root[data-theme="dark"] .docs-nav__link.is-active:focus-visible),
   :global(:root[data-theme="dark"] .docs-nav__overview.is-active:hover),
   :global(:root[data-theme="dark"] .docs-nav__overview.is-active:focus-visible) {
-    background: var(--accent-strong);
-    color: var(--text-inverted);
+    background: var(--color-accent-strong);
+    color: var(--color-text-inverted);
   }
 </style>

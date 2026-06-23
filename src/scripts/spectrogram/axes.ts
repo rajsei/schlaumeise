@@ -21,9 +21,9 @@ function getSpecColors(canvas: HTMLCanvasElement) {
   const cs = getComputedStyle(canvas);
   const read = (name: string, fb: string) => cs.getPropertyValue(name).trim() || fb;
   specColorsCache = {
-    fill: read("--spec-label-fill", "rgba(255, 255, 255, 0.96)"),
-    stroke: read("--spec-label-stroke", "rgba(255, 255, 255, 0.85)"),
-    shadow: read("--spec-label-shadow", "rgba(0, 0, 0, 0.9)"),
+    fill: read("--color-spec-label-fill", "rgba(255, 255, 255, 0.96)"),
+    stroke: read("--color-spec-label-stroke", "rgba(255, 255, 255, 0.85)"),
+    shadow: read("--color-spec-label-shadow", "rgba(0, 0, 0, 0.9)"),
   };
   return specColorsCache;
 }

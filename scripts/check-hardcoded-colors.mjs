@@ -77,7 +77,7 @@ if (violations.length > 0) {
   }
   console.error(
     `\nNutze semantische Tokens aus src/styles/global.css ` +
-      `(--surface-*, --text-*, --accent-*, --border-*, --scrim-* …).\n` +
+      `(--color-surface-*, --color-text-*, --color-accent-*, --color-border-*, --color-scrim-* …).\n` +
       `Begruendete Ausnahme: Kommentar "${IGNORE_MARKER}" in die Zeile setzen.\n`,
   );
   process.exit(1);

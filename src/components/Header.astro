@@ -116,7 +116,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     position: sticky;
     top: 0;
     z-index: 90;
-    background: var(--surface-header);
+    background: var(--color-surface-header);
   }
 
   :global(.button-nav) {
@@ -125,12 +125,12 @@ function navLinkClass(href: string, extra: string[] = []): string {
     text-decoration: none;
     gap: var(--spacing-2xs);
     padding: 0.38rem 0.8rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
 
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-base);
 
-    color: var(--text);
+    color: var(--color-text);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -138,14 +138,14 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
   :global(.button-nav:hover),
   :global(.button-nav:focus-visible) {
-    background: color-mix(in srgb, var(--accent-subtle), transparent 70%);
-    border-color: var(--accent-strong);
+    background: color-mix(in srgb, var(--color-accent-subtle), transparent 70%);
+    border-color: var(--color-accent-strong);
     border-width: 2px;
   }
 
   :global(.button-nav.is-active) {
-    color: var(--text);
-    background: var(--accent-subtle);
+    color: var(--color-text);
+    background: var(--color-accent-subtle);
   }
 
   :global(.global-nav__link_text) {
@@ -159,12 +159,12 @@ function navLinkClass(href: string, extra: string[] = []): string {
     text-decoration: none;
     gap: var(--spacing-2xs);
     padding: 0.38rem 0.8rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
 
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-base);
 
-    color: var(--text);
+    color: var(--color-text);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -179,7 +179,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--text-strong);
+    color: var(--color-text-strong);
     font-weight: var(--font-weight-bold);
     text-decoration: none;
     letter-spacing: -0.01em;
@@ -207,7 +207,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
   .docs-toggle-line {
     width: 100%;
     height: 2px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: currentColor;
     transform-origin: center;
     transition:
