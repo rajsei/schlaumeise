@@ -54,7 +54,9 @@ function setupInstance(root: HTMLElement): void {
   let scrollAcc = 0;
   let running = false;
 
-  const axisColor = () => getComputedStyle(canvas).color || "#888";
+  const axisColor = () =>
+    getComputedStyle(canvas).color ||
+    getComputedStyle(canvas).getPropertyValue("--spec-axis").trim();
 
   const buildBuffers = (): void => {
     setup = setupCanvas(canvas);

@@ -43,7 +43,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
 }
 ---
 
-<div class="navbar site-navbar bg-base-300 shadow-sm">
+<div class="navbar site-navbar shadow-sm">
   <div class="navbar-start">
     <button
       type="button"
@@ -116,6 +116,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     position: sticky;
     top: 0;
     z-index: 90;
+    background: var(--surface-header);
   }
 
   :global(.button-nav) {
@@ -129,7 +130,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     font-weight: 600;
     font-size: 0.95rem;
 
-    color: var(--color-base-content);
+    color: var(--text);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -137,14 +138,14 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
   :global(.button-nav:hover),
   :global(.button-nav:focus-visible) {
-    background: color-mix(in srgb, var(--color-accent-low), transparent 70%);
-    border-color: var(--color-accent-high);
+    background: color-mix(in srgb, var(--accent-subtle), transparent 70%);
+    border-color: var(--accent-strong);
     border-width: 2px;
   }
 
   :global(.button-nav.is-active) {
-    color: var(--color-base-content);
-    background: var(--color-accent-low);
+    color: var(--text);
+    background: var(--accent-subtle);
   }
 
   :global(.global-nav__link_text) {
@@ -163,7 +164,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     font-weight: 600;
     font-size: 0.95rem;
 
-    color: var(--color-base-content);
+    color: var(--text);
     transition:
       color 150ms ease,
       background 150ms ease;
@@ -178,7 +179,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--color-base-content-strong);
+    color: var(--text-strong);
     font-weight: 700;
     text-decoration: none;
     letter-spacing: -0.01em;

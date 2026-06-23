@@ -22,7 +22,6 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(h1, h2, h3, h4, h5, h6) {
-    /* color: var(--color-ink); */
     font-weight: 700;
     line-height: 1.25;
     margin-top: 1.6rem;
@@ -76,7 +75,7 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(a) {
-    color: var(--color-accent-high);
+    color: var(--accent-strong);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 0.08em;
@@ -89,8 +88,8 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   .mdx-interpreter :where(code):not(pre code) {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.9em;
-    background: var(--color-accent-low);
-    border: 1px solid var(--color-accent-high);
+    background: var(--accent-subtle);
+    border: 1px solid var(--accent-strong);
     border-radius: 0.35rem;
     padding: 0.1rem 0.35rem;
   }
@@ -100,7 +99,7 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
     border: var(--border-sm);
     padding: 0.8rem;
     overflow-x: auto;
-    background: var(--color-base-100);
+    background: var(--surface-panel);
   }
 
   .mdx-interpreter :where(pre):not(.astro-code):not(.docs-terminal__pre) code {
@@ -112,9 +111,9 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(blockquote) {
-    border-left: 3px solid var(--color-accent);
+    border-left: 3px solid var(--accent);
     padding: 0.2rem 0 0.2rem 0.85rem;
-    color: var(--color-base-content);
+    color: var(--text);
     font-style: italic;
   }
 
@@ -133,8 +132,8 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(th) {
-    color: var(--color-base-content);
-    background: color-mix(in srgb, var(--color-accent), transparent 84%);
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent), transparent 84%);
   }
 
   .mdx-interpreter :where(hr) {

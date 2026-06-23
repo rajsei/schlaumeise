@@ -91,7 +91,9 @@ function setupInstance(root: HTMLElement): void {
   let visible = true;
   let loading = false;
 
-  const axisColor = () => getComputedStyle(canvas).color || "#888";
+  const axisColor = () =>
+    getComputedStyle(canvas).color ||
+    getComputedStyle(canvas).getPropertyValue("--spec-axis").trim();
 
   const rebuildLayout = (): void => {
     setup = setupCanvas(canvas);
