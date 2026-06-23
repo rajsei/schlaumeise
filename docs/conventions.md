@@ -48,7 +48,8 @@ Content-Ordner: kebab-case (neu); Bestand in snake_case (`knowledge_collection` 
 
 - Scoped `<style>` in der Komponente zuerst; globale Selektoren nur in `styles/*.css` oder begründet via `:global()`/`is:global`.
 - Klassennamen: Block-Element-Stil mit Komponenten-Präfix (`docs-code-block__copy`), Zustände als `is-*`/`data-*`.
-- Farben/Abstände über CSS-Variablen (`--color-*`, `--docs-*`) bzw. daisyUI-Klassen — keine neuen Hex-Werte in Komponenten.
+- **Farben nur über semantische Rollen-Tokens.** Komponenten nutzen ausschließlich eigene Rollen-Tokens — `--surface-*`, `--text-*`, `--accent-*`, `--border-*`, `--state-*`, `--scrim-*`/`--shadow-*` (definiert in `src/styles/global.css`) oder daisyUI-Utilities (`bg-base-200`, `text-primary`). Surface-Rollen gibt es zusätzlich als Utilities (`bg-surface-panel`, `bg-surface-inset` …). **Kein** rohes `--palette-*`, **kein** `--color-base-*` und **kein** Hex/`rgb()`/benannte Farbe direkt in Komponenten — neue Farbrollen zuerst als Token in `global.css` anlegen.
+- Quelle aller Farben ist `src/styles/global.css` (Palette + Rohwerte leben nur dort). Der Guard `npm run lint:colors` (Pre-Commit-Hook `.githooks/` + CI) erzwingt das; begründete Ausnahme via Zeilen-Kommentar `color-guard-ignore`.
 
 ## Commits & Pull Requests
 

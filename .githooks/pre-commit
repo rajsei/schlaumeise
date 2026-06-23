@@ -1,0 +1,7 @@
+#!/bin/sh
+# Guard gegen hardcodierte Farben (siehe docs/semantic-tokens-plan.md, Abschnitt 6).
+# Aktivieren (einmalig):   git config core.hooksPath .githooks
+# Im Notfall umgehen:      git commit --no-verify
+#
+# Ruft node direkt auf (nicht via npm) -> keine zusaetzliche Shell, robust auf Windows.
+exec node scripts/check-hardcoded-colors.mjs

@@ -2,6 +2,23 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-23 — Semantische Farb-Tokens vollständig durchgezogen (Agent)
+
+### Geändert
+- **Text & Akzent:** alle Komponenten von Alt-Aliassen (`--color-base-content*`, `--color-accent*`) auf semantische Rollen-Tokens (`--text`/`--text-strong`/`--text-muted`/`--text-on-accent`, `--accent`/`--accent-subtle`/`--accent-strong`) umgestellt; tote Aliasse aus `global.css` entfernt
+- **Flächen:** verbliebene rohe `--color-base-100/200/300` in Komponenten auf `--surface-panel`/`--surface-page`/`--surface-header` migriert; neue Tokens `--surface-inset` (versenkte Medienflächen) und `--text-inverted` (Schrift auf aktiver Nav)
+- **Surface-Utilities:** `@theme`-Bridge in `global.css` spiegelt die Surface-Rollen in den `--color-*`-Namespace → Tailwind-Utilities `bg-surface-page/-panel/-header/-inset` (eine Quelle, theme-aware, auch als `var(--surface-*)` nutzbar)
+- **Border:** `--color-border`/`--color-border-low` umbenannt zu `--border-base`/`--border-subtle` (+ `--border-strong`); kollidiert bewusst **nicht** mit daisyUIs Breiten-Token `--border: 1px`
+- **Scrims/Schatten:** hardcodierte `rgb()`-Overlays tokenisiert (`--scrim-drawer`, `--scrim-modal`, `--shadow-dropdown`), `docs.css`-Dopplung aufgelöst, toter Fallback im Picker entfernt
+
+### Hinzugefügt
+- Guard `scripts/check-hardcoded-colors.mjs` (`npm run lint:colors`): scannt Komponenten + `docs.css` auf Hex/`rgb()`/`--palette-*`/`--color-base-*`; Ausnahme via Zeilen-Kommentar `color-guard-ignore`
+- Pre-Commit-Hook `.githooks/pre-commit` (aktiv via `core.hooksPath`) + CI-Workflow `.github/workflows/lint-colors.yml`
+- `docs/conventions.md`: CSS-Farbregel auf semantische Tokens präzisiert (+ Guard-Verweis)
+
+### Hinweis
+- Rein wertneutral (Tokens zeigen auf dieselben Werte) — kein optischer Diff; `npm run build` grün. `src` enthält außerhalb `global.css` keine hardcodierten Farben mehr (einzige erlaubte Ausnahme: JS-Fallbacks in `scripts/spectrogram/axes.ts`)
+
 ## 2026-06-16 — Spektrogramm-Visualisierung umgesetzt (Agent)
 
 ### Hinzugefügt

@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "spectrograms": "node scripts/spectrogram/precompute-spectrograms.mjs",
+    "lint:colors": "node scripts/check-hardcoded-colors.mjs",
     "predev": "npm run spectrograms",
     "dev": "astro dev",
     "prebuild": "npm run spectrograms",

@@ -1,0 +1,4 @@
+# Git-Hooks und Shell-Skripte muessen LF behalten — CRLF bricht den Shebang
+# (#!/bin/sh^M) auf Unix/WSL und damit die Hook-Ausfuehrung. Greift trotz core.autocrlf=true.
+.githooks/** text eol=lf
+*.sh text eol=lf

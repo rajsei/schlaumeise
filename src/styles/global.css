@@ -140,11 +140,11 @@
   --spec-axis: #1f2733;   /* Spektrogramm-Zeitachse (Literal, per getPropertyValue lesbar) */
 
   /* Border */
-  --color-border: var(--palette-n-200);               /* custom: daisyUI hat keinen Border-Token */
-  --color-border-low: var(--palette-n-300);
-  --color-border-high: var(--color-error);            /* derzeit ungenutzt */
-  --border-sm: 1px solid var(--color-border);
-  --border-m: 2px solid var(--color-border-low);
+  --border-base: var(--palette-n-200);               /* custom: daisyUI hat keinen Border-Token */
+  --border-subtle: var(--palette-n-300);
+  --border-strong: var(--color-error);            /* derzeit ungenutzt */
+  --border-sm: 1px solid var(--border-base);
+  --border-m: 2px solid var(--border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
 
   /* Neutraler Halbton (Scrollbars, TOC-Linien) */
@@ -177,7 +177,7 @@
 
   /* Header */
   --global-header-bg: rgb(244 246 250 / 0.9);
-  --global-header-border: var(--color-border);
+  --global-header-border: var(--border-base);
 
   /* Flaechen (surface) — semantische Rollen; passen sich pro Theme an */
   --surface-page: var(--color-base-200);    /* Gesamt-Seitenhintergrund */
@@ -192,16 +192,16 @@
 
   /* Docs-Panels (Artikel, Sidebar, TOC) — zentral steuerbar; passt sich pro Theme an */
   --docs-panel-bg: var(--surface-panel);
-  --docs-panel-border: var(--border-sm);   /* = 1px solid var(--color-border) */
+  --docs-panel-border: var(--border-sm);   /* = 1px solid var(--border-base) */
   --docs-panel-radius: var(--radius-panel);
 
   /* Docs / Code-Bloecke */
-  --docs-code-border: var(--color-border);
+  --docs-code-border: var(--border-base);
   --docs-code-header-bg: var(--color-base-100);
   --docs-code-header-text: var(--text-muted);
   --docs-code-title-text: var(--text-strong);
   --docs-copy-btn-bg: var(--color-base-100);
-  --docs-copy-btn-border: var(--color-border);
+  --docs-copy-btn-border: var(--border-base);
   --docs-copy-btn-text: var(--text);
   --docs-code-highlight: var(--accent-subtle);
   --docs-code-line-number: var(--text-muted);
@@ -214,11 +214,11 @@
   --spec-axis: #f4f6fa;   /* Spektrogramm-Zeitachse */
 
   /* Border */
-  --color-border: var(--palette-n-500);               /* custom: daisyUI hat keinen Border-Token */
-  --color-border-low: var(--palette-n-400);
-  --color-border-high: var(--color-error);            /* derzeit ungenutzt */
-  --border-sm: 1px solid var(--color-border);
-  --border-m: 2px solid var(--color-border-low);
+  --border-base: var(--palette-n-500);               /* custom: daisyUI hat keinen Border-Token */
+  --border-subtle: var(--palette-n-400);
+  --border-strong: var(--color-error);            /* derzeit ungenutzt */
+  --border-sm: 1px solid var(--border-base);
+  --border-m: 2px solid var(--border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
 
   /* Neutraler Halbton (Scrollbars, TOC-Linien) */
@@ -246,15 +246,15 @@
 
   /* Header */
   --global-header-bg: rgb(8 8 16 / 0.85);
-  --global-header-border: var(--color-border);
+  --global-header-border: var(--border-base);
 
   /* Docs / Code-Bloecke */
-  --docs-code-border: var(--color-border);
+  --docs-code-border: var(--border-base);
   --docs-code-header-bg: var(--color-base-100);
   --docs-code-header-text: var(--text-muted);
   --docs-code-title-text: var(--text-strong);
   --docs-copy-btn-bg: var(--color-base-100);
-  --docs-copy-btn-border: var(--color-border);
+  --docs-copy-btn-border: var(--border-base);
   --docs-copy-btn-text: var(--text);
   --docs-code-highlight: var(--accent-subtle);
   --docs-code-line-number: var(--text-muted);
