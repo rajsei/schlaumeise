@@ -38,10 +38,10 @@ const hasPagination = Boolean(prev || next);
 <style>
   .docs-pagination {
     margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    padding-top: var(--spacing-lg);
     border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
     display: grid;
-    gap: 0.75rem;
+    gap: var(--spacing-sm);
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -53,7 +53,7 @@ const hasPagination = Boolean(prev || next);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.25rem;
+    gap: var(--spacing-2xs);
     width: 100%;
     text-decoration: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -68,16 +68,16 @@ const hasPagination = Boolean(prev || next);
   }
 
   .docs-pagination__caption {
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     opacity: 0.82;
   }
 
   .docs-pagination__title {
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
     line-height: 1.35;
     word-break: break-word;
   }

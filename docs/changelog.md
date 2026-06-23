@@ -2,6 +2,19 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-23 — Spacing- & Typografie-Tokens (Slices 6/7) (Agent)
+
+### Hinzugefügt
+- **Spacing-Skala** `--spacing-2xs…2xl` (0.25/0.5/0.75/1/1.5/2/3 rem) im `@theme`-Block → nutzbar als `var(--spacing-md)` und als Utilities (`p-md`, `gap-sm`, `m-lg`)
+- **Typografie-Tokens** (theme-invariant): `--font-size-xs/sm/base/md/lg/xl` + Heading-`clamp()` `--font-size-h1/h2/h3`; `--font-weight-medium/semibold/bold/extrabold`
+
+### Geändert
+- Komponenten-`<style>`-Blöcke + `docs.css`: literale `font-weight` → Tokens (wertneutral); `font-size` → Tokens (Body-Skala konsolidiert vormals 0.72–0.95-Streuung, Snaps ≤ ~0,8 px); einzelne On-Scale-Abstände (`gap`/`padding`/`margin` = 0.25/0.5/0.75/1/1.5/2/3 rem) → `var(--spacing-*)`
+
+### Hinweis
+- Bewusst **nicht** tokenisiert: bespoke Einzelwerte (0.65, 1.2, 2.7 rem …) und Shorthand-Magic-Numbers (gehören nicht in eine Skala), `font-size: 0.9em` (relativ für Inline-Code), `font-size: 0` (Reset). `npm run build` grün
+- Doku: `architecture.md` (Styling-Schichten), `todo.md` #6b/#9
+
 ## 2026-06-23 — Semantische Farb-Tokens vollständig durchgezogen (Agent)
 
 ### Geändert

@@ -22,24 +22,24 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(h1, h2, h3, h4, h5, h6) {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     line-height: 1.25;
     margin-top: 1.6rem;
     margin-bottom: 0.8rem;
   }
 
   .mdx-interpreter :where(h2) {
-    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    font-size: var(--font-size-h2);
     border-bottom: var(--border-sm);
     padding-bottom: 0.35rem;
   }
 
   .mdx-interpreter :where(h3) {
-    font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+    font-size: var(--font-size-h3);
   }
 
   .mdx-interpreter :where(h4, h5, h6) {
-    font-size: 1rem;
+    font-size: var(--font-size-md);
   }
 
   .mdx-interpreter :where(p, ul, ol, blockquote, table, hr) {
@@ -82,7 +82,7 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
   }
 
   .mdx-interpreter :where(strong) {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
   }
 
   .mdx-interpreter :where(code):not(pre code) {
@@ -106,7 +106,7 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
     background: transparent;
     border: 0;
     padding: 0;
-    font-size: 0.88rem;
+    font-size: var(--font-size-sm);
     line-height: 1.55;
   }
 

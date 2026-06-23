@@ -10,10 +10,10 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 4 | ~~`ai+bioacoustic.md` umbenennen + Redirect~~ **erledigt 2026-06-12**: `ai-and-bioacoustic.md` | — | — | — |
 | 5 | Sprachumschalter nur bei existierender Übersetzung anzeigen (oder i18n-Fallback aktivieren) | P2 | M | — |
 | 6 | ~~Theme-Fix + Custom-Themes~~ **erledigt 2026-06-12**: Head-Skript (kein FOUC), cupcake entfernt, Custom-daisyUI-Themes light/dark aus Markenfarben, versioniertes Speicherformat | — | — | — |
-| 6b | High-Contrast-Themes `light-contrast`/`dark-contrast` + Kontrast-Schalter im ThemeController (Vorlage am Ende von `global.css`; `prefers-contrast: more` als Default) | P3 | M | #6 ✅ |
+| 6b | High-Contrast-Themes `light-contrast`/`dark-contrast` + Kontrast-Schalter im ThemeController (Vorlage am Ende von `global.css`; `prefers-contrast: more` als Default). **Vereinfacht 2026-06-23**: die semantischen Rollen-Tokens (`--surface/-text/-border/-accent-*`) sind vollständig — High-Contrast = nur diese pro Contrast-Theme überschreiben, Komponenten bleiben unangetastet | P3 | S | #6 ✅ |
 | 7 | ~~Inhaltsbilder zu `astro:assets`/`<Image>` migrieren~~ **erledigt 2026-06-12** (Build-Verifikation auf Windows ausstehend, siehe #1) | — | — | — |
 | 8 | ~~WAV-Audio konvertieren~~ **erledigt 2026-06-13**: 10 WAV → MP3 160 kbps, alle Audio-Dateinamen kebab-case (8,1 → 3,7 MB) | — | — | — |
-| 9 | A11y-Audit (Kontrast, Tastatur, `aria-current`) und Befunde beheben | P2 | M | — |
+| 9 | A11y-Audit (Kontrast, Tastatur, `aria-current`) und Befunde beheben. Kontrast-Korrekturen laufen seit 2026-06-23 zentral über die Rollen-Tokens (`--text-*`/`--surface-*`/`--border-*`) statt verstreut in Komponenten | P2 | M | — |
 | 10 | ~~`workshop_materials` in Navigation aufnehmen~~ **erledigt 2026-06-13**: Topic „Workshops“ → „Spring School 2026“ | — | — | — |
 | 11 | Startseiten DE/EN in eine dictionary-getriebene `HomeContent` zusammenführen | P2 | M | — |
 | 12 | Quiz-UI: `QuizPlayer`, Fragetyp-Komponenten, Route `quiz/[id]` (+ en) | P3 | L | Datenmodell ✅ |

@@ -74,4 +74,11 @@ Bewusst minimal, keine Framework-Islands:
 
 ## Styling
 
-Drei Schichten: Tailwind 4 + daisyUI mit zwei **Custom-Themes** „light“/„dark“ aus Markenfarben (definiert via `@plugin "daisyui/theme"` in `global.css`; Namen sind fix, da Komponenten und `localStorage` darauf referenzieren) → globale Stylesheets (`styles/global.css`, `styles/docs.css` mit Projekt-Tokens `--color-*`, `--docs-*`; Light auf `:root`, Dark via `[data-theme="dark"]`) → komponenten-scoped `<style>`-Blöcke. Markdown-Typografie zentral in `MdxInterpreter`. High-Contrast-Varianten sind vorbereitet (Vorlage am Ende von `global.css`).
+Tailwind 4 + daisyUI; die gesamte Token-Architektur liegt in `global.css` (Aufbau dort im Kopf dokumentiert):
+
+- **Block A** — zwei daisyUI-**Custom-Themes** „light“/„dark“ aus Markenfarben (`@plugin "daisyui/theme"`; Namen sind fix, da Komponenten und `localStorage` darauf referenzieren).
+- **Schicht 1** — themen-unabhängige **Palette** `--palette-n-*` (neutrale Rampe, einzige Quelle der Roh-Hex).
+- **Block B** — eigene **theme-abhängige Rollen-Tokens** (Light auf `:root`, Dark via `[data-theme="dark"]`): `--surface-*` (Flächen), `--text-*` (Schrift), `--accent-*`, `--border-*`, `--state-*`, Highlights, Schatten.
+- **Block C** — **theme-invariante** Konstanten: `--color-fixed-*`, `--scrim-*`/`--shadow-*`, `--spec-*`, `--docs-terminal-*` sowie **Typografie** (`--font-size-*`, `--font-weight-*`) und die **Spacing-Skala** (`--spacing-*`).
+
+Ein `@theme`-Block spiegelt Surface- und Spacing-Rollen in den Tailwind-Namespace → nutzbar als `var(--token)` **und** als Utility (`bg-surface-panel`, `p-md`, `gap-sm`). Komponenten-scoped `<style>`-Blöcke referenzieren **ausschließlich** diese Rollen-Tokens (oder daisyUI-Utilities) — keine rohen `--palette-*`/`--color-base-*`, kein Hex/`rgb()`, keine literalen Abstände/Schriftgrößen; erzwungen durch den Guard `npm run lint:colors` (Pre-Commit-Hook `.githooks/` + CI). Markdown-Typografie zentral in `MdxInterpreter`. High-Contrast-Varianten sind vorbereitet (Vorlage am Ende von `global.css`); dank der Rollen-Ebene genügt dafür das Überschreiben weniger `--surface/-text/-border/-accent-*` pro Theme.

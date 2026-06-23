@@ -131,6 +131,22 @@
   --line-height: 1.75;
   --navbar-height: 4rem;
 
+  /* Typografie (theme-invariant) — Schriftgroessen + -gewichte als Rollen.
+     Body-Skala konsolidiert vormals gestreute Werte (0.72..0.95); Headings als clamp(). */
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.85rem;
+  --font-size-base: 0.95rem;
+  --font-size-md:   1rem;
+  --font-size-lg:   1.1rem;
+  --font-size-xl:   1.4rem;
+  --font-size-h3:   clamp(1.15rem, 1.4vw, 1.35rem);
+  --font-size-h2:   clamp(1.35rem, 2vw, 1.8rem);
+  --font-size-h1:   clamp(1.5rem, 2vw, 2rem);
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
   /* Text — semantische Rollen */
   --text-strong: var(--palette-n-900);     /* kraeftiger als --text */
   --text: var(--color-base-content);       /* = daisyUI --color-base-content */
@@ -308,6 +324,15 @@
   --color-surface-panel: var(--surface-panel);
   --color-surface-header: var(--surface-header);
   --color-surface-inset: var(--surface-inset);
+
+  /* Spacing-Skala (4px-Basis) — als var(--spacing-md) und Utilities (p-md, gap-sm, m-lg). */
+  --spacing-2xs: 0.25rem;
+  --spacing-xs:  0.5rem;
+  --spacing-sm:  0.75rem;
+  --spacing-md:  1rem;
+  --spacing-lg:  1.5rem;
+  --spacing-xl:  2rem;
+  --spacing-2xl: 3rem;
 }
 
 /* ===========================================================================

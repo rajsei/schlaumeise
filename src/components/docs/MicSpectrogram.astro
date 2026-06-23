@@ -88,19 +88,19 @@ const uid = id ?? `mic-spectrogram-${Math.random().toString(36).slice(2, 8)}`;
   .spectrogram__controls {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
   }
 
   .spectrogram-mic-status {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     color: var(--color-error);
   }
 
   .spectrogram__caption {
     margin-top: 0.35rem;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     opacity: 0.8;
   }
 </style>

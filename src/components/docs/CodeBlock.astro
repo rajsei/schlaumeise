@@ -140,13 +140,13 @@ const wrapperClass = [
 <style is:global>
   .docs-code-block__copy::before {
     content: "⧉";
-    font-size: 1rem;
+    font-size: var(--font-size-md);
     line-height: 1;
   }
 
   .docs-code-block__copy[data-copied="true"]::before {
     content: "✓";
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
   }
 
   .docs-code-block.terminal-code {

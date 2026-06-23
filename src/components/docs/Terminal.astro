@@ -147,7 +147,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
   }
 
   .docs-terminal__title {
-    font-size: 0.76rem;
+    font-size: var(--font-size-xs);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--docs-terminal-muted);
@@ -168,7 +168,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     display: block;
     white-space: pre;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 0.86rem;
+    font-size: var(--font-size-sm);
     line-height: 1.5;
   }
 
@@ -232,13 +232,13 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
   .docs-code-block__copy--terminal::before {
     content: "⧉";
-    font-size: 1rem;
+    font-size: var(--font-size-md);
     line-height: 1;
   }
 
   .docs-code-block__copy--terminal[data-copied="true"]::before {
     content: "✓";
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
   }
 
   .docs-terminal__body:hover .docs-code-block__copy--terminal,
@@ -265,7 +265,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     }
 
     .docs-terminal__pre code {
-      font-size: 0.8rem;
+      font-size: var(--font-size-sm);
     }
   }
 </style>
