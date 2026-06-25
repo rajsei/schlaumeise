@@ -33,6 +33,18 @@ Diese Regeln gelten für jede automatisierte Änderung am Schlaumeise-Projekt. B
 - Neue Komponenten mit nicht offensichtlichem Verhalten: Kommentarkopf mit Zweck, Props, Verwendungsbeispiel.
 - Keine toten Komponenten hinterlassen: Wird eine Komponente unbenutzt, entweder löschen oder in `docs/features.md` unter „Reservierte Komponenten“ begründen.
 
+## Styling- & Token-Regeln
+
+- **Nur semantische Tokens, keine hartkodierten Design-Werte.** In Komponenten-`<style>`-Blöcken und `src/styles/docs.css` ausschließlich Tokens aus `src/styles/global.css` (oder daisyUI-Utilities) verwenden — **keine** rohen Werte für:
+  - **Farben** → `--color-*` (alle Farb-Rollen tragen das `--color-`-Präfix; nie Hex/`rgb()`/benannte Farben, nie `--palette-*` oder `--color-base-*` direkt)
+  - **Abstände** → `--spacing-*` (auch als Utilities `p-md`, `gap-sm`, `m-lg`)
+  - **Schriftgrößen/-gewichte** → `--font-size-*` / `--font-weight-*`
+  - **Radien** → `--radius-*`
+  - **Ränder/Schatten** → `--border-sm`/`--border-m`, `--global-shadow*`, `--shadow-dropdown`
+- **`global.css` ist die einzige Quelle der Wahrheit.** Neue Design-Werte zuerst dort als Token anlegen — in der richtigen Schicht: Palette (`--palette-n-*`) → daisyUI-Theme-Block → Block B (theme-abhängige Rollen-Tokens) / `@theme` (Surface + Spacing) / Block C (theme-invariant). Theme-abhängige Werte gehören in die Theme-Blöcke, nie in die Komponente.
+- **Guard:** `npm run lint:colors` (Pre-Commit-Hook `.githooks/` + CI) erzwingt das automatisch — **Farben, Abstände, Radien, Schriftgrößen/-gewichte und line-height**. Begründete Ausnahme pro Zeile: Kommentar `color-guard-ignore` oder `bespoke`.
+- Architektur und Details: `docs/architecture.md` „Styling", `docs/conventions.md`, `docs/theme-plan.md`.
+
 ## Dokumentationspflicht
 
 Nach **jeder** Feature-Änderung, vor Abschluss der Aufgabe:

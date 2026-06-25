@@ -153,7 +153,7 @@ const rootClass = [
   .sl-link-card__text {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: var(--spacing-xs);
     min-width: 0;
   }
 
@@ -164,7 +164,7 @@ const rootClass = [
 
   .sl-link-card__description {
     color: color-mix(in oklab, var(--color-text) 68%, transparent);
-    line-height: 1.5;
+    line-height: var(--line-height-normal);
     overflow-wrap: anywhere;
   }
 
@@ -178,7 +178,7 @@ const rootClass = [
 
   .sl-link-card--image .sl-link-card__icon {
     align-self: start;
-    margin-top: 0.15rem;
+    margin-top: var(--spacing-3xs);
   }
 
   .sl-link-card:hover .sl-link-card__icon,

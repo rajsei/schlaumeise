@@ -97,8 +97,8 @@ const bgColor = colorClassByName[color];
     position: relative;
     margin-right: var(--spacing-2xl);
     margin-top: var(--spacing-md);
-    padding: 1rem 3rem 1rem 1.25rem;
-    border-radius: 0.15rem;
+    padding: 1rem 3rem 1rem 1.25rem; /* bespoke: Callout, Icon-Freiraum rechts */
+    border-radius: var(--radius-xs);
     box-shadow: var(--global-shadow);
     transition: background 0.3s ease;
     justify-content: space-between;
@@ -131,7 +131,7 @@ const bgColor = colorClassByName[color];
   .content {
     margin: 0;
     color: var(--color-text);
-    line-height: 1.5;
+    line-height: var(--line-height-normal);
     font-size: var(--font-size-base);
   }
 
@@ -164,7 +164,7 @@ const bgColor = colorClassByName[color];
   @media (max-width: 768px) {
     .pastel-box {
       margin-right: 0;
-      padding-right: 1.25rem;
+      padding-right: 1.25rem; /* bespoke: Icon-Freiraum */
     }
 
     .arrow {

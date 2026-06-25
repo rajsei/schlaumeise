@@ -1,10 +1,10 @@
-// Guard gegen hardcodierte Farben (siehe docs/semantic-tokens-plan.md, Abschnitt 6).
+// Guard gegen hardcodierte Design-Werte (siehe AGENTS.md "Styling- & Token-Regeln",
+// docs/semantic-tokens-plan.md). Scannt Komponenten + docs.css und schlaegt an, wenn
+// rohe Werte statt Tokens aus src/styles/global.css verwendet werden — fuer Farben,
+// Abstaende, Radien, Schriftgroessen/-gewichte und line-height.
 //
-// Scannt Komponenten + docs.css auf nicht-semantische Farbquellen und schlaegt an,
-// damit sich keine rohen Farben zurueck in den Code schleichen. Quelle der Tokens
-// (src/styles/global.css) ist bewusst ausgenommen — dort *duerfen* Hex/rgb/Palette stehen.
-//
-// Ausnahme pro Zeile: Kommentar `color-guard-ignore` in der Zeile -> wird uebersprungen.
+// global.css ist die Token-Quelle und bewusst ausgenommen (dort *duerfen* Rohwerte stehen).
+// Begruendete Ausnahme pro Zeile: Kommentar `color-guard-ignore` ODER `bespoke` in der Zeile.
 //
 // Aufruf: `node scripts/check-hardcoded-colors.mjs` (npm run lint:colors).
 // Exit-Code 1 bei Verstoessen, sonst 0.
@@ -19,13 +19,22 @@ const EXTRA_FILES = ["src/styles/docs.css"];
 const SCAN_EXT = new Set([".astro", ".css"]);
 // Quell-Definitionen der Tokens — hier sind Rohwerte erlaubt:
 const IGNORE_FILES = new Set(["src/styles/global.css"].map((p) => p.split("/").join(sep)));
-const IGNORE_MARKER = "color-guard-ignore";
+const IGNORE_MARKERS = ["color-guard-ignore", "bespoke"];
+
+// Lookbehind (?<![\w-]) verhindert Treffer in Custom-Property-Namen (z. B. --toc-level-gap).
+const SPACING_PROP =
+  "(?:padding|margin|gap|row-gap|column-gap)(?:-(?:top|right|bottom|left|block|inline|block-start|block-end|inline-start|inline-end))?";
 
 const RULES = [
   { name: "Hex-Literal", re: /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b/ },
   { name: "rgb/hsl-Literal", re: /\b(?:rgba?|hsla?)\(/ },
   { name: "rohe Palette", re: /var\(\s*--palette-/ },
   { name: "rohes daisyUI base-*", re: /var\(\s*--color-base-/ },
+  { name: "rohes Spacing (rem/px)", re: new RegExp(`(?<![\\w-])${SPACING_PROP}\\s*:\\s*[^;{]*?\\d*\\.?\\d+(?:rem|px|em)`) },
+  { name: "roher Radius (rem/px)", re: /(?<![\w-])border-radius\s*:\s*[^;{]*?\d*\.?\d+(?:rem|px)/ },
+  { name: "rohe font-size (rem/px)", re: /(?<![\w-])font-size\s*:\s*[^;{]*?\d*\.?\d+(?:rem|px)/ },
+  { name: "rohes font-weight (numerisch)", re: /(?<![\w-])font-weight\s*:\s*\d{2,3}\b/ },
+  { name: "rohe line-height (dezimal)", re: /(?<![\w-])line-height\s*:\s*\d*\.\d+/ },
 ];
 
 function walk(dir) {
@@ -60,7 +69,7 @@ for (const file of files) {
     continue;
   }
   lines.forEach((line, i) => {
-    if (line.includes(IGNORE_MARKER)) return;
+    if (IGNORE_MARKERS.some((m) => line.includes(m))) return;
     for (const rule of RULES) {
       if (rule.re.test(line)) {
         violations.push({ rel, line: i + 1, rule: rule.name, text: line.trim() });
@@ -71,16 +80,16 @@ for (const file of files) {
 }
 
 if (violations.length > 0) {
-  console.error(`\n✗ Hardcodierte Farben gefunden (${violations.length}):\n`);
+  console.error(`\n✗ Hardcodierte Design-Werte gefunden (${violations.length}):\n`);
   for (const v of violations) {
     console.error(`  ${v.rel}:${v.line}  [${v.rule}]\n      ${v.text}`);
   }
   console.error(
-    `\nNutze semantische Tokens aus src/styles/global.css ` +
-      `(--color-surface-*, --color-text-*, --color-accent-*, --color-border-*, --color-scrim-* …).\n` +
-      `Begruendete Ausnahme: Kommentar "${IGNORE_MARKER}" in die Zeile setzen.\n`,
+    `\nNutze Tokens aus src/styles/global.css: Farben --color-*, Abstaende --spacing-*,\n` +
+      `Radien --radius-*, Schrift --font-size-*/--font-weight-*/--line-height*.\n` +
+      `Begruendete Ausnahme: Kommentar "color-guard-ignore" oder "bespoke" in die Zeile.\n`,
   );
   process.exit(1);
 }
 
-console.log(`✓ Keine hardcodierten Farben in ${files.length} Dateien.`);
+console.log(`✓ Keine hardcodierten Design-Werte in ${files.length} Dateien.`);

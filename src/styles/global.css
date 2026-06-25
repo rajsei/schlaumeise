@@ -101,6 +101,78 @@
   --noise: 0;
 }
 
+/* High-Contrast-Themes (todo.md #6b, theme-plan.md): Basis = light/dark, kontrast-
+ * kritische Werte verschaerft (Ziel Text/BG >= 8:1, Raender >= 5:1), --depth: 0.*/
+@plugin "daisyui/theme" {
+  name: "light-contrast";
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f6fa;
+  --color-base-300: #e6ebf3;
+  --color-base-content: #000000;
+  --color-primary: #124470;
+  --color-primary-content: #ffffff;
+  --color-secondary: #42450d;
+  --color-secondary-content: #ffffff;
+  --color-accent: #2f1aa0;
+  --color-accent-content: #ffffff;
+  --color-neutral: var(--palette-n-700);
+  --color-neutral-content: #ffffff;
+  --color-info: #08457e;
+  --color-info-content: #ffffff;
+  --color-success: #0a5027;
+  --color-success-content: #ffffff;
+  --color-warning: #792f12;
+  --color-warning-content: #ffffff;
+  --color-error: #8a133e;                 
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark-contrast";
+  color-scheme: dark;
+
+  --color-base-100: #000000;
+  --color-base-200: #0b0d12;
+  --color-base-300: #161a22;
+  --color-base-content: #ffffff;
+  --color-primary: #b3f4ff;
+  --color-primary-content: #000000;
+  --color-secondary: #ffd95e;
+  --color-secondary-content: #1a1500;
+  --color-accent: #d1c9ff;
+  --color-accent-content: #000000;
+  --color-neutral: var(--palette-n-100);
+  --color-neutral-content: #000000;
+  --color-info: #a9d4ff;
+  --color-info-content: #000000;
+  --color-success: #74e69a;
+  --color-success-content: #000000;
+  --color-warning: #ffc55a;
+  --color-warning-content: #000000;
+  --color-error: #ffbbc1;
+  --color-error-content: #000000;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
 /* ===========================================================================
  * SCHICHT 1 — PALETTE (neutrale Rampe, themen-unabhaengig, einmal definiert)
  * Hell -> dunkel. Referenziert von BLOCK A (base/neutral) und BLOCK B (border/content).
@@ -111,7 +183,6 @@
   --palette-n-50:  #f4f6fa;
   --palette-n-100: #e6ebf3;
   --palette-n-200: #bdc2ca;
-  --palette-n-250: #c3c9d1;   /* derzeit ungenutzt */
   --palette-n-300: #9aa5b4;
   --palette-n-400: #828c9b;
   --palette-n-500: #505966;
@@ -119,6 +190,7 @@
   --palette-n-700: #1f2733;
   --palette-n-800: #1a202b;
   --palette-n-900: #15181e;
+  --palette-n-1000: #000000;
 }
 
 /* ===========================================================================
@@ -130,7 +202,10 @@
  * =========================================================================== */
 :root {
   /* Layout (theme-invariant; nur hier definiert) */
-  --line-height: 1.75;
+  --line-height: 1.75;            /* Body / relaxed */
+  --line-height-tight: 1.25;      /* Ueberschriften */
+  --line-height-snug: 1.4;        /* dichte Mehrzeiler */
+  --line-height-normal: 1.5;      /* Fliesstext-Bloecke */
   --navbar-height: 4rem;
 
   /* Typografie (theme-invariant) — Schriftgroessen + -gewichte als Rollen.
@@ -192,9 +267,11 @@
     rgba(255, 255, 255, 0.438) 0px 8px 0px inset;
 
   /* Radius (Form) — themen-invariant; auf daisyUI-Radien gemappt */
-  --radius-panel: var(--radius-box);       /* daisyUI 1rem; Karten/Panels */
+  --radius-xs: 0.25rem;                    /* sehr kleine Rundungen (Marker, Mini-Chips) */
+  --radius-sm: 0.375rem;                   /* kleine Rundungen (Badges, kleine Buttons) */
   --radius-control: var(--radius-field);   /* daisyUI 0.5rem; Buttons/Felder */
   --radius-md: 0.75rem;                    /* mittlerer Radius (Karten-Header, Bilder, Dropdown) */
+  --radius-panel: var(--radius-box);       /* daisyUI 1rem; Karten/Panels */
   --radius-pill: 999px;                    /* runde Pillen/Badges */
 
   /* Docs-Panels (Artikel, Sidebar, TOC) — zentral steuerbar; passt sich pro Theme an */
@@ -214,7 +291,8 @@
   --docs-code-line-number: var(--color-text-muted);
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="dark"],
+:root[data-theme="dark-contrast"] {
   /* Text */
   --color-text-strong: var(--palette-n-0);
   --color-text-muted: var(--palette-n-300);
@@ -260,6 +338,41 @@
   --docs-copy-btn-text: var(--color-text);
   --docs-code-highlight: var(--color-accent-subtle);
   --docs-code-line-number: var(--color-text-muted);
+}
+
+/* ===========================================================================
+ * HIGH-CONTRAST — Rollen-Token-Deltas (nur Abweichungen ggue. Basis-Theme).
+ * light-contrast erbt die Light-Werte (:root), dark-contrast die Dark-Werte
+ * (kombinierter Selektor oben). --color-text/-surface/-on-accent folgen
+ * automatisch den daisyUI base- und accent-Tokens der Contrast-Theme-Bloecke.
+ * Schatten aus (K2); Raender sichtbar (>= 3:1). "unsicher"-Werte vom Nutzer pruefen.
+ * =========================================================================== */
+:root[data-theme="light-contrast"] {
+  --color-text-strong: var(--palette-n-1000);
+  --color-text-muted: var(--palette-n-800);
+  --color-text-inverted: var(--palette-n-0);
+  --color-border-base: var(--palette-n-600); 
+  --color-border-subtle: var(--palette-n-500);
+  --border-sm: 1.5px solid var(--color-border-base);
+  --border-sm-transparent: 2px solid var(--palette-n-1000);   /* High-Contrast: sichtbar */
+  --color-accent-subtle: #c9ccff;
+  --color-accent-strong: #261b70;
+  --global-shadow: none;
+  --global-shadow-inset: none;
+}
+
+:root[data-theme="dark-contrast"] {
+  --color-text-strong: var(--palette-n-0);
+  --color-text-muted: var(--palette-n-100);
+  --color-text-inverted: var(--palette-n-1000);
+  --color-border-base: var(--palette-n-100);
+  --color-border-subtle: var(--palette-n-200);
+  --border-sm: 1.5px solid var(--color-border-base);
+  --border-sm-transparent: 2px solid var(--palette-n-50);
+  --color-accent-subtle: #2b2750;
+  --color-accent-strong: #c3b8ff;
+  --global-shadow: none;
+  --global-shadow-inset: none;
 }
 
 /* ===========================================================================
@@ -311,6 +424,7 @@
   --color-surface-inset:  var(--color-base-300);  /* versenkte Medienflaechen */
 
   /* Spacing-Skala (4px-Basis) — als var(--spacing-md) und Utilities (p-md, gap-sm, m-lg). */
+  --spacing-3xs: 0.125rem;
   --spacing-2xs: 0.25rem;
   --spacing-xs:  0.5rem;
   --spacing-sm:  0.75rem;
@@ -356,11 +470,8 @@ body {
 }
 
 /*
- * Vorlage fuer die geplanten High-Contrast-Themes (todo.md #6b, docs/theme-plan.md Phase 4):
- * 1. Zwei Theme-Bloecke "light-contrast"/"dark-contrast" (Basis: obige Bloecke,
- *    Farben auf >= 7:1 anheben, --depth: 0).
- * 2. BLOCK-B-Tokens je Theme ueberschreiben: :root[data-theme="light-contrast"] { ... }.
- * 3. Head-Skript: data-mode + data-contrast + zusammengesetztes data-theme;
- *    prefers-contrast: more als Default.
- * 4. ThemeController um Kontrast-Schalter ergaenzen.
+ * High-Contrast: umgesetzt — siehe die daisyUI-Bloecke light-contrast/dark-contrast
+ * oben, die Rollen-Token-Deltas in BLOCK B und das Head-Skript in MainLayout.astro.
+ * Steuerung: data-mode + data-contrast (eigene Selektoren) + zusammengesetztes
+ * data-theme (daisyUI). Offen: finale Markenfarbwerte ("unsicher"-Kommentare).
  */

@@ -1,7 +1,10 @@
 # Plan: Vollständige Umstellung auf semantische Tokens
 
-> Status: Vorschlag · Ergänzt `docs/theme-plan.md` · Betrifft `src/styles/global.css`,
-> `src/styles/docs.css` und alle Komponenten mit `<style>`-Blöcken.
+> Status: **umgesetzt (2026-06-23).** Alle Slices 1–7 erledigt; Token-Architektur
+> dokumentiert in `architecture.md` „Styling". Farb-Tokens tragen das `--color-`-Präfix
+> (daisyUI-Konvention), Surface + Spacing liegen im `@theme`. Ergänzt `docs/theme-plan.md`
+> (High-Contrast). Dieses Dokument bleibt als Entwurfs-/Begründungshistorie erhalten;
+> Token-Namen unten teils im damaligen (präfixlosen) Zwischenstand.
 >
 > Entscheidungen:
 > - **S1 — Strategie: daisyUI-lean Hybrid.** daisyUI-Semantik (base/primary/…) bleibt

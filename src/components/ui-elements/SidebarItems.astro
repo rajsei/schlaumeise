@@ -70,30 +70,34 @@ const { items, nested = false } = Astro.props;
   .overview-btn {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
-    margin-top: 0px;
+    margin-top: 0;
   }
   .summary-btn {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
 
-  :global(:root[data-theme="light"] .docs-nav__overview.is-active),
-  :global(:root[data-theme="light"] .docs-nav__overview.is-active:hover),
-  :global(:root[data-theme="light"] .docs-nav__overview.is-active:focus-visible) {
+  :global(:root .docs-nav__overview) {
+    border: var(--border-sm-transparent);
+  }
+
+  :global(:root[data-mode="light"] .docs-nav__overview.is-active),
+  :global(:root[data-mode="light"] .docs-nav__overview.is-active:hover),
+  :global(:root[data-mode="light"] .docs-nav__overview.is-active:focus-visible) {
     background: var(--color-text);
     color: var(--color-text-inverted);
   }
 
-  :global(:root[data-theme="dark"] .docs-nav__link.is-active),
-  :global(:root[data-theme="dark"] .docs-nav__overview.is-active) {
+  :global(:root[data-mode="dark"] .docs-nav__link.is-active),
+  :global(:root[data-mode="dark"] .docs-nav__overview.is-active) {
     background: var(--color-text);
     color: var(--color-text-inverted);
   }
 
-  :global(:root[data-theme="dark"] .docs-nav__link.is-active:hover),
-  :global(:root[data-theme="dark"] .docs-nav__link.is-active:focus-visible),
-  :global(:root[data-theme="dark"] .docs-nav__overview.is-active:hover),
-  :global(:root[data-theme="dark"] .docs-nav__overview.is-active:focus-visible) {
+  :global(:root[data-mode="dark"] .docs-nav__link.is-active:hover),
+  :global(:root[data-mode="dark"] .docs-nav__link.is-active:focus-visible),
+  :global(:root[data-mode="dark"] .docs-nav__overview.is-active:hover),
+  :global(:root[data-mode="dark"] .docs-nav__overview.is-active:focus-visible) {
     background: var(--color-accent-strong);
     color: var(--color-text-inverted);
   }

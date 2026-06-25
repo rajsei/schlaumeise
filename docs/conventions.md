@@ -49,7 +49,7 @@ Content-Ordner: kebab-case (neu); Bestand in snake_case (`knowledge_collection` 
 - Scoped `<style>` in der Komponente zuerst; globale Selektoren nur in `styles/*.css` oder begründet via `:global()`/`is:global`.
 - Klassennamen: Block-Element-Stil mit Komponenten-Präfix (`docs-code-block__copy`), Zustände als `is-*`/`data-*`.
 - **Farben nur über semantische Rollen-Tokens.** Komponenten nutzen ausschließlich eigene Rollen-Tokens (alle Farben mit `--color-`-Präfix, daisyUI-Konvention) — `--color-surface-*`, `--color-text-*`, `--color-accent-*` (+ daisyUI `--color-accent`), `--color-border-*`, `--color-state-*`, `--color-scrim-*`/`--shadow-*` (definiert in `src/styles/global.css`) oder daisyUI-Utilities (`bg-base-200`, `text-primary`). Surface-Rollen gibt es zusätzlich als Utilities (`bg-surface-panel`, `bg-surface-inset` …). **Kein** rohes `--palette-*`, **kein** `--color-base-*` und **kein** Hex/`rgb()`/benannte Farbe direkt in Komponenten — neue Farbrollen zuerst als Token in `global.css` anlegen.
-- Quelle aller Farben ist `src/styles/global.css` (Palette + Rohwerte leben nur dort). Der Guard `npm run lint:colors` (Pre-Commit-Hook `.githooks/` + CI) erzwingt das; begründete Ausnahme via Zeilen-Kommentar `color-guard-ignore`.
+- Quelle aller Design-Werte ist `src/styles/global.css` (Palette + Rohwerte leben nur dort). Der Guard `npm run lint:colors` (Pre-Commit-Hook `.githooks/` + CI) erzwingt das für **Farben, Abstände, Radien, Schrift und line-height**; begründete Ausnahme via Zeilen-Kommentar `color-guard-ignore` oder `bespoke`.
 
 ## Commits & Pull Requests
 

@@ -128,7 +128,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
 <style>
   .docs-terminal {
-    margin: 1rem 0;
+    margin: var(--spacing-md) 0;
     border: 1px solid var(--docs-terminal-border);
     border-radius: var(--radius-md);
     background: var(--docs-terminal-bg);
@@ -141,7 +141,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     align-items: center;
     justify-content: space-between;
     min-height: 2.25rem;
-    padding: 0.45rem 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
     border-bottom: 1px solid var(--docs-terminal-border);
     background: var(--docs-terminal-header-bg);
   }
@@ -159,7 +159,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
   .docs-terminal__pre {
     margin: 0;
-    padding: 0.95rem 1rem 0.95rem 1.2rem;
+    padding: 0.95rem 1rem 0.95rem 1.2rem; /* bespoke: asymmetrisches Callout-Padding */
     overflow-x: auto;
     background: var(--docs-terminal-bg);
   }
@@ -169,7 +169,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     white-space: pre;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: var(--font-size-sm);
-    line-height: 1.5;
+    line-height: var(--line-height-normal);
   }
 
   .docs-terminal__line {
@@ -177,7 +177,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
   }
 
   .docs-terminal.has-line-numbers .docs-terminal__line {
-    padding-left: 2.25rem;
+    padding-left: 2.25rem; /* bespoke: Zeilennummern-Gutter */
     position: relative;
   }
 
@@ -197,15 +197,15 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
   .docs-terminal__prompt {
     color: var(--docs-terminal-prompt);
-    margin-right: 0.55rem;
+    margin-right: var(--spacing-xs);
     user-select: none;
   }
 
   .docs-terminal__word {
     background: color-mix(in srgb, var(--docs-terminal-word-bg), transparent 70%);
     color: var(--docs-terminal-word-fg);
-    border-radius: 0.2rem;
-    padding: 0 0.14rem;
+    border-radius: var(--radius-xs);
+    padding: 0 var(--spacing-3xs);
   }
 
   .docs-code-block__copy--terminal {
@@ -213,7 +213,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     top: 0.6rem;
     right: 0.6rem;
     border: 1px solid var(--docs-terminal-copy-border);
-    border-radius: 0.45rem;
+    border-radius: var(--radius-sm);
     background: var(--docs-terminal-copy-bg);
     color: var(--docs-terminal-fg);
     width: 2rem;
@@ -261,7 +261,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
   @media (max-width: 640px) {
     .docs-terminal__pre {
-      padding: 0.8rem;
+      padding: var(--spacing-sm);
     }
 
     .docs-terminal__pre code {

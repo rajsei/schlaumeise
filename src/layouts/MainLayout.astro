@@ -46,32 +46,33 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
   <head>
     <meta charset="utf-8" />
     <script is:inline>
-      /* Setzt das Theme VOR dem ersten Paint (kein Aufblitzen).
+      /* Setzt Theme VOR dem ersten Paint (kein Aufblitzen).
          Speicherformat "schlaumeise:theme:v1": { mode: "light"|"dark", contrast: "normal"|"high" }.
-         contrast wird bereits gespeichert, aber erst mit den geplanten
-         High-Contrast-Themes ausgewertet (siehe global.css, Dateiende). */
+         Drei Attribute am <html>: data-mode + data-contrast (eigene Selektoren) und das
+         zusammengesetzte data-theme (light|dark|light-contrast|dark-contrast) fuer daisyUI.
+         Praezedenz: gespeichert -> sonst prefers-contrast: more / prefers-color-scheme. */
       (function () {
-        var theme = null;
+        var mode = null, contrast = null;
         try {
           var stored = JSON.parse(localStorage.getItem("schlaumeise:theme:v1") || "null");
-          if (stored && (stored.mode === "light" || stored.mode === "dark")) {
-            theme = stored.mode;
+          if (stored) {
+            if (stored.mode === "light" || stored.mode === "dark") mode = stored.mode;
+            if (stored.contrast === "normal" || stored.contrast === "high") contrast = stored.contrast;
           }
-          if (!theme) {
+          if (!mode) {
             var legacy = localStorage.getItem("theme");
-            if (legacy === "light" || legacy === "dark") theme = legacy;
+            if (legacy === "light" || legacy === "dark") mode = legacy;
           }
         } catch (e) {
           /* localStorage nicht verfügbar: Systempräferenz nutzen */
         }
-        if (!theme) {
-          theme =
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-        }
-        document.documentElement.setAttribute("data-theme", theme);
+        var mm = window.matchMedia;
+        if (!mode) mode = mm && mm("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        if (!contrast) contrast = mm && mm("(prefers-contrast: more)").matches ? "high" : "normal";
+        var root = document.documentElement;
+        root.setAttribute("data-mode", mode);
+        root.setAttribute("data-contrast", contrast);
+        root.setAttribute("data-theme", mode + (contrast === "high" ? "-contrast" : ""));
       })();
     </script>
     <meta name="viewport" content="width=device-width" />

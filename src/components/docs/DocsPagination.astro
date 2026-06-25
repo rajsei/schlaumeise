@@ -37,7 +37,7 @@ const hasPagination = Boolean(prev || next);
 
 <style>
   .docs-pagination {
-    margin-top: 2.5rem;
+    margin-top: 2.5rem; /* bespoke: grosser Abschnittsabstand (zwischen 2xl/xl) */
     padding-top: var(--spacing-lg);
     border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
     display: grid;
@@ -48,7 +48,7 @@ const hasPagination = Boolean(prev || next);
   .docs-pagination__link {
     border-radius: var(--radius-md);
     border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-    padding: 0.9rem 1rem;
+    padding: var(--spacing-md);
     min-height: 4.5rem;
     display: flex;
     flex-direction: column;
@@ -78,7 +78,7 @@ const hasPagination = Boolean(prev || next);
   .docs-pagination__title {
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.35;
+    line-height: var(--line-height-snug);
     word-break: break-word;
   }
 

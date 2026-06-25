@@ -67,7 +67,7 @@ const uid = id ?? `mic-spectrogram-${Math.random().toString(36).slice(2, 8)}`;
 <style>
   .spectrogram--mic {
     position: relative;
-    margin: 1rem 0;
+    margin: var(--spacing-md) 0;
   }
 
   .spectrogram--mic .spectrogram__stage {
@@ -99,7 +99,7 @@ const uid = id ?? `mic-spectrogram-${Math.random().toString(36).slice(2, 8)}`;
   }
 
   .spectrogram__caption {
-    margin-top: 0.35rem;
+    margin-top: var(--spacing-2xs);
     font-size: var(--font-size-sm);
     opacity: 0.8;
   }

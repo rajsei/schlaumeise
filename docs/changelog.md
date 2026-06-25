@@ -2,6 +2,44 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-23 — Spacing/Radius/Line-Height vollständig tokenisiert + AGENTS-Regel (Agent)
+
+### Hinzugefügt
+- Tokens: `--spacing-3xs` (0.125rem), `--radius-xs` (0.25rem) / `--radius-sm` (0.375rem), `--line-height-tight/-snug/-normal` (1.25 / 1.4 / 1.5)
+- `AGENTS.md`: neue Sektion „Styling- & Token-Regeln" — Komponenten nutzen **ausschließlich** Tokens (Farben/Abstände/Schrift/Radien/Ränder), `global.css` ist einzige Quelle
+
+### Geändert
+- Restliche hardkodierte Werte in Komponenten + `docs.css` auf Tokens **gesnappt** (≤ ~2 px Verschiebung): ~50 Spacing-Werte (Einzel + Shorthand), 7 Radien, 6 line-heights
+- 10 bewusste Ausnahmen als `/* bespoke: … */` begründet (asymmetrische Callout-Paddings, Icon-Freiräume, Zeilennummern-Gutter, TOC-Einrückung, großer Abschnittsabstand); `line-height: 1/0` bleiben Resets; `border: 1px solid color-mix(currentColor…)` bewusst komponenten-relativ
+
+### Hinweis
+- Wertneutral bis auf die bewussten Snaps (alle ≤ ~2 px); Layout im Browser geprüft, `npm run build` grün, Guard clean
+- Guard (`check-hardcoded-colors.mjs`) auf Spacing/Radien/Schrift/line-height erweitert — erzwingt jetzt alle Design-Tokens (Ausnahme-Marker `color-guard-ignore`/`bespoke`)
+
+## 2026-06-23 — High-Contrast-Themes umgesetzt (Agent)
+
+### Hinzugefügt
+- Zwei daisyUI-Themes `light-contrast`/`dark-contrast` (Ziel Text/BG ≥ 7:1, Ränder ≥ 3:1, `--depth: 0`) + Rollen-Token-Deltas (`:root[data-theme="…-contrast"]`); `dark-contrast` erbt Dark über kombinierten Selektor. Schatten in High-Contrast aus, `--border-sm-transparent` sichtbar
+- Head-Skript (`MainLayout`) setzt `data-mode` + `data-contrast` + zusammengesetztes `data-theme` vor dem Paint; Präzedenz: gespeichert → `prefers-contrast: more` → `prefers-color-scheme`
+- `ThemeController`: **zweiter Toggle** (Kontrast), gemeinsame `apply()`-Logik, Speicherung `{mode, contrast}`
+
+### Geändert
+- `SidebarItems` aktive-Nav-Selektoren von `data-theme` auf `data-mode` (kontrast-unabhängig)
+- **Fix (wichtig):** `class="theme-controller"` vom Mode-Toggle entfernt — daisyUIs `:root:has(input.theme-controller[value="dark"]:checked)` erzwang sonst das schlichte `dark`-Theme und überstimmte die zusammengesetzten Contrast-Themes (`dark-contrast` zeigte Normal-Dark-Farben). `data-theme` (Skript) ist jetzt alleinige Theme-Quelle
+
+### Hinweis
+- Im Browser verifiziert: alle vier Themes schalten korrekt **und orthogonal** (Mode × Kontrast), Persistenz ok, `npm run build` grün, Guard clean
+- **Offen:** finale Markenfarbwerte (im CSS `/* unsicher */`) — neutrale Werte (Text/Fläche/Rand) sind belastbar; Kontrast von primary/accent/secondary/Feedback noch messen/justieren → #9
+- Spektrogramm-Kontrast-Verstärkung bewusst separat (K4)
+
+## 2026-06-23 — High-Contrast-Plan aktualisiert + Entscheidungen festgelegt (Agent)
+
+### Geändert
+- `docs/theme-plan.md` auf den aktuellen Token-Stand umgeschrieben (war veraltet: beschrieb die längst erledigte Vereinheitlichung + entfernte Tokens `--color-white/black`, `--color-gray-1…7`). Jetzt fokussierter High-Contrast-Umsetzungsplan auf Basis der `--color-*`-Architektur
+- **Entscheidungen für #6b festgelegt:** (1a) vier volle daisyUI-Themes `light/dark/light-contrast/dark-contrast`; Ziele ≥ 7:1 Text/BG, ≥ 3:1 Ränder; `prefers-contrast: more` als Default + zweiter Toggle; Schatten aus (`--depth:0`, `--global-shadow*`→none, sichtbares `--border-sm-transparent`); Auflösungs-Präzedenz gespeichert → prefers-contrast → prefers-color-scheme; Spektrogramm-Kontrast separat
+- Konkreter Farbwert-Entwurf im Plan (neutrale Werte gesetzt, Markenfarben als `/* unsicher */` zur finalen Festlegung markiert)
+- `todo.md` #6b + `architecture.md` (Styling) nachgezogen
+
 ## 2026-06-23 — Farb-Tokens auf `--color-`-Präfix vereinheitlicht (Agent)
 
 ### Geändert
