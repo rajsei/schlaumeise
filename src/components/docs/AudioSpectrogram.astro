@@ -135,8 +135,11 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
     display: none;
   }
 
-  .spectrogram[data-state="unavailable"] .spectrogram__stage,
-  .spectrogram[data-state="error"] .spectrogram__stage {
+  /* Ohne Raster (kein Decoder beim Build) bzw. bei Fehler: gesamten Viewport
+     ausblenden — sonst kollabiert er auf Hoehe 0 und der absolut positionierte
+     Color-Picker faellt auf den darunterliegenden <audio>-Player. */
+  .spectrogram[data-state="unavailable"] .spectrogram__viewport,
+  .spectrogram[data-state="error"] .spectrogram__viewport {
     display: none;
   }
 
