@@ -20,7 +20,6 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "daisyui": "^5.5.14",
-    "mpg123-decoder": "^1.0.5"
+    "daisyui": "^5.5.14"
   }
 }
