@@ -81,6 +81,7 @@
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
+    z-index: 1;
     border: 1px solid var(--docs-copy-btn-border);
     border-radius: var(--radius-sm);
     background: var(--docs-copy-btn-bg);
@@ -127,6 +128,39 @@
       right: 0.45rem;
       width: 1.8rem;
       height: 1.8rem;
+    }
+  }
+
+  /* Scroll-Affordanz: rechter Kanten-Schatten, wenn der Code-Block horizontal
+     scrollbar ist und noch nicht am Ende (data-xscroll via docs-scroll-shadow.ts).
+     Overlay (kein Hintergrund-Cover), da Shiki einen eigenen Hintergrund mitbringt. */
+  .docs-code-block__body[data-xscroll]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--spacing-lg);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+    background: linear-gradient(to left, var(--color-gray-transparent), transparent);
+  }
+
+  .docs-code-block__body[data-xscroll="more"]::after {
+    opacity: 1;
+  }
+
+  /* Touch-/Schmal-Screens: Copy-Button dauerhaft sichtbar + groesseres Tap-Target
+     (~44px), da :hover/:focus-within dort nicht greift. Nach der 640px-Regel, damit
+     es gewinnt. */
+  @media (pointer: coarse), (max-width: 640px) {
+    .docs-code-block__copy {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      width: 2.75rem;
+      height: 2.75rem;
     }
   }
 </style>

@@ -212,6 +212,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
+    z-index: 1;
     border: 1px solid var(--docs-terminal-copy-border);
     border-radius: var(--radius-sm);
     background: var(--docs-terminal-copy-bg);
@@ -266,6 +267,36 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
 
     .docs-terminal__pre code {
       font-size: var(--font-size-sm);
+    }
+  }
+
+  /* Scroll-Affordanz: rechter Kanten-Schatten, wenn das Terminal horizontal scrollbar
+     ist und noch nicht am Ende (data-xscroll via docs-scroll-shadow.ts). */
+  .docs-terminal__body[data-xscroll]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--spacing-lg);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+    background: linear-gradient(to left, var(--color-gray-transparent), transparent);
+  }
+
+  .docs-terminal__body[data-xscroll="more"]::after {
+    opacity: 1;
+  }
+
+  /* Touch-/Schmal-Screens: Copy-Button dauerhaft sichtbar + groesseres Tap-Target (~44px). */
+  @media (pointer: coarse), (max-width: 640px) {
+    .docs-code-block__copy--terminal {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      width: 2.75rem;
+      height: 2.75rem;
     }
   }
 </style>
