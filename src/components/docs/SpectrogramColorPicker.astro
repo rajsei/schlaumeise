@@ -76,4 +76,24 @@ const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slic
     font-weight: var(--font-weight-bold);
     background: color-mix(in srgb, var(--color-primary), transparent 80%);
   }
+
+  /* Touch- bzw. schmale Screens: groessere Tap-Flaechen (~44px) fuer Zahnrad und
+     Farboptionen. Greift auf echten Touch-Geraeten (pointer: coarse) jeder Breite
+     sowie auf schmalen Viewports (<=480px, im Preview pruefbar). */
+  @media (pointer: coarse), (max-width: 480px) {
+    .spectrogram-colors__toggle {
+      width: 2.75rem;
+      height: 2.75rem;
+      min-height: 2.75rem;
+    }
+
+    .spectrogram-colors__toggle svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .spectrogram-colors__menu button {
+      padding-block: var(--spacing-sm);
+    }
+  }
 </style>

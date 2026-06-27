@@ -36,6 +36,10 @@
   margin-top: var(--spacing-md);
   line-height: var(--line-height);
   color: var(--color-text-strong);
+  /* Mobile-Schutz: lange unbrechbare Laeufe (URLs, Code, fehlerhafte Inhalte) brechen
+     um statt horizontal ueberzulaufen. Eigene Scroll-Container (Tabellen, Code-Bloecke)
+     bleiben unberuehrt, da sie overflow-x selbst regeln. */
+  overflow-wrap: break-word;
 }
 
 .docs-sidebar {
