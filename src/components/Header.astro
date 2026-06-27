@@ -68,7 +68,7 @@ function navLinkClass(href: string, extra: string[] = []): string {
           loading="lazy"
           decoding="async"
         />
-        <span class="text-xl">{brand.name}</span>
+        <span class="brand-name text-xl max-[400px]:hidden">{brand.name}</span>
       </a>
     </div>
   </div>
@@ -225,5 +225,21 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
   .docs-toggle-btn.is-open .docs-toggle-line:nth-child(3) {
     transform: translateY(-0.31rem) rotate(-45deg);
+  }
+
+  /* Sehr kleine Screens: Navbar-Elemente enger packen, damit nichts ueberlaeuft.
+     Markenname wird zusaetzlich per max-[400px]:hidden ausgeblendet (Header.astro). */
+  @media (max-width: 400px) {
+    .site-navbar {
+      padding-inline: var(--spacing-xs);
+    }
+
+    .navbar-start > .btn-link {
+      padding-inline: var(--spacing-2xs);
+    }
+
+    .docs-toggle-btn {
+      min-width: 2.2rem;
+    }
   }
 </style>

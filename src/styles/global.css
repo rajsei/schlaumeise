@@ -424,6 +424,7 @@
   --color-surface-inset:  var(--color-base-300);  /* versenkte Medienflaechen */
 
   /* Spacing-Skala (4px-Basis) — als var(--spacing-md) und Utilities (p-md, gap-sm, m-lg). */
+  --spacing-0: 0rem;
   --spacing-3xs: 0.125rem;
   --spacing-2xs: 0.25rem;
   --spacing-xs:  0.5rem;
@@ -432,6 +433,51 @@
   --spacing-lg:  1.5rem;
   --spacing-xl:  2rem;
   --spacing-2xl: 3rem;
+}
+
+/* ===========================================================================
+ * SCHMALE SCREENS — SPACING-OVERRIDES (zentrale Stellschraube)
+ * Einzige Stelle, um die Abstands-Skala auf sehr schmalen Screens zu justieren.
+ * Greift fuer Viewports <= 480px (gleicher Breakpoint wie die Full-Bleed-Regeln in
+ * docs.css / HighlightSection.astro — bei Aenderung dort mitziehen).
+ *
+ * Hier gesetzte Tokens UEBERSCHREIBEN die @THEME-Werte oben und wirken auf ALLES,
+ * was var(--spacing-*) bzw. die Utilities (p-md, gap-lg, m-xl ...) nutzt: Header,
+ * Footer, Docs, Callouts usw. Standard: alles auskommentiert = identisch zu Desktop
+ * (kein visueller Unterschied). Zum Verkleinern die gewuenschte Zeile einkommentieren
+ * und anpassen.
+ *
+ * Hinweis: numerische Tailwind-Utilities (p-4, gap-6, py-8) nutzen die Tailwind-
+ * Basiseinheit --spacing (Default 0.25rem) und werden von den BENANNTEN Tokens NICHT
+ * beeinflusst. Wer alle numerischen Abstaende proportional skalieren will, kann unten
+ * --spacing setzen (mit Bedacht — wirkt projektweit).
+ * =========================================================================== */
+@media (max-width: 480px) {
+  :root {
+    /* Desktop-Defaults zum Vergleich — einkommentieren & anpassen zum Verkleinern:
+     * --spacing-3xs: 0.125rem;
+     * --spacing-2xs: 0.25rem;
+     * --spacing-xs:  0.5rem;
+     * --spacing-sm:  0.75rem;
+     * --spacing-md:  1rem;
+     * --spacing-lg:  1.5rem;
+     * --spacing-xl:  2rem;
+     * --spacing-2xl: 3rem;
+     *
+     * Basis fuer numerische Utilities (p-4, gap-6, py-8 ...), Default 0.25rem:
+     * --spacing: 0.25rem;
+     */
+
+  --spacing-0: 0rem;
+  --spacing-3xs: 0.125rem;
+  --spacing-2xs: 0.2rem;
+  --spacing-xs:  0.3rem;
+  --spacing-sm:  0.5rem;
+  --spacing-md:  0.7rem;
+  --spacing-lg:  1rem;
+  --spacing-xl:  1.25rem;
+  --spacing-2xl: 1.5rem;
+  }
 }
 
 /* ===========================================================================

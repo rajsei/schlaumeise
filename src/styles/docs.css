@@ -358,6 +358,22 @@
   }
 }
 
+/* Sehr schmale Screens: Docs-Content randlos zum Displayrand (kein aeusserer
+   Abstand links/rechts). Das Artikel-Panel laeuft voll bis an die Raender; die
+   inneren Abstaende bleiben, damit der Text nicht am Rand klebt. Seitenraender und
+   Rundung entfallen fuer einen sauberen Full-Bleed (vertikale Abstaende bleiben). */
+@media (max-width: 480px) {
+  .docs-content-layout {
+    padding-inline: 0;
+  }
+
+  .docs-article {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+}
+
 @media (min-width: 1280px) {
   .docs-content-layout[data-show-content-toc="true"] {
     grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);

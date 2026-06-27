@@ -20,7 +20,7 @@ const brandAria = formatMessage(dictionary.a11y.brandHome, {
 ---
 
 <footer
-  class="footer footer-horizontal bg-base-300 text-base-content border-base-300 items-center border-t px-10 py-4"
+  class="footer md:footer-horizontal bg-base-300 text-base-content border-base-300 items-center border-t px-4 py-4 md:px-10"
 >
   <div class="brand-block">
     <a class="brand" href={homeHref} aria-label={brandAria}>
@@ -72,8 +72,19 @@ const brandAria = formatMessage(dictionary.a11y.brandHome, {
   .funding-logo {
     height: 3.5rem;
     width: auto;
+    max-width: 100%;
     background: var(--color-fixed-white);
     border-radius: var(--radius-sm);
     padding: var(--spacing-2xs) var(--spacing-xs);
+  }
+
+  /* Sehr kleine Screens: Logo nach Breite statt Hoehe skalieren, damit es
+     nie ueber den Viewport hinauslaeuft (Seitenverhaeltnis bleibt erhalten). */
+  @media (max-width: 480px) {
+    .funding-logo {
+      height: auto;
+      width: 100%;
+      max-width: 18rem;
+    }
   }
 </style>

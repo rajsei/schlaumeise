@@ -171,4 +171,15 @@ const bgColor = colorClassByName[color];
       display: none;
     }
   }
+
+  /* Sehr schmale Screens: Callout randlos zum Displayrand, passend zum Docs-Content
+     (docs.css, gleicher 480px-Breakpoint). Der negative Aussenabstand hebt den
+     16px-Innenabstand des Artikels (--spacing-md) auf; der Innenabstand des Callouts
+     bleibt, damit der Text nicht am Rand klebt. Rundung entfaellt fuer sauberen Full-Bleed. */
+  @media (max-width: 480px) {
+    .pastel-box {
+      margin-inline: calc(-1 * var(--spacing-md));
+      border-radius: 0;
+    }
+  }
 </style>
