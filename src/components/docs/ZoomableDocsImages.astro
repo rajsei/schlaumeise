@@ -1,11 +1,29 @@
 <dialog class="docs-image-lightbox" data-docs-image-lightbox aria-label="Bildvorschau">
-  <img class="docs-image-lightbox__image" data-docs-image-lightbox-image alt="" />
+  <button
+    type="button"
+    class="docs-image-lightbox__close"
+    data-docs-image-lightbox-close
+    aria-label="Vorschau schließen"
+  >
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M6 6 18 18M18 6 6 18"></path>
+    </svg>
+  </button>
+  <img
+    class="docs-image-lightbox__image"
+    data-docs-image-lightbox-image
+    alt=""
+    draggable="false"
+  />
 </dialog>
 
 <script>
   const dialog = document.querySelector<HTMLDialogElement>("[data-docs-image-lightbox]");
   const dialogImage = dialog?.querySelector<HTMLImageElement>(
     "[data-docs-image-lightbox-image]",
+  );
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(
+    "[data-docs-image-lightbox-close]",
   );
 
   if (dialog && dialogImage) {
@@ -41,9 +59,141 @@
       window.scrollTo(0, lockedScrollY);
     };
 
+    /* --- Zoom/Pan: Pinch (2 Finger), Pan (1 Finger bei Zoom), Doppel-Tipp/Klick,
+       Mausrad (Desktop). Bild wird per CSS-transform skaliert/verschoben; Layout
+       bleibt unberuehrt. touch-action: none (CSS) gibt die Gesten an dieses Skript. */
+    const MAX_SCALE = 5;
+    let scale = 1;
+    let tx = 0;
+    let ty = 0;
+    const pointers = new Map<number, { x: number; y: number }>();
+    let startDist = 1;
+    let startScale = 1;
+    let startMidX = 0;
+    let startMidY = 0;
+    let startTx = 0;
+    let startTy = 0;
+    let panStartX = 0;
+    let panStartY = 0;
+    let moved = false;
+    let pinchUsed = false;
+    let lastTapTime = 0;
+
+    const applyTransform = () => {
+      dialogImage.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      dialogImage.classList.toggle("is-zoomed", scale > 1.01);
+    };
+
+    const clampPan = () => {
+      const maxX = (dialogImage.offsetWidth * (scale - 1)) / 2 + dialogImage.offsetWidth * 0.1;
+      const maxY = (dialogImage.offsetHeight * (scale - 1)) / 2 + dialogImage.offsetHeight * 0.1;
+      tx = Math.max(-maxX, Math.min(maxX, tx));
+      ty = Math.max(-maxY, Math.min(maxY, ty));
+    };
+
+    const resetZoom = () => {
+      scale = 1;
+      tx = 0;
+      ty = 0;
+      applyTransform();
+    };
+
+    const setZoom = (next: number) => {
+      scale = Math.min(MAX_SCALE, Math.max(1, next));
+      if (scale <= 1.01) {
+        resetZoom();
+        return;
+      }
+      clampPan();
+      applyTransform();
+    };
+
+    dialogImage.addEventListener("pointerdown", (event) => {
+      try {
+        dialogImage.setPointerCapture(event.pointerId);
+      } catch {
+        /* Pointer evtl. nicht (mehr) aktiv — Gesten funktionieren auch ohne Capture. */
+      }
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      moved = false;
+      if (pointers.size === 2) {
+        pinchUsed = true;
+        const [a, b] = [...pointers.values()];
+        startDist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+        startScale = scale;
+        startMidX = (a.x + b.x) / 2;
+        startMidY = (a.y + b.y) / 2;
+        startTx = tx;
+        startTy = ty;
+      } else {
+        panStartX = event.clientX;
+        panStartY = event.clientY;
+        startTx = tx;
+        startTy = ty;
+      }
+    });
+
+    dialogImage.addEventListener("pointermove", (event) => {
+      if (!pointers.has(event.pointerId)) return;
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pointers.size >= 2) {
+        const [a, b] = [...pointers.values()];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+        scale = Math.min(MAX_SCALE, Math.max(1, startScale * (dist / startDist)));
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2;
+        tx = startTx + (midX - startMidX);
+        ty = startTy + (midY - startMidY);
+        clampPan();
+        applyTransform();
+        moved = true;
+      } else if (pointers.size === 1 && scale > 1.01) {
+        tx = startTx + (event.clientX - panStartX);
+        ty = startTy + (event.clientY - panStartY);
+        if (Math.abs(event.clientX - panStartX) > 6 || Math.abs(event.clientY - panStartY) > 6) {
+          moved = true;
+        }
+        clampPan();
+        applyTransform();
+      }
+    });
+
+    const handlePointerEnd = (event: PointerEvent) => {
+      if (!pointers.has(event.pointerId)) return;
+      pointers.delete(event.pointerId);
+      // Doppel-Tipp (kurz, ohne Bewegung, kein Pinch) schaltet Zoom um.
+      if (pointers.size === 0 && !moved && !pinchUsed) {
+        const now = Date.now();
+        if (now - lastTapTime < 300) {
+          setZoom(scale > 1.01 ? 1 : 2.5);
+          lastTapTime = 0;
+        } else {
+          lastTapTime = now;
+        }
+      }
+      if (pointers.size === 0) {
+        if (scale <= 1.01) resetZoom();
+        pinchUsed = false;
+      }
+    };
+
+    dialogImage.addEventListener("pointerup", handlePointerEnd);
+    dialogImage.addEventListener("pointercancel", handlePointerEnd);
+
+    // Mausrad-Zoom (Desktop); Seite ist im Modal ohnehin scroll-gesperrt.
+    dialogImage.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+        setZoom(scale - event.deltaY * 0.0015 * scale);
+      },
+      { passive: false },
+    );
+
     const openDialog = (img: HTMLImageElement) => {
       dialogImage.src = img.currentSrc || img.src;
       dialogImage.alt = img.alt || "Screenshot";
+      resetZoom();
       lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       lockPageScroll();
       dialog.showModal();
@@ -53,8 +203,9 @@
       dialog.close();
     };
 
-    dialogImage.addEventListener("click", closeDialog);
+    closeButton?.addEventListener("click", closeDialog);
 
+    // Klick auf den Hintergrund (nicht aufs Bild) schliesst.
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) {
         closeDialog();
@@ -63,6 +214,7 @@
 
     dialog.addEventListener("close", () => {
       dialogImage.removeAttribute("src");
+      resetZoom();
       unlockPageScroll();
       if (lastFocused) {
         lastFocused.focus({ preventScroll: true });
@@ -154,6 +306,44 @@
     border: var(--border-sm);
     display: block;
     margin: 0;
-    cursor: zoom-out;
+    cursor: zoom-in;
+    /* Gesten an das Skript geben; Browser-eigenes Scrollen/Zoomen hier aus. */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  .docs-image-lightbox__image.is-zoomed {
+    cursor: grab;
+  }
+
+  /* Sichtbarer Schliessen-Button, fest in der Bildschirmecke (Tap-Target >= 44px). */
+  .docs-image-lightbox__close {
+    position: fixed;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border: var(--border-sm);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-panel);
+    color: var(--color-text);
+    cursor: pointer;
+    box-shadow: var(--global-shadow);
+  }
+
+  .docs-image-lightbox__close:hover,
+  .docs-image-lightbox__close:focus-visible {
+    background: var(--color-state-hover-bg);
+  }
+
+  .docs-image-lightbox__close svg {
+    pointer-events: none;
   }
 </style>
