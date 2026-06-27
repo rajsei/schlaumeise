@@ -11,7 +11,20 @@ export interface AxisLabels {
   seconds: string;
 }
 
-const FONT = "10px system-ui, sans-serif";
+const FONT_FAMILY = "system-ui, sans-serif";
+
+/* Schmaler Canvas (Mobile): etwas groessere Achsenschrift fuer bessere Lesbarkeit;
+ * Desktop bleibt bei 10px. Schwelle in CSS-px (Plotbreite). */
+function axisFont(plotWidth: number): string {
+  return `${plotWidth < 480 ? 11 : 10}px ${FONT_FAMILY}`;
+}
+
+/* Tick-Dichte: Standardwert (fallback), auf engem Canvas aber reduziert, damit ein
+ * Mindestabstand (px) zwischen den Beschriftungen bleibt und nichts ueberlappt.
+ * Bei typischer Mobile-Breite ein No-op, greift erst bei sehr schmalen Canvases. */
+function tickDivisions(available: number, minSpacing: number, fallback: number): number {
+  return Math.max(2, Math.min(fallback, Math.floor(available / minSpacing)));
+}
 
 /* Overlay-Farben der Beschriftung kommen aus theme-invarianten CSS-Tokens
  * (--spec-label-*, siehe global.css BLOCK C). Einmal gelesen + gecacht, da konstant. */
@@ -53,14 +66,14 @@ export function drawFrequencyAxis(
 ): void {
   const range = maxFreq - minFreq;
   if (range <= 0) return;
-  const step = niceStep(range / 4, [1000, 2000, 5000, 10000, 20000]);
+  const step = niceStep(range / tickDivisions(layout.h, 34, 4), [1000, 2000, 5000, 10000, 20000]);
 
   const tickLen = 4; // Länge der Tick-Striche am linken Rand
   const padX = 5; // Abstand des Texts vom Tick
   const padY = 7; // hält oberste/unterste Beschriftung im sichtbaren Bereich
 
   ctx.save();
-  ctx.font = FONT;
+  ctx.font = axisFont(layout.w);
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.lineJoin = "round";
@@ -109,9 +122,9 @@ export function drawTimeAxisFile(
   if (layout.gutterBottom === 0) return;
   const span = endSec - startSec;
   if (span <= 0) return;
-  const step = niceStep(span / 4, [1, 2, 5, 10, 15, 30, 60, 120, 300]);
+  const step = niceStep(span / tickDivisions(layout.w, 72, 4), [1, 2, 5, 10, 15, 30, 60, 120, 300]);
 
-  ctx.font = FONT;
+  ctx.font = axisFont(layout.w);
   ctx.fillStyle = color;
   ctx.strokeStyle = color;
   ctx.textAlign = "center";
@@ -141,9 +154,9 @@ export function drawTimeAxisLive(
   labels: AxisLabels,
 ): void {
   if (layout.gutterBottom === 0) return;
-  const step = niceStep(windowSeconds / 5, [1, 2, 5, 10, 15, 30]);
+  const step = niceStep(windowSeconds / tickDivisions(layout.w, 64, 5), [1, 2, 5, 10, 15, 30]);
 
-  ctx.font = FONT;
+  ctx.font = axisFont(layout.w);
   ctx.fillStyle = color;
   ctx.strokeStyle = color;
   ctx.textAlign = "center";
