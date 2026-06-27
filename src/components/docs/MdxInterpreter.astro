@@ -122,6 +122,23 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
     border-collapse: collapse;
     display: block;
     overflow-x: auto;
+    /* Scroll-Affordanz (CSS-Scroll-Shadows): Schatten an den Raendern erscheinen nur,
+       wenn die Tabelle horizontal scrollbar ist, und verschwinden am jeweiligen Ende.
+       Cover-Gradienten (background-attachment: local) verdecken den Schatten am Start/
+       Ende; Schatten-Gradienten (scroll) liegen fest an den Kanten. Theme-aware ueber
+       --color-surface-panel (Cover) und --color-gray-transparent (Schatten). */
+    background:
+      linear-gradient(to right, var(--color-surface-panel) 30%, transparent) 0 0,
+      linear-gradient(to right, transparent, var(--color-surface-panel) 70%) 100% 0,
+      radial-gradient(farthest-side at 0 50%, var(--color-gray-transparent), transparent) 0 0,
+      radial-gradient(farthest-side at 100% 50%, var(--color-gray-transparent), transparent) 100% 0;
+    background-repeat: no-repeat;
+    background-size:
+      var(--spacing-xl) 100%,
+      var(--spacing-xl) 100%,
+      var(--spacing-sm) 100%,
+      var(--spacing-sm) 100%;
+    background-attachment: local, local, scroll, scroll;
   }
 
   .mdx-interpreter :where(th, td) {
