@@ -242,4 +242,15 @@ function navLinkClass(href: string, extra: string[] = []): string {
       min-width: 2.2rem;
     }
   }
+
+  /* Touch-/Schmal-Screens: Navbar-Bedienelemente auf >= 44px Tap-Flaeche anheben
+     (min-* schlaegt die feste daisyUI-Hoehe). :global noetig, da die Theme-/Kontrast-
+     Toggles aus ThemeController (eigene Komponente) sonst nicht erfasst wuerden. */
+  @media (pointer: coarse), (max-width: 640px) {
+    :global(.site-navbar .btn),
+    :global(.site-navbar .brand) {
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+    }
+  }
 </style>
