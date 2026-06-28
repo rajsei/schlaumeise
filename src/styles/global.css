@@ -436,6 +436,25 @@
 }
 
 /* ===========================================================================
+ * RESPONSIVE BREAKPOINTS — kanonische Skala (Single Source of Truth)
+ * CSS-@media kann keine Variablen in Bedingungen nutzen; diese Werte gelten daher
+ * als verbindliche Konvention. Neue und bestehende @media bitte hierauf ausrichten;
+ * die Tailwind-Utilities (sm:/md:/lg:/xl:) nutzen exakt dieselben Werte.
+ *
+ *   xs    480px  — schmale Phones: Mobile-Overrides (Full-Bleed Docs/Callouts,
+ *                  Spacing-Knob unten, Footer-Stack, Tap-Targets).
+ *   sm    640px  — Tailwind sm (Code-/Terminal-Feinschliff, Pagination).
+ *   md    768px  — Tailwind md (Hero/Footer-Wechsel, Callout-Pfeil, Reveal-Padding).
+ *   lg   1024px  — Tailwind lg; zugleich Docs-Sidebar Drawer <-> Desktop-Grid
+ *                  (max-width: 1023px ist der zugehoerige Unter-Zweig).
+ *   xl   1280px  — Tailwind xl (Docs-Content-TOC-Rail).
+ *
+ * Ausnahme: 400px in Header.astro (max-[400px]) blendet NUR den Markennamen aus,
+ * sobald die Navbar sonst zu eng wird — bewusst enger als xs, da der Name bis ~480px
+ * noch passt. Nicht auf xs anheben (sonst unnoetig frueh versteckt).
+ * =========================================================================== */
+
+/* ===========================================================================
  * SCHMALE SCREENS — SPACING-OVERRIDES (zentrale Stellschraube)
  * Einzige Stelle, um die Abstands-Skala auf sehr schmalen Screens zu justieren.
  * Greift fuer Viewports <= 480px (gleicher Breakpoint wie die Full-Bleed-Regeln in

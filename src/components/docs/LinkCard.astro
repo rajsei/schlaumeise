@@ -186,7 +186,8 @@ const rootClass = [
     color: var(--color-text);
   }
 
-  @media (max-width: 900px) {
+  /* Unter lg (Docs-Sidebar wird Drawer, Inhalt volle Breite): Bild-Card stapeln. */
+  @media (max-width: 1023px) {
     .sl-link-card--image {
       grid-template-columns: minmax(0, 1fr);
     }
