@@ -238,13 +238,17 @@
   font-size: var(--font-size-base);
 }
 
+/* Stufen-Fuehrungslinien nur fuer verschachtelte Eintraege (toc-level >= 2). Top-Level
+   (level 1) erhaelt KEINE Linie: sonst laeuft am linken Rand eine durchgehende Linie
+   parallel zum Panel-Rahmen der rechten Leiste ("ein Strich zu viel"). Um einen Gap
+   nach innen versetzt, damit nichts den Rahmen bei left:0 dupliziert. */
 .docs-toc__item::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: var(--toc-level-gap);
   top: 0;
   bottom: 0;
-  width: calc(var(--toc-level) * var(--toc-level-gap));
+  width: calc((var(--toc-level) - 1) * var(--toc-level-gap));
   background-image: repeating-linear-gradient(
     to right,
     var(--color-gray-transparent) 0 1px,
