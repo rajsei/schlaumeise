@@ -55,6 +55,17 @@
     position: relative;
   }
 
+  /* Kopier-Affordanz: die gesamte Flaeche ist per Klick kopierbar (docs-code-copy.ts)
+     -> Copy-Cursor. Direkt ueber dem Text bleibt der Text-Cursor, damit Markieren
+     weiterhin natuerlich wirkt. */
+  .docs-code-block__body[data-docs-copy-surface] {
+    cursor: copy;
+  }
+
+  .docs-code-block__body[data-docs-copy-surface] .line {
+    cursor: text;
+  }
+
   .docs-code-block .docs-code-block__pre {
     margin: 0;
     border: 0;
@@ -105,10 +116,8 @@
     height: 2rem;
     display: inline-grid;
     place-items: center;
-    font-size: 0;
-    line-height: 1;
     padding: 0;
-    cursor: pointer;
+    cursor: copy;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-2px);
@@ -139,10 +148,15 @@
 
   @media (max-width: 640px) {
     .docs-code-block__copy {
-      top: 0.45rem;
-      right: 0.45rem;
+      top: 0.4rem;
+      right: 0.4rem;
       width: 1.8rem;
       height: 1.8rem;
+    }
+
+    /* Rechter Freiraum, damit der dauerhaft sichtbare Button keine Schrift verdeckt. */
+    .docs-code-block .docs-code-block__pre code {
+      padding-right: 2.9rem; /* bespoke: an feste Button-Groesse (1.8rem) gekoppelt, darf nicht mit --spacing-* schrumpfen */
     }
   }
 
@@ -166,16 +180,23 @@
     opacity: 1;
   }
 
-  /* Touch-/Schmal-Screens: Copy-Button dauerhaft sichtbar + groesseres Tap-Target
-     (~44px), da :hover/:focus-within dort nicht greift. Nach der 640px-Regel, damit
-     es gewinnt. */
+  /* Touch-/Schmal-Screens: Copy-Button dauerhaft sichtbar, da :hover/:focus-within dort
+     nicht greift. Tap-Target ~36px: gross genug zum Tippen, aber kompakt genug, dass er
+     auf kurzen (einzeiligen) Bloecken nicht unten ueberlaeuft. Die gesamte Flaeche ist
+     ohnehin antippbar zum Kopieren. Nach der 640px-Regel, damit es gewinnt. */
   @media (pointer: coarse), (max-width: 640px) {
     .docs-code-block__copy {
       opacity: 1;
       pointer-events: auto;
       transform: none;
-      width: 2.75rem;
-      height: 2.75rem;
+      top: 0.4rem;
+      right: 0.4rem;
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .docs-code-block .docs-code-block__pre code {
+      padding-right: 3.1rem; /* bespoke: an feste Button-Groesse (2.25rem) gekoppelt, darf nicht mit --spacing-* schrumpfen */
     }
   }
 </style>

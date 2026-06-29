@@ -172,6 +172,18 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
     display: inline-grid;
     place-items: center;
     pointer-events: none;
+    transition: transform 120ms ease;
+  }
+
+  /* Verbindung Flaeche <-> Button: beim Hover ueber den ganzen Code-/Terminal-Block
+     waechst das Icon leicht; beim direkten Hover/Fokus des Buttons noch etwas mehr.
+     Macht erlebbar, dass ein Klick irgendwo auf der Flaeche kopiert. */
+  .mdx-interpreter :where(.docs-code-block__body:hover, .docs-terminal__body:hover) .docs-code-block__copy-icon-wrap {
+    transform: scale(1.18);
+  }
+
+  .mdx-interpreter :where(.docs-code-block__copy:hover, .docs-code-block__copy:focus-visible) .docs-code-block__copy-icon-wrap {
+    transform: scale(1.32);
   }
 
   .mdx-interpreter :where(.docs-code-block__copy-icon, .docs-code-block__copied-icon) {
