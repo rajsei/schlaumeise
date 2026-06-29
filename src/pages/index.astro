@@ -16,6 +16,11 @@ const hero = {
       link: "./projects/project01/",
       icon: "right-arrow",
     },
+    {
+      text: "Vogelerkennung für die Hosentasche",
+      link: "./guides/birdnet_live/",
+      icon: "right-arrow",
+    },
   ],
 };
 ---
@@ -30,10 +35,6 @@ const hero = {
           {
             hero.actions.map((action) => (
               <a class="btn btn-primary btn-lg w-full gap-2 sm:w-auto" href={action.link}>
-                <span>{action.text}</span>
-                {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
-              </a>
-              <a class="btn btn-secondary btn-lg w-full gap-2 sm:w-auto" href={action.link}>
                 <span>{action.text}</span>
                 {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
               </a>
