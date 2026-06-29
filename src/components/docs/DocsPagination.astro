@@ -39,7 +39,7 @@ const hasPagination = Boolean(prev || next);
   .docs-pagination {
     margin-top: 2.5rem; /* bespoke: grosser Abschnittsabstand (zwischen 2xl/xl) */
     padding-top: var(--spacing-lg);
-    border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    border-top: var(--border-sm);
     display: grid;
     gap: var(--spacing-sm);
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -47,7 +47,9 @@ const hasPagination = Boolean(prev || next);
 
   .docs-pagination__link {
     border-radius: var(--radius-md);
-    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    /* Kontrast-bewusster Rand: --border-sm verstaerkt sich in den High-Contrast-Themes
+       automatisch (statt eines festen currentColor-Anteils, der dort blass bleibt). */
+    border: var(--border-sm);
     padding: var(--spacing-md);
     min-height: 4.5rem;
     display: flex;
@@ -62,7 +64,7 @@ const hasPagination = Boolean(prev || next);
 
   .docs-pagination__link:hover,
   .docs-pagination__link:focus-visible {
-    border-color: color-mix(in srgb, currentColor 30%, transparent);
+    border-color: var(--color-accent);
     background-color: color-mix(in srgb, currentColor 5%, transparent);
     outline: none;
   }

@@ -94,6 +94,10 @@ const rootClass = [
     --card-p: 1rem;
     display: block;
     width: 100%;
+    /* Kontrast-bewusster Rand: --color-border-base verstaerkt sich in den
+       High-Contrast-Themes automatisch (statt eines festen currentColor-Anteils,
+       der dort blass bleibt). */
+    border-color: var(--color-border-base);
     color: var(--color-text);
     text-decoration: none;
     line-height: var(--sl-line-height-headings, 1.3);
@@ -102,7 +106,7 @@ const rootClass = [
 
   .sl-link-card:hover,
   .sl-link-card:focus-visible {
-    border-color: color-mix(in oklab, var(--color-text) 28%, transparent);
+    border-color: var(--color-accent);
     background: var(--color-surface-page);
     outline: none;
   }
