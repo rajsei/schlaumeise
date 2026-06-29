@@ -7,6 +7,21 @@
     background: var(--color-surface-panel);
   }
 
+  /* Shiki Dual-Theme: im Dark-/Dark-Contrast-Mode die dunkle Palette aktivieren.
+     Astro/Shiki liefert die --shiki-dark*-Variablen inline, aktiviert sie aber nicht
+     selbst -> ohne diese Regel bleiben Code-Bloecke im Dark-Mode hell. */
+  :root[data-theme="dark"] .astro-code,
+  :root[data-theme="dark-contrast"] .astro-code {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+
+  :root[data-theme="dark"] .astro-code,
+  :root[data-theme="dark"] .astro-code span,
+  :root[data-theme="dark-contrast"] .astro-code,
+  :root[data-theme="dark-contrast"] .astro-code span {
+    color: var(--shiki-dark) !important;
+  }
+
   .docs-code-block__header {
     display: flex;
     align-items: center;

@@ -412,10 +412,11 @@
 }
 
 /* ===========================================================================
- * @THEME — Surface-Rollen + Spacing-Skala im Tailwind-Namespace.
+ * @THEME — Surface-Rollen im Tailwind-Namespace.
  * Kanonische Quelle der Surface-Farben (passen sich pro Theme an, da auf die
  * daisyUI base-* gemappt). Nutzbar als var(--color-surface-*) UND als Utility
- * (bg-surface-panel, bg-surface-inset, p-md, gap-sm).
+ * (bg-surface-panel, bg-surface-inset). Die Spacing-Skala liegt bewusst darunter
+ * in :root (nicht in @theme) — siehe Kommentar dort (max-w-Kollision).
  * =========================================================================== */
 @theme {
   --color-surface-page:   var(--color-base-200);  /* Gesamt-Seitenhintergrund */
@@ -423,7 +424,16 @@
   --color-surface-header: var(--color-base-300);  /* Navbar */
   --color-surface-inset:  var(--color-base-300);  /* versenkte Medienflaechen */
 
-  /* Spacing-Skala (4px-Basis) — als var(--spacing-md) und Utilities (p-md, gap-sm, m-lg). */
+}
+
+/* Spacing-Skala (4px-Basis) — BEWUSST in :root statt @theme.
+ * Benannte Keys (sm/md/lg/xl/2xl) im --spacing-Namespace kollidieren in Tailwind v4 mit
+ * den Sizing-Utilities (max-w-md, max-w-2xl, w-lg ...): diese liefern sonst die winzigen
+ * Spacing-Werte statt der Container-Breiten. In :root bleibt var(--spacing-*) voll nutzbar,
+ * aber Tailwind erzeugt KEINE kollidierenden Utilities mehr -> max-w-<name> nutzt wieder die
+ * Tailwind-Container-Defaults. Benannte Spacing-Utilities (p-md, gap-lg) werden im Projekt
+ * nicht verwendet; numerische (p-4, gap-6) nutzen die Tailwind-Basis --spacing (unberuehrt). */
+:root {
   --spacing-0: 0rem;
   --spacing-3xs: 0.125rem;
   --spacing-2xs: 0.25rem;
