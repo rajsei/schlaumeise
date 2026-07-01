@@ -313,7 +313,10 @@
     -webkit-user-select: none;
     -webkit-user-drag: none;
     transform-origin: center center;
-    will-change: transform;
+    /* Bewusst KEIN will-change/translateZ: eine promotete GPU-Ebene wuerde das Bild in
+       seiner (auf schmalen Screens kleinen) Layout-Groesse als Textur cachen und beim
+       Zoom hochskalieren -> unscharf. Ohne Promotion rastert der Browser bei jedem Zoom
+       neu aus der vollen Quellaufloesung -> scharf bis zur nativen Bildgroesse. */
   }
 
   .docs-image-lightbox__image.is-zoomed {

@@ -378,5 +378,38 @@ const initialCompleted = completed
     max-width: 100%;
     overflow-x: auto;
   }
+
+  /* Schmale Screens (Option B): Inline-Nummer + volle Textbreite. Die Schrittnummer
+     wandert per float in die erste Zeile, statt eine breite Spur zu belegen; der Inhalt
+     nutzt fast die ganze Breite. Der Verbindungsstrich bleibt sichtbar – als duenne Linie
+     ganz am linken Rand, mit nur kleiner Einrueckung (kein Nummern-Gutter mehr). */
+  @media (max-width: 480px) {
+    [data-steps-root] > :is(ol, ul) > .steps__item {
+      padding-left: var(--spacing-sm);
+    }
+
+    [data-steps-root] > :is(ol, ul) > .steps__item::before {
+      left: 1px;
+      top: 0.5rem;
+      bottom: -0.7rem;
+    }
+
+    [data-steps-root] .steps__toggle {
+      /* relative (nicht static): bleibt Bezugsrahmen fuer die absolut zentrierte
+         .steps__number; top/left zuruecksetzen, damit das Badge an der Float-Position sitzt. */
+      position: relative;
+      top: auto;
+      left: auto;
+      float: left;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: var(--spacing-3xs) var(--spacing-xs) var(--spacing-2xs) 0;
+    }
+
+    /* Code/Bilder/Tabellen immer unter der Nummer in voller Breite (nicht neben dem Float). */
+    [data-steps-root] .steps__attachments {
+      clear: left;
+    }
+  }
 </style>
 
