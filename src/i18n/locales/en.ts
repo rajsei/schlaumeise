@@ -39,4 +39,16 @@ export const en = {
     micStop: "Stop recording",
     micError: "Microphone access unavailable.",
   },
+  notFound: {
+    eyebrow: "Error 404",
+    title: "This page has flown the nest",
+    description:
+      "The page you're looking for doesn't exist (anymore) — maybe it changed nests, or a typo slipped in.",
+    home: "Back to home",
+    linkProject: "First project",
+    linkKnowledge: "Knowledge",
+    linkGlossary: "Glossary",
+    note: "Smartfinch is bilingual — you can switch the language anytime in the header.",
+    logoAlt: "Smartfinch logo",
+  },
 } as const;

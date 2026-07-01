@@ -2,6 +2,21 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-06-30 — Custom 404-Seite (zweisprachig, sauber) (Agent)
+
+### Hinzugefügt
+- `src/pages/404.astro` (DE, die ausgelieferte `404.html`) + `src/pages/en/404.astro` (EN) als **echte, server-gerenderte Seiten pro Locale** — Header, Logo, Footer, Wegweiser-Links automatisch korrekt lokalisiert
+- `NotFoundCard.astro`: gemeinsames Karten-Markup beider 404-Seiten (Logo, Text, Wegweiser via `buildLocalizedUrl`)
+- `MainLayout`: `name="head"`-Slot für seitenspezifische `<head>`-Einträge (noindex, Redirect-Skript)
+- Dictionary-Sektion `notFound` (de/en)
+- `conventions.md` → i18n: neue Regeln gegen selbstgebautes Locale-Routing und clientseitiges Sprach-„Patchen"
+
+### Geändert
+- **Fix:** vorheriger Ansatz (eine `404.html`, Inhalt clientseitig auf EN umgebaut) war fehlerhaft — Navbar-Logo blieb deutsch, und naives `"/en"+pfad` erzeugte Doppel-Locales wie `/en/de/…`. Ersetzt durch: Root-404 leitet `/en/`-Besucher per Head-Skript (nur Locale-Erkennung, fester Redirect via `buildLocalizedUrl`) auf die echte `/en/404/` um
+
+### Hinweis
+- GitHub Pages liefert nur EINE `404.html`; die EN-Seite (`/en/404/`, 200-Status) ist deren Redirect-Ziel, beide tragen `noindex`. `npm run build` grün (35 Seiten), Guard clean; DE/EN, Redirect, Sprachumschalter (beide Richtungen) und Menu-Drawer im Build geprüft
+
 ## 2026-06-23 — Spacing/Radius/Line-Height vollständig tokenisiert + AGENTS-Regel (Agent)
 
 ### Hinzugefügt

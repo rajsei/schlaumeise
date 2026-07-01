@@ -1,0 +1,41 @@
+---
+/**
+ * Root-404 (Deutsch) — von GitHub Pages als EINZIGE 404.html fuer ALLE unbekannten
+ * Routen ausgeliefert. Server-seitig vollstaendig deutsch (Header, Logo, Footer, Links).
+ *
+ * Zweisprachigkeit OHNE clientseitigen HTML-Umbau: EN-Besucher (Pfad <base>/en/...) werden
+ * per Head-Skript VOR dem ersten Paint auf die echte, server-gerenderte EN-404 (/en/404/)
+ * umgeleitet. So ist jede Sprache eine korrekte, vollstaendige Seite.
+ *
+ * WICHTIG: Hier NIEMALS Pfade von Hand zu Locales umrechnen — ein frueherer Versuch,
+ * "/en" vor den Pfad zu kleben, erzeugte Doppel-Locales wie /en/de/. Wir leiten nur auf
+ * eine FESTE, mit buildLocalizedUrl erzeugte URL um; alle echten Links rendert Astro.
+ */
+import MainLayout from "../layouts/MainLayout.astro";
+import NotFoundCard from "../components/NotFoundCard.astro";
+import { getDictionary } from "../i18n";
+import { buildLocalizedUrl } from "../i18n/routing";
+
+const t = getDictionary("de").notFound;
+const enNotFoundUrl = buildLocalizedUrl("en", "/404/");
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<MainLayout locale="de" title={`404 — ${t.title}`}>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+    <script is:inline define:vars={{ enNotFoundUrl, baseUrl }}>
+      /* EN-Besucher auf die echte EN-404 umleiten, bevor die deutsche Seite paintet.
+         Nur Locale-ERKENNUNG (kein Pfad-Umbau) -> kein /en/de/-Risiko. /en/404/ ist eine
+         echte Datei und wird nie ueber diese 404.html ausgeliefert -> keine Schleife. */
+      (function () {
+        var base = (baseUrl || "/").replace(/\/$/, "");
+        var path = location.pathname;
+        if (base && path.indexOf(base) === 0) path = path.slice(base.length);
+        if (path.charAt(0) !== "/") path = "/" + path;
+        if (/^\/en(\/|$)/.test(path)) location.replace(enNotFoundUrl);
+      })();
+    </script>
+  </Fragment>
+  <NotFoundCard locale="de" />
+</MainLayout>

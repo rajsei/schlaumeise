@@ -1,0 +1,17 @@
+---
+/**
+ * EN-404 — echte, server-gerenderte englische 404 (Header, Logo, Footer, Links englisch).
+ * Ziel der Root-404-Weiterleitung fuer /en/-Routen. KEIN Redirect-Skript hier (sonst
+ * Schleife). Eigene Datei mit 200-Status -> deshalb noindex.
+ */
+import MainLayout from "../../layouts/MainLayout.astro";
+import NotFoundCard from "../../components/NotFoundCard.astro";
+import { getDictionary } from "../../i18n";
+
+const t = getDictionary("en").notFound;
+---
+
+<MainLayout locale="en" title={`404 — ${t.title}`}>
+  <meta name="robots" content="noindex" slot="head" />
+  <NotFoundCard locale="en" />
+</MainLayout>

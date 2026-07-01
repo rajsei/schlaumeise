@@ -39,4 +39,16 @@ export const de = {
     micStop: "Aufnahme stoppen",
     micError: "Kein Mikrofonzugriff möglich.",
   },
+  notFound: {
+    eyebrow: "Fehler 404",
+    title: "Diese Seite ist ausgeflogen",
+    description:
+      "Die Seite, die du suchst, gibt es nicht (mehr) — vielleicht hat sie das Nest gewechselt oder es hat sich ein Tippfehler eingeschlichen.",
+    home: "Zur Startseite",
+    linkProject: "Erstes Projekt",
+    linkKnowledge: "Wissen",
+    linkGlossary: "Glossar",
+    note: "Schlaumeise ist zweisprachig — du kannst die Sprache jederzeit oben in der Kopfzeile wechseln.",
+    logoAlt: "Schlaumeise-Logo",
+  },
 } as const;

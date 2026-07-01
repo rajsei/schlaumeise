@@ -80,6 +80,8 @@ const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alterna
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     {description && <meta name="description" content={description} />}
     <title>{title}</title>
+    {/* Seitenspezifische <head>-Eintraege (z. B. noindex, Redirect-Skripte der 404). */}
+    <slot name="head" />
   </head>
   <body>
     <Header
