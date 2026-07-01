@@ -1,0 +1,87 @@
+---
+title: Data Sheet
+description: All information and passwords in one place.
+sidebar:
+  order: 6
+---
+
+*All information and passwords in one place*
+
+<div role="alert" class="alert alert-info">
+  <span>Replace '00' with the number on your Raspberry Pi.</span>
+</div>
+
+|                     | Username / Command / URL                   | Password        |
+|---------------------|--------------------------------------------|-----------------|
+| **Local Website**   | `http://birdnet-rpi00.local`               |                 |
+| **Tools**           | birdnet                                    | (leave empty)   |
+| **Preconfigured Wi-Fi** | birdnet-wifi                           | rotkehlchen     |
+| **SSH**             | `ssh birdnet-admin@birdnet-rpi00.local`    | mauersegler     |
+
+---
+
+## How to connect to the BirdNET-Pi
+
+### Use your home network
+
+If you have configured your **home Wi-Fi**, simply start your Raspberry Pi. It should automatically connect to your network.
+
+If your Raspberry Pi is connected to the **same network** as your computer or phone, you can access the BirdNET-Pi interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
+
+---
+
+### Use the hotspot of your BirdNET-Pi
+
+If neither the **preconfigured Wi-Fi** nor your **home Wi-Fi** is available, search for the **hotspot created by your BirdNET-Pi** and connect to it using your computer or phone.
+
+Then access the interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
+
+---
+
+### Use the preconfigured Wi-Fi network
+
+You can create a **hotspot** from your computer, using the preconfigured Wi-Fi credentials:
+
+- **Wi-Fi name:** `birdnet-wifi`
+- **Password:** `rotkehlchen`
+
+Restart your Raspberry Pi. It should automatically connect to this network.
+
+If you are using your **phone as a hotspot**, make sure your **computer is connected to the same hotspot**.
+
+If your **BirdNET-Pi** does not connect to this Wi-Fi, check whether it has created its own **configured hotspot** instead.
+
+Then access the interface in your browser:
+
+```text
+http://birdnet-rpi00.local
+```
+---
+
+## Useful links and related projects
+
+- [BirdNET](https://birdnet.cornell.edu/) – The BirdNET website.
+- [BirdNET-Pi](https://github.com/Nachtzuster/BirdNET-Pi) – The **BirdNET-Pi software** used in this workshop on your Raspberry Pi.
+- [BirdWeather](https://app.birdweather.com/) – A **global platform for bird sound monitoring**. You can submit your detections to contribute to **citizen science**.
+
+---
+
+### Other Raspberry Pi projects with BirdNET
+
+- [BirdNET-PiPy](https://suncuss.github.io/BirdNET-PiPy/) – An alternative project for Raspberry Pi (only for Raspberry Pi 4/5).
+- [BattyBirdNET-Pi](https://github.com/rdz-oss/BattyBirdNET-Pi) – A project for **bat sound monitoring** using BirdNET (only for Raspberry Pi 4/5).
+- There are many more, so have a look yourself.
+
+---
+
+### More projects
+
+- [BirdNET-Go](https://github.com/tphakala/birdnet-go) – An AI-based solution for continuous bird monitoring and identification.

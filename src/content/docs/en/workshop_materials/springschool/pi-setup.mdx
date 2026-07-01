@@ -1,0 +1,135 @@
+---
+title: Setting up the Raspberry Pi
+description: Connect to the preconfigured workshop Raspberry Pi via SSH.
+sidebar:
+  order: 2
+---
+
+## Starting Point
+
+The Raspberry Pi OS has already been installed on the SD card.
+
+Typically, this is done using the Raspberry Pi Imager, which allows configuration of settings such as Wi-Fi credentials, hostname, and passwords during the setup process.
+
+In our case, these steps have already been completed for you, so the system is ready to use.
+
+
+## Instructions
+
+<Steps>
+
+1. **Insert the SD card into the Raspberry Pi** and **connect the Raspberry Pi to the power supply** using the power adapter.
+   An LED on the Raspberry Pi should light up or flash.
+   It is best to wait a few minutes for it to boot up; the initial boot process takes longer.
+   Do not disconnect it from the power supply during this time.
+
+2. Ensure that the computer is connected to the Wi-Fi network. *Wi-Fi:* `birdnet-wifi`, *Password:* `rotkehlchen`.
+
+3. Open the console.
+
+<LinkCard
+  title="More information about the console"
+  href="../../../glossary/console/"
+  description="Instructions for opening and operating the console."
+/>
+
+4. Connect to the Pi using the following command. **Replace '00' with the number on your Raspberry Pi.**
+
+```sh
+ssh birdnet-admin@birdnet-rpi00.local
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="PS C:\Users\Name> ssh birdnet-admin@birdnet-rpi00.local 
+  The authenticity of host 'birdnet-rpi00.local (2a02:4454:c122:2000:15gc:24b7:f06a:f322)' can't be established. 
+  ED25519 key fingerprint is SHA256:kfRttaVIh+Z/FbSq9g6adalVfIsgvUtk4o. 
+  This key is not known by any other names. 
+  Are you sure you want to continue connecting (yes/no/[fingerprint])?"
+/>
+
+<div role="alert" class="alert alert-warning alert-vertical w-full [grid-template-columns:1fr] !items-start !justify-items-start text-left">
+  <div class="flex items-start gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    <span class="font-semibold">Troubleshooting</span>
+  </div>
+  <div class="w-full self-stretch text-left">
+    <div class="collapse collapse-arrow w-full bg-alert-soft text-left">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">What if no connection can be established? (The specified host is unknown.)</div>
+      <div class="collapse-content text-sm">
+        If the following message appears:
+        <Code
+          lang="plaintext" title="Terminal" class="terminal-code"
+          code="PS C:\Users\Name> ssh birdnet-admin@birdnet-rpi00.local
+          ssh: Could not resolve hostname birdnet-rpi00.local: The specified host is unknown."
+        />
+        this means that no connection can be established to your Raspberry Pi.
+
+        Check the following points: power supply (Raspberry Pi turned on, SD card inserted correctly, status LEDs flashing or lit); 
+        
+        network (PC and Raspberry Pi on the same Wi-Fi or hotspot, and the Wi-Fi data in Raspberry Pi OS matches your current Wi-Fi); 
+        
+        reinstallation (reinstall Raspberry Pi OS and re-enter the Wi-Fi access data); 
+        
+        or a direct connection (experienced users can connect a keyboard and screen to check the settings manually).
+      </div>
+    </div>
+
+    <br />
+      
+    <div class="collapse collapse-arrow w-full bg-alert-soft text-left">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">What if 'WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!' is displayed?</div>
+      <div class="collapse-content text-sm">
+        Don't worry — this is normal if you have previously connected to a Raspberry Pi with the same name via SSH. 
+        
+        To fix it: open the file C:\Users\username\.ssh\known_hosts (the exact path is also included in the warning) with a text editor, find all lines that start with birdnet-rpi00.local and delete them (there may be several entries spanning multiple lines). 
+        
+        If you have never used SSH for other connections, you can also delete the entire contents of the file. Then save, close the editor, and try the connection again.
+      </div>
+    </div>
+  </div>
+</div>
+
+5. Confirm the connection.
+
+```sh
+yes
+```
+
+<Code
+  lang="plaintext"
+  title="Terminal"
+  class="terminal-code"
+  code="Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+  Warning: Permanently added 'birdnet-rpi00.local' (ED25529) to the list of known hosts.
+  Connection closed by 2a02:4454:c122:2000:15gc:24b7:f06a:f322 port 23
+  birdnet-admin@birdnet-rpi00.local's password:"
+/>
+
+6. A **password prompt** should then appear.
+   Enter the **password `mauersegler`**. Note that the password will **remain invisible** as you type it.
+   If you are no longer prompted to enter a password, restart the process by entering the command from step 4.
+
+<Code lang='plaintext' title='Terminal' class="terminal-code"
+code="birdnet-admin@birdnet-rpi00.local's password:
+Linux birdnetpi 6.12.47+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.12.47-1+rpt1~bookworm (2025-09-01) aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/\*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Oct 01 00:00:00 2025 from 2a02:4454:c122:2000:15gc:24b7:f06a:f322" />
+
+7. You are now connected to the Raspberry Pi via SSH and can execute commands on the Raspberry Pi through the terminal.
+
+8. Now we will edit the **Wi-Fi** and **hotspot settings**, so continue with **"Change the Wi-Fi settings"**.
+
+</Steps>

@@ -1,0 +1,119 @@
+---
+title: Assemble the bird station
+description: Set up your BirdNET-Pi station safely and protect the Raspberry Pi, microphone, and accessories from weather and moisture.
+next: false
+sidebar:
+  order: 6
+---
+
+import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
+
+import parts1 from "../../../../../assets/images/project01/overview/parts1.jpg";
+import parts3 from "../../../../../assets/images/project01/overview/parts3.jpg";
+import parts4 from "../../../../../assets/images/project01/overview/parts4.jpg";
+import vogelhaus1 from "../../../../../assets/images/project01/overview/vogelhaus1.jpg";
+import extern01 from "../../../../../assets/images/project01/extern/01.jpg";
+import extern02 from "../../../../../assets/images/project01/extern/02.png";
+import extern03 from "../../../../../assets/images/project01/extern/03.png";
+import extern04 from "../../../../../assets/images/project01/extern/04.png";
+import extern05 from "../../../../../assets/images/project01/extern/05.png";
+import extern06 from "../../../../../assets/images/project01/extern/06.png";
+
+So how do I get the BirdNET-Pi out into the garden?
+
+## Options
+
+There are several ways to place the BirdNET-Pi outdoors:
+
+### Birdhouse:
+You can build the Pi into a wooden birdhouse. Keep in mind that it is not weatherproof.
+So place it in a sheltered spot and bring it indoors when it rains or freezes.
+
+<ImageCarousel
+  label="Pictures of the project components"
+  images={[
+    {
+      src: parts1,
+      alt: "Parts for the listening birdhouse",
+    },
+    {
+      src: parts3,
+      alt: "More parts for the listening birdhouse",
+    },
+    {
+      src: parts4,
+      alt: "More parts for the listening birdhouse",
+    },
+    {
+      src: vogelhaus1,
+      alt: "More parts for the listening birdhouse",
+    },
+  ]}
+/>
+
+### Junction box:
+At DIY stores you can find junction boxes for electrical installations. These work well to protect the Pi from the weather.
+<br />
+<LinkCard
+  title="BirdNET Pi out in nature"
+  description="An outdoor BirdNET Pi setup."
+  href="https://pixcams.com/building-a-birdnet-pi-real-time-acoustic-bird-id-station/"
+  imgSrc={extern03}
+  imgAlt="BirdNET Pi in a weatherproof housing in the garden."
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET Pi in your garden"
+  description="An outdoor BirdNET Pi setup."
+  href="https://becausebirds.com/fun-raspberry-pi-project-identify-backyard-birds-24-7/"
+  imgSrc={extern05}
+  imgAlt="BirdNET Pi in a weatherproof housing in the garden."
+  isExternal
+/>
+
+### Running only the microphone outside:
+You can also run just the microphone outside.
+That way the Pi stays dry, and you can design the housing however you like.
+<br />
+<LinkCard
+  title="BirdNET Pi on the windowsill"
+  description="A BirdNET Pi setup with the microphone
+  routed out of the window."
+  href="https://anconafamily.com/tech/birdnet/"
+  imgSrc={extern02}
+  imgAlt="BirdNET Pi on a windowsill with the microphone routed out of the window."
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET Pi at the window"
+  description="A BirdNET Pi setup with the microphone
+  routed out of the window."
+  href="https://stickyhat.com/automated-bird-detection-with-a-raspberry-pi-getting-started/"
+  imgSrc={extern06}
+  imgAlt="BirdNET Pi at the window with the microphone routed out of the window."
+  isExternal
+/>
+
+## Helpful materials:
+
+3D printing: For a clean mount, you can use 3D-printed brackets to attach the Pi securely.
+<br />
+<LinkCard
+  title="Raspberry Pi Zero Mount"
+  description="A free digital file for your 3D printer."
+  href="https://www.printables.com/model/115161-rasberry-pi-zero-minimalist-mount"
+  imgSrc={extern01}
+  imgAlt="Minimalist Raspberry Pi Zero Mount"
+  isExternal
+/>
+<br />
+<LinkCard
+  title="BirdNET-Pi housing for Orange Pi Zero2"
+  description="A free digital file for your 3D printer."
+  href="https://www.thingiverse.com/thing:6059867/files "
+  imgSrc={extern04}
+  imgAlt="BirdNET-Pi housing for Orange Pi Zero2"
+  isExternal
+/>

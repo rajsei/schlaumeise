@@ -5,9 +5,10 @@ next: false
 sidebar:
   order: 8
 ---
-
 import RevealImage from "../../../../components/docs/RevealImage.astro";
 import HighlightSection from "../../../../components/docs/HighlightSection.astro";
+import AudioSpectrogram from "../../../../components/docs/AudioSpectrogram.astro";
+import MicSpectrogram from "../../../../components/docs/MicSpectrogram.astro";
 
 import bluejayImage from "../../../../assets/birds/bluejay.jpg";
 import chipmunkImage from "../../../../assets/birds/chipmunk.jpg";
@@ -34,253 +35,261 @@ import Streifenhoernchen from "../../../../assets/audio/streifenhoernchen.mp3";
 
 ## How do birds communicate with each other?
 
-Vögel nutzen ihre Stimmen, um miteinander zu kommunizieren. 
-Unterschiedliche Laute haben dabei unterschiedliche soziale Funktionen, ähnlich wie Sprache bei uns Menschen. 
+Birds use their voices to communicate with each other.
+Different sounds have different social functions, similar to language in us humans.
 
-Grundsätzlich gibt es zwei Hauptformen: **Gesänge** und **Rufe**.
+There are basically two main types: **songs** and **calls**.
 
-### 1. Lieder/Gesänge
+### 1. Songs
 
 <HighlightSection
-  title="Was sind Gesänge?"
+  title="What are songs?"
   color="blue">
   <p>
-    Gesänge sind **längere**, **melodische** und oft **komplexe Lautfolgen**. 
-    Sie werden vor allem von Männchen vorgetragen – besonders in der **Brutzeit**.
+    Songs are **longer**, **melodic**, and often **complex sequences of sounds**.
+    They are mainly performed by males – especially during the **breeding season**.
   </p>
 </HighlightSection>
 
-Wofür werden Gesänge genutzt?
+What are songs used for?
 
-Gesänge haben mehrere **wichtige Aufgaben**:
+Songs have several **important functions**:
 
-  - **Revierabgrenzung:** Der Vogel signalisiert: „Dieses Gebiet gehört mir!“ So werden andere Tiere der gleichen Art auf Abstand gehalten.
-  - **Anlocken von Paarungspartnern:** Ein schöner oder abwechslungsreicher Gesang kann die Chancen auf einen Partner erhöhen.
-  - **Arterkennung:** Jede Vogelart hat ihren eigenen typischen Gesang. So finden Vögel Partner der gleichen Art.
+  - **Territory marking:** The bird signals: „This area belongs to me!“ This keeps other animals of the same species at a distance.
+  - **Attracting mates:** A beautiful or varied song can increase the chances of finding a mate.
+  - **Species recognition:** Each bird species has its own distinctive song. This is how birds find mates of the same species.
 
-**Gesänge dienen vor allem der Partnersuche und der Verteidigung des eigenen Reviers.**
+**Songs are primarily used to find a mate and to defend one's own territory.**
 
 <HighlightSection
-  title="Wie hört sich das Lied eines Weidengelbkehlchens an?"
+  title="How does the song of a common yellowthroat sound?"
   color="blue">
   <div slot="body">
-    <p>Das Weidengelbkehlchen (*Geothlypis trichas*) ist ein Singvogel aus der Familie der Waldsänger. Viele Männchen erkennt man an der schwarzen Gesichtsmaske mit gelbem Kehlbereich; Weibchen sind meist unauffälliger gefärbt.</p>
+    <p>The common yellowthroat (*Geothlypis trichas*) is a songbird from the wood-warbler family. Many males can be recognized by their black facial mask with a yellow throat area; females are usually more plainly colored.</p>
   </div>
-    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenLied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={weidengelbkehlchenLied} label="Common yellowthroat song" maxFrequency={10000} />
 </HighlightSection>
 
 
 
-### 2. Rufe
+### 2. Calls
 
 <HighlightSection
-  title="Was sind Rufe?"
+  title="What are calls?"
   color="blue">
   <p>
-    Rufe sind **kurze**, **einfache** Laute, die oft **mehrfach hintereinander** erklingen. 
-    Sie werden von **Weibchen** und **Männchen** genutzt, und zwar das ganze Jahr über.
+    Calls are **short**, **simple** sounds that often sound **several times in succession**.
+    They are used by both **females** and **males**, throughout the whole year.
   </p>
 </HighlightSection>
 
-Welche Funktionen haben Rufe?
+What functions do calls have?
 
-Rufe sind vor allem für den Alltag wichtig:
+Calls are especially important in everyday life:
 
-- **Kontakt- und Sozialrufe:** Helfen, Gruppen zusammenzuhalten, zum Beispiel bei Familienverbänden oder Zugvögeln.
-- **Warnrufe:** Machen andere auf Gefahren aufmerksam, etwa auf Greifvögel oder Katzen.
-- **Aggressions- oder Drohrufe:** Werden bei Konflikten eingesetzt, etwa wenn sich zwei Tiere zu nahe kommen.
+- **Contact and social calls:** Help keep groups together, for example in family groups or among migratory birds.
+- **Warning calls:** Alert others to dangers, such as birds of prey or cats.
+- **Aggression or threat calls:** Used in conflicts, for example when two animals get too close.
 
-**Rufe helfen Vögeln, in Kontakt zu bleiben und schnell auf Gefahren zu reagieren.**
+**Calls help birds stay in contact and react quickly to danger.**
 
 <HighlightSection
-    title="Wie hört sich der Ruf eines Weidengelbkehlchens an?"
+    title="How does the call of a common yellowthroat sound?"
     color="blue">
-    <audio class="audio" id="weidengelbkehlchen-audio" controls preload="metadata" src={weidengelbkehlchenRuf}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={weidengelbkehlchenRuf} 
+     label="Common yellowthroat call" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
-## Singen will gelernt sein
-Ähnlich wie Kinder das Sprechen lernen, müssen viele echte Singvögel ihren vollständigen Gesang erst erlernen. 
-Sie hören erwachsenen Artgenossen zu und üben so lange, bis ihr eigener Gesang richtig klingt.
+## Singing must be learned
+Similar to how children learn to speak, many true songbirds have to learn their full song first.
+They listen to adult members of their own species and practice until their own song sounds right.
 
 <HighlightSection
-  title="Wie unterscheidet sich das Lied einer Weißkehlammer, je nachdem, ob es sich um ein Jungtier oder einen erwachsenen Vogel handelt?"
+  title="How does the song of a white-throated sparrow differ, depending on whether it is a juvenile or an adult?"
   color="green">
   <div>
-    <p>So klingt das Lied eines Jungvogels:</p>
+    <p>This is how a juvenile bird sounds:</p>
   </div>
-    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerÜbungslied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={WeißkehlammerÜbungslied} 
+     label="Practice song of a juvenile white-throated sparrow" 
+     maxFrequency={10000}/>
       <div>
-    <p>So klingt das Lied eines erwachsenen Vogels:</p>
+    <p>This is how an adult bird sounds:</p>
   </div>
-    <audio class="audio" id="weißkehlammer-audio" controls preload="metadata" src={WeißkehlammerErwachsenenlied}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={WeißkehlammerErwachsenenlied} 
+     label="Song of an adult white-throated sparrow" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
-## „Dialekte“ bei Vogelstimmen
+## „Dialects“ in bird songs
 
-Vogelstimmen können sich je nach Region und über die Zeit verändern – ähnlich wie Dialekte bei uns Menschen. 
-Nimmt man den Gesang erwachsener Vögel derselben Art an zwei verschiedenen Orten auf, klingen sie oft leicht unterschiedlich, obwohl das Grundmuster gleich bleibt.
+Bird songs can change depending on the region and over time – similar to dialects among us humans.
+If you record the song of adult birds of the same species in two different places, they often sound slightly different, even though the basic pattern stays the same.
 
 <HighlightSection
-  title="Wie unterscheidet sich der Gesang einer Dachsammer in verschiedenen Regionen?"
+  title="How does the song of a white-crowned sparrow vary across different regions?"
   color="purple">
   <div>
-    <p>So klingen zwei Individuen an unterschiedlichen Orten:</p>
+    <p>This is how two individuals in different locations sound:</p>
   </div>
-    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt1}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={DachsammerDialekt1} 
+     label="White-crowned sparrow – location 1" 
+     maxFrequency={10000}/>
       <div>
 
   </div>
-    <audio class="audio" id="Dachsammer-audio" controls preload="metadata" src={DachsammerDialekt2}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={DachsammerDialekt2} 
+     label="White-crowned sparrow – location 2" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
-## Mehr als singen
+## More than singing
 
-Vögel nutzen nicht nur ihre Stimmen, um miteinander zu kommunizieren. 
-Kennst du einen Vogel, den man oft hört, obwohl er nicht singt?
+Birds don't only use their voices to communicate with each other.
+Do you know a bird that is often heard even though it isn't singing?
 
-Es ist der **Specht**. 
+It's the **woodpecker**.
 
-Wenn ein Specht mit seinem Schnabel auf einen Baum klopft, wird dieses Geräusch als **„Trommeln”** bezeichnet. 
-Häufig wählt er hohle Baumstämme, weil sie den Klang verstärken. 
-Dieses Trommeln dient vor allem dazu, das Revier zu markieren und Paarungspartner anzulocken, ähnlich wie Gesang bei Singvögeln.
-Spechte klopfen auch bei der Nahrungssuche. Dieses Klopfen ist aber meist leiser als das territoriale Trommeln.
+When a woodpecker taps its beak on a tree, this sound is called **“drumming”**.
+It often chooses hollow tree trunks because they amplify the sound.
+This drumming mainly serves to mark territory and attract mates, much like the song of songbirds.
+Woodpeckers also peck when searching for food. But this pecking is usually quieter than territorial drumming.
 
-Dabei hat jede Spechtart ihren eigenen „Rhythmus“: 
-Länge, Tempo, Schlagzahl und Pausen zwischen den Schlägen unterscheiden sich und machen die Arten für geübte Ohren erkennbar.
+Each woodpecker species has its own “rhythm”:
+the length, tempo, number of beats, and pauses between beats differ and make the species recognizable to trained ears.
 
 <HighlightSection
-  title="Wie unterscheidet sich der Klang des Trommelns verschiedener Spechtarten?"
+  title="How does the sound of drumming differ between different woodpecker species?"
   color="red">
   <div>
-    <p>So klingt ein Dunenspecht:</p>
+    <p>This is what a downy woodpecker sounds like:</p>
   </div>
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Dunenspecht}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Dunenspecht} 
+     label="Downy woodpecker (drumming)" 
+     maxFrequency={10000}/>
     <div>
-        <p>Und so klingt ein Haarspecht:</p>
+        <p>And this is what a hairy woodpecker sounds like:</p>
   </div>
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Haarspecht}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Haarspecht} 
+     label="Hairy woodpecker (drumming)" 
+     maxFrequency={10000}/>
 </HighlightSection>
 
-## Mysteriöse Vögel – Was zwitschert hier?
+## Mysterious birds – what's chirping here?
 
-Lass uns gemeinsam einige Vogelstimmen anhören und herausfinden, um welche Art es sich handelt.
+Let's listen to some bird calls together and find out what species they are.
 
 <HighlightSection
-  title="Welcher Vogel ist das nur?"
+  title="Which bird is that?"
   color="green">
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Blauhaeher}>
-        Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Blauhaeher} />
     <RevealImage
       imageSrc={bluejayImage}
-      alt="Blauhäher"
-      overlayText="Blauhäher"
-      revealLabel="Lösung"
+      alt="Blue Jay"
+      overlayText="Blue Jay"
+      revealLabel="Solution"
       >
       <p>
-        Es ist ein **Blauhäher**. Der Blauhäher stammt aus Nordamerika und gilt als besonders intelligenter Vogel. 
-        Er ist mit unserem europäischen Eichelhäher verwandt – beide zeigen ähnliche Verhaltensweisen und gehören zur Familie der Rabenvögel, die für ihre hohe Lernfähigkeit bekannt sind.
+        It's a **blue jay**. The blue jay comes from North America and is considered a particularly intelligent bird.
+        It is related to our European Eurasian jay – both show similar behaviors and belong to the corvid family, which is known for its high learning ability.
 
-        Blauhäher und Eichelhäher werden manchmal als „Polizei des Waldes“ bezeichnet. Sie informieren andere Tiere mit lauten Warnrufen über mögliche Gefahren.
-        Gleichzeitig nutzen sie ihre Intelligenz zu ihrem Vorteil: 
-        Sie können die Rufe von Raubvögeln imitieren, um andere Vögel aus ihrem Revier zu vertreiben oder von Futterstellen fernzuhalten.
+        Blue jays and Eurasian jays are sometimes called the “police of the forest”. They inform other animals about possible dangers with loud warning calls.
+        At the same time, they use their intelligence to their advantage:
+        they can imitate the calls of birds of prey to drive other birds out of their territory or keep them away from feeding sites.
       </p>
     </RevealImage>
 </HighlightSection>
 
 <HighlightSection
-  title="Und der nächste Vogel?"
+  title="And the next bird?"
   color="blue">
-    <audio class="audio" id="Specht-audio" controls preload="metadata" src={Spottdrossel}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Spottdrossel} />
     <RevealImage
       imageSrc={mockingbirdImage}
-      alt="Spottdrossel"
-      overlayText="Spottdrossel"
-      revealLabel="Lösung"
+      alt="Mockingbird"
+      overlayText="Mockingbird"
+      revealLabel="Solution"
       >
       <p>
-      Es ist ein Blauhäher? Nein, es ist eine **Spottdrossel**.
+      It's a blue jay? No, it's a **mockingbird**.
 
-      Auch wenn der Anfang des Gesangs wie ein Blauhäher klingt, handelt es sich hier um eine Spottdrossel. 
-      Dieser nordamerikanische Singvogel ist berühmt dafür, die Stimmen anderer Vögel zu imitieren.
+      Even though the beginning of the song sounds like a blue jay, this is a mockingbird.
+      This North American songbird is famous for imitating the voices of other birds.
 
-      Die Spottdrossel singt lange, laute und sehr komplexe Lieder und ahmt dabei nicht nur andere Vogelarten nach, sondern auch Geräusche aus ihrer Umgebung – 
-      zum Beispiel Frösche, Grillen, Katzen oder sogar künstliche Klänge wie quietschende Räder oder Autowarnanlagen. 
-      Für uns Menschen klingen diese Nachahmungen oft täuschend echt, doch nicht jeder Vogel lässt sich damit täuschen.
+      The mockingbird sings long, loud, and very complex songs, imitating not only other bird species but also sounds from its surroundings –
+      for example frogs, crickets, cats, or even artificial sounds such as squeaking wheels or car alarms.
+      To us humans, these imitations often sound deceptively real, but not every bird is fooled by them.
 
-      Außerdem gilt die Spottdrossel als furchtlos und durchsetzungsstark: 
-      Sie verteidigt ihr Brut- und Winterrevier energisch und ruft bei Gefahr manchmal Artgenossen zur Hilfe, um gemeinsam größere Räuber zu vertreiben.
+      The mockingbird is also considered fearless and assertive:
+      it vigorously defends its breeding and wintering territory and sometimes calls fellow birds to help when danger threatens, so that together they can drive away larger predators.
       </p>
     </RevealImage>
 </HighlightSection>
 
 <HighlightSection
-  title="Und was hört man hier?"
+  title="And what can you hear here?"
   color="purple">
-    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Leierschwanz}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram 
+     src={Leierschwanz} 
+     maxFrequency={10000}/>
     <RevealImage
       imageSrc={lyrebirdImage}
-      alt="Leierschwanz"
-      overlayText="Leierschwanz"
-      revealLabel="Lösung"
+      alt="Lyrebird"
+      overlayText="Lyrebird"
+      revealLabel="Solution"
       >
       <p>
-      Es wird immer verrückter!
+      It's getting crazier and crazier!
 
-      Der **Leierschwanz** ist ein besonderer Vogel aus Australien. Sein Stimmorgan (die sogenannte Syrinx) zählt zu den am stärksten ausgeprägten unter den Singvögeln. 
-      Dadurch kann er eine erstaunliche Vielfalt an Geräuschen aus seiner Umgebung imitieren – von anderen Vogelarten bis hin zu Umwelt- und Alltagsgeräuschen.
+      The **lyrebird** is a special bird from Australia. Its vocal organ (the so-called syrinx) is one of the most highly developed among songbirds.
+      This lets it imitate an astonishing variety of sounds from its surroundings – from other bird species to environmental and everyday noises.
 
-      Leierschwänze sind sehr scheu. Oft bemerkt man ihre Anwesenheit nur daran, dass scheinbar viele verschiedene Vogelgesänge von ein und derselben Stelle kommen.
+      Lyrebirds are very shy. Often you only notice their presence because many different bird songs seem to be coming from one and the same spot.
       
-      Konntest du heraushören, was er alles nachmacht? 
-      Der Leierschwanz imitiert oft auch Kettensägen, Kameraverschlüsse, Autohupen und sogar menschliche Stimmen.
+      Could you hear everything it imitates?
+      The lyrebird often also imitates chainsaws, camera shutters, car horns, and even human voices.
       </p>
     </RevealImage>
 </HighlightSection>
 
 <HighlightSection
-  title="Wer könnte das denn sein?"
+  title="Who could that be?"
   color="red">
-    <audio class="audio" id="Leierschwanz-audio" controls preload="metadata" src={Streifenhoernchen}>
-      Your browser does not support the audio element.
-    </audio>
+    <AudioSpectrogram src={Streifenhoernchen} />
     <RevealImage
       imageSrc={chipmunkImage}
-      alt="Streifenhörnchen"
-      overlayText="Streifenhörnchen"
-      revealLabel="Lösung"
+      alt="Chipmunk"
+      overlayText="Chipmunk"
+      revealLabel="Solution"
       >
       <p>
-        Das ist gar kein Vogel. Nicht nur Vögel machen Geräusche, die wie Vogelstimmen klingen können – 
-        auch andere Tiere überraschen uns damit. 
-        Ein gutes Beispiel ist das Streifenhörnchen, auf Englisch Chipmunk genannt.
+        That's not a bird at all. It's not only birds that make sounds that can sound like bird calls –
+        other animals surprise us with them too.
+        A good example is the chipmunk (in German, „Streifenhörnchen“).
 
-        Der englische Name stammt von dem lauten „chip“-Ruf, den diese Tiere oft ausstoßen, zusätzlich zu einem trillenden Laut. 
-        Deshalb kann man ihre Geräusche manchmal leicht mit Vogelrufen verwechseln.
+        The English name comes from the loud “chip” call that these animals often make, in addition to a trilling sound.
+        That's why their sounds can sometimes be easily confused with bird calls.
       </p>
     </RevealImage>
     
 </HighlightSection>
 
+## See your own voice
 
+A **spectrogram** shows which sounds are currently audible: low frequencies at the bottom, high frequencies at the top, and time passing from left to right. In the examples above, you see the image of the whole recording with a line marking the current position.
 
+Try it with your own microphone – speak, whistle, or sing and watch how the image changes!
+
+<HighlightSection
+  title="Your live spectrogram"
+  color="green">
+  <MicSpectrogram label="Your microphone (the last 5 seconds)" />
+</HighlightSection>

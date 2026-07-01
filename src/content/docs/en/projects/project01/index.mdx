@@ -1,0 +1,98 @@
+---
+title: The Listening Birdhouse
+description: Discover which birds are singing on your balcony or in your garden, and build your own bird station step by step with a Raspberry Pi and BirdNET.
+category: "Audio"
+tags: ["Crafting", "Raspberry-pi", "Citizen-Science", "Interactive", "Outdoor"]
+prev: false
+sidebar:
+  order: 1
+---
+
+import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
+
+import parts1 from "../../../../../assets/images/project01/overview/parts1.jpg";
+import parts3 from "../../../../../assets/images/project01/overview/parts3.jpg";
+import parts4 from "../../../../../assets/images/project01/overview/parts4.jpg";
+import vogelhaus1 from "../../../../../assets/images/project01/overview/vogelhaus1.jpg";
+
+<ImageCarousel
+  label="Pictures of the project components"
+  images={[
+    {
+      src: parts1,
+      alt: "Parts for the listening birdhouse",
+    },
+    {
+      src: parts3,
+      alt: "More parts for the listening birdhouse",
+    },
+    {
+      src: parts4,
+      alt: "More parts for the listening birdhouse",
+    },
+    {
+      src: vogelhaus1,
+      alt: "More parts for the listening birdhouse",
+    },
+  ]}
+/>
+
+Have you always been curious about what's singing on your balcony or in your garden?
+The listening birdhouse makes it possible!
+Inside it sits a small Raspberry Pi running BirdNET – an AI that recognizes bird songs.
+The system listens around the clock and shows you which species are chirping in your area.
+
+In this project, you build your own little bird station step by step.
+First you set up the SD card and the Raspberry Pi, install BirdNET-Pi, and then place the system in a suitable spot.
+After that, the station can record bird songs, evaluate them automatically, and display the detected species through a web interface.
+
+The project combines crafting, nature observation, and digital technology:
+out of just a few parts, you create a device that listens outdoors or at your window and helps you get to know the birdlife around you better.
+You can use it in the garden, on the balcony, or in another sheltered place.
+
+## What will you build?
+
+In the end you'll have a working BirdNET-Pi station with:
+
+- a Raspberry Pi as a small computer,
+- a microphone for recording bird songs,
+- BirdNET-Pi for automatically recognizing the species,
+- a web interface where you can view your observations,
+- an optional hotspot, in case the station will be placed outside your Wi-Fi range.
+
+## Steps
+<LinkCard
+  title="Required components"
+  href="./components/"
+  description="Here you'll find a list of the parts and materials you need."
+/>
+<br />
+<LinkCard
+  title="Set up the SD card"
+  href="./sd-setup/"
+  description="Install Raspberry Pi OS and prepare the Pi for its first start."
+/>
+<br />
+<LinkCard
+  title="Set up the Raspberry Pi"
+  href="./pi-setup/"
+  description="Connect to the Pi via SSH and install BirdNET-Pi."
+/>
+<br />
+<LinkCard
+  title="Set up a hotspot"
+  href="./hotspot-setup/"
+  description="Optional: Set up your own hotspot so the station stays reachable even without a known Wi-Fi network."
+/>
+<br />
+<LinkCard
+  title="Assemble the bird station"
+  href="./assembly/"
+  description="Find a suitable housing and place the Pi and microphone in a good spot."
+/>
+
+## Prior knowledge
+
+Basic computer skills are required; a little English is helpful.
+You can follow the guide step by step even without deep technical knowledge – but it will be easier if you already have experience with the console and basic programming.
+If you have any questions, feel free to reach out by email.
