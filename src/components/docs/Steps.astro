@@ -347,6 +347,16 @@ const initialCompleted = completed
     margin-top: 0;
   }
 
+  /* Der Nummern-Button wird per JS als erstes Kind vorangestellt, dadurch greift die
+     Regel oben nur noch auf den Button. Der eigentliche Inhalt (z. B. ein <p> aus einer
+     "loose" Liste, das ueber ".mdx-interpreter :where(p,...)" einen margin-top erhaelt)
+     muss aber buendig zur Schrittnummer starten – sonst beginnt er nach unten verschoben
+     unter der Nummer. Deshalb den oberen Abstand des ersten Inhalts nach dem Button
+     zuruecksetzen. */
+  [data-steps-root] > :is(ol, ul) > .steps__item > .steps__toggle + * {
+    margin-top: 0;
+  }
+
   [data-steps-root] > :is(ol, ul) > .steps__item > :last-child {
     margin-bottom: 0;
   }
@@ -412,4 +422,3 @@ const initialCompleted = completed
     }
   }
 </style>
-
