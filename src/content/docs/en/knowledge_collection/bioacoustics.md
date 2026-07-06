@@ -14,7 +14,7 @@ Or have you ever wondered what a dog’s bark means?
 
 ## Bioacoustics – What Does Nature Sound Like? What Does Bioacoustics Study?
 
-Buzzing bees, chirping crickets, chirping birds, and croaking frogs: Nature is full of sounds. Every habitat has its own **soundscape**. 
+Buzzing bees, chirping crickets, twittering birds, and croaking frogs: Nature is full of sounds. Every habitat has its own **soundscape**. 
 Bioacoustics studies these sounds produced by living creatures and their meaning. 
 It reveals what nature sounds like and what we can learn from it about animals and the environment.
 
