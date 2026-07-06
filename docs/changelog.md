@@ -2,6 +2,14 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-06 — Roadmap-/Doku-Planung erweitert (Agent)
+
+### Geändert
+- **Nur Planungsdoku, kein Code.** Neue Vorhaben aus einer kritischen Review aufgenommen.
+- `roadmap.md`: „Nie inline"-Durchsetzung, Import-Alias `@components/*`, **Heimische Vögel einbinden** (mit Artenvorschlägen: Eichelhäher, Star, Buchfink, Bunt-/Kleinspecht statt der nicht-heimischen Beispiele) und „Quellen & weiterführende Links" unter „Vor dem nächsten Release"; **Projekt-Steckbrief/Projektübersicht** und **Inline-Glossar** unter „Mittelfristig"; Quiz-UI als **noch ausstehend** markiert.
+- `todo.md`: neue Aufgaben #26–#32 (ProjectMeta-Steckbrief, Quellen-Sektion, Heimische Vögel, Roh-HTML→`Callout`, Import-Alias, Inline-Glossar, „nie inline" auf DE-Startseite).
+- `features.md`: Quizsystem-Status auf „UI noch ausstehend" präzisiert; neue geplante Einträge „Projekt-Steckbrief & Projektübersicht", „Wissenssammlung — Quellen & weiterführende Links", „Inline-Glossar".
+
 ## 2026-06-30 — Custom 404-Seite (zweisprachig, sauber) (Agent)
 
 ### Hinzugefügt

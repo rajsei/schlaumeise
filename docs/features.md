@@ -83,9 +83,30 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 ## Quizsystem
 
 **Beschreibung:** Interaktive Quizze zu Lerninhalten. Fragetypen: Single/Multiple Choice, Wahr/Falsch, Bild- und Audiofragen, Reihenfolgen, Zuordnungen.
-**Status:** 🟡 teilweise umgesetzt — Datenmodell (Zod-Schema), Loader mit Build-Validierung und Beispiel-Quiz vorhanden; UI-Komponenten und Routen geplant (siehe quiz-handbook.md).
+**Status:** 🟡 teilweise umgesetzt — **UI noch ausstehend.** Vorhanden sind nur Datenmodell (Zod-Schema), Loader mit Build-Validierung und ein Beispiel-Quiz; es gibt **keine spielbare Oberfläche und keine Route** — das Quizsystem ist für Nutzer:innen derzeit unsichtbar. `QuizPlayer`, Fragetyp-Komponenten und `quiz/[id]`-Routen sind geplant (siehe quiz-handbook.md, todo #12, roadmap „Mittelfristig").
 **Betroffene Bereiche:** `src/lib/quiz-schema.ts`, `src/lib/quizzes.ts`, `src/data/quizzes/`
 **Erweiterungsmöglichkeiten:** Neue Fragetypen über diskriminierte Union; Lückentext; Quiz-Empfehlung am Ende jeder Lernseite (`relatedDoc`).
+
+## Projekt-Steckbrief & Projektübersicht
+
+**Beschreibung:** Kompakte Einordnung jedes Projekts (Tabelle/Karte) mit Aufwand/Dauer, geschätzten Kosten, benötigten Computerkenntnissen und Betreuungsgrad (Kinder allein / mit Erwachsenen / nur betreut); zusätzlich eine sortier-/filterbare Übersichtsseite über alle Projekte.
+**Status:** 📋 geplant — datengetrieben über neue Frontmatter-Felder (`difficulty`, `cost`, `duration`, `skillLevel`, `supervision`, `ageMin`, `tools`, `indoorOutdoor`, `learningGoals`) + Zod-Schema; eine Komponente `ProjectMeta`.
+**Betroffene Bereiche:** künftig `src/content.config.ts`, `src/types/docs.ts`, `src/components/docs/ProjectMeta.astro`, Projekt-`index.mdx`
+**Erweiterungsmöglichkeiten:** Punkte-/Ampel-Skala (1–3), Legende, Sicherheitshinweise, Werkzeug-Checkliste, druckfreundliche Ansicht für Lehrkräfte — todo #26, roadmap „Mittelfristig".
+
+## Wissenssammlung — Quellen & weiterführende Links
+
+**Beschreibung:** Einheitlicher Block „Quellen & weiterführende Links" am Fuß jeder Wissensseite.
+**Status:** 📋 geplant — datengetrieben (Frontmatter `sources`/`links` + Zod + eine Komponente, Wiederverwendung `LinkCard`), damit kein rohes HTML im Content nötig ist.
+**Betroffene Bereiche:** künftig `src/content.config.ts`, `src/types/docs.ts`, eine Komponente, `src/content/docs/*/knowledge_collection/*`
+**Erweiterungsmöglichkeiten:** Zitierstil/Autor+Jahr; „zuletzt geprüft"-Datum — todo #27.
+
+## Inline-Glossar
+
+**Beschreibung:** Fachbegriffe im Fließtext per MDX-Komponente (`Term`/`Gloss`) mit Tooltip/Link auf das Begriffsverzeichnis.
+**Status:** 📋 geplant — verbessert Sprachniveau (Fachwörter bleiben erklärt) und aktiviert das bislang isolierte Glossar.
+**Betroffene Bereiche:** künftig `src/components/docs/`, `src/content/docs/`, `glossary/`
+**Erweiterungsmöglichkeiten:** automatische Verlinkung bekannter Begriffe beim Build — todo #31, roadmap „Mittelfristig".
 
 ## Lernfortschritt
 
