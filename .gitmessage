@@ -1,0 +1,17 @@
+# <type>(<scope>): <kurze Beschreibung, Imperativ, klein, ohne Punkt>   (max ~50 Zeichen)
+#
+# ── Body (optional): Was & Warum, nicht Wie. Zeilen ~72 Zeichen. ──
+#
+#
+# ── Footer (optional): Breaking Changes / Issues ──
+# BREAKING CHANGE: <was bricht>
+# Refs: #123   Closes: #123
+#
+# ─────────────────────────────────────────────────────────────
+# type:  feat | fix | docs | style | refactor | perf | test
+#        | chore | build | ci | content | i18n | a11y | revert
+# scope: components | pages | content | i18n | quizzes | audio
+#        | lib | styles | config | scripts | ci | deps | docs
+# ─────────────────────────────────────────────────────────────
+# Faustregel: "Wenn angewendet, wird dieser Commit <deine Zeile>".
+#   z. B. "Wenn angewendet, wird dieser Commit: füge Vogelquiz hinzu".
