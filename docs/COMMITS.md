@@ -14,9 +14,10 @@ Ziel: sinnvolle, durchsuchbare Historie. Wir nutzen **Conventional Commits**.
 
 Regeln für die Betreffzeile:
 
-- Imperativ, Gegenwart: „füge …", „behebe …" — nicht „hinzugefügt".
+- **Sprache: Englisch.** Alle Commit-Messages (Betreff und Body) werden auf Englisch geschrieben.
+- Imperativ, Gegenwart: „add …", „fix …" — nicht „added".
 - klein, kein Punkt am Ende, Ziel ≤ 50 Zeichen.
-- Test: „Wenn angewendet, wird dieser Commit **<betreff>**".
+- Test: „If applied, this commit will **<subject>**".
 
 ## Types
 
@@ -48,44 +49,44 @@ Scope ist optional, aber hilfreich. Ein Commit = eine logische Änderung.
 
 Feature:
 ```
-feat(quizzes): füge Vogelstimmen-Quiz mit Audio-Playback hinzu
+feat(quizzes): add bird call quiz with audio playback
 ```
 
 Bugfix mit Kontext:
 ```
-fix(i18n): korrigiere fehlenden EN-Fallback für Quiz-Titel
+fix(i18n): fix missing EN fallback for quiz titles
 
-Fehlende Keys fielen auf den rohen Schlüssel zurück statt auf DE.
-Nun greift der Locale-Fallback DE → EN sauber.
+Missing keys fell back to the raw key instead of DE.
+The locale fallback DE → EN now works correctly.
 
 Closes: #42
 ```
 
 Inhalt / neuer Vogel:
 ```
-content(birds): ergänze Amsel-Steckbrief samt Spektrogramm
+content(birds): add blackbird profile with spectrogram
 ```
 
 Refactor ohne Verhaltensänderung:
 ```
-refactor(lib): extrahiere Audio-Decoder in eigenes Modul
+refactor(lib): extract audio decoder into separate module
 ```
 
 Build / Abhängigkeit:
 ```
-build(deps): aktualisiere astro auf 5.16.12
+build(deps): update astro to 5.16.12
 ```
 
 CI / Hooks:
 ```
-ci: erzwinge Farb-Lint im pre-commit-Hook
+ci: enforce color lint in pre-commit hook
 ```
 
 Breaking Change:
 ```
-feat(config): stelle Locale-Routing auf [locale]-Segment um
+feat(config): switch locale routing to [locale] segment
 
-BREAKING CHANGE: alte /en/* URLs brauchen Redirects.
+BREAKING CHANGE: old /en/* URLs need redirects.
 ```
 
 ## Vorlage aktivieren

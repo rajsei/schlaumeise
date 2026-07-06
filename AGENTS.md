@@ -9,6 +9,11 @@ Diese Regeln gelten für jede automatisierte Änderung am Schlaumeise-Projekt. B
 3. `docs/features.md` — was existiert, was geplant ist
 4. Bei Content-Arbeit: `docs/content-handbook.md` · bei Quiz-Arbeit: `docs/quiz-handbook.md`
 
+## Commit-Regeln
+
+- Conventional Commits nach `docs/COMMITS.md`, Vorlage: `.gitmessage`.
+- **Alle Commit-Messages auf Englisch** (Betreff und Body) — Imperativ, klein, kein Punkt am Ende.
+
 ## Architekturregeln
 
 - **Bestehende Patterns verwenden.** Navigation wird in `src/config/docs-navigation.ts` deklariert und vom Resolver aufgelöst — niemals Navigations-HTML hartkodieren. URLs ausschließlich über `buildLocalizedUrl`/`withBase`/`resolveAssetUrl` bauen, niemals `/schlaumeise/…` hartkodieren. Sichtbare UI-Strings über das i18n-Dictionary, nie inline.

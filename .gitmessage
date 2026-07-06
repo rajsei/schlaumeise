@@ -1,4 +1,5 @@
-# <type>(<scope>): <kurze Beschreibung, Imperativ, klein, ohne Punkt>   (max ~50 Zeichen)
+# <type>(<scope>): <short description, English, imperative, lowercase, no period>   (max ~50 Zeichen)
+# Sprache: ENGLISCH — Betreff und Body immer auf Englisch schreiben.
 #
 # ── Body (optional): Was & Warum, nicht Wie. Zeilen ~72 Zeichen. ──
 #
@@ -13,5 +14,5 @@
 # scope: components | pages | content | i18n | quizzes | audio
 #        | lib | styles | config | scripts | ci | deps | docs
 # ─────────────────────────────────────────────────────────────
-# Faustregel: "Wenn angewendet, wird dieser Commit <deine Zeile>".
-#   z. B. "Wenn angewendet, wird dieser Commit: füge Vogelquiz hinzu".
+# Faustregel: "If applied, this commit will <deine Zeile>".
+#   z. B. "If applied, this commit will: add bird quiz".
