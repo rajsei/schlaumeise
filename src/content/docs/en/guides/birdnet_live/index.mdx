@@ -25,19 +25,112 @@ import bnLive01 from "../../../../../assets/images/birdnet-live/bn_live_01.jpg";
   </div>
 </div>
 
-Turn your smartphone into a powerful tool for automatic bird song recognition. With BirdNET Live, you can identify bird species in real time based on their songs and calls—without any additional hardware.
+>**BirdNET Live** is your companion for **recognizing bird sounds** – anytime and anywhere.
+Thanks to the powerful BirdNET+ AI, the entire analysis runs directly on your device.
+**No internet connection is required**, and your audio recordings and detections stay completely on your smartphone.
 
-The app uses the latest BirdNET+ AI model and analyzes ambient sounds directly on your device. All calculations are performed locally on your smartphone or tablet. Your audio recordings do not need to be uploaded to the cloud, so your data remains on your device at all times. Once the required models are installed, BirdNET Live works completely offline.
+With its various modes, BirdNET Live adapts to different use cases.
+You can **spontaneously explore the wildlife around you**, carry out **structured surveys**,
+**let the app run in the background while walking**, or use your **smartphone as a scheduled recording unit** for longer surveys.
+**Audio files you have already recorded** can also be analyzed directly on the device.
+The individual modes are presented in detail on the following pages.
 
-BirdNET Live was developed as a joint open-source project by the Cornell K. Lisa Yang Center for Conservation Bioacoustics and Chemnitz University of Technology. The app is designed for bird enthusiasts, citizen scientists, conservation projects, and researchers who want to record bird songs reliably and in a privacy-friendly manner.
+## BirdNET recognizes more than just birds
+
+Although the focus is on recognizing bird sounds, BirdNET Live now identifies considerably more animal groups.
+The app currently supports 9,789 animal species and identifies their sounds completely offline.
+In addition to the **8,927 bird species**, it can also recognize **268 mammals**, **340 amphibians**, and **254 insects**.
+This makes BirdNET Live one of the most comprehensive offline-capable applications for automatic animal sound recognition.
+
+> Of the roughly **11,000 bird species** known **worldwide**, BirdNET Live can currently recognize **8,927 species**.
+
+## Background
+
+BirdNET Live is the next generation of the **BirdNET app**.
+It is made possible by a new generation of optimized AI models that are small and efficient enough to run directly on modern smartphones.
+As a result, the app combines professional bioacoustic analysis with full offline functionality.
+
+BirdNET Live is the result of close interdisciplinary collaboration within the RangerSound project, funded by the German Federal Environmental Foundation (DBU).
+The goal of the project was to develop an AI-powered application that meets the demands of practical nature conservation and works reliably even under real-world conditions.
+
+To achieve this, conservation biologists from the University of Würzburg, rangers from the Bavarian Forest National Park, hardware experts from OekoFor, and AI researchers from Chemnitz University of Technology worked closely together.
+Experiences from day-to-day fieldwork fed directly into the development of the app.
+
+The result is a robust and practice-oriented open-source application designed specifically for field use.
+Combined with an external microphone, the smartphone can, for example, be stowed safely in a backpack or a waterproof bag while BirdNET Live continuously records and analyzes animal sounds in the background.
+This turns the smartphone into a powerful mobile bioacoustics system for research, nature conservation, and citizen science.
+
+
+## Overview of the modes
 
 Depending on your use case, various modes are available:
 
+**Live Mode** – Recognize animal sounds in real time. A live spectrogram and continuous detections make this mode ideal for spontaneously exploring nature.
+
+<LinkCard
+  title="Live Mode"
+  href="./live/"
+/>
+<br />
+
+**Point Count** – Carry out standardized, time-limited surveys at a fixed location. This mode is especially suited to scientific mapping and monitoring projects.
+
+<LinkCard
+  title="Point Count"
+  href="./point-count/"
+/>
+<br />
+
+**Survey Mode** – Document longer walks, field visits, or transects. The app records your route via GPS and links detections to their respective locations.
+
+<LinkCard
+  title="Survey Mode"
+  href="./survey/"
+/>
+<br />
+
+**ARU Mode (Autonomous Recording Unit)** – Turn your smartphone into an autonomous recording device. Scheduled recordings, for example at sunrise or sunset, enable long-term and unattended surveys in the field.
+
+<LinkCard
+  title="ARU Mode (Autonomous Recording Unit)"
+  href="./aru/"
+/>
+<br />
+
+**File Analysis** – Analyze existing audio recordings directly on your device. Supported formats include WAV, FLAC, MP3, and OGG files.
+
+**Explore** – Use the BirdNET Geo model to find out which animal species are expected at your current location and during the selected season.
+  You can also see which species you have already recorded.
+
+**Sessions** – Manage past sessions, review detections with spectrograms and audio playback, add metadata, and export the results in various formats.
+
+## FAQ
 
 
-- Live Mode – Identify bird calls in real time and watch as new identifications appear while you listen.
-- Point Count – Conduct time-limited surveys at a fixed location—ideal for standardized mapping.
-- Survey Mode – Document longer walks or transects with GPS support and continuous recording.
-- File Analysis – Analyze existing audio recordings directly on your device.
-- Explore – Find out which bird species are expected in your area and during the current season.
-- Session Library – Manage past recordings, review identifications, and export your results in various formats.
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="my-accordion-2" checked="checked" />
+  <div class="collapse-title font-semibold">Can the app work in the background?</div>
+  <div class="collapse-content text-sm">Yes. In the right mode, BirdNET Live can keep working in the background.
+    In **Survey Mode**, you can leave your smartphone in your pocket or backpack during a walk while the app continues to recognize and document animal sounds. </div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="my-accordion-2" checked="checked" />
+  <div class="collapse-title font-semibold">GPS doesn't work properly in Survey Mode.</div>
+  <div class="collapse-content text-sm">For Survey Mode to record your location correctly, location services must be enabled on your smartphone.
+  In addition, BirdNET Live needs permission to access your location in the background as well.
+To do this, open your **smartphone's settings** and go to **Apps → BirdNET Live → Permissions → Location**. Then select **"Allow all the time" (Android)** or enable **continuous location access (iOS)**.
+Only with this permission can BirdNET Live reliably record your route during a survey – even when the app is in the background or the display is turned off.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="my-accordion-2" />
+  <div class="collapse-title font-semibold">Where can I see which bird species I have already recorded?</div>
+  <div class="collapse-content text-sm"> Under **Explore**, you get an overview of all animal species expected at your current location and during the selected season. The BirdNET Geo model helps you discover and classify new species in a targeted way.
+    This section also shows you which species you have already detected with BirdNET Live. This way you can see at a glance which animals you have already recorded and which species are still missing from your personal collection.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="my-accordion-2" />
+  <div class="collapse-title font-semibold">Where can I see what I have already recorded?</div>
+  <div class="collapse-content text-sm">You can find all past surveys under **Sessions**.
+    This is where your completed sessions are stored, along with all recognized species.
+    You can review individual detections, listen to the associated audio recordings, view spectrograms, and export or share your data as needed.</div>
+</div>
