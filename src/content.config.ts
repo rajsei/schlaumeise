@@ -35,6 +35,15 @@ const docs = defineCollection({
   }),
 });
 
+// Startseiten-Fließtext je Sprache (src/content/home/<locale>.mdx).
+// Wird direkt als Komponente in die index-Seiten importiert, nicht geroutet;
+// die Deklaration verhindert nur die "auto-generierte Collection"-Warnung.
+const home = defineCollection({
+  type: "content",
+  schema: z.object({}).passthrough(),
+});
+
 export const collections = {
   docs,
+  home,
 };

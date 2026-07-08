@@ -2,6 +2,8 @@
 import schlaumeiseFull from "../assets/SchlaumeiseFull.svg";
 import { buildLocalizedUrl } from "../i18n/routing";
 import MainLayout from "../layouts/MainLayout.astro";
+import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
+import HomeBody from "../content/home/de.mdx";
 
 const locale = "de" as const;
 const hero = {
@@ -51,6 +53,14 @@ const hero = {
           loading="eager"
         />
       </div>
+    </div>
+  </section>
+
+  <section class="bg-base-100 py-10 md:py-16">
+    <div class="mx-auto w-full max-w-3xl px-4">
+      <MdxInterpreter>
+        <HomeBody />
+      </MdxInterpreter>
     </div>
   </section>
 </MainLayout>
