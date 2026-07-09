@@ -1,0 +1,76 @@
+---
+title: Einstellungen und Tipps
+sidebar:
+  order: 6
+next: false
+---
+
+Mit den richtigen Einstellungen und einer geeigneten Aufnahmeumgebung kannst du die Erkennungsgenauigkeit von BirdNET Live deutlich verbessern. 
+Viele Parameter müssen nur einmal eingerichtet werden und können anschließend unverändert bleiben.
+
+## Tipps für bessere Erkennungen
+- Halte dein Smartphone möglichst ruhig und richte das Mikrofon auf die Schallquelle.
+- Vermeide Gespräche oder andere laute Geräusche während der Aufnahme.
+- Nutze den Live-Modus möglichst in einer ruhigen Umgebung mit wenig Verkehrslärm oder anderen Hintergrundgeräuschen.
+- Schütze das Mikrofon vor Wind, da Windgeräusche die Erkennung beeinträchtigen können.
+- Für die besten Ergebnisse empfiehlt sich ein externes Mikrofon mit Windschutz. Dieses verbessert die Aufnahmequalität insbesondere bei leisen oder weiter entfernten Tierstimmen.
+
+## Einstellungen
+
+### Mikrofon
+
+**Verstärkung**
+
+Mit der Mikrofonverstärkung kannst du die Lautstärke des Eingangssignals digital erhöhen. Dies ist hilfreich, wenn dein Mikrofon sehr leise aufnimmt.
+
+Eine zu hohe Verstärkung erhöht jedoch auch das Grundrauschen und kann die Erkennungsqualität verschlechtern. Passe den Wert daher nur an, wenn dies wirklich notwendig ist.
+
+**Hochpassfilter (High-Pass Filter)**
+
+Der Hochpassfilter unterdrückt tieffrequente Geräusche wie Wind, Straßenverkehr oder Trittschall. 
+Dadurch können Vogelstimmen in lauten Umgebungen besser hervorgehoben werden.
+
+Ist der Filter zu hoch eingestellt, können allerdings auch tiefe Tierstimmen abgeschwächt werden.
+
+**Mikrofon auswählen**
+
+Hier kannst du auswählen, welches Mikrofon BirdNET Live verwenden soll – beispielsweise das integrierte Mikrofon deines Smartphones oder ein angeschlossenes externes Mikrofon.
+
+### Inferenz
+
+In diesem Bereich legst du fest, wie das KI-Modell die aufgenommenen Geräusche analysiert.
+
+#### Fensterdauer
+
+Bestimmt die Länge des Fensters, das die KI auf einmal analysiert.
+
+#### Konfidenzschwellenwert
+
+Der Konfidenzschwellenwert legt fest, ab welcher Sicherheit eine Erkennung angezeigt wird.
+
+>Wichtig, ein **hoher Konfidenzwert ist keine Garantie für eine korrekte Erkennung**. KI kann immer Fehler machen.
+
+*Niedriger Wert:* Mehr Erkennungen, aber die Wahrscheinlichkeit für Fehlbestimmungen steigt.
+
+*Hoher Wert:* Weniger Fehlbestimmungen, dafür werden weniger Tierstimmen erkannt.
+
+#### Empfindlichkeit
+
+Die Empfindlichkeit beeinflusst, wie sensibel das KI-Modell auf Tierstimmen reagiert.
+
+Eine höhere Empfindlichkeit kann mehr Rufe erkennen, erhöht aber gleichzeitig die Wahrscheinlichkeit von Fehlbestimmungen.
+
+#### Inferenzrate
+
+Die Inferenzrate bestimmt, wie häufig BirdNET Live neue Analysen durchführt.
+
+Kurze Intervalle erfassen kurze Rufe besser, benötigen jedoch mehr Rechenleistung und Akku. 
+Längere Intervalle sparen Energie, können aber kurze Rufe übersehen.
+
+## Ansagen
+
+Auf Wunsch kann BirdNET Live neu erkannte Tierarten automatisch ansagen.
+
+Für diese Funktion empfiehlt sich die Verwendung von Kopfhörern. Dadurch werden die Sprachausgaben nicht erneut vom Mikrofon aufgenommen und beeinflussen die Analyse nicht. 
+Die Ansagen sind insbesondere hilfreich, wenn du dein Smartphone während einer Wanderung in der Tasche trägst.
+

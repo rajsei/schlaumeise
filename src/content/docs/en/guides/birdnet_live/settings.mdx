@@ -1,0 +1,75 @@
+---
+title: Settings and tips
+sidebar:
+  order: 6
+next: false
+---
+
+With the right settings and a suitable recording environment, you can significantly improve the detection accuracy of BirdNET Live.
+Many parameters only need to be set up once and can then be left unchanged.
+
+## Tips for better detections
+- Hold your smartphone as steady as possible and point the microphone at the sound source.
+- Avoid conversations or other loud noises during recording.
+- Whenever possible, use Live Mode in a quiet environment with little traffic noise or other background sounds.
+- Protect the microphone from wind, as wind noise can impair detection.
+- For the best results, we recommend an external microphone with a windshield. This improves recording quality especially for quiet or more distant animal sounds.
+
+## Settings
+
+### Microphone
+
+**Gain**
+
+With the microphone gain, you can digitally increase the volume of the input signal. This is helpful when your microphone records very quietly.
+
+However, too much gain also increases the background noise and can degrade detection quality. Therefore, only adjust the value when it is really necessary.
+
+**High-pass filter**
+
+The high-pass filter suppresses low-frequency sounds such as wind, road traffic, or footfall noise.
+This can help bird sounds stand out better in noisy environments.
+
+If the filter is set too high, however, low-pitched animal sounds may also be attenuated.
+
+**Select microphone**
+
+Here you can choose which microphone BirdNET Live should use – for example your smartphone's built-in microphone or a connected external microphone.
+
+### Inference
+
+In this area, you define how the AI model analyzes the recorded sounds.
+
+#### Window duration
+
+Determines the length of the window that the AI analyzes at once.
+
+#### Confidence threshold
+
+The confidence threshold defines the level of certainty at which a detection is shown.
+
+>Important: a **high confidence value is no guarantee of a correct detection**. AI can always make mistakes.
+
+*Low value:* More detections, but the probability of misidentifications increases.
+
+*High value:* Fewer misidentifications, but fewer animal sounds are detected.
+
+#### Sensitivity
+
+The sensitivity affects how sensitively the AI model responds to animal sounds.
+
+A higher sensitivity can detect more calls, but at the same time increases the likelihood of misidentifications.
+
+#### Inference rate
+
+The inference rate determines how often BirdNET Live runs new analyses.
+
+Short intervals capture brief calls better but require more computing power and battery.
+Longer intervals save energy but may miss short calls.
+
+## Announcements
+
+If you like, BirdNET Live can automatically announce newly detected animal species.
+
+For this feature, we recommend using headphones. That way the voice output is not picked up again by the microphone and does not affect the analysis.
+The announcements are especially helpful when you carry your smartphone in your pocket during a hike.
