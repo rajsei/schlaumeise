@@ -26,6 +26,7 @@ category: "Audio"             # optional — Kategorisierung
 tags: ["Basteln", "Outdoor"]  # optional — Schlagworte
 menu: false                   # optional — Desktop-Sidebar eingeklappt starten
 content: false                # optional — Inhalts-TOC ausblenden
+definition: Kurzdefinition    # optional — nur glossary/: Tooltip-Text des Inline-Glossars (Term)
 prev: false                   # optional — „Zurück“-Link unterdrücken
 next:                         # optional — „Weiter“-Link überschreiben
   link: projects/project01
@@ -95,7 +96,7 @@ Weitere Regeln:
 
 ## MDX-Bausteine
 
-In `.mdx`-Dateien stehen ohne Import zur Verfügung (registriert in den Catch-all-Routen): `Steps`, `LinkCard`, `Code`, `CodeBlock`, `Terminal`. Andere Komponenten (z. B. `ImageCarousel`, `RevealImage`, `HighlightSection`) müssen relativ importiert werden:
+In `.mdx`-Dateien stehen ohne Import zur Verfügung (registriert in den Catch-all-Routen): `Steps`, `LinkCard`, `Code`, `CodeBlock`, `Terminal`, `Term`. Andere Komponenten (z. B. `ImageCarousel`, `RevealImage`, `HighlightSection`) müssen relativ importiert werden:
 
 ```mdx
 import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
@@ -118,6 +119,17 @@ print("Welt")
 ```
 
 Tastenkombinationen: `<kbd class="kbd">Strg</kbd>+<kbd class="kbd">C</kbd>`.
+
+### Inline-Glossar (`Term`)
+
+Verlinkt einen Fachbegriff im Fließtext mit seinem Glossareintrag; die Kurzdefinition (Frontmatter `definition`, Fallback `description`) erscheint bei Hover/Fokus als Tooltip, Klick führt zur Glossarseite:
+
+```mdx
+Öffne die <Term id="console">Konsole</Term>.
+Selbstschließend übernimmt der Begriff den Glossar-Titel: <Term id="os" />
+```
+
+`id` ist der Dateiname des Glossareintrags ohne Endung (`src/content/docs/<locale>/glossary/<id>.md`); eine unbekannte `id` bricht den Build ab. Fehlt der Eintrag in der aktiven Sprache, fällt die Komponente auf die DE-Version zurück. Konvention: pro Seite nur die erste Erwähnung eines Begriffs auszeichnen.
 
 ## Zweisprachigkeit
 

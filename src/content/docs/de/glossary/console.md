@@ -1,6 +1,7 @@
 ---
 title: Konsole
 description: Was ist eine Konsole?
+definition: Textbasierte Oberfläche, über die du Befehle direkt an das Betriebssystem sendest — auch Kommandozeile oder Terminal genannt.
 sidebar:
   order: 3
 ---

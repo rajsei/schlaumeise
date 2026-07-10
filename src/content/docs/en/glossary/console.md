@@ -1,6 +1,7 @@
 ---
 title: Console
 description: What is a console?
+definition: Text-based interface for sending commands directly to the operating system — also called command line or terminal.
 sidebar:
   order: 3
 ---

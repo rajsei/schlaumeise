@@ -1,6 +1,7 @@
 ---
 title: Netzwerk, WLAN und Hotspot
 description: Was sind Netzwerk, WLAN und Hotspot?
+definition: Ein Verbund aus mindestens zwei Geräten, die Daten austauschen — kabelgebunden (LAN) oder kabellos (WLAN). Ein Hotspot ist ein Gerät, das ein WLAN aufspannt.
 sidebar:
   order: 2
 ---

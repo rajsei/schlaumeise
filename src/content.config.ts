@@ -34,6 +34,9 @@ const docs = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
+    // Kurzdefinition (1–2 Sätze) für das Inline-Glossar: wird von der
+    // Term-Komponente als Tooltip angezeigt. Nur für glossary/-Einträge gedacht.
+    definition: z.string().optional(),
     menu: z.boolean().optional(),
     content: z.boolean().optional(),
     sidebar: z

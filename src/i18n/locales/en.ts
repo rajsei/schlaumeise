@@ -24,6 +24,7 @@ export const en = {
     globalHeading: "Global",
     tocHeading: "Contents",
     noTocItems: "No headings available.",
+    glossaryTermHint: "(glossary)",
   },
   home: {
     heading: "Smartfinch",

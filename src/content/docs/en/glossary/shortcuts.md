@@ -1,6 +1,7 @@
 ---
 title: Copy and Paste Quickly
 description: Important keyboard shortcuts
+definition: Key combinations like Ctrl+C and Ctrl+V that let you execute commands faster — they work in many programs and in the console.
 next: false
 sidebar:
   order: 4

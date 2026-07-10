@@ -1,6 +1,7 @@
 ---
 title: Networks, Wi-Fi, and Hotspots
 description: What are networks, Wi-Fi, and hotspots?
+definition: A group of at least two devices exchanging data — wired (LAN) or wireless (Wi-Fi). A hotspot is a device providing a Wi-Fi network.
 sidebar:
   order: 2
 ---

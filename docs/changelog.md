@@ -2,6 +2,17 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-10 — Inline-Glossar: `Term`-Komponente (Agent)
+
+### Hinzugefügt
+- `src/components/docs/Term.astro`: verlinkt Fachbegriffe im Fließtext mit ihrem Glossareintrag; Kurzdefinition als reiner CSS-Tooltip (Hover + Tastaturfokus, `aria-describedby`/`role="tooltip"`, sr-only-Hinweis `docs.glossaryTermHint`), Klick/Tap führt zur Glossarseite. Unbekannte `id` bricht den Build ab; fehlende Übersetzung fällt aufs Default-Locale zurück. Registriert in beiden Catch-all-Routen — in MDX ohne Import nutzbar (todo #31)
+- Frontmatter-Feld `definition` (optional, für `glossary/`-Einträge) in `content.config.ts` + `types/docs.ts`; alle 4 Glossareinträge (DE+EN) mit Kurzdefinition versehen
+- i18n-Key `docs.glossaryTermHint` (de/en)
+
+### Geändert
+- Erste Begriffs-Erwähnungen auf `<Term>` umgestellt: project01 `pi-setup` (Betriebssystem, Konsole), `sd-setup` (Betriebssystem), `hotspot-setup` (WLAN) — jeweils DE+EN — sowie Springschool-`pi-setup` (EN, console)
+- `content-handbook.md`: Frontmatter-Referenz (`definition`) + Abschnitt „Inline-Glossar (`Term`)" unter MDX-Bausteine
+
 ## 2026-07-10 — Import-Aliase `@components/*` & Co. (Agent)
 
 ### Hinzugefügt

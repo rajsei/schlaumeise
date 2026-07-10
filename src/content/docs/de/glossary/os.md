@@ -1,6 +1,7 @@
 ---
 title: Betriebssystem
 description: Was ist ein Betriebssystem?
+definition: Die grundlegende Software, die einen Computer verwaltet — z. B. Windows, macOS, Linux oder Raspberry Pi OS.
 prev: false
 sidebar:
   order: 1

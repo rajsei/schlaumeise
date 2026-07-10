@@ -39,6 +39,8 @@ export interface DocsProjectMeta {
 export interface DocsEntryData {
   title: string;
   description?: string;
+  /** Kurzdefinition für das Inline-Glossar (Tooltip der Term-Komponente). */
+  definition?: string;
   menu?: boolean;
   content?: boolean;
   topicId?: string;

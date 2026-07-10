@@ -110,10 +110,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Inline-Glossar
 
-**Beschreibung:** Fachbegriffe im Fließtext per MDX-Komponente (`Term`/`Gloss`) mit Tooltip/Link auf das Begriffsverzeichnis.
-**Status:** 📋 geplant — verbessert Sprachniveau (Fachwörter bleiben erklärt) und aktiviert das bislang isolierte Glossar.
-**Betroffene Bereiche:** künftig `src/components/docs/`, `src/content/docs/`, `glossary/`
-**Erweiterungsmöglichkeiten:** automatische Verlinkung bekannter Begriffe beim Build — todo #31, roadmap „Mittelfristig".
+**Beschreibung:** Fachbegriffe im Fließtext per MDX-Komponente `Term` mit Tooltip (Kurzdefinition) und Link auf den Glossareintrag.
+**Status:** ✅ umgesetzt (2026-07-10) — `Term.astro` (CSS-Tooltip, kein Client-JS; `aria-describedby`/`role="tooltip"`, sichtbar bei Hover **und** Tastaturfokus; Touch: Tap folgt dem Link). Kurzdefinition aus neuem Frontmatter-Feld `definition` (Fallback `description`), Zod-Schema + `types/docs.ts` erweitert; unbekannte `id` bricht den Build ab, fehlende Übersetzung fällt auf DE zurück. Ohne Import in MDX verfügbar (Catch-all-Routen); alle 4 Glossareinträge (DE+EN) haben `definition`; eingesetzt in `pi-setup`, `sd-setup`, `hotspot-setup` (DE+EN) und Springschool-`pi-setup` (EN).
+**Betroffene Bereiche:** `src/components/docs/Term.astro`, `src/content.config.ts`, `src/types/docs.ts`, `src/i18n/locales/*` (`docs.glossaryTermHint`), `src/pages/[...slug].astro`, `src/pages/[locale]/[...slug].astro`, `src/content/docs/*/glossary/*`, diverse MDX-Inhalte
+**Erweiterungsmöglichkeiten:** automatische Verlinkung bekannter Begriffe beim Build; weitere Glossareinträge (z. B. Bioindikator, Ökosystem) für die Wissenssammlung — todo #31.
 
 ## Lernfortschritt
 

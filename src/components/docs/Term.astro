@@ -1,0 +1,134 @@
+---
+// Term — Inline-Glossar (docs/todo.md #31)
+//
+// Zweck: Verlinkt einen Fachbegriff im Fließtext mit seinem Glossareintrag.
+// Die Kurzdefinition (Frontmatter `definition`, Fallback `description`) wird
+// bei Hover/Fokus als CSS-Tooltip angezeigt; Klick/Tap führt zur Glossarseite
+// (funktioniert damit auch auf Touch-Geräten ohne Hover). Kein Client-JS.
+//
+// Props:
+//   id — Dateiname des Glossareintrags ohne Endung (z. B. "console" für
+//        src/content/docs/<locale>/glossary/console.md). Unbekannte id
+//        bricht den Build mit einer Fehlermeldung ab.
+//
+// Verwendung (nur MDX; registriert in src/pages/[...slug].astro und
+// src/pages/[locale]/[...slug].astro):
+//   Öffne die <Term id="console">Konsole</Term>.
+//   Selbstschließend übernimmt der Begriff den Glossar-Titel: <Term id="os" />
+//
+// Barrierefreiheit: Definition via aria-describedby (role="tooltip"), sicht-
+// bar auch bei Tastaturfokus; sr-only-Hinweis "(Glossar)" im Linknamen.
+import { defaultLocale } from "@i18n/config";
+import { buildLocalizedUrl, getLocaleFromPathname } from "@i18n/routing";
+import { getDictionary } from "@i18n";
+import { getDocsEntriesForLocale, getEntryDocPath } from "@lib/docs-content";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+const locale = getLocaleFromPathname(Astro.url.pathname);
+const t = getDictionary(locale).docs;
+
+async function findGlossaryEntry(entryLocale: typeof locale) {
+  const entries = await getDocsEntriesForLocale(entryLocale);
+  return entries.find((entry) => getEntryDocPath(entry) === `glossary/${id}`) ?? null;
+}
+
+// DE ist führend: fehlt der Eintrag in der aktiven Sprache, fällt der Begriff
+// auf das Default-Locale zurück statt den Build zu brechen.
+const glossaryEntry =
+  (await findGlossaryEntry(locale)) ??
+  (locale !== defaultLocale ? await findGlossaryEntry(defaultLocale) : null);
+
+if (!glossaryEntry) {
+  throw new Error(
+    `Term: kein Glossareintrag "glossary/${id}" gefunden (locale "${locale}"). ` +
+      `Erwartet: src/content/docs/${locale}/glossary/${id}.md`,
+  );
+}
+
+const definition = glossaryEntry.data.definition ?? glossaryEntry.data.description;
+
+if (!definition) {
+  throw new Error(
+    `Term: Glossareintrag "glossary/${id}" hat weder "definition" noch ` +
+      `"description" im Frontmatter — Tooltip wäre leer.`,
+  );
+}
+
+const href = buildLocalizedUrl(locale, `/glossary/${id}/`);
+const hasLabel = Astro.slots.has("default");
+const tooltipId = `term-tooltip-${crypto.randomUUID().slice(0, 8)}`;
+---
+
+<span class="term">
+  <a class="term__link" href={href} aria-describedby={tooltipId}
+    >{hasLabel ? <slot /> : glossaryEntry.data.title}<span class="sr-only"> {t.glossaryTermHint}</span></a
+  ><span class="term__tooltip" id={tooltipId} role="tooltip">{definition}</span>
+</span>
+
+<style>
+  .term {
+    position: relative;
+    display: inline;
+  }
+
+  .term__link {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.2em;
+    cursor: help;
+  }
+
+  .term__link:hover,
+  .term__link:focus-visible {
+    color: var(--color-accent-strong);
+    text-decoration-style: solid;
+  }
+
+  .term__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .term__tooltip {
+    position: absolute;
+    bottom: calc(100% + var(--spacing-2xs));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    width: max-content;
+    max-width: min(22rem, 80vw);
+    padding: var(--spacing-2xs) var(--spacing-sm);
+    background: var(--color-surface-panel);
+    color: var(--color-text);
+    border: var(--border-sm) solid var(--color-border-base);
+    border-radius: var(--radius-field);
+    box-shadow: var(--shadow-dropdown);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    text-align: left;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    pointer-events: none;
+  }
+
+  .term__link:hover + .term__tooltip,
+  .term__link:focus-visible + .term__tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .term__tooltip {
+      transition: none;
+    }
+  }
+</style>

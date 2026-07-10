@@ -24,6 +24,7 @@ export const de = {
     globalHeading: "Allgemein",
     tocHeading: "Inhalt",
     noTocItems: "Keine Überschriften vorhanden.",
+    glossaryTermHint: "(Glossar)",
   },
   home: {
     heading: "Schlaumeise",

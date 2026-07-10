@@ -1,6 +1,7 @@
 ---
 title: Schnell Kopieren und Einfügen
 description: Wichtige Tastaturkürzel
+definition: Tastenkombinationen wie Strg+C und Strg+V, mit denen du Befehle schneller ausführst — funktionieren in vielen Programmen und in der Konsole.
 next: false
 sidebar:
   order: 4
