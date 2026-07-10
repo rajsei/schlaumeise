@@ -1,6 +1,5 @@
 ---
 title: Survey
-description: A survey is a route-based recording mode for longer captures on the move, e.g. along a route.
 sidebar:
   order: 3
 ---
@@ -31,136 +30,38 @@ import bnLive04 from "../../../../../assets/images/birdnet-live/bn_live_04.jpg";
 </div>
 <br />
 
-## 1. Open Survey Mode
 
-1. Open the **BirdNET Live app**.
-2. Go to the **home screen**.
-3. Tap the **Survey** button.
+## How survey mode works
 
----
+1. Open **Survey Mode**.
+2. Complete the **setup wizard**.
+  - Enter the **details**. For the start location, it's advisable to use the current GPS position.
+  - Set the **parameters**. The default settings are suitable for most applications.
+  - Configure **species alerts**.
+    The app can alert you to certain species during the survey. For this feature, we recommend using headphones. That way the voice output is not picked up again by the microphone and does not affect the analysis.
+    The announcements are especially helpful when you carry your smartphone in your pocket during a hike.
+  - Review the **field tips**.
+  - Check the configuration and **start the survey**.
 
-## 2. Complete the setup wizard
-
-The survey is set up through a **wizard with five steps**.
-
-### Step 1: Enter details
-
-Enter the basic data for the survey:
-
-- **Survey name**
-- **Transect ID**
-- **Name of the observer**
-- **Start location**
-
-For the start location you can choose between:
-
-- GPS position
-- manually entered coordinates
-- no start location
-
-If needed, the app also shows a map picker here and notes about GPS permissions in the background.
-
----
-
-### Step 2: Set parameters
-
-Set the technical recording and detection parameters:
-
-- **Select microphone**
-- **Set inference rate**
-- **Set confidence threshold**
-- **Set GPS interval**
-- **Set maximum duration**
-- **Select recording mode**
-- **Set clip context for detection-only recordings**
-- **Select detection sampling mode**
-- optional: **set a Top-N limit per species**
-
-### Choose detection sampling
-
-Detection sampling controls which **audio clips** are saved. The actual detection data is always kept. Only for deleted audio data will there later be no playable clip in the Session Review.
-
-| Mode | Meaning | Suitable for |
-| --- | --- | --- |
-| **All** | Every clip is saved. | short surveys or complete post-analysis |
-| **Top N** | Only the N best clips per species are kept. | longer surveys with limited storage |
-| **Smart** | Like Top N, but additionally spatially distributed. Similar detections at the same location are reduced. | longer transects, fewer duplicates |
-
-For **Top N**, the default value is **10 clips per species**, adjustable from **1 to 50**. The limit applies per species, not globally.
-
----
-
-### Step 3: Set up species alerts
-
-Decide whether the app should send notifications during the survey. Possible modes:
-
-- **Off**: no alerts, default
-- **First in session**: alert on the first occurrence of each species in this survey
-- **First ever**: alert when the species is detected for the first time across all previous sessions
-- **Rare for this location**: alert for species with a low location probability
-- **Watchlist**: alert only for species on your own list
-
-There is also a **minimum confidence** for alerts. This cannot be more sensitive than the survey's detection threshold. The first time you enable an alert mode, Android asks for notification permission.
-
----
-
-### Step 4: Review field tips
-
-Read the short **checklist before starting**. This serves as a final check before recording.
-
-Worth checking:
-
-- microphone connected correctly
-- GPS active
-- enough battery
-- enough storage space
-- surroundings as quiet as possible
-- starting point of the transect reached
-
----
-
-### Step 5: Review the configuration and start the survey
-
-On the **Ready screen**, the app shows a summary of the active survey configuration. Check the settings and then start the survey.
-
----
-
-## 3. Monitor the live survey
-
-During the survey, the dashboard shows:
+3. **Monitor the live survey.** During the survey, the dashboard shows:
 
 - a **route map with detections**
 - a **spectrogram**
 - a **statistics view with a species breakdown**
 - a list of the **most recent detections**
 
-At the top you'll also find:
+4. **Let the survey run in the background.**
+5. **End the survey and evaluate it**
 
-- End survey
-- elapsed time
-- Open help
-- Open survey settings
+- In the live dashboard, tap the red button to **end the survey**.
+- The app saves the finished survey.
+- BirdNET Live then automatically opens the **Session Review**.
 
-Tapping a detection opens details about the species.
 
----
-
-## 4. Let the survey run in the background
-
-While recording, a persistent Android notification stays visible so that Android doesn't stop the audio pipeline. It shows, among other things:
-
-- elapsed time
-- number of detections
-- number of species
-- distance covered
-- the three most recent unique species with confidence and time
-
----
-
-## 5. End the survey and evaluate it
-
-1. In the live dashboard, tap **End survey**.
-2. The app saves the finished survey.
-3. BirdNET Live then automatically opens the **Session Review**.
-
-There you can review, listen to, and evaluate the detections later.
+<div role="alert" class="alert alert-warning ">
+  <span>For survey mode to record your location correctly, BirdNET Live needs permission to access your location in the background as well.
+To do this, open your **smartphone's settings** and go to **Apps → BirdNET Live → Permissions → Location**.
+Then select **"Allow all the time" (Android)** or enable **continuous location access (iOS)**.
+Only with this permission can BirdNET Live reliably record your route during a survey recording
+– even when the app is in the background or the display is turned off.</span>
+</div>
