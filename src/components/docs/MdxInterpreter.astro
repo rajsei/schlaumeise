@@ -65,6 +65,19 @@ import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
     list-style: decimal;
   }
 
+  /* Nummerierung fett darstellen (gilt auch fuer verschachtelte ol).
+     ::marker wird von aelteren Browsern ignoriert -> faellt auf normale Zahl zurueck. */
+  .mdx-interpreter :where(ol > li)::marker {
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Verschachtelte Stichpunkte: Strich statt Punkt. String-Werte fuer list-style-type
+     werden von aelteren Safari-Versionen ignoriert -> Fallback bleibt disc.
+     Muss NACH der ul-disc-Regel stehen (gleiche Spezifitaet, Reihenfolge entscheidet). */
+  .mdx-interpreter :where(li ul) {
+    list-style-type: "– ";
+  }
+
   .mdx-interpreter :where(li) {
     margin-top: var(--spacing-2xs);
     margin-bottom: var(--spacing-2xs);
