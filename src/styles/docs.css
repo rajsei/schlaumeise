@@ -380,6 +380,19 @@
     border-right: 0;
     border-radius: 0;
   }
+
+  /* Hero-Bloecke (MDX, Klasse .docs-hero-bleed): randlos zum Displayrand.
+     Negativer Aussenabstand hebt den Artikel-Innenabstand (--spacing-md) auf;
+     Rundung entfaellt fuer sauberen Full-Bleed (gleiches Muster wie
+     HighlightSection.astro). */
+  .docs-article .docs-hero-bleed {
+    /* daisyUI .hero hat width: 100%; mit beidseitig negativem Margin ist die Box
+       ueberbestimmt und der rechte Margin wird ignoriert -> Breite explizit um
+       beide Innenabstaende vergroessern. */
+    width: calc(100% + 2 * var(--spacing-md));
+    margin-inline: calc(-1 * var(--spacing-md));
+    border-radius: 0;
+  }
 }
 
 @media (min-width: 1280px) {
