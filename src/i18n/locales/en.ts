@@ -26,8 +26,12 @@ export const en = {
     noTocItems: "No headings available.",
   },
   home: {
-    title: "Welcome to {brand}",
-    intro: "English routes are always prefixed with /en/.",
+    heading: "Smartfinch",
+    tagline:
+      "Smartfinch is an interactive learning platform that uses AI and projects centered on native birds to teach children and teens about nature, the environment, computer science, and acoustics.",
+    ctaProject: "Our First Project",
+    ctaBirdnet: "Bird identification for your pocket",
+    logoAlt: "Smartfinch logo",
   },
   projectMeta: {
     heading: "Project fact sheet",

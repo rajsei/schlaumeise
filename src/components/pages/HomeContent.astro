@@ -1,22 +1,70 @@
 ---
+/**
+ * HomeContent — gemeinsamer Startseiten-Inhalt (Hero + MDX-Fliesstext), vollstaendig
+ * ueber das `locale`-Prop lokalisiert. Wird von beiden Startseiten genutzt
+ * (src/pages/index.astro = de, src/pages/en/index.astro = en), damit Markup und Stil
+ * nur an EINER Stelle leben. Saemtliche Texte kommen aus dem i18n-Dictionary
+ * (Sektion `home`), das Logo aus der Brand-Config, alle Links via buildLocalizedUrl.
+ * Der sprachspezifische Fliesstext (src/content/home/<locale>.mdx) wird als Slot
+ * uebergeben und durch MdxInterpreter typografisch aufbereitet.
+ *
+ * Beispiel:
+ *   <HomeContent locale="de">
+ *     <HomeBody />
+ *   </HomeContent>
+ */
 import { getBrandConfig } from "../../config/site.config";
-import { formatMessage, getDictionary } from "../../i18n";
+import { getDictionary } from "../../i18n";
+import { buildLocalizedUrl } from "../../i18n/routing";
 import type { Locale } from "../../i18n/config";
+import MdxInterpreter from "../docs/MdxInterpreter.astro";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const dictionary = getDictionary(locale);
+const t = getDictionary(locale).home;
 const brand = getBrandConfig(locale);
+
+const actions = [
+  { label: t.ctaProject, href: buildLocalizedUrl(locale, "/projects/project01/") },
+  { label: t.ctaBirdnet, href: buildLocalizedUrl(locale, "/guides/birdnet_live/") },
+];
 ---
 
-<section class="hero bg-base-200 min-h-[50vh]">
-  <div class="hero-content text-center">
-    <div class="max-w-xl">
-      <h1 class="text-3xl font-bold md:text-5xl">{formatMessage(dictionary.home.title, { brand: brand.name })}</h1>
-      <p class="py-6">{dictionary.home.intro}</p>
+<section class="hero bg-base-200 py-8 md:py-16">
+  <div class="hero-content w-full max-w-6xl flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+    <div class="w-full max-w-2xl text-left">
+      <h1 class="text-3xl font-bold leading-tight md:text-5xl">{t.heading}</h1>
+      <p class="mt-4 text-base leading-relaxed md:mt-6 md:text-lg">{t.tagline}</p>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
+        {
+          actions.map((action) => (
+            <a class="btn btn-primary btn-lg w-full gap-2 sm:w-auto" href={action.href}>
+              <span>{action.label}</span>
+              <span aria-hidden="true">{"→"}</span>
+            </a>
+          ))
+        }
+      </div>
     </div>
+
+    <div class="w-full max-w-md lg:max-w-lg">
+      <img
+        src={brand.logoFull.src}
+        alt={t.logoAlt}
+        class="h-auto w-full drop-shadow-md"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="bg-base-100 py-10 md:py-16">
+  <div class="mx-auto w-full max-w-3xl px-4">
+    <MdxInterpreter>
+      <slot />
+    </MdxInterpreter>
   </div>
 </section>

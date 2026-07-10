@@ -2,6 +2,20 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-10 — Startseiten DE/EN vereinheitlicht, „nie inline" auf der Startseite (Agent)
+
+### Hinzugefügt
+- Dictionary-Sektion `home` neu aufgebaut (de/en): `heading`, `tagline`, `ctaProject`, `ctaBirdnet`, `logoAlt` — alle sichtbaren Startseiten-Strings über i18n, nichts mehr inline (todo #32)
+- `site.config.ts`: `BrandConfig.logoFull` (Wort-Bild-Marke `SchlaumeiseFull.svg`/`SmartfinchFull.svg`) für die Hero-Sektion
+
+### Geändert
+- `HomeContent.astro` neu geschrieben als gemeinsame Startseiten-Komponente beider Locales (vorher ungenutzter Alt-Stand): Hero (Überschrift, Tagline, zwei CTA-Buttons, Logo) + MDX-Fliesstext als Slot via `MdxInterpreter`; Links via `buildLocalizedUrl`, nie hart gebaut (todo #11)
+- `src/pages/index.astro` (DE) und `src/pages/en/index.astro` (EN) auf dünne Wrapper reduziert (MainLayout + HomeContent + sprachspezifisches `content/home/<locale>.mdx`); Markup und Stil leben nur noch an EINER Stelle
+- EN-Startseite zeigt jetzt wie DE beide CTAs („Our First Project" + BirdNET-Live-Guide); beide Ziele existieren auf Englisch
+
+### Entfernt
+- Ungenutzte Dictionary-Keys `home.title`/`home.intro` (Platzhalter aus der Anfangsphase)
+
 ## 2026-07-10 — Projekt-Steckbrief `ProjectMeta` (Agent)
 
 ### Hinzugefügt

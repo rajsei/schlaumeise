@@ -31,6 +31,13 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 **Betroffene Bereiche:** `src/scripts/docs-drawer.ts`, `src/components/MenuDrawer.astro`, `src/components/Header.astro`, `src/styles/docs.css`
 **Erweiterungsmöglichkeiten:** Fokus-Falle im offenen Drawer; Wischgesten.
 
+## Startseite (Hero + Fließtext)
+
+**Beschreibung:** Gemeinsame Komponente `HomeContent.astro` für beide Locales: Hero mit Überschrift, Tagline, zwei CTA-Buttons (erstes Projekt, BirdNET-Live-Guide) und Wort-Bild-Marke (`BrandConfig.logoFull`), darunter sprachspezifischer MDX-Fließtext (`src/content/home/<locale>.mdx`) als Slot via `MdxInterpreter`. Alle sichtbaren Strings aus der Dictionary-Sektion `home`, alle Links via `buildLocalizedUrl`.
+**Status:** ✅ umgesetzt (2026-07-10 vereinheitlicht, vorher DE/EN dupliziert mit Inline-Strings)
+**Betroffene Bereiche:** `src/components/pages/HomeContent.astro`, `src/pages/index.astro`, `src/pages/en/index.astro`, `src/content/home/`, `src/i18n/locales/`, `src/config/site.config.ts`
+**Erweiterungsmöglichkeiten:** CTA-Ziele konfigurierbar machen (z. B. aus `docs-navigation.ts`), sobald weitere Projekte existieren.
+
 ## Zweisprachigkeit (de/en)
 
 **Beschreibung:** Deutsch ohne Präfix (Marke „Schlaumeise“), Englisch unter `/en/` (Marke „Smartfinch“) mit eigenem Logo; Dictionary-System mit aus `de` abgeleitetem Typ; Sprachumschalter im Header.

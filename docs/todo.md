@@ -15,7 +15,7 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 8 | ~~WAV-Audio konvertieren~~ **erledigt 2026-06-13**: 10 WAV → MP3 160 kbps, alle Audio-Dateinamen kebab-case (8,1 → 3,7 MB) | — | — | — |
 | 9 | A11y-Audit (Kontrast, Tastatur, `aria-current`) und Befunde beheben. Kontrast-Korrekturen laufen seit 2026-06-23 zentral über die Rollen-Tokens (`--text-*`/`--surface-*`/`--border-*`) statt verstreut in Komponenten | P2 | M | — |
 | 10 | ~~`workshop_materials` in Navigation aufnehmen~~ **erledigt 2026-06-13**: Topic „Workshops“ → „Spring School 2026“ | — | — | — |
-| 11 | Startseiten DE/EN in eine dictionary-getriebene `HomeContent` zusammenführen | P2 | M | — |
+| 11 | ~~Startseiten DE/EN in eine dictionary-getriebene `HomeContent` zusammenführen~~ **erledigt 2026-07-10**: `HomeContent.astro` rendert Hero + MDX-Fliesstext (Slot) für beide Locales; beide `index.astro` nur noch dünne Wrapper; volles Logo als `logoFull` in der Brand-Config; Links via `buildLocalizedUrl` (EN-Startseite hat jetzt auch den BirdNET-Live-Button) | — | — | — |
 | 12 | Quiz-UI: `QuizPlayer`, Fragetyp-Komponenten, Route `quiz/[id]` (+ en) | P3 | L | Datenmodell ✅ |
 | 13 | Quiz-Fortschritt in `localStorage` (`schlaumeise:quiz-progress:v1`) | P3 | M | #12 |
 | 14 | Pagefind-Suche integrieren | P3 | M | #1 |
@@ -36,4 +36,4 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 29 | **Rohes HTML aus MDX auslagern:** daisyUI-Alert-Block (`<div role="alert" class="alert …">`) in `de/projects/project01/pi-setup.mdx` (und weitere) in eine wiederverwendbare `Callout`/`Alert`-MDX-Komponente überführen — Konvention „Layout-Blöcke gehören in Komponenten" durchsetzen, damit Redakteur:innen kein HTML schreiben | P3 | M | — |
 | 30 | **Import-Alias einführen:** `@components/*`, `@lib/*`, `@assets/*`, `@i18n/*` in `tsconfig.json` (+ Astro-Auflösung), bestehende `../../../../../…`-Importe in MDX/Komponenten umstellen | P3 | S | — |
 | 31 | **Inline-Glossar:** MDX-Komponente (`Term`/`Gloss`) verlinkt Fachbegriffe im Fließtext per Tooltip/Link auf das Begriffsverzeichnis | P3 | M | — |
-| 32 | **„Nie inline" durchsetzen:** hartkodierte UI-Strings in `src/pages/index.astro` (Tagline, Button-Texte, Alt-Text) ins Dictionary; mit #11 (Startseiten vereinheitlichen) zusammenführen | P2 | M | #11 |
+| 32 | ~~**„Nie inline" durchsetzen:** hartkodierte UI-Strings in `src/pages/index.astro` (Tagline, Button-Texte, Alt-Text) ins Dictionary; mit #11 (Startseiten vereinheitlichen) zusammenführen~~ **erledigt 2026-07-10** (zusammen mit #11): Dictionary-Sektion `home` neu (heading, tagline, ctaProject, ctaBirdnet, logoAlt), ungenutzte Keys `home.title`/`home.intro` entfernt. **Offen:** „nie inline" als Regel im Review-Check verankern | — | — | #11 ✅ |

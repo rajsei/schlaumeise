@@ -1,66 +1,13 @@
 ---
-import schlaumeiseFull from "../assets/SchlaumeiseFull.svg";
-import { buildLocalizedUrl } from "../i18n/routing";
 import MainLayout from "../layouts/MainLayout.astro";
-import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
+import HomeContent from "../components/pages/HomeContent.astro";
 import HomeBody from "../content/home/de.mdx";
 
 const locale = "de" as const;
-const hero = {
-  tagline:
-    "Schlaumeise ist eine interaktive Lernplattform, die Kindern und Jugendlichen mithilfe von KI und Projekten rund um heimische Vögel Natur, Umwelt, Informatik und Akustik näherbringt.",
-  image: {
-    file: schlaumeiseFull,
-  },
-  actions: [
-    {
-      text: "Unser erstes Projekt",
-      link: "./projects/project01/",
-      icon: "right-arrow",
-    },
-    {
-      text: "Vogelerkennung für die Hosentasche",
-      link: "./guides/birdnet_live/",
-      icon: "right-arrow",
-    },
-  ],
-};
 ---
 
-<MainLayout locale={locale} title="schlaumeise">
-  <section class="hero bg-base-200 py-8 md:py-16">
-    <div class="hero-content w-full max-w-6xl flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
-      <div class="w-full max-w-2xl text-left">
-        <h1 class="text-3xl font-bold leading-tight md:text-5xl">Schlaumeise</h1>
-        <p class="mt-4 text-base leading-relaxed md:mt-6 md:text-lg">{hero.tagline}</p>
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
-          {
-            hero.actions.map((action) => (
-              <a class="btn btn-primary btn-lg w-full gap-2 sm:w-auto" href={action.link}>
-                <span>{action.text}</span>
-                {action.icon === "right-arrow" && <span aria-hidden="true">{"\u2192"}</span>}
-              </a>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="w-full max-w-md lg:max-w-lg">
-        <img
-          src={hero.image.file.src}
-          alt="Schlaumeise Logo"
-          class="h-auto w-full drop-shadow-md"
-          loading="eager"
-        />
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-base-100 py-10 md:py-16">
-    <div class="mx-auto w-full max-w-3xl px-4">
-      <MdxInterpreter>
-        <HomeBody />
-      </MdxInterpreter>
-    </div>
-  </section>
+<MainLayout locale={locale}>
+  <HomeContent locale={locale}>
+    <HomeBody />
+  </HomeContent>
 </MainLayout>

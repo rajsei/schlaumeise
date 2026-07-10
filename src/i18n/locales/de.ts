@@ -26,8 +26,12 @@ export const de = {
     noTocItems: "Keine Überschriften vorhanden.",
   },
   home: {
-    title: "Willkommen bei {brand}",
-    intro: "Deutsch ist die Standardsprache ohne Sprachpraefix.",
+    heading: "Schlaumeise",
+    tagline:
+      "Schlaumeise ist eine interaktive Lernplattform, die Kindern und Jugendlichen mithilfe von KI und Projekten rund um heimische Vögel Natur, Umwelt, Informatik und Akustik näherbringt.",
+    ctaProject: "Unser erstes Projekt",
+    ctaBirdnet: "Vogelerkennung für die Hosentasche",
+    logoAlt: "Schlaumeise-Logo",
   },
   projectMeta: {
     heading: "Projekt-Steckbrief",
