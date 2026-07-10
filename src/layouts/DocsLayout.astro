@@ -5,6 +5,7 @@ import Sidebar from "../components/ui-elements/Sidebar.astro";
 import DocsTOC from "../components/docs/DocsTOC.astro";
 import DocsPagination from "../components/docs/DocsPagination.astro";
 import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
+import ProjectMeta from "../components/docs/ProjectMeta.astro";
 import ZoomableDocsImages from "../components/docs/ZoomableDocsImages.astro";
 
 import MainLayout from "./MainLayout.astro";
@@ -61,6 +62,8 @@ const pagination = resolveDocsPagination({
               <h1>{entry.data.title}</h1>
               {entry.data.description && <p>{entry.data.description}</p>}
             </header>
+
+            {entry.data.project && <ProjectMeta locale={locale} meta={entry.data.project} />}
 
             {
               showContentToc && (

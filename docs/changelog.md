@@ -2,6 +2,19 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-10 — Projekt-Steckbrief `ProjectMeta` (Agent)
+
+### Hinzugefügt
+- `src/components/docs/ProjectMeta.astro`: Steckbrief-Karte (Kachel-Grid) mit Ampel-Punkteskala (1–3) für Schwierigkeit/Computerkenntnisse, Betreuungsgrad-Badge, Kacheln für Dauer/Kosten/Alter/Ort, optionalen Werkzeug-/Lernziel-Chips und Sicherheitshinweis; Inline-SVG-Icons (Tabler, MIT), kein Client-JS
+- `content.config.ts` + `types/docs.ts`: optionales Frontmatter-Objekt `project` (`difficulty`, `skillLevel`, `duration`, `cost`, `supervision`, `ageMin`, `indoorOutdoor`, `tools`, `learningGoals`, `safetyNotes`) mit Zod-Validierung beim Build
+- Dictionary-Sektion `projectMeta` (de/en) — alle sichtbaren Labels über i18n, nichts inline
+- `projects/project01/index.mdx` (DE + EN): `project`-Frontmatter befüllt
+
+### Geändert
+- `DocsLayout.astro` rendert `ProjectMeta` automatisch zwischen Seitenkopf und Inhalt, sobald `entry.data.project` gesetzt ist
+- `todo.md` #26 und `roadmap.md` „Mittelfristig": Steckbrief-Teil als erledigt markiert; **Projekt-Übersichtsseite bleibt offen**
+- `content-handbook.md`: neues Frontmatter-Feld `project` dokumentiert
+
 ## 2026-07-06 — Roadmap-/Doku-Planung erweitert (Agent)
 
 ### Geändert

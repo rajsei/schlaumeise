@@ -9,6 +9,26 @@ const paginationOverrideSchema = z.union([
   }),
 ]);
 
+// Projekt-Steckbrief (docs/roadmap.md "Projekt-Steckbrief & Projektübersicht"):
+// kompakte Einordnung eines Projekts auf seiner index-Seite. Wird von
+// DocsLayout automatisch als ProjectMeta-Karte gerendert, sobald `project`
+// im Frontmatter gesetzt ist. Skalen (difficulty/skillLevel): 1 = leicht /
+// keine Vorkenntnisse, 2 = mittel / Grundkenntnisse, 3 = anspruchsvoll /
+// Fortgeschritten. Freitextfelder (duration, cost, …) sind lokalisiert und
+// stehen je Sprachversion im jeweiligen Frontmatter.
+const projectMetaSchema = z.object({
+  difficulty: z.number().int().min(1).max(3),
+  skillLevel: z.number().int().min(1).max(3),
+  duration: z.string(),
+  cost: z.string(),
+  supervision: z.enum(["alone", "adults", "supervised"]),
+  ageMin: z.number().int().positive(),
+  indoorOutdoor: z.enum(["indoor", "outdoor", "both"]),
+  tools: z.array(z.string()).optional(),
+  learningGoals: z.array(z.string()).optional(),
+  safetyNotes: z.string().optional(),
+});
+
 const docs = defineCollection({
   type: "content",
   schema: z.object({
@@ -32,6 +52,7 @@ const docs = defineCollection({
     tags: z.array(z.string()).optional(),
     prev: paginationOverrideSchema.optional(),
     next: paginationOverrideSchema.optional(),
+    project: projectMetaSchema.optional(),
   }),
 });
 

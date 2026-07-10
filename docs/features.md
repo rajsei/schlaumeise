@@ -89,10 +89,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Projekt-Steckbrief & Projektübersicht
 
-**Beschreibung:** Kompakte Einordnung jedes Projekts (Tabelle/Karte) mit Aufwand/Dauer, geschätzten Kosten, benötigten Computerkenntnissen und Betreuungsgrad (Kinder allein / mit Erwachsenen / nur betreut); zusätzlich eine sortier-/filterbare Übersichtsseite über alle Projekte.
-**Status:** 📋 geplant — datengetrieben über neue Frontmatter-Felder (`difficulty`, `cost`, `duration`, `skillLevel`, `supervision`, `ageMin`, `tools`, `indoorOutdoor`, `learningGoals`) + Zod-Schema; eine Komponente `ProjectMeta`.
-**Betroffene Bereiche:** künftig `src/content.config.ts`, `src/types/docs.ts`, `src/components/docs/ProjectMeta.astro`, Projekt-`index.mdx`
-**Erweiterungsmöglichkeiten:** Punkte-/Ampel-Skala (1–3), Legende, Sicherheitshinweise, Werkzeug-Checkliste, druckfreundliche Ansicht für Lehrkräfte — todo #26, roadmap „Mittelfristig".
+**Beschreibung:** Kompakte Einordnung jedes Projekts als Kachel-Karte am Seitenanfang: Schwierigkeit und Computerkenntnisse als Ampel-Punkteskala (1–3, grün/gelb/rot), Dauer, Kosten, Alter, Ort, Betreuungsgrad-Badge (Kinder allein / mit Erwachsenen / nur betreut), optionale Werkzeug-/Lernziel-Chips und Sicherheitshinweis; zusätzlich (noch offen) eine sortier-/filterbare Übersichtsseite über alle Projekte.
+**Status:** 🟡 teilweise umgesetzt (2026-07-10) — **Steckbrief fertig:** Frontmatter-Objekt `project` (`difficulty`, `skillLevel`, `duration`, `cost`, `supervision`, `ageMin`, `indoorOutdoor`, `tools`, `learningGoals`, `safetyNotes`) mit Zod-Schema; `ProjectMeta.astro` wird von `DocsLayout` automatisch gerendert, sobald `project` gesetzt ist; Labels vollständig im i18n-Dictionary (`projectMeta`, de/en); eingesetzt auf `projects/project01` (DE + EN). **Übersichts-/Vergleichsseite noch ausstehend.**
+**Betroffene Bereiche:** `src/content.config.ts`, `src/types/docs.ts`, `src/components/docs/ProjectMeta.astro`, `src/layouts/DocsLayout.astro`, `src/i18n/locales/*`, Projekt-`index.mdx`
+**Erweiterungsmöglichkeiten:** Projekt-Übersichtsseite (sortier-/filterbar, skaliert ab `project02`), Legende, druckfreundliche Ansicht für Lehrkräfte — todo #26, roadmap „Mittelfristig".
 
 ## Wissenssammlung — Quellen & weiterführende Links
 

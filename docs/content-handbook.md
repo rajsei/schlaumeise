@@ -35,6 +35,28 @@ next:                         # optional — „Weiter“-Link überschreiben
 
 Nur diese Felder sind erlaubt. Neue Felder müssen zuerst in `src/content.config.ts` (Zod-Schema) und `src/types/docs.ts` ergänzt werden — unbekannte Felder werden sonst stillschweigend verworfen.
 
+### Projekt-Steckbrief (`project`, nur Projekt-`index`-Seiten)
+
+Setzt eine Projekt-Übersichtsseite das Feld `project`, rendert das Layout automatisch eine Steckbrief-Karte zwischen Seitenkopf und Inhalt (Komponente `ProjectMeta`, kein Import nötig):
+
+```yaml
+project:
+  difficulty: 2               # PFLICHT — Schwierigkeit 1–3 (1 leicht · 2 mittel · 3 anspruchsvoll)
+  skillLevel: 2               # PFLICHT — Computerkenntnisse 1–3 (1 keine · 2 Grundkenntnisse · 3 Fortgeschritten)
+  duration: "2–3 Nachmittage" # PFLICHT — Freitext, pro Sprache übersetzen
+  cost: "ca. 60–120 €"        # PFLICHT — Freitext, pro Sprache übersetzen
+  supervision: adults         # PFLICHT — alone | adults | supervised
+  ageMin: 10                  # PFLICHT — empfohlenes Mindestalter
+  indoorOutdoor: both         # PFLICHT — indoor | outdoor | both
+  tools:                      # optional — Chips „Das brauchst du"
+    - Raspberry Pi
+  learningGoals:              # optional — Chips „Das lernst du"
+    - KI verstehen
+  safetyNotes: "…"            # optional — Sicherheitshinweis (gelber Kasten)
+```
+
+Die Skalen erscheinen als Ampel-Punkte (grün/gelb/rot), `supervision` als Badge. Alle festen Beschriftungen kommen aus dem i18n-Dictionary (`projectMeta` in `src/i18n/locales/`) — in beiden Sprachversionen dieselben Feldwerte verwenden, nur Freitexte (`duration`, `cost`, `tools`, `learningGoals`, `safetyNotes`) übersetzen.
+
 ## Bilder einbinden
 
 Alle Inhaltsbilder liegen in `src/assets/images/<themenbereich>/<seite>/` und laufen durch die Astro-Bildoptimierung (`astro:assets`: WebP-Konvertierung, Größenanpassung, Hashing). Dateinamen kebab-case bzw. nummeriert (`01.png`, `02.png` …). `public/` ist nur noch für Dateien, die unverändert ausgeliefert werden müssen (z. B. `favicon.svg`).

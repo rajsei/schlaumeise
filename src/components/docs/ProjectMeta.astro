@@ -1,0 +1,324 @@
+---
+// ProjectMeta — Projekt-Steckbrief als Kachel-Karte (docs/roadmap.md
+// "Projekt-Steckbrief & Projektübersicht").
+//
+// Zweck: kompakte Einordnung eines Projekts (Schwierigkeit, Dauer, Kosten,
+// Computerkenntnisse, Alter, Ort) mit Ampel-Punkteskala (1–3), optionalen
+// Werkzeug-/Lernziel-Chips und Sicherheitshinweis. Wird von DocsLayout
+// automatisch am Seitenanfang gerendert, sobald eine Projekt-index-Seite
+// das Frontmatter-Feld `project` setzt (Schema: src/content.config.ts).
+//
+// Props:
+//   locale — aktive Sprache (Labels kommen aus dem i18n-Dictionary)
+//   meta   — validiertes `project`-Frontmatter (DocsProjectMeta)
+//
+// Verwendung (DocsLayout):
+//   {entry.data.project && <ProjectMeta locale={locale} meta={entry.data.project} />}
+import { formatMessage, getDictionary } from "../../i18n";
+import type { Locale } from "../../i18n/config";
+import type {
+  DocsProjectMeta,
+  ProjectMetaLevel,
+  ProjectMetaLocation,
+  ProjectMetaSupervision,
+} from "../../types/docs";
+
+interface Props {
+  locale: Locale;
+  meta: DocsProjectMeta;
+}
+
+const { locale, meta } = Astro.props;
+const t = getDictionary(locale).projectMeta;
+
+const clampLevel = (value: number): ProjectMetaLevel =>
+  Math.min(3, Math.max(1, Math.round(value))) as ProjectMetaLevel;
+
+const difficulty = clampLevel(meta.difficulty);
+const skillLevel = clampLevel(meta.skillLevel);
+
+const levelLabels: Record<ProjectMetaLevel, string> = {
+  1: t.level1,
+  2: t.level2,
+  3: t.level3,
+};
+
+const skillLabels: Record<ProjectMetaLevel, string> = {
+  1: t.skill1,
+  2: t.skill2,
+  3: t.skill3,
+};
+
+const supervisionLabels: Record<ProjectMetaSupervision, string> = {
+  alone: t.supervisionAlone,
+  adults: t.supervisionAdults,
+  supervised: t.supervisionSupervised,
+};
+
+const locationLabels: Record<ProjectMetaLocation, string> = {
+  indoor: t.locationIndoor,
+  outdoor: t.locationOutdoor,
+  both: t.locationBoth,
+};
+
+// Tabler-Icons (MIT), outline, 24×24, stroke: currentColor.
+const icons: Record<string, string[]> = {
+  levels: ["M3 12h6v8h-6z", "M9 8h6v12h-6z", "M15 4h6v16h-6z"],
+  clock: ["M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0", "M12 7v5l3 3"],
+  coin: ["M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0", "M15.5 9a4 4 0 1 0 0 6", "M7 10.5h5", "M7 13.5h5"],
+  cpu: ["M5 5h14v14h-14z", "M9 9h6v6h-6z", "M3 10h2", "M3 14h2", "M10 3v2", "M14 3v2", "M21 10h-2", "M21 14h-2", "M10 21v-2", "M14 21v-2"],
+  user: ["M12 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0", "M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"],
+  pin: ["M9 11a3 3 0 1 0 6 0a3 3 0 1 0 -6 0", "M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"],
+  users: ["M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0", "M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2", "M16 3.13a4 4 0 0 1 0 7.75", "M21 21v-2a4 4 0 0 0 -3 -3.85"],
+  tool: ["M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5"],
+  target: ["M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0", "M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0", "M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"],
+  alert: ["M12 9v4", "M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.871l-8.106 -13.534a1.914 1.914 0 0 0 -3.274 0z", "M12 16h.01"],
+};
+
+interface Tile {
+  icon: string;
+  label: string;
+  text: string;
+  level?: ProjectMetaLevel;
+}
+
+const tiles: Tile[] = [
+  { icon: "levels", label: t.difficulty, text: levelLabels[difficulty], level: difficulty },
+  { icon: "clock", label: t.duration, text: meta.duration },
+  { icon: "coin", label: t.cost, text: meta.cost },
+  { icon: "cpu", label: t.skillLevel, text: skillLabels[skillLevel], level: skillLevel },
+  { icon: "user", label: t.age, text: formatMessage(t.ageValue, { age: String(meta.ageMin) }) },
+  { icon: "pin", label: t.location, text: locationLabels[meta.indoorOutdoor] },
+];
+
+const chipGroups = [
+  { icon: "tool", heading: t.toolsHeading, items: meta.tools ?? [] },
+  { icon: "target", heading: t.goalsHeading, items: meta.learningGoals ?? [] },
+].filter((group) => group.items.length > 0);
+
+const dotSlots: ProjectMetaLevel[] = [1, 2, 3];
+---
+
+<section class="project-meta" aria-label={t.heading}>
+  <header class="project-meta__header">
+    <p class="project-meta__eyebrow">{t.heading}</p>
+    <span class="project-meta__badge">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        {icons.users.map((d) => <path d={d} />)}
+      </svg>
+      {supervisionLabels[meta.supervision]}
+    </span>
+  </header>
+
+  <dl class="project-meta__grid">
+    {
+      tiles.map((tile) => (
+        <div class="project-meta__tile">
+          <dt class="project-meta__label">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              {icons[tile.icon].map((d) => <path d={d} />)}
+            </svg>
+            {tile.label}
+          </dt>
+          <dd class="project-meta__value">
+            {tile.level && (
+              <>
+                <span class={`project-meta__dots project-meta__dots--${tile.level}`} aria-hidden="true">
+                  {dotSlots.map((slot) => (
+                    <span class={`project-meta__dot${slot <= tile.level! ? " project-meta__dot--filled" : ""}`} />
+                  ))}
+                </span>
+                <span class="sr-only">{formatMessage(t.scaleOf, { value: String(tile.level) })},</span>
+              </>
+            )}
+            <span>{tile.text}</span>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  {
+    chipGroups.map((group) => (
+      <div class="project-meta__chip-group">
+        <p class="project-meta__label">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            {icons[group.icon].map((d) => <path d={d} />)}
+          </svg>
+          {group.heading}
+        </p>
+        <ul class="project-meta__chips" aria-label={group.heading}>
+          {group.items.map((item) => (
+            <li class="project-meta__chip">{item}</li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+
+  {
+    meta.safetyNotes && (
+      <p class="project-meta__safety" role="note">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          {icons.alert.map((d) => <path d={d} />)}
+        </svg>
+        <span>
+          <strong>{t.safetyLabel}:</strong> {meta.safetyNotes}
+        </span>
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    border: var(--border-sm) solid var(--color-border-base);
+    border-radius: var(--radius-box);
+    background: var(--color-surface-panel);
+    padding: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  .project-meta svg {
+    width: 1em;
+    height: 1em;
+    flex: none;
+  }
+
+  .project-meta__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .project-meta__eyebrow {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em; /* bespoke: dezente Sperrung der Eyebrow-Zeile */
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .project-meta__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-3xs);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent-strong);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-3xs) var(--spacing-xs);
+  }
+
+  .project-meta__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--spacing-2xs);
+    margin: 0;
+  }
+
+  .project-meta__tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xs);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-inset);
+    padding: var(--spacing-2xs) var(--spacing-xs);
+  }
+
+  .project-meta__label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3xs);
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .project-meta__value {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2xs);
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-strong);
+  }
+
+  .project-meta__dots {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-3xs);
+  }
+
+  .project-meta__dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: var(--radius-pill);
+    border: var(--border-sm) solid var(--color-border-base);
+  }
+
+  .project-meta__dot--filled {
+    background: var(--project-meta-dot-color);
+    border-color: var(--project-meta-dot-color);
+  }
+
+  .project-meta__dots--1 {
+    --project-meta-dot-color: var(--color-success);
+  }
+
+  .project-meta__dots--2 {
+    --project-meta-dot-color: var(--color-warning);
+  }
+
+  .project-meta__dots--3 {
+    --project-meta-dot-color: var(--color-error);
+  }
+
+  .project-meta__chip-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xs);
+  }
+
+  .project-meta__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-meta__chip {
+    border: var(--border-sm) solid var(--color-border-base);
+    border-radius: var(--radius-pill);
+    padding: var(--spacing-3xs) var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+  }
+
+  .project-meta__safety {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2xs);
+    margin: 0;
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--color-warning) 16%, transparent);
+    padding: var(--spacing-2xs) var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+  }
+
+  .project-meta__safety svg {
+    margin-top: var(--spacing-3xs);
+    color: var(--color-warning);
+  }
+</style>
