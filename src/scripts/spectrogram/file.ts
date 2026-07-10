@@ -4,7 +4,7 @@
  *
  * Selbst-initialisierend über `[data-spectrogram-file]`. Mehrere Instanzen pro Seite.
  */
-import type { ColormapName, SpectrogramRaster } from "../../types/spectrogram";
+import type { ColormapName, SpectrogramRaster } from "@types/spectrogram";
 import type { AxisLabels } from "./axes";
 import {
   clearGutters,

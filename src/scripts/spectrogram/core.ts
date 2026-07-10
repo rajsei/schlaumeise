@@ -2,7 +2,7 @@
  * Gemeinsamer Zeichen-Kern für beide Modi: Canvas-Setup (devicePixelRatio),
  * Layout (Plotbereich + Achsenstege), Einfärben von Rastern/Spalten.
  */
-import type { ColormapName, SpectrogramRaster } from "../../types/spectrogram";
+import type { ColormapName, SpectrogramRaster } from "@types/spectrogram";
 import { getLut } from "./colormap";
 
 export interface CanvasSetup {

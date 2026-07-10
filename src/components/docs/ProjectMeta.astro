@@ -14,14 +14,14 @@
 //
 // Verwendung (DocsLayout):
 //   {entry.data.project && <ProjectMeta locale={locale} meta={entry.data.project} />}
-import { formatMessage, getDictionary } from "../../i18n";
-import type { Locale } from "../../i18n/config";
+import { formatMessage, getDictionary } from "@i18n";
+import type { Locale } from "@i18n/config";
 import type {
   DocsProjectMeta,
   ProjectMetaLevel,
   ProjectMetaLocation,
   ProjectMetaSupervision,
-} from "../../types/docs";
+} from "@types/docs";
 
 interface Props {
   locale: Locale;

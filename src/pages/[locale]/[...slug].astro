@@ -1,14 +1,14 @@
 ---
-import DocsLayout from "../../layouts/DocsLayout.astro";
-import Steps from "../../components/docs/Steps.astro";
-import LinkCard from "../../components/docs/LinkCard.astro";
-import Code from "../../components/docs/Code.astro";
-import CodeBlock from "../../components/docs/CodeBlock.astro";
-import Terminal from "../../components/docs/Terminal.astro";
+import DocsLayout from "@layouts/DocsLayout.astro";
+import Steps from "@components/docs/Steps.astro";
+import LinkCard from "@components/docs/LinkCard.astro";
+import Code from "@components/docs/Code.astro";
+import CodeBlock from "@components/docs/CodeBlock.astro";
+import Terminal from "@components/docs/Terminal.astro";
 
-import { defaultLocale, locales, type Locale } from "../../i18n/config";
-import { createSlugParam, getDocsEntriesForLocale } from "../../lib/docs-content";
-import type { DocsEntry } from "../../types/docs";
+import { defaultLocale, locales, type Locale } from "@i18n/config";
+import { createSlugParam, getDocsEntriesForLocale } from "@lib/docs-content";
+import type { DocsEntry } from "@types/docs";
 
 interface Props {
   locale: Locale;

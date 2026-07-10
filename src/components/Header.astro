@@ -1,15 +1,16 @@
 ---
 import ThemeController from "./ui-elements/ThemeController.astro";
-import type { BrandConfig } from "../config/site.config";
-import { formatMessage, type Dictionary } from "../i18n";
-import type { Locale } from "../i18n/config";
-import { buildLocalizedUrl } from "../i18n/routing";
+import type { BrandConfig } from "@config/site.config";
+import { formatMessage, type Dictionary } from "@i18n";
+import type { Locale } from "@i18n/config";
+import { buildLocalizedUrl } from "@i18n/routing";
 
 interface Props {
   locale: Locale;
   dictionary: Dictionary;
   brand: BrandConfig;
-  languageSwitchHref: string;
+  /* null = keine Übersetzung vorhanden → Umschalter wird nicht gerendert */
+  languageSwitchHref: string | null;
 }
 
 const { locale, dictionary, brand, languageSwitchHref } = Astro.props;
@@ -87,13 +88,17 @@ function navLinkClass(href: string, extra: string[] = []): string {
     </ul>
   </div>
   <div class="navbar-end">
-    <a
-      class={"button-languageSwitch btn btn-ghost"}
-      href={languageSwitchHref}
-      aria-label={dictionary.a11y.switchLanguage}
-    >
-      <span class="global-nav__link_text">{dictionary.nav.switchTo}</span>
-    </a>
+    {
+      languageSwitchHref && (
+        <a
+          class={"button-languageSwitch btn btn-ghost"}
+          href={languageSwitchHref}
+          aria-label={dictionary.a11y.switchLanguage}
+        >
+          <span class="global-nav__link_text">{dictionary.nav.switchTo}</span>
+        </a>
+      )
+    }
     <ThemeController />
   </div>
 </div>

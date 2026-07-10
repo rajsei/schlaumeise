@@ -1,4 +1,4 @@
-import { withBase } from "../i18n/routing";
+import { withBase } from "@i18n/routing";
 
 const externalUrlPattern = /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i;
 

@@ -1,6 +1,6 @@
-import type { Locale } from "../i18n/config";
-import { buildLocalizedUrl, withBase } from "../i18n/routing";
-import type { DocsEntry, DocsPaginationOverride } from "../types/docs";
+import type { Locale } from "@i18n/config";
+import { buildLocalizedUrl, withBase } from "@i18n/routing";
+import type { DocsEntry, DocsPaginationOverride } from "@types/docs";
 import {
   navigation,
   type NavigationAutogenerateItem,
@@ -12,7 +12,7 @@ import {
   type NavigationTopicWithLink,
   type NavigationTopic,
   type TopicIconName,
-} from "../config/docs-navigation";
+} from "@config/docs-navigation";
 
 interface SidebarMeta {
   label?: string;

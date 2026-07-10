@@ -2,6 +2,20 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-10 — Import-Aliase `@components/*` & Co. (Agent)
+
+### Hinzugefügt
+- `tsconfig.json`: `baseUrl` + `paths` für `@assets/*`, `@components/*`, `@config/*`, `@content/*`, `@data/*`, `@i18n`/`@i18n/*`, `@layouts/*`, `@lib/*`, `@plugins/*`, `@scripts/*`, `@styles/*`, `@types/*` (Astro löst tsconfig-Aliase nativ auf, keine Vite-Konfiguration nötig); Konvention dokumentiert in `conventions.md` „Importe & Aliase" (todo #30)
+
+### Geändert
+- Alle 206 verzeichnisübergreifenden `../`-Importe in 54 Dateien unter `src/` (`.astro`, `.ts`, `.mjs`, `.mdx`) per Codemod auf Aliase umgestellt — inkl. der `../../../../../…`-Ketten in den MDX-Inhalten; Importe innerhalb desselben Teilbaums bleiben relativ (`./`). Root-`scripts/` und `astro.config.mjs` unverändert (laufen außerhalb der Vite-Pipeline)
+
+## 2026-07-10 — Sprachumschalter nur bei existierender Übersetzung (Agent)
+
+### Geändert
+- `MainLayout.astro`: prüft vor dem Bauen von `languageSwitchHref`, ob die aktuelle Docs-Seite im Alternativ-Locale existiert (`findDocEntryBySlug` gegen die Einträge des Alternativ-Locales); Nicht-Docs-Seiten (Home, 404) gelten als beidsprachig. Ohne Übersetzung: `languageSwitchHref = null`
+- `Header.astro`: Prop `languageSwitchHref` ist jetzt `string | null`; bei `null` wird der Umschalt-Button nicht gerendert — der Umschalter führt damit nie mehr auf eine 404 (bisher z. B. EN→DE auf den EN-only Springschool-Unterseiten oder DE→EN bei fehlender Übersetzung)
+
 ## 2026-07-10 — Startseiten DE/EN vereinheitlicht, „nie inline" auf der Startseite (Agent)
 
 ### Hinzugefügt

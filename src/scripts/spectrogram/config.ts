@@ -2,7 +2,7 @@
  * Single Source of Truth für Spektrogramm-Defaults.
  * Build-seitige STFT-Parameter liegen separat in scripts/spectrogram/precompute-spectrograms.mjs.
  */
-import type { ColormapName } from "../../types/spectrogram";
+import type { ColormapName } from "@types/spectrogram";
 
 export const DEFAULT_MIN_FREQUENCY = 0;
 export const DEFAULT_MAX_FREQUENCY = 20000;

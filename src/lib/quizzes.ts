@@ -1,4 +1,4 @@
-import type { Locale } from "../i18n/config";
+import type { Locale } from "@i18n/config";
 import { quizSchema, validateQuizIntegrity, type Quiz } from "./quiz-schema";
 
 /**

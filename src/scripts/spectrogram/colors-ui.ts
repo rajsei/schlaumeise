@@ -2,7 +2,7 @@
  * Verdrahtet die Zahnrad-Farbauswahl: Klick -> globale Palette setzen,
  * aktive Auswahl spiegeln. Wirkt global auf alle Instanzen (über settings.ts).
  */
-import type { ColormapName } from "../../types/spectrogram";
+import type { ColormapName } from "@types/spectrogram";
 import { getColormap, onColormapChange, setColormap } from "./settings";
 
 let initialized = false;

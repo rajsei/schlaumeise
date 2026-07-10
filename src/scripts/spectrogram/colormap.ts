@@ -2,7 +2,7 @@
  * Farbpaletten als 256×RGB-LUT. Aus wenigen Stützfarben linear interpoliert.
  * Eine LUT bildet einen normierten Wert 0..255 auf RGB ab.
  */
-import type { ColormapName } from "../../types/spectrogram";
+import type { ColormapName } from "@types/spectrogram";
 
 type Stop = [number, number, number]; // r,g,b 0..255
 

@@ -4,7 +4,7 @@
  *
  * Selbst-initialisierend über `[data-spectrogram-mic]`.
  */
-import type { ColormapName } from "../../types/spectrogram";
+import type { ColormapName } from "@types/spectrogram";
 import type { AxisLabels } from "./axes";
 import { clearGutters, drawFrequencyAxis, drawTimeAxisLive } from "./axes";
 import { computeLayout, createOffscreen, setupCanvas, writeColumn, type PlotLayout } from "./core";

@@ -1,5 +1,5 @@
 import { defaultLocale, isLocale, type Locale } from "./config";
-import { siteConfig } from "../config/site.config";
+import { siteConfig } from "@config/site.config";
 
 function ensureLeadingSlash(path: string): string {
   if (!path) {

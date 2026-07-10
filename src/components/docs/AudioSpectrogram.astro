@@ -13,7 +13,7 @@
  * scripts/spectrogram/precompute-spectrograms.mjs). Fehlt ein Raster, wird nur das
  * <audio> angezeigt.
  */
-import type { AudioSpectrogramProps } from "../../types/spectrogram";
+import type { AudioSpectrogramProps } from "@types/spectrogram";
 import {
   DEFAULT_COLORMAP,
   DEFAULT_FOLLOW_THRESHOLD,
@@ -21,9 +21,9 @@ import {
   DEFAULT_MAX_FREQUENCY,
   DEFAULT_MIN_FREQUENCY,
   DEFAULT_PIXELS_PER_SECOND,
-} from "../../scripts/spectrogram/config";
-import { getDictionary } from "../../i18n";
-import { getLocaleFromPathname } from "../../i18n/routing";
+} from "@scripts/spectrogram/config";
+import { getDictionary } from "@i18n";
+import { getLocaleFromPathname } from "@i18n/routing";
 import SpectrogramColorPicker from "./SpectrogramColorPicker.astro";
 
 const {
@@ -162,8 +162,8 @@ const uid = id ?? `spectrogram-${name}-${Math.random().toString(36).slice(2, 8)}
 </style>
 
 <script>
-  import { initFileSpectrograms } from "../../scripts/spectrogram/file";
-  import { initColorPickers } from "../../scripts/spectrogram/colors-ui";
+  import { initFileSpectrograms } from "@scripts/spectrogram/file";
+  import { initColorPickers } from "@scripts/spectrogram/colors-ui";
   initFileSpectrograms();
   initColorPickers();
 </script>

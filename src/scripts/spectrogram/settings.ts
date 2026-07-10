@@ -2,7 +2,7 @@
  * Globale Farbpalette: in localStorage persistiert, Änderungen per Custom-Event
  * an alle Spektrogramm-Instanzen der Seite verteilt (Pub/Sub).
  */
-import type { ColormapName } from "../../types/spectrogram";
+import type { ColormapName } from "@types/spectrogram";
 import {
   COLORMAP_CHANGE_EVENT,
   COLORMAP_STORAGE_KEY,

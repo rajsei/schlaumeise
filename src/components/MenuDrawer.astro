@@ -1,8 +1,8 @@
 ---
-import "../styles/docs.css";
-import type { Locale } from "../i18n/config";
-import { getDictionary } from "../i18n";
-import type { DocsEntry } from "../types/docs";
+import "@styles/docs.css";
+import type { Locale } from "@i18n/config";
+import { getDictionary } from "@i18n";
+import type { DocsEntry } from "@types/docs";
 import Sidebar from "./ui-elements/Sidebar.astro";
 
 interface Props {
@@ -41,7 +41,7 @@ const dictionary = getDictionary(locale);
 </section>
 
 <script>
-  import { initDocsDrawer } from "../scripts/docs-drawer";
+  import { initDocsDrawer } from "@scripts/docs-drawer";
 
   initDocsDrawer({
     shellSelector: "[data-global-docs-shell]",

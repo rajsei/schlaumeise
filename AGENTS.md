@@ -27,7 +27,7 @@ Diese Regeln gelten für jede automatisierte Änderung am Schlaumeise-Projekt. B
 
 - Frontmatter exakt nach Schema (`src/content.config.ts`); `title` ist Pflicht. Neue Felder zuerst in Schema **und** `src/types/docs.ts`, dann erst in Inhalten verwenden.
 - Dateinamen kebab-case, klein, **englisch**, keine Sonderzeichen/Umlaute (werden URL). Der Dateiname ist in allen Sprachversionen identisch (`de/…/birds.md` ↔ `en/…/birds.md`) — nur Inhalte werden übersetzt. Bestehende URLs nie ohne Redirect ändern (`redirects` in `astro.config.mjs`).
-- Bilder nach `src/assets/images/<themenbereich>/<seite>/` und per relativem Pfad (Markdown) bzw. Import (MDX/Komponenten) einbinden — läuft durch `astro:assets`. Niemals absolute `/schlaumeise/…`-Pfade. Jedes Bild mit Alt-Text (dekorativ: `alt=""`). `public/` nur für unveränderlich auszuliefernde Dateien (favicon).
+- Bilder nach `src/assets/images/<themenbereich>/<seite>/` und per relativem Pfad (Markdown) bzw. Import (MDX/Komponenten, via Alias `@assets/…` — nie `../`-Ketten, siehe `docs/conventions.md` „Importe & Aliase") einbinden — läuft durch `astro:assets`. Niemals absolute `/schlaumeise/…`-Pfade. Jedes Bild mit Alt-Text (dekorativ: `alt=""`). `public/` nur für unveränderlich auszuliefernde Dateien (favicon).
 - Neue Inhaltsverzeichnisse in `src/config/docs-navigation.ts` registrieren — sonst sind sie verwaist.
 - Deutsche Inhalte sind führend; englische Übersetzung wenn möglich gleich mitliefern (`src/content/docs/en/`, gleiche Pfadstruktur).
 

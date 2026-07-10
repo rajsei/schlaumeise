@@ -40,10 +40,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Zweisprachigkeit (de/en)
 
-**Beschreibung:** Deutsch ohne Präfix (Marke „Schlaumeise“), Englisch unter `/en/` (Marke „Smartfinch“) mit eigenem Logo; Dictionary-System mit aus `de` abgeleitetem Typ; Sprachumschalter im Header.
-**Status:** 🟡 teilweise umgesetzt — Infrastruktur vollständig, englische Inhalte fehlen fast komplett (nur Impressum); Umschalter führt daher meist auf 404.
-**Betroffene Bereiche:** `src/i18n/`, `src/config/site.config.ts`, `src/content/docs/en/`
-**Erweiterungsmöglichkeiten:** Fallback auf deutsche Inhalte oder Umschalter nur bei vorhandener Übersetzung anzeigen; weitere Sprachen über `locales`-Array.
+**Beschreibung:** Deutsch ohne Präfix (Marke „Schlaumeise“), Englisch unter `/en/` (Marke „Smartfinch“) mit eigenem Logo; Dictionary-System mit aus `de` abgeleitetem Typ; Sprachumschalter im Header. Der Umschalter wird nur gerendert, wenn die Zielseite existiert: `MainLayout` prüft via `findDocEntryBySlug`, ob im Alternativ-Locale ein Docs-Eintrag mit gleichem Doc-Pfad vorhanden ist (Nicht-Docs-Seiten wie Home/404 gelten als beidsprachig); fehlt die Übersetzung, erhält `Header` `languageSwitchHref: null` und lässt den Button weg — kein 404 mehr über den Umschalter.
+**Status:** 🟡 teilweise umgesetzt — Infrastruktur vollständig inkl. 404-sicherem Umschalter; englische Inhalte teilweise vorhanden.
+**Betroffene Bereiche:** `src/i18n/`, `src/config/site.config.ts`, `src/content/docs/en/`, `src/layouts/MainLayout.astro`, `src/components/Header.astro`
+**Erweiterungsmöglichkeiten:** Fallback auf deutsche Inhalte statt Ausblenden; weitere Sprachen über `locales`-Array.
 
 ## Theme-Umschaltung (hell/dunkel)
 

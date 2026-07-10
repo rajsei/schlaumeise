@@ -1,9 +1,9 @@
 import type { ImageMetadata } from "astro";
-import schlaumeiseLogo from "../assets/SchlaumeiseLogo.svg";
-import schlaumeiseFull from "../assets/SchlaumeiseFull.svg";
-import smartfinchLogo from "../assets/SmartfinchLogo.svg";
-import smartfinchFull from "../assets/SmartfinchFull.svg";
-import { type Locale } from "../i18n/config";
+import schlaumeiseLogo from "@assets/SchlaumeiseLogo.svg";
+import schlaumeiseFull from "@assets/SchlaumeiseFull.svg";
+import smartfinchLogo from "@assets/SmartfinchLogo.svg";
+import smartfinchFull from "@assets/SmartfinchFull.svg";
+import { type Locale } from "@i18n/config";
 
 type BrandKey = "schlaumeise" | "smartfinch";
 

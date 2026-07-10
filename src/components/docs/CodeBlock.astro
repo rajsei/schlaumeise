@@ -1,7 +1,7 @@
 ---
 import { Code } from "astro:components";
-import { parseLineSelection } from "../../plugins/code-block-meta.mjs";
-import { createDocsCodeTransformer } from "../../plugins/shiki-transformer-docs-code.mjs";
+import { parseLineSelection } from "@plugins/code-block-meta.mjs";
+import { createDocsCodeTransformer } from "@plugins/shiki-transformer-docs-code.mjs";
 import DocsCodeBlockStyles from "./DocsCodeBlockStyles.astro";
 
 interface Props {
@@ -142,7 +142,7 @@ const wrapperClass = [
 </figure>
 
 <script>
-  import "../../scripts/docs-code-copy";
+  import "@scripts/docs-code-copy";
 </script>
 
 <style is:global>

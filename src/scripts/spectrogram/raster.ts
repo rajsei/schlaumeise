@@ -2,7 +2,7 @@
  * Liest das vorberechnete .spec-Rasterformat im Browser.
  * Format identisch zu scripts/spectrogram/spectrogram-core.mjs (writeRasterBuffer).
  */
-import type { RasterHeader, SpectrogramRaster } from "../../types/spectrogram";
+import type { RasterHeader, SpectrogramRaster } from "@types/spectrogram";
 
 const MAGIC = "SPEC";
 

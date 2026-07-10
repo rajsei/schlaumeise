@@ -11,10 +11,10 @@
  * "/en" vor den Pfad zu kleben, erzeugte Doppel-Locales wie /en/de/. Wir leiten nur auf
  * eine FESTE, mit buildLocalizedUrl erzeugte URL um; alle echten Links rendert Astro.
  */
-import MainLayout from "../layouts/MainLayout.astro";
-import NotFoundCard from "../components/NotFoundCard.astro";
-import { getDictionary } from "../i18n";
-import { buildLocalizedUrl } from "../i18n/routing";
+import MainLayout from "@layouts/MainLayout.astro";
+import NotFoundCard from "@components/NotFoundCard.astro";
+import { getDictionary } from "@i18n";
+import { buildLocalizedUrl } from "@i18n/routing";
 
 const t = getDictionary("de").notFound;
 const enNotFoundUrl = buildLocalizedUrl("en", "/404/");

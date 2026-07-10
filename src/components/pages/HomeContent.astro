@@ -13,11 +13,11 @@
  *     <HomeBody />
  *   </HomeContent>
  */
-import { getBrandConfig } from "../../config/site.config";
-import { getDictionary } from "../../i18n";
-import { buildLocalizedUrl } from "../../i18n/routing";
-import type { Locale } from "../../i18n/config";
-import MdxInterpreter from "../docs/MdxInterpreter.astro";
+import { getBrandConfig } from "@config/site.config";
+import { getDictionary } from "@i18n";
+import { buildLocalizedUrl } from "@i18n/routing";
+import type { Locale } from "@i18n/config";
+import MdxInterpreter from "@components/docs/MdxInterpreter.astro";
 
 interface Props {
   locale: Locale;

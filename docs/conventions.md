@@ -32,6 +32,14 @@ Content-Ordner: kebab-case (neu); Bestand in snake_case (`knowledge_collection` 
 - Funktionen: verbbasiert (`resolveSidebarNavigation`, `getDocPath`, `buildLocalizedUrl`); Prädikate mit `is`/`has` (`isActivePath`, `topicHasItems`).
 - Typen/Interfaces: PascalCase (`ResolvedNavItem`, `QuizQuestion`); keine `I`-Präfixe.
 
+## Importe & Aliase
+
+- **Verzeichnisübergreifende Importe innerhalb von `src/` immer über die `@`-Aliase**, nie über `../`-Ketten. Definiert in `tsconfig.json` (`baseUrl` + `paths`); Astro löst sie nativ auf — auch in `.mdx`-Inhalten und `<script>`-Blöcken von `.astro`-Dateien.
+- Verfügbar: `@assets/*`, `@components/*`, `@config/*`, `@content/*`, `@data/*`, `@i18n` (Barrel `src/i18n/index.ts`), `@i18n/*`, `@layouts/*`, `@lib/*`, `@plugins/*`, `@scripts/*`, `@styles/*`, `@types/*` — jeweils 1:1 auf `src/<ordner>/`.
+- Importe **innerhalb desselben Teilbaums** bleiben relativ mit `./` (z. B. `./ui-elements/ThemeController.astro` aus `Header.astro`).
+- **Nicht anwendbar außerhalb der Vite-Pipeline:** Root-`scripts/` (plain Node) und `astro.config.mjs` importieren weiterhin relativ (`./src/…`). Relative Bild-Referenzen in reinem Markdown (`![](./bild.jpg)`) bleiben relativ — nur MDX-`import`-Statements nutzen Aliase.
+- Hinweis: `@types/*` überdeckt als Alias den gleichnamigen npm-Scope — Pakete aus `node_modules/@types/` werden nie direkt importiert, daher unkritisch; direkte Importe wie `from "@types/node"` sind tabu.
+
 ## Collections & Daten
 
 - Collection-Namen: englisch, Plural, camelCase: `docs`, künftig `quizzes`.

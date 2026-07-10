@@ -1,18 +1,18 @@
 ---
 import type { MarkdownHeading } from "astro";
-import "../styles/docs.css";
-import Sidebar from "../components/ui-elements/Sidebar.astro";
-import DocsTOC from "../components/docs/DocsTOC.astro";
-import DocsPagination from "../components/docs/DocsPagination.astro";
-import MdxInterpreter from "../components/docs/MdxInterpreter.astro";
-import ProjectMeta from "../components/docs/ProjectMeta.astro";
-import ZoomableDocsImages from "../components/docs/ZoomableDocsImages.astro";
+import "@styles/docs.css";
+import Sidebar from "@components/ui-elements/Sidebar.astro";
+import DocsTOC from "@components/docs/DocsTOC.astro";
+import DocsPagination from "@components/docs/DocsPagination.astro";
+import MdxInterpreter from "@components/docs/MdxInterpreter.astro";
+import ProjectMeta from "@components/docs/ProjectMeta.astro";
+import ZoomableDocsImages from "@components/docs/ZoomableDocsImages.astro";
 
 import MainLayout from "./MainLayout.astro";
-import type { Locale } from "../i18n/config";
-import { getDictionary } from "../i18n";
-import type { DocsEntry } from "../types/docs";
-import { resolveDocsPagination } from "../lib/docs-navigation";
+import type { Locale } from "@i18n/config";
+import { getDictionary } from "@i18n";
+import type { DocsEntry } from "@types/docs";
+import { resolveDocsPagination } from "@lib/docs-navigation";
 
 interface Props {
   locale: Locale;
@@ -123,7 +123,7 @@ const pagination = resolveDocsPagination({
   </section>
 
   <script>
-    import { initDocsDrawer } from "../scripts/docs-drawer";
+    import { initDocsDrawer } from "@scripts/docs-drawer";
 
     initDocsDrawer({
       shellSelector: "[data-docs-shell]",

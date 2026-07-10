@@ -8,16 +8,16 @@
  *   import MicSpectrogram from ".../MicSpectrogram.astro";
  *   <MicSpectrogram label="Sprich ins Mikrofon" />
  */
-import type { MicSpectrogramProps } from "../../types/spectrogram";
+import type { MicSpectrogramProps } from "@types/spectrogram";
 import {
   DEFAULT_COLORMAP,
   DEFAULT_HEIGHT,
   DEFAULT_MAX_FREQUENCY,
   DEFAULT_MIN_FREQUENCY,
   DEFAULT_WINDOW_SECONDS,
-} from "../../scripts/spectrogram/config";
-import { getDictionary } from "../../i18n";
-import { getLocaleFromPathname } from "../../i18n/routing";
+} from "@scripts/spectrogram/config";
+import { getDictionary } from "@i18n";
+import { getLocaleFromPathname } from "@i18n/routing";
 import SpectrogramColorPicker from "./SpectrogramColorPicker.astro";
 
 const {
@@ -106,8 +106,8 @@ const uid = id ?? `mic-spectrogram-${Math.random().toString(36).slice(2, 8)}`;
 </style>
 
 <script>
-  import { initMicSpectrograms } from "../../scripts/spectrogram/mic";
-  import { initColorPickers } from "../../scripts/spectrogram/colors-ui";
+  import { initMicSpectrograms } from "@scripts/spectrogram/mic";
+  import { initColorPickers } from "@scripts/spectrogram/colors-ui";
   initMicSpectrograms();
   initColorPickers();
 </script>

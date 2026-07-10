@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
-import { defaultLocale, isLocale, type Locale, locales } from "../i18n/config";
-import type { DocsEntry } from "../types/docs";
+import { defaultLocale, isLocale, type Locale, locales } from "@i18n/config";
+import type { DocsEntry } from "@types/docs";
 
 const getCollectionUnsafe = getCollection as unknown as (
   collection: string,

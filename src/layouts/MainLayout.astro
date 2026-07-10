@@ -1,18 +1,18 @@
 ---
-import "../styles/global.css";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import MenuDrawer from "../components/MenuDrawer.astro";
-import { getBrandConfig, siteConfig } from "../config/site.config";
-import { getDictionary } from "../i18n";
-import { defaultLocale, type Locale } from "../i18n/config";
-import { getDocsEntriesForLocale } from "../lib/docs-content";
+import "@styles/global.css";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import MenuDrawer from "@components/MenuDrawer.astro";
+import { getBrandConfig, siteConfig } from "@config/site.config";
+import { getDictionary } from "@i18n";
+import { defaultLocale, type Locale } from "@i18n/config";
+import { findDocEntryBySlug, getDocsEntriesForLocale } from "@lib/docs-content";
 import {
   getLocaleFromPathname,
   stripLocaleFromPathname,
   switchLocalePath,
   withBase,
-} from "../i18n/routing";
+} from "@i18n/routing";
 
 interface Props {
   title?: string;
@@ -38,7 +38,20 @@ const isDocsPage =
   pathWithoutLocale.startsWith("/reference/");
 
 const alternateLocale: Locale = locale === defaultLocale ? "en" : defaultLocale;
-const languageSwitchHref = withBase(switchLocalePath(Astro.url.pathname, alternateLocale));
+
+/* Sprachumschalter nur anzeigen, wenn die Zielseite existiert (kein EN-404).
+   Docs-Seiten: Eintrag mit gleichem Doc-Pfad muss im Alternativ-Locale vorhanden sein.
+   Nicht-Docs-Seiten (Home, 404) existieren in beiden Sprachen. */
+const currentDocEntry = findDocEntryBySlug(docsEntries, pathWithoutLocale);
+const hasTranslation = currentDocEntry
+  ? findDocEntryBySlug(
+      await getDocsEntriesForLocale(alternateLocale),
+      pathWithoutLocale,
+    ) !== null
+  : true;
+const languageSwitchHref = hasTranslation
+  ? withBase(switchLocalePath(Astro.url.pathname, alternateLocale))
+  : null;
 ---
 
 <!doctype html>
