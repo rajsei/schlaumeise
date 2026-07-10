@@ -1,4 +1,10 @@
 ---
+/**
+ * Bildkarussell im "Minimal Clean"-Stil:
+ * Freistehendes Bild mit weichem Schatten, Bildunterschrift aus dem alt-Text,
+ * schlanke Kontrollleiste unter dem Bild (Pfeile + Balken-Indikatoren).
+ * Pfeiltasten links/rechts funktionieren, wenn das Karussell fokussiert ist.
+ */
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -18,81 +24,74 @@ const { images, label = "Bildergalerie" } = Astro.props;
 
 {
   images.length > 0 && (
-    <div class="docs-image-carousel" data-image-carousel aria-label={label}>
-      <div class="docs-image-carousel__viewport">
-        <div class="docs-image-carousel__slides">
-          {images.map((image, index) => (
-            <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
-              {typeof image.src === "string" ? (
-                <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
-              ) : (
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={Math.min(1024, image.src.width)}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                />
-              )}
-            </figure>
-          ))}
-        </div>
+    <div class="docs-image-carousel" data-image-carousel aria-label={label} tabindex="0">
+      <div class="docs-image-carousel__slides">
+        {images.map((image, index) => (
+          <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
+            {typeof image.src === "string" ? (
+              <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+            ) : (
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={Math.min(1024, image.src.width)}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            )}
+            <figcaption class="docs-image-carousel__caption">{image.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
 
-        {images.length > 1 && (
-          <div class="docs-image-carousel__controls">
-            <button type="button" class="btn btn-soft btn-primary docs-image-carousel__control" data-carousel-prev aria-label="Vorheriges Bild">
-              ❮
-            </button>
-            <button type="button" class="btn btn-soft btn-primary docs-image-carousel__control" data-carousel-next aria-label="Nächstes Bild">
-              ❯
-            </button>
-          </div>
-        )}
-        
-        {images.length > 1 && (
-          <div class="docs-image-carousel__dots">
+      {images.length > 1 && (
+        <div class="docs-image-carousel__bar">
+          <button
+            type="button"
+            class="btn btn-ghost btn-circle btn-sm"
+            data-carousel-prev
+            aria-label="Vorheriges Bild"
+          >
+            ❮
+          </button>
+
+          <div class="docs-image-carousel__indicators">
             {images.map((_, index) => (
               <button
                 type="button"
                 class:list={[
-                  "btn",
-                  "btn-xs",
-                  "btn-circle",
-                  "docs-image-carousel__dot",
-                  {
-                    "btn-primary": index === 0,
-                    "docs-image-carousel__dot--active": index === 0,
-                  },
+                  "docs-image-carousel__indicator",
+                  { "docs-image-carousel__indicator--active": index === 0 },
                 ]}
                 data-carousel-dot
                 data-carousel-slide-to={index}
                 aria-label={`Bild ${index + 1} anzeigen`}
                 aria-current={index === 0 ? "true" : "false"}
-              >
-                
-              </button>
+              />
             ))}
           </div>
-        )}
-      </div>
+
+          <button
+            type="button"
+            class="btn btn-ghost btn-circle btn-sm"
+            data-carousel-next
+            aria-label="Nächstes Bild"
+          >
+            ❯
+          </button>
+        </div>
+      )}
     </div>
   )
 }
 
 <script>
   document.querySelectorAll("[data-image-carousel]").forEach((carousel) => {
-    if (carousel instanceof HTMLElement && carousel.dataset.carouselReady === "true") {
-      return;
-    }
-
-    if (carousel instanceof HTMLElement) {
-      carousel.dataset.carouselReady = "true";
-    }
+    if (!(carousel instanceof HTMLElement) || carousel.dataset.carouselReady === "true") return;
+    carousel.dataset.carouselReady = "true";
 
     const slides = Array.from(carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]"));
-    const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"));
-    const previousButton = carousel.querySelector<HTMLButtonElement>("[data-carousel-prev]");
-    const nextButton = carousel.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const indicators = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"));
     let activeIndex = 0;
 
     const showSlide = (requestedIndex: number) => {
@@ -102,98 +101,106 @@ const { images, label = "Bildergalerie" } = Astro.props;
         slide.hidden = index !== activeIndex;
       });
 
-      dots.forEach((dot, index) => {
+      indicators.forEach((indicator, index) => {
         const isActive = index === activeIndex;
-        dot.classList.toggle("btn-primary", isActive);
-        dot.classList.toggle("docs-image-carousel__dot--active", isActive);
-        dot.setAttribute("aria-current", isActive ? "true" : "false");
+        indicator.classList.toggle("docs-image-carousel__indicator--active", isActive);
+        indicator.setAttribute("aria-current", isActive ? "true" : "false");
       });
     };
 
-    previousButton?.addEventListener("click", () => showSlide(activeIndex - 1));
-    nextButton?.addEventListener("click", () => showSlide(activeIndex + 1));
+    carousel.querySelector("[data-carousel-prev]")?.addEventListener("click", () => showSlide(activeIndex - 1));
+    carousel.querySelector("[data-carousel-next]")?.addEventListener("click", () => showSlide(activeIndex + 1));
+    indicators.forEach((indicator) => {
+      indicator.addEventListener("click", () => showSlide(Number(indicator.dataset.carouselSlideTo)));
+    });
 
-    dots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        showSlide(Number(dot.dataset.carouselSlideTo));
-      });
+    carousel.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") showSlide(activeIndex - 1);
+      if (event.key === "ArrowRight") showSlide(activeIndex + 1);
     });
   });
 </script>
 
 <style>
   .docs-image-carousel {
-    position: relative;
     width: fit-content;
     max-width: 100%;
     margin-inline: auto;
+    outline: none;
   }
 
-  .docs-image-carousel__viewport {
-    position: relative;
-    max-width: 100%;
-    overflow: hidden;
-
-  }
-
-  .docs-image-carousel__slides {
-    max-width: 100%;
+  .docs-image-carousel:focus-visible {
+    border-radius: var(--radius-md);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
   }
 
   .docs-image-carousel__slide {
     margin: 0;
-    
-    max-width: 100%;
+    animation: docs-image-carousel-in 260ms ease;
+  }
+
+  @keyframes docs-image-carousel-in {
+    from {
+      opacity: 0;
+      transform: translateX(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .docs-image-carousel__slide img {
     display: block;
-    
-
-  max-height: 420px;
-  object-fit: contain;
-
-    width: auto;
+    max-height: 420px;
     max-width: 100%;
+    width: auto;
     height: auto;
+    object-fit: contain;
+    margin-inline: auto;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 24px color-mix(in oklab, var(--color-text) 14%, transparent);
   }
 
-  .docs-image-carousel__controls {
-    pointer-events: none;
-    margin-left: var(--spacing-md);
-    margin-right: var(--spacing-md);
-    position: absolute;
-    inset: 0;
+  .docs-image-carousel__caption {
+    margin-top: var(--spacing-xs);
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--color-text-muted);
+  }
+
+  .docs-image-carousel__bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-md);
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
   }
 
-  .docs-image-carousel__control {
-    pointer-events: auto;
-  }
-
-  .docs-image-carousel__dots {
-    position: absolute;
-    left: 50%;
-    bottom: 2rem;
-    z-index: 2;
+  .docs-image-carousel__indicators {
     display: flex;
-    gap: var(--spacing-xs);
-    transform: translateX(-50%);
+    align-items: center;
+    gap: var(--spacing-2xs);
   }
 
-  .docs-image-carousel__dot {
-    transition:
-      transform 160ms ease,
-      opacity 160ms ease;
-      transform: scale(0.8);
+  .docs-image-carousel__indicator {
+    width: 16px;
+    height: 4px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklab, var(--color-text) 25%, transparent);
+    cursor: pointer;
+    transition: width 200ms ease, background-color 200ms ease;
   }
 
-  .docs-image-carousel__dot--active {
-    transform: scale(1.2);
-    margin-left: var(--spacing-2xs);
-    margin-right: var(--spacing-2xs);
+  .docs-image-carousel__indicator:hover {
+    background: color-mix(in oklab, var(--color-text) 45%, transparent);
+  }
+
+  .docs-image-carousel__indicator--active {
+    width: 32px;
+    background: var(--color-primary);
   }
 </style>
