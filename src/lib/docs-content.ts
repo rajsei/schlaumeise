@@ -2,21 +2,17 @@ import { getCollection } from "astro:content";
 import { defaultLocale, isLocale, type Locale, locales } from "@i18n/config";
 import type { DocsEntry } from "@types/docs";
 
-const getCollectionUnsafe = getCollection as unknown as (
-  collection: string,
-) => Promise<DocsEntry[]>;
-
 export function getEntryLocale(entry: DocsEntry): Locale | null {
   const first = entry.id.split("/")[0] ?? "";
   return isLocale(first) ? first : null;
 }
 
+// Entry-IDs der Loader-API sind bereits Pfade ohne Dateiendung und ohne
+// trailing "/index" (siehe content.config.ts): erstes Segment = Locale,
+// Rest = Doc-Pfad (= URL-Pfad unterhalb der Locale).
 export function getEntryDocPath(entry: DocsEntry): string {
   const [, ...segments] = entry.id.split("/");
-  return segments
-    .join("/")
-    .replace(/\.(md|mdx)$/i, "")
-    .replace(/\/index$/i, "");
+  return segments.join("/");
 }
 
 function normalizeSlugParam(value: string | undefined): string {
@@ -29,7 +25,7 @@ function normalizeSlugParam(value: string | undefined): string {
 export async function getDocsEntriesForLocale(
   locale: Locale,
 ): Promise<DocsEntry[]> {
-  const entries = await getCollectionUnsafe("docs");
+  const entries = await getCollection("docs");
   return entries.filter((entry) => getEntryLocale(entry) === locale);
 }
 

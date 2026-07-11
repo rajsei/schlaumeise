@@ -14,7 +14,7 @@ Verbindliche Regeln. Bestehender Code, der abweicht, wird bei Gelegenheit migrie
 | Bilder | `kebab-case`, nummeriert in Schrittfolgen | `pi-setup/01.png` |
 | Audio | `kebab-case.mp3`/`.opus` (keine unkomprimierten WAV) | `blauhaeher.mp3` |
 
-Content-Ordner: kebab-case (neu); Bestand in snake_case (`knowledge_collection` …) bleibt bis zur Redirect-Migration.
+Content-Ordner: kebab-case, durchgängig (snake_case-Bestand am 2026-07-11 migriert: `knowledge_collection` → `knowledge`, `workshop_materials` → `workshops`, `birdnet_live` → `birdnet-live`; alte URLs per Redirect abgedeckt).
 
 **Content-Dateinamen sind englisch und in allen Sprachversionen identisch:** `de/<bereich>/birds.md` und `en/<bereich>/birds.md` — nur der Inhalt ist übersetzt, nie der Dateiname. So bleiben Übersetzungspaare trivial zuzuordnen und URLs sprachneutral. (Einzige Bestandsausnahme: `impressum.mdx`.)
 

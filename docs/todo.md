@@ -19,8 +19,8 @@ Priorität: P1 kritisch · P2 wichtig · P3 mittel · P4 später. Aufwand: S < 1
 | 12 | Quiz-UI: `QuizPlayer`, Fragetyp-Komponenten, Route `quiz/[id]` (+ en) | P3 | L | Datenmodell ✅ |
 | 13 | Quiz-Fortschritt in `localStorage` (`schlaumeise:quiz-progress:v1`) | P3 | M | #12 |
 | 14 | Pagefind-Suche integrieren | P3 | M | #1 |
-| 15 | Content-Ordner auf kebab-case migrieren (mit Redirects) | P3 | M | #2 |
-| 16 | Collections auf Loader-API (`glob()`/`file()`) migrieren, `getCollectionUnsafe` entfernen | P3 | L | #1 |
+| 15 | ~~Content-Ordner auf kebab-case migrieren (mit Redirects)~~ **erledigt 2026-07-11**: `knowledge_collection` → `knowledge`, `workshop_materials` → `workshops`, `guides/birdnet_live` → `guides/birdnet-live` (de+en); 31 explizite Redirects in `astro.config.mjs` | — | — | — |
+| 16 | ~~Collections auf Loader-API (`glob()`/`file()`) migrieren, `getCollectionUnsafe` entfernen~~ **erledigt 2026-07-11**: `docs`/`home` auf `glob()`-Loader, Quizze als eigene `quizzes`-Collection (Zod + Integritätsprüfung via `superRefine`), `render(entry)` statt `entry.render()`, Typen aus Schema abgeleitet | — | — | — |
 | 17 | `docs-navigation.ts` in `sidebar-resolver.ts` + `pagination.ts` aufteilen | P4 | M | #16 |
 | 18 | `MdxInterpreter` → `DocsProse` umbenennen (Name beschreibt Funktion nicht) | P4 | S | — |
 | 19 | EN-Inhalte übersetzen (mindestens project01 + birdnet_live) | P4 | L | #5 |

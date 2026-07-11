@@ -4,7 +4,8 @@ import { z } from "astro/zod";
  * Quiz-Schema (Single Source of Truth).
  *
  * Quizdaten liegen als JSON unter `src/data/quizzes/<locale>/<quiz-id>.json`
- * und werden über `src/lib/quizzes.ts` geladen und beim Build validiert.
+ * und werden über die `quizzes`-Collection (content.config.ts, glob()-Loader)
+ * geladen und beim Build validiert; Zugriffs-Helfer in `src/lib/quizzes.ts`.
  * Die TypeScript-Typen werden aus diesem Zod-Schema abgeleitet —
  * Schema ändern = Typen ändern. Details: docs/quiz-handbook.md
  */
@@ -31,7 +32,7 @@ const questionBase = {
   media: quizMediaSchema.optional(),
   /** Erklärung, die nach dem Beantworten angezeigt wird. */
   explanation: z.string().optional(),
-  /** Verweis auf eine Lernseite (Doc-Pfad ohne Locale, z. B. "knowledge_collection/birds"). */
+  /** Verweis auf eine Lernseite (Doc-Pfad ohne Locale, z. B. "knowledge/birds"). */
   relatedDoc: z.string().optional(),
 };
 
@@ -95,7 +96,7 @@ export const quizSchema = z.object({
   locale: z.enum(["de", "en"]),
   title: z.string().min(1),
   description: z.string().optional(),
-  /** Themenbereich aus docs-navigation (z. B. "knowledge_collection"). */
+  /** Themenbereich aus docs-navigation (z. B. "knowledge"). */
   topicId: z.string().optional(),
   /** Zugehörige Lernseite (Doc-Pfad ohne Locale). */
   relatedDoc: z.string().optional(),

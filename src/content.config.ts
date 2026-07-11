@@ -1,4 +1,6 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
+import { quizSchema, validateQuizIntegrity } from "./lib/quiz-schema";
 
 const paginationOverrideSchema = z.union([
   z.boolean(),
@@ -9,6 +11,15 @@ const paginationOverrideSchema = z.union([
   }),
 ]);
 
+// Skala 1–3 als Literal-Union statt int().min(1).max(3), damit der
+// abgeleitete Typ exakt `1 | 2 | 3` ist (passt zu ProjectMetaLevel in
+// types/docs.ts) — Validierung ist identisch.
+const projectMetaLevelSchema = z.union([
+  z.literal(1),
+  z.literal(2),
+  z.literal(3),
+]);
+
 // Projekt-Steckbrief (docs/roadmap.md "Projekt-Steckbrief & Projektübersicht"):
 // kompakte Einordnung eines Projekts auf seiner index-Seite. Wird von
 // DocsLayout automatisch als ProjectMeta-Karte gerendert, sobald `project`
@@ -17,8 +28,8 @@ const paginationOverrideSchema = z.union([
 // Fortgeschritten. Freitextfelder (duration, cost, …) sind lokalisiert und
 // stehen je Sprachversion im jeweiligen Frontmatter.
 const projectMetaSchema = z.object({
-  difficulty: z.number().int().min(1).max(3),
-  skillLevel: z.number().int().min(1).max(3),
+  difficulty: projectMetaLevelSchema,
+  skillLevel: projectMetaLevelSchema,
   duration: z.string(),
   cost: z.string(),
   supervision: z.enum(["alone", "adults", "supervised"]),
@@ -29,8 +40,12 @@ const projectMetaSchema = z.object({
   safetyNotes: z.string().optional(),
 });
 
+// Loader-API (todo #16): Entry-IDs sind Pfade relativ zu `base`, ohne
+// Dateiendung und ohne trailing `/index` (z. B. "de/knowledge/birds",
+// "de/projects/project01"). Erstes Segment = Locale, Rest = Doc-Pfad
+// (siehe src/lib/docs-content.ts).
 const docs = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/docs" }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -61,13 +76,27 @@ const docs = defineCollection({
 
 // Startseiten-Fließtext je Sprache (src/content/home/<locale>.mdx).
 // Wird direkt als Komponente in die index-Seiten importiert, nicht geroutet;
-// die Deklaration verhindert nur die "auto-generierte Collection"-Warnung.
+// die Deklaration verhindert nur die "unbekannter Ordner in src/content"-Warnung.
 const home = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "*.mdx", base: "./src/content/home" }),
   schema: z.object({}).passthrough(),
+});
+
+// Quiz-Daten (docs/quiz-handbook.md): eine JSON-Datei pro Quiz unter
+// src/data/quizzes/<locale>/<quiz-id>.json. Zod-Validierung + Konsistenz-
+// prüfungen laufen build-seitig über das Collection-Schema — fehlerhafte
+// Quizze brechen den Build ab und erreichen nie die Produktion.
+const quizzes = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/data/quizzes" }),
+  schema: quizSchema.superRefine((quiz, ctx) => {
+    for (const problem of validateQuizIntegrity(quiz)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: problem });
+    }
+  }),
 });
 
 export const collections = {
   docs,
   home,
+  quizzes,
 };

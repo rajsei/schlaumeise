@@ -105,7 +105,7 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 **Beschreibung:** Einheitlicher Block „Quellen & weiterführende Links" am Fuß jeder Wissensseite.
 **Status:** 📋 geplant — datengetrieben (Frontmatter `sources`/`links` + Zod + eine Komponente, Wiederverwendung `LinkCard`), damit kein rohes HTML im Content nötig ist.
-**Betroffene Bereiche:** künftig `src/content.config.ts`, `src/types/docs.ts`, eine Komponente, `src/content/docs/*/knowledge_collection/*`
+**Betroffene Bereiche:** künftig `src/content.config.ts`, `src/types/docs.ts`, eine Komponente, `src/content/docs/*/knowledge/*`
 **Erweiterungsmöglichkeiten:** Zitierstil/Autor+Jahr; „zuletzt geprüft"-Datum — todo #27.
 
 ## Inline-Glossar
@@ -139,3 +139,4 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 ## Reservierte Komponenten
 
 `DropdownNavItem.astro` (`src/components/ui-elements/`): generisches, framework-freies Navbar-Dropdown mit Tastatursteuerung — derzeit ohne Verwendung, reserviert für ein künftiges Themen-Dropdown im Header. Nicht löschen, ohne diese Zeile zu aktualisieren.
+              

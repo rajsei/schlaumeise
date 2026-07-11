@@ -21,7 +21,7 @@ Die Schwächen lagen vor allem an den Rändern: tote Navigationslinks, Platzhalt
 - **[erledigt]** `package.json` hatte keinen Namen; README war das unveränderte Starter-Template.
 - **[erledigt]** Leere, nirgends eingebundene Dateien `src/content/about_us.mdx` und `src/content/index.mdx` entfernt.
 - **Offen:** `src/plugins/rehype-base-path-assets.mjs` existiert, ist aber in `astro.config.mjs` nicht eingebunden (tote Datei mit klarem Zweck: Basis-Pfad-Korrektur für Bilder). Entweder einbinden und die hartkodierten `/schlaumeise/…`-Pfade aus 7 Content-Dateien entfernen, oder Plugin löschen. Empfehlung: einbinden (siehe Roadmap „Sofort“).
-- **Offen:** Legacy-Collection-API (`type: "content"`); Astro 5 empfiehlt die Loader-API (`glob()`). Migration mittelfristig, zusammen mit Entfernung des `getCollectionUnsafe`-Casts in `src/lib/docs-content.ts`.
+- **[erledigt 2026-07-11]** Legacy-Collection-API (`type: "content"`) auf die Loader-API (`glob()`) migriert; `getCollectionUnsafe`-Cast in `src/lib/docs-content.ts` entfernt, Typen werden aus dem Zod-Schema abgeleitet.
 
 **Gibt es redundanten/unnötigen Code?**
 
@@ -39,7 +39,7 @@ Die Schwächen lagen vor allem an den Rändern: tote Navigationslinks, Platzhalt
 
 Code-Seite weitgehend konsistent (PascalCase-Komponenten, kebab-case-TS-Module, camelCase-Variablen, verbbasierte Funktionen). Inkonsistent ist der Content-Bereich:
 
-- Ordner in snake_case (`knowledge_collection`, `workshop_materials`, `birdnet_live`) — wird Teil der URL; Konvention ist kebab-case.
+- ~~Ordner in snake_case (`knowledge_collection`, `workshop_materials`, `birdnet_live`) — wird Teil der URL; Konvention ist kebab-case.~~ **[erledigt 2026-07-11]** — migriert zu `knowledge`, `workshops`, `birdnet-live` (mit Redirects).
 - `ai+bioacoustic.md`: `+` im Dateinamen landet in der URL (Encoding-Risiko). **[erledigt 2026-06-12]** — umbenannt in `ai-and-bioacoustic.md` (mit Redirect); zugleich Konvention festgelegt: Dateinamen englisch, in allen Sprachen identisch.
 - Mischung deutscher/englischer Dateinamen (`birds.md` vs. `impressum.mdx`).
 

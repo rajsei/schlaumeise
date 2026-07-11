@@ -7,6 +7,7 @@ import CodeBlock from "@components/docs/CodeBlock.astro";
 import Terminal from "@components/docs/Terminal.astro";
 import Term from "@components/docs/Term.astro";
 
+import { render } from "astro:content";
 import { defaultLocale } from "@i18n/config";
 import {
   createSlugParam,
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, entries } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content, headings } = await render(entry);
 const mdxComponents = { Steps, LinkCard, Code, CodeBlock, Terminal, Term };
 ---
 

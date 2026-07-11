@@ -6,7 +6,7 @@ Architektur und Datenformat des Quizsystems. **Status: Datenmodell umgesetzt, UI
 
 | Option | Bewertung |
 | --- | --- |
-| **JSON + Zod-Schema (gewählt)** | Strukturierte, validierbare Daten; von Menschen und KI-Agenten gleichermaßen gut zu erzeugen; build-seitige Validierung verhindert kaputte Quizze in Produktion; später ohne Formatänderung in eine Content Collection (`file()`-Loader) oder ein CMS überführbar. |
+| **JSON + Zod-Schema (gewählt)** | Strukturierte, validierbare Daten; von Menschen und KI-Agenten gleichermaßen gut zu erzeugen; build-seitige Validierung verhindert kaputte Quizze in Produktion; seit 2026-07-11 ohne Formatänderung als Content Collection (`glob()`-Loader) eingebunden. |
 | Markdown/MDX pro Quiz | Gut für Fließtext, schlecht für strukturierte Antwort-/Auswertungslogik; Parsing fehleranfällig. Markdown bleibt das Format für *Lerninhalte*, nicht für Quizdaten. |
 | Astro-/TS-Dateien | Maximale Typsicherheit, aber Redaktion bräuchte Programmierkenntnisse; Inhalte und Code vermischt. |
 | Hybrid | Quiz-JSON kann per `relatedDoc` auf Lernseiten verweisen — Inhalte bleiben Markdown, Fragen bleiben Daten. So umgesetzt. |
@@ -16,7 +16,8 @@ Architektur und Datenformat des Quizsystems. **Status: Datenmodell umgesetzt, UI
 ```text
 src/data/quizzes/<locale>/<quiz-id>.json   # Quizdaten (id = Dateiname)
 src/lib/quiz-schema.ts                     # Zod-Schema + abgeleitete TS-Typen
-src/lib/quizzes.ts                         # Loader (import.meta.glob) + Build-Validierung
+src/lib/quizzes.ts                         # Zugriffs-Helfer auf die quizzes-Collection
+src/content.config.ts                      # quizzes-Collection (glob()-Loader) + Build-Validierung
 ```
 
 Beispiel mit allen Fragetypen: `src/data/quizzes/de/voegel-basiswissen.json`.
@@ -30,8 +31,8 @@ Beispiel mit allen Fragetypen: `src/data/quizzes/de/voegel-basiswissen.json`.
   "locale": "de",
   "title": "Vögel-Basiswissen",
   "description": "…",              // optional
-  "topicId": "knowledge_collection", // optional, Themenbereich
-  "relatedDoc": "knowledge_collection/birds", // optional, Lernseite
+  "topicId": "knowledge",          // optional, Themenbereich
+  "relatedDoc": "knowledge/birds", // optional, Lernseite
   "shuffleQuestions": false,
   "questions": [ /* … */ ]
 }
@@ -53,7 +54,7 @@ Gemeinsame Felder jeder Frage: `id`, `type`, `prompt`, optional `media`, `explan
 
 ## Validierung
 
-`getAllQuizzes()` in `src/lib/quizzes.ts` validiert beim Build jede Datei gegen das Zod-Schema **und** auf referentielle Konsistenz (`validateQuizIntegrity`: existieren alle referenzierten Options-/Item-IDs?). Fehler brechen den Build mit Datei- und Feldangabe ab.
+Die `quizzes`-Collection (`src/content.config.ts`) validiert beim Build jede Datei gegen das Zod-Schema **und** auf referentielle Konsistenz (`validateQuizIntegrity` via `superRefine`: existieren alle referenzierten Options-/Item-IDs?). Fehler brechen den Build mit Datei- und Feldangabe ab. Zugriff über `getAllQuizzes()`/`getQuizzesForLocale()`/`getQuizById()` in `src/lib/quizzes.ts` (async).
 
 ## Geplante Komponenten
 

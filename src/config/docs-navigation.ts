@@ -81,7 +81,7 @@ export const navigation: NavigationConfig = {
           translations: {
             de: "BirdNET Live",
           },
-          items: [{ autogenerate: { directory: "guides/birdnet_live" } }],
+          items: [{ autogenerate: { directory: "guides/birdnet-live" } }],
         },
       ],
     },
@@ -101,13 +101,13 @@ export const navigation: NavigationConfig = {
       }],
     },
     {
-      id: "knowledge_collection",
+      id: "knowledge",
       label: "Knowledge Base",
       translations: {
         de: "Wissenssammlung",
       },
       icon: "books",
-      items: [{ autogenerate: { directory: "knowledge_collection" } }],
+      items: [{ autogenerate: { directory: "knowledge" } }],
     },
     {
       id: "glossary",
@@ -129,7 +129,7 @@ export const navigation: NavigationConfig = {
         {
           label: "Spring School 2026",
           items: [
-            { autogenerate: { directory: "workshop_materials/springschool" } },
+            { autogenerate: { directory: "workshops/springschool" } },
           ],
         },
       ],

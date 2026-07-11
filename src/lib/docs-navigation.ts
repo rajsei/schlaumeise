@@ -117,13 +117,11 @@ function localizeLabel(
   return translations?.[locale] ?? label;
 }
 
+// Entry-IDs der Loader-API sind bereits Pfade ohne Dateiendung/"/index"
+// (siehe content.config.ts): erstes Segment = Locale, Rest = Doc-Pfad.
 function getDocPath(entry: DocsEntry): string {
   const [, ...segments] = entry.id.split("/");
-  const docPath = segments
-    .join("/")
-    .replace(/\.(md|mdx)$/i, "")
-    .replace(/\/index$/i, "");
-  return normalizeDocPath(docPath);
+  return normalizeDocPath(segments.join("/"));
 }
 
 function getDocLabel(entry: DocsEntry): string {

@@ -21,7 +21,7 @@ sidebar:
   order: 3                    # Reihenfolge in der Sidebar (aufsteigend)
   label: Anderes Label        # optional — überschreibt title in der Sidebar
   hidden: true                # optional — Seite aus Sidebar/Pagination ausblenden
-topicId: knowledge_collection # optional — aktives Topic erzwingen
+topicId: knowledge             # optional — aktives Topic erzwingen
 category: "Audio"             # optional — Kategorisierung
 tags: ["Basteln", "Outdoor"]  # optional — Schlagworte
 menu: false                   # optional — Desktop-Sidebar eingeklappt starten

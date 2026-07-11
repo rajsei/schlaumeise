@@ -4,8 +4,8 @@
   "locale": "de",
   "title": "Vögel-Basiswissen",
   "description": "Teste dein Wissen über heimische Vögel und ihre Stimmen. Beispiel-Quiz, das alle unterstützten Fragetypen demonstriert.",
-  "topicId": "knowledge_collection",
-  "relatedDoc": "knowledge_collection/birds",
+  "topicId": "knowledge",
+  "relatedDoc": "knowledge/birds",
   "shuffleQuestions": false,
   "questions": [
     {
@@ -19,7 +19,7 @@
       ],
       "correctOptionId": "samen",
       "explanation": "Viele Vögel fressen Früchte und scheiden die Samen an anderer Stelle wieder aus — so verbreiten sie Pflanzen.",
-      "relatedDoc": "knowledge_collection/birds"
+      "relatedDoc": "knowledge/birds"
     },
     {
       "id": "birdnet-eingaben",

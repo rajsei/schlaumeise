@@ -31,8 +31,8 @@ Abgeleitet aus [analysis.md](./analysis.md). Konkrete Aufgaben mit Aufwand und A
 - **Lernfortschritt in `localStorage`** (versioniertes Format `schlaumeise:quiz-progress:v1`).
 - **Suche mit Pagefind** — statisch, kein Server, i18n-fähig.
 - ~~**Spektrogramm-Visualisierung**~~ **umgesetzt (2026-06-16)** — Live-Mikrofon + Datei-Modus (zur Build-Zeit vorberechnetes dB-Raster), Fortschrittsstrich, Achsen, Farb-Picker. Plan: [spectrogram-plan.md](./spectrogram-plan.md). Offen: `npm run build` auf dem Zielsystem verifizieren.
-- **Content-Verzeichnisse auf kebab-case migrieren** (mit Redirects): `knowledge_collection` → `wissen`, `workshop_materials` → `workshops`, `birdnet_live` → `birdnet-live`.
-- **Collections auf Astro-Loader-API migrieren** (`glob()`), dabei `getCollectionUnsafe`-Cast in `docs-content.ts` entfernen; Quizze als `file()`-Collection.
+- ~~**Content-Verzeichnisse auf kebab-case migrieren**~~ **umgesetzt (2026-07-11)** — `knowledge_collection` → `knowledge`, `workshop_materials` → `workshops`, `birdnet_live` → `birdnet-live` (de+en); alte URLs per expliziter Redirect-Liste in `astro.config.mjs` abgedeckt.
+- ~~**Collections auf Astro-Loader-API migrieren**~~ **umgesetzt (2026-07-11)** — `docs`/`home` auf `glob()`-Loader, `getCollectionUnsafe`-Cast entfernt, Typen aus dem Zod-Schema abgeleitet; Quizze als eigene `quizzes`-Collection (`glob()` über die JSON-Dateien, Integritätsprüfung via `superRefine`).
 
 ## Langfristig (Vision)
 

@@ -1,3 +1,5 @@
+import type { CollectionEntry } from "astro:content";
+
 export interface DocsSidebarMeta {
   label?: string;
   order?: number;
@@ -36,27 +38,13 @@ export interface DocsProjectMeta {
   safetyNotes?: string;
 }
 
-export interface DocsEntryData {
-  title: string;
-  description?: string;
-  /** Kurzdefinition für das Inline-Glossar (Tooltip der Term-Komponente). */
-  definition?: string;
-  menu?: boolean;
-  content?: boolean;
-  topicId?: string;
-  category?: string;
-  tags?: string[];
-  sidebar?: boolean | DocsSidebarMeta;
-  prev?: DocsPaginationOverride;
-  next?: DocsPaginationOverride;
-  project?: DocsProjectMeta;
-}
+/**
+ * Docs-Eintrag der `docs`-Collection (todo #16): Typ wird direkt aus dem
+ * Zod-Schema in content.config.ts abgeleitet — Schema ändern = Typ ändern.
+ * Die Interfaces oben bleiben als benannte Teil-Typen für Komponenten
+ * (z. B. ProjectMeta.astro) erhalten; sie sind strukturell identisch mit
+ * den abgeleiteten Schema-Typen.
+ */
+export type DocsEntry = CollectionEntry<"docs">;
 
-export interface DocsEntry {
-  id: string;
-  data: DocsEntryData;
-  render: () => Promise<{
-    Content: unknown;
-    headings: Array<{ depth: number; slug: string; text: string }>;
-  }>;
-}
+export type DocsEntryData = DocsEntry["data"];

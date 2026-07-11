@@ -2,6 +2,11 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-11 — Content-Ordner kebab-case + Collections auf Loader-API (Agent)
+
+### Geändert
+- **todo #15 — Content-Ordner migriert** (de+en): `knowledge_collection` → `knowledge`, `workshop_materials` → `workshops`, `guides/birdnet_live` → `guides/birdnet-live`. Topic-ID `knowledge_collection` → `knowledge` (docs-navigation + Quiz-JSON `topicId`/`relatedDoc`). Referenzen angepasst: `docs-navigation.ts` (autogenerate-Verzeichnisse), `NotFoundCard.astro`, `HomeContent.astro`, DE→EN-Link in `workshops/springschool/index.mdx`. 31 explizite Redirects in `astro.config.mjs` für alle zum Migrationszeitpunkt existierenden alten URLs (statischer Build ⇒ Meta-Refresh); bestehender `ai+bioacoustic`-Redirect zeigt direkt auf `/knowledge/…` (keine Redirect-Kette)
+- **todo #16 — Collections auf Loader-API migriert**: `docs`/`home` in `content.config.ts` auf `glob()`-Loader (`type: "content"` entfernt). Entry-IDs sind jetzt Pfade ohne Dateiendung/`/index` → `getEntryDocPath` (docs-content.ts) und `getDocPath` (docs-navigation.ts) vereinfacht; `entry.render()` → `render(entry)` in beiden Catch-all-Routen. `getCollectionUnsafe`-Cast entfernt: `DocsEntry` ist jetzt `CollectionEntry<"docs">` (aus dem Zod-Schema abgeleitet statt handgepflegt); `difficulty`/`skillLevel` im Schema als Literal-Union `1 | 2 | 3`. Neue `quizzes`-Collection (`glob()` über `src/data/quizzes/**/*.json`, `quizSchema` + `validateQuizIntegrity` via `superRefine`); `src/lib/quizzes.ts` ist nur noch dünner async-Zugriff auf `getCollection("quizzes")`
 ## 2026-07-10 — Inline-Glossar: `Term`-Komponente (Agent)
 
 ### Hinzugefügt
