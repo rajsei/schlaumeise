@@ -20,28 +20,56 @@ interface Props {
 }
 
 const { images, label = "Bildergalerie" } = Astro.props;
+
+/** Muss zu max-height von .docs-image-carousel__slide img passen. */
+const MAX_DISPLAY_HEIGHT = 420;
+const MAX_RENDER_WIDTH = 1024;
+
+/**
+ * Angezeigte Groesse eines Bildes vorberechnen (Breite auf 1024 begrenzt,
+ * Hoehe per CSS auf 420px). Damit reserviert der Skeleton-Platzhalter exakt
+ * den Platz des fertigen Bildes und das Layout springt beim Laden nicht.
+ */
+function displaySize(src: ImageMetadata) {
+  let width = Math.min(MAX_RENDER_WIDTH, src.width);
+  let height = src.height * (width / src.width);
+  if (height > MAX_DISPLAY_HEIGHT) {
+    width = width * (MAX_DISPLAY_HEIGHT / height);
+    height = MAX_DISPLAY_HEIGHT;
+  }
+  return { width: Math.round(width), height: Math.round(height) };
+}
 ---
 
 {
   images.length > 0 && (
     <div class="docs-image-carousel" data-image-carousel aria-label={label} tabindex="0">
       <div class="docs-image-carousel__slides">
-        {images.map((image, index) => (
-          <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
-            {typeof image.src === "string" ? (
-              <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
-            ) : (
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={Math.min(1024, image.src.width)}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-              />
-            )}
-            <figcaption class="docs-image-carousel__caption">{image.alt}</figcaption>
-          </figure>
-        ))}
+        {images.map((image, index) => {
+          const size = typeof image.src === "string" ? null : displaySize(image.src);
+          return (
+            <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
+              <div
+                class="docs-image-carousel__media skeleton"
+                style={size ? `--media-width: ${size.width}px; --media-aspect: ${size.width} / ${size.height};` : undefined}
+                data-carousel-media
+              >
+                {typeof image.src === "string" ? (
+                  <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                ) : (
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={Math.min(MAX_RENDER_WIDTH, image.src.width)}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                )}
+              </div>
+              <figcaption class="docs-image-carousel__caption">{image.alt}</figcaption>
+            </figure>
+          );
+        })}
       </div>
 
       {images.length > 1 && (
@@ -118,6 +146,19 @@ const { images, label = "Bildergalerie" } = Astro.props;
       if (event.key === "ArrowLeft") showSlide(activeIndex - 1);
       if (event.key === "ArrowRight") showSlide(activeIndex + 1);
     });
+
+    // Skeleton-Platzhalter entfernen, sobald das jeweilige Bild geladen ist.
+    carousel.querySelectorAll<HTMLElement>("[data-carousel-media]").forEach((media) => {
+      const image = media.querySelector("img");
+      const reveal = () => media.classList.remove("skeleton");
+
+      if (!image || (image.complete && image.naturalWidth > 0)) {
+        reveal();
+        return;
+      }
+      image.addEventListener("load", reveal, { once: true });
+      image.addEventListener("error", reveal, { once: true });
+    });
   });
 </script>
 
@@ -151,9 +192,28 @@ const { images, label = "Bildergalerie" } = Astro.props;
     }
   }
 
+  /* Platzhalter: reserviert NUR waehrend des Ladens die (vorberechnete)
+     Bildgroesse, damit das Layout nicht springt. Nach dem Laden bestimmt
+     wieder das Bild selbst die Groesse — kein Restabstand zur Caption.
+     Fallback fuer URL-Bilder ohne bekannte Masse: 40rem breit, 3:2. */
+  .docs-image-carousel__media {
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .docs-image-carousel__media.skeleton {
+    width: var(--media-width, min(40rem, 100%));
+    aspect-ratio: var(--media-aspect, 3 / 2);
+    border-radius: var(--radius-md);
+  }
+
+  .docs-image-carousel__media.skeleton img {
+    opacity: 0;
+  }
+
   .docs-image-carousel__slide img {
     display: block;
-    max-height: 420px;
+    max-height: 420px; /* muss zu MAX_DISPLAY_HEIGHT im Frontmatter passen */
     max-width: 100%;
     width: auto;
     height: auto;
@@ -161,6 +221,7 @@ const { images, label = "Bildergalerie" } = Astro.props;
     margin-inline: auto;
     border-radius: var(--radius-md);
     box-shadow: 0 4px 24px color-mix(in oklab, var(--color-text) 14%, transparent);
+    transition: opacity 200ms ease;
   }
 
   .docs-image-carousel__caption {
