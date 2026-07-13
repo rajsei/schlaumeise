@@ -1,0 +1,41 @@
+---
+/**
+ * Dev-Demoseite fuer das ImageCarousel — nicht verlinkt, nur zum Testen unter
+ * /dev/carousel-demo. Kann geloescht werden, sobald alles passt.
+ *
+ * Testfall: gemischte Bildformate (quer 4:3, quer 3:2, hochkant, extrabreit).
+ * Erwartung: Pfeile und Indikatoren bleiben beim Durchblaettern an Ort und
+ * Stelle (feste Buehne, bemessen am groessten Bild).
+ */
+import MainLayout from "@layouts/MainLayout.astro";
+import ImageCarousel from "@components/docs/ImageCarousel.astro";
+
+import parts1 from "@assets/images/project01/overview/parts1.jpg";
+import vogelhaus1 from "@assets/images/project01/overview/vogelhaus1.jpg";
+import bnLive01 from "@assets/images/birdnet-live/bn_live_01.jpg";
+import bnLive04 from "@assets/images/birdnet-live/bn_live_04.jpg";
+import pi01 from "@assets/images/springschool/pi01.jpg";
+
+const mixedImages = [
+  { src: parts1, alt: "Querformat 4:3 — Bauteile" },
+  { src: bnLive04, alt: "Hochformat — schmales Bild" },
+  { src: pi01, alt: "Extrabreites Format — sehr flaches Bild" },
+  { src: bnLive01, alt: "Querformat 3:2 — Aufbau im Gelände" },
+  { src: vogelhaus1, alt: "Querformat 4:3 — Vogelhaus" },
+];
+---
+
+<MainLayout title="Carousel-Demo (dev)" locale="de">
+  <main class="mx-auto w-full max-w-3xl px-4 py-10 space-y-6">
+    <header>
+      <h1 class="text-2xl font-bold">ImageCarousel — Test mit gemischten Formaten</h1>
+      <p class="mt-2 opacity-80">
+        Zum Testen mehrfach auf ❯ klicken, ohne die Maus zu bewegen: Der Button muss
+        unter dem Cursor bleiben. Wischgesten (Touch/Maus) und Pfeiltasten funktionieren
+        ebenfalls.
+      </p>
+    </header>
+
+    <ImageCarousel label="Demo: gemischte Bildformate" images={mixedImages} />
+  </main>
+</MainLayout>

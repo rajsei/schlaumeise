@@ -39,37 +39,52 @@ function displaySize(src: ImageMetadata) {
   }
   return { width: Math.round(width), height: Math.round(height) };
 }
+
+const sizedSlides = images
+  .map((image) => (typeof image.src === "string" ? null : displaySize(image.src)))
+  .filter((size): size is { width: number; height: number } => size !== null);
+
+/* Feste Buehne: alle Slides teilen sich dieselbe Box, bemessen am groessten
+   Bild der Galerie. Pfeile und Indikatoren bleiben so beim Durchblaettern an
+   Ort und Stelle — auch bei gemischten Formaten (quer/hoch/breit).
+   Fallback fuer reine URL-Galerien ohne bekannte Masse: 640x420. */
+const stageWidth = sizedSlides.length > 0 ? Math.max(...sizedSlides.map((s) => s.width)) : 640;
+const stageHeight = sizedSlides.length > 0 ? Math.max(...sizedSlides.map((s) => s.height)) : 420;
+const stageStyle = `--stage-width: ${stageWidth}px; --stage-aspect: ${stageWidth} / ${stageHeight};`;
 ---
 
 {
   images.length > 0 && (
-    <div class="docs-image-carousel" data-image-carousel aria-label={label} tabindex="0">
+    <div class="docs-image-carousel" style={stageStyle} data-image-carousel aria-label={label} tabindex="0">
       <div class="docs-image-carousel__slides">
-        {images.map((image, index) => {
-          const size = typeof image.src === "string" ? null : displaySize(image.src);
-          return (
-            <figure class="docs-image-carousel__slide" data-carousel-slide hidden={index !== 0}>
-              <div
-                class="docs-image-carousel__media skeleton"
-                style={size ? `--media-width: ${size.width}px; --media-aspect: ${size.width} / ${size.height};` : undefined}
-                data-carousel-media
-              >
-                {typeof image.src === "string" ? (
-                  <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
-                ) : (
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={Math.min(MAX_RENDER_WIDTH, image.src.width)}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                )}
-              </div>
-              <figcaption class="docs-image-carousel__caption">{image.alt}</figcaption>
-            </figure>
-          );
-        })}
+        {images.map((image, index) => (
+          <figure
+            class:list={["docs-image-carousel__slide", { "docs-image-carousel__slide--active": index === 0 }]}
+            data-carousel-slide
+          >
+            <div class="docs-image-carousel__media skeleton" data-carousel-media>
+              {typeof image.src === "string" ? (
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable="false"
+                />
+              ) : (
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={Math.min(MAX_RENDER_WIDTH, image.src.width)}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable="false"
+                />
+              )}
+            </div>
+            <figcaption class="docs-image-carousel__caption">{image.alt}</figcaption>
+          </figure>
+        ))}
       </div>
 
       {images.length > 1 && (
@@ -126,7 +141,7 @@ function displaySize(src: ImageMetadata) {
       activeIndex = (requestedIndex + slides.length) % slides.length;
 
       slides.forEach((slide, index) => {
-        slide.hidden = index !== activeIndex;
+        slide.classList.toggle("docs-image-carousel__slide--active", index === activeIndex);
       });
 
       indicators.forEach((indicator, index) => {
@@ -145,6 +160,22 @@ function displaySize(src: ImageMetadata) {
     carousel.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") showSlide(activeIndex - 1);
       if (event.key === "ArrowRight") showSlide(activeIndex + 1);
+    });
+
+    // Wischgesten (Touch/Maus) auf dem Bildbereich.
+    const slidesContainer = carousel.querySelector<HTMLElement>(".docs-image-carousel__slides");
+    let pointerStartX: number | null = null;
+    slidesContainer?.addEventListener("pointerdown", (event) => {
+      pointerStartX = event.clientX;
+    });
+    slidesContainer?.addEventListener("pointerup", (event) => {
+      if (pointerStartX === null) return;
+      const deltaX = event.clientX - pointerStartX;
+      pointerStartX = null;
+      if (Math.abs(deltaX) > 40 && slides.length > 1) showSlide(activeIndex + (deltaX < 0 ? 1 : -1));
+    });
+    slidesContainer?.addEventListener("pointercancel", () => {
+      pointerStartX = null;
     });
 
     // Skeleton-Platzhalter entfernen, sobald das jeweilige Bild geladen ist.
@@ -177,7 +208,18 @@ function displaySize(src: ImageMetadata) {
   }
 
   .docs-image-carousel__slide {
+    grid-area: 1 / 1;
+    min-width: 0; /* Grid-Item darf schmaler werden als sein Inhalt */
     margin: 0;
+    visibility: hidden;
+    /* Slide bleibt auf Zeilenhoehe gestreckt (Hochformate geben die Hoehe
+       vor); nur der Inhalt (Bild + Caption) wird vertikal zentriert.
+       Aeltere Browser ignorieren das und richten wie bisher oben aus. */
+    align-content: center;
+  }
+
+  .docs-image-carousel__slide--active {
+    visibility: visible;
     animation: docs-image-carousel-in 260ms ease;
   }
 
@@ -192,18 +234,33 @@ function displaySize(src: ImageMetadata) {
     }
   }
 
-  /* Platzhalter: reserviert NUR waehrend des Ladens die (vorberechnete)
-     Bildgroesse, damit das Layout nicht springt. Nach dem Laden bestimmt
-     wieder das Bild selbst die Groesse — kein Restabstand zur Caption.
-     Fallback fuer URL-Bilder ohne bekannte Masse: 40rem breit, 3:2. */
+  /* Slides liegen im Grid uebereinander: Der Container ist immer so hoch wie
+     der hoechste Slide INKLUSIVE Bildunterschrift. So bleibt die Bedienleiste
+     auch auf schmalen Screens fix, wenn Captions unterschiedlich umbrechen.
+     Inaktive Slides sind nur unsichtbar (visibility), nicht aus dem Layout. */
+  .docs-image-carousel__slides {
+    display: grid;
+    /* minmax(0, 1fr): Spur darf nicht auf die px-Buehnenbreite der Slides
+       anwachsen — sonst overflowt das Bild auf schmalen Screens rechts. */
+    grid-template-columns: minmax(0, 1fr);
+    touch-action: pan-y;
+  }
+
+  /* Feste Buehne: alle Slides teilen sich dieselbe Box (Mass des groessten
+     Bildes, siehe --stage-* im Frontmatter). Pfeile/Indikatoren bleiben so
+     beim Durchblaettern an Ort und Stelle, auch bei gemischten Formaten.
+     Die Buehne dient waehrend des Ladens zugleich als Skeleton-Platzhalter. */
   .docs-image-carousel__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--stage-width, min(40rem, 100%));
     max-width: 100%;
+    aspect-ratio: var(--stage-aspect, 3 / 2);
     margin-inline: auto;
   }
 
   .docs-image-carousel__media.skeleton {
-    width: var(--media-width, min(40rem, 100%));
-    aspect-ratio: var(--media-aspect, 3 / 2);
     border-radius: var(--radius-md);
   }
 
@@ -213,7 +270,7 @@ function displaySize(src: ImageMetadata) {
 
   .docs-image-carousel__slide img {
     display: block;
-    max-height: 420px; /* muss zu MAX_DISPLAY_HEIGHT im Frontmatter passen */
+    max-height: 100%; /* Buehnenhoehe begrenzt das Bild (max. MAX_DISPLAY_HEIGHT) */
     max-width: 100%;
     width: auto;
     height: auto;
