@@ -298,9 +298,12 @@
   .docs-image-lightbox__image {
     box-sizing: border-box;
     width: auto;
-    max-width: 100%;
+    /* Viewport-basierte Limits statt Prozenten: 100%-Werte loesen sich im Grid gegen
+       die auto-hohe Zeile auf, die mit dem Bild mitwaechst — Hochkant-Bilder liefen
+       dadurch vertikal ueber. Werte entsprechen der Dialog-Groesse. */
+    max-width: min(calc(100vw - 2rem), 1400px);
     height: auto;
-    max-height: 100%;
+    max-height: calc(100dvh - 2rem);
     object-fit: contain;
     border-radius: var(--radius-md);
     border: var(--border-sm);
