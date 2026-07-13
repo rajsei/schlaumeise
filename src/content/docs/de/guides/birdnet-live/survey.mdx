@@ -7,6 +7,16 @@ sidebar:
 import { Image } from "astro:assets";
 import bnLive04 from "@assets/images/birdnet-live/bn_live_04.jpg";
 
+import ImageCarousel from "@components/docs/ImageCarousel.astro";
+
+import backpack1 from "@assets/images/birdnet-live/survey/backpack1.jpg";
+import backpack2 from "@assets/images/birdnet-live/survey/backpack2.jpg";
+
+import survey1 from "@assets/images/birdnet-live/survey/survey1.jpg";
+import survey2 from "@assets/images/birdnet-live/survey/survey2.jpg";   
+import survey3 from "@assets/images/birdnet-live/survey/survey3.jpg";
+
+
 
 
 <div class="hero bg-base-200 rounded-box docs-hero-bleed min-h-[60vh] md:min-h-screen">
@@ -36,6 +46,33 @@ import bnLive04 from "@assets/images/birdnet-live/bn_live_04.jpg";
   </svg>
   <span>Survey ist Englisch und lässt sich mit Erfassung, Erhebung oder Untersuchung übersetzen.</span>
 </div>
+
+
+<ImageCarousel
+  label="Bilder der Projektkomponenten"
+  images={[
+        {
+      src: survey1,
+      alt: "Smartphone mit BirdNET Live App im Survey-Modus.",
+    },
+    {
+      src: survey2,
+      alt: "Smartphone mit BirdNET Live App im Survey-Modus.",
+    },
+    {
+      src: survey3,
+      alt: "Smartphone mit BirdNET Live App im Survey-Modus.",
+    },
+    {
+      src: backpack1,
+      alt: "Externes Bluetooth-Mikrofon an einem Rucksack.",
+    },
+    {
+      src: backpack2,
+      alt: "Smartphone mit einem externen Bluetooth-Mikrofon.",
+    },
+  ]}
+/>
 
 
 ## So funktioniert der Survey-Modus

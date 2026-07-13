@@ -4,6 +4,35 @@ sidebar:
   order: 5
 ---
 
+import ImageCarousel from "@components/docs/ImageCarousel.astro";
+
+import aru1 from "@assets/images/birdnet-live/aru/aru1.jpg";
+import aru2 from "@assets/images/birdnet-live/aru/aru2.jpg";
+import aru3 from "@assets/images/birdnet-live/aru/aru3.jpg";
+import aru4 from "@assets/images/birdnet-live/aru/aru4.jpg";
+
+<ImageCarousel
+  label="Bilder der Projektkomponenten"
+  images={[
+    {
+      src: aru1,
+      alt: "Smartphone mit BirdNET Live App in einer Abzweigdose aus dem Baumarkt.",
+    },
+    {
+      src: aru2,
+      alt: "Smartphone mit BirdNET Live App in einer Abzweigdose aus dem Baumarkt.",
+    },
+    {
+      src: aru3,
+      alt: "Smartphone in einer Abzweigdose, das als autonomes Aufnahmegerät (ARU) an einem Baum verwendet wird.",
+    },
+    {
+      src: aru4,
+      alt: "Smartphone, das als autonomes Aufnahmegerät (ARU) verwendet wird.",
+    },
+  ]}
+/>
+
 Der ARU-Modus verwandelt dein Smartphone in ein autonomes Aufnahmegerät (Autonomous Recording Unit, kurz ARU). 
 Anstatt dauerhaft aktiv zu sein, startet BirdNET Live die Aufnahmen automatisch nach einem festgelegten Zeitplan – beispielsweise zum Sonnenaufgang oder Sonnenuntergang – und eignet sich damit ideal für langfristige Erfassungen an einem festen Standort.
 
