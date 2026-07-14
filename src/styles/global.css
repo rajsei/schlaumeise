@@ -536,12 +536,14 @@ body {
 .audio {
   width: min(100%, 36rem);
   margin-bottom: 1rem;
-  margin-top: 1rem; 
+  margin-top: 1rem;
   border-radius: var(--radius-pill);
   border: var(--border-sm);
   background: var(--color-base-200);
   box-shadow: var(--global-shadow-inset);
   color: var(--color-text);
+  /* Firefox: natives Control ist eckig, overflow clippt es auf die Pill-Form */
+  overflow: hidden;
 }
 
 /*
