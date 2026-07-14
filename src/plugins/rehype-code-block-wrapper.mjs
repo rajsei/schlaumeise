@@ -1,4 +1,21 @@
 import { visit } from "unist-util-visit";
+import { defaultLocale } from "../i18n/config";
+import { de } from "../i18n/locales/de";
+import { en } from "../i18n/locales/en";
+
+/* Copy-Button-Labels aus dem i18n-Dictionary (AGENTS.md: keine Inline-UI-Strings).
+   Die Locale wird pro Markdown-Datei aus dem Content-Pfad abgeleitet
+   (src/content/docs/<locale>/… bzw. src/content/home/<locale>.mdx). */
+const copyLabelsByLocale = {
+  de: { copy: de.docs.copyCode, copied: de.docs.copiedCode },
+  en: { copy: en.docs.copyCode, copied: en.docs.copiedCode },
+};
+
+function getLocaleFromFilePath(path) {
+  const normalized = String(path ?? "").replace(/\\/g, "/");
+  const match = normalized.match(/\/content\/(?:docs|home)\/(de|en)(?:\/|\.)/);
+  return match ? match[1] : defaultLocale;
+}
 
 function toClassList(value) {
   if (Array.isArray(value)) {
@@ -92,20 +109,20 @@ function createCopiedIcon() {
   );
 }
 
-function createCopyButton() {
+function createCopyButton(labels) {
   return createElement(
     "button",
     {
       type: "button",
       class: ["docs-code-block__copy"],
       "data-docs-copy-button": "true",
-      "data-copy-label": "Copy",
-      "data-copied-label": "Copied",
-      "aria-label": "Copy code to clipboard",
+      "data-copy-label": labels.copy,
+      "data-copied-label": labels.copied,
+      "aria-label": labels.copy,
     },
     [
       createElement("span", { class: ["docs-code-block__copy-icon-wrap"] }, [createCopyIcon(), createCopiedIcon()]),
-      createElement("span", { class: ["sr-only"] }, [createText("Copy")]),
+      createElement("span", { class: ["sr-only"] }, [createText(labels.copy)]),
     ],
   );
 }
@@ -197,7 +214,10 @@ function shouldShowHeader(title, language) {
 }
 
 export function rehypeCodeBlockWrapper() {
-  return (tree) => {
+  return (tree, file) => {
+    const copyLabels =
+      copyLabelsByLocale[getLocaleFromFilePath(file?.path)] ?? copyLabelsByLocale[defaultLocale];
+
     visit(tree, "element", (node, index, parent) => {
       if (!parent || typeof index !== "number") {
         return;
@@ -270,7 +290,7 @@ export function rehypeCodeBlockWrapper() {
       const body = createElement("div", bodyProperties, [node]);
 
       if (copyEnabled) {
-        body.children.push(createCopyButton());
+        body.children.push(createCopyButton(copyLabels));
       }
 
       figure.children.push(body);

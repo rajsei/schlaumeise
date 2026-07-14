@@ -2,6 +2,17 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-14 — Header-Tooltips + lokalisierte Copy-Button-Labels (Agent)
+
+### Hinzugefügt
+- **Header:** Tooltips für Hamburger (`docs.toggleNavTooltip`), Theme- und Kontrast-Toggle (`a11y.themeToggle`/`a11y.contrastToggle`) — jeweils daisyUI-`tooltip`-Wrapper-Span um den Button; Ausrichtung zum Seiteninneren (Hamburger `tooltip-right`, Toggles `tooltip-left`), damit nichts über den Viewport-Rand ragt
+- Neue i18n-Keys (de/en): `a11y.themeToggle`, `a11y.contrastToggle`, `docs.toggleNavTooltip`, `docs.copyCode`, `docs.copiedCode` — die Copy-Keys dienen als aria-Label/Statuswechsel-Label der Copy-Buttons (Tooltips an Copy-Buttons und Thema-Buttons wurden erprobt und wieder verworfen)
+
+### Geändert
+- `ThemeController.astro`: hart deutsch kodierte aria-Labels durch Props (`themeToggleLabel`/`contrastToggleLabel` aus dem Dictionary via `Header.astro`) ersetzt — EN-Seiten bekommen jetzt englische Labels
+- `rehype-code-block-wrapper.mjs`: hart englisch kodierte Copy-Button-Labels („Copy"/„Copied") durch Dictionary-Werte ersetzt; Locale pro Markdown-Datei aus dem Content-Pfad (`/content/docs|home/<locale>/…`), Fallback `defaultLocale`
+- `CodeBlock.astro`/`Terminal.astro`: Copy-Button-Labels über `getDictionary(getLocaleFromPathname(…))` statt inline
+
 ## 2026-07-11 — Content-Ordner kebab-case + Collections auf Loader-API (Agent)
 
 ### Geändert

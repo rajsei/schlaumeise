@@ -2,6 +2,8 @@ export const de = {
   a11y: {
     brandHome: "Zur Startseite von {brand}",
     switchLanguage: "Sprache wechseln",
+    themeToggle: "Hell/Dunkel umschalten",
+    contrastToggle: "Hohen Kontrast umschalten",
   },
   nav: {
     home: "Startseite",
@@ -15,6 +17,7 @@ export const de = {
   },
   docs: {
     toggleNav: "Navigation",
+    toggleNavTooltip: "Navigation ein- oder ausblenden",
     closeNav: "Schließen",
     navLabel: "Dokumentationsnavigation",
     paginationLabel: "Dokumentationsseitenwechsel",
@@ -27,6 +30,8 @@ export const de = {
     tocSectionCountOne: "1 Abschnitt",
     noTocItems: "Keine Überschriften vorhanden.",
     glossaryTermHint: "(Glossar)",
+    copyCode: "Code kopieren",
+    copiedCode: "Kopiert!",
   },
   home: {
     heading: "Schlaumeise",

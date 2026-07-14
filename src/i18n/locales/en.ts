@@ -2,6 +2,8 @@ export const en = {
   a11y: {
     brandHome: "Go to {brand} homepage",
     switchLanguage: "Switch language",
+    themeToggle: "Toggle light/dark mode",
+    contrastToggle: "Toggle high contrast",
   },
   nav: {
     home: "Home",
@@ -15,6 +17,7 @@ export const en = {
   },
   docs: {
     toggleNav: "Navigation",
+    toggleNavTooltip: "Show or hide the navigation",
     closeNav: "Close",
     navLabel: "Documentation navigation",
     paginationLabel: "Documentation pagination",
@@ -27,6 +30,8 @@ export const en = {
     tocSectionCountOne: "1 section",
     noTocItems: "No headings available.",
     glossaryTermHint: "(glossary)",
+    copyCode: "Copy code",
+    copiedCode: "Copied!",
   },
   home: {
     heading: "Smartfinch",

@@ -1,18 +1,32 @@
 ---
 import "@styles/global.css";
+
+// Labels kommen aus dem i18n-Dictionary des Aufrufers (Header.astro) und
+// dienen als aria-label UND Tooltip-Text (daisyUI data-tip).
+interface Props {
+  themeToggleLabel: string;
+  contrastToggleLabel: string;
+}
+
+const { themeToggleLabel, contrastToggleLabel } = Astro.props;
 ---
 <div class="theme-controls">
-  <div class="btn btn-circle btn-ghost">
-    <label class="swap swap-rotate">
-      <!-- steuert hell/dunkel -->
-      <!-- bewusst OHNE daisyUI-Klasse "theme-controller": diese schaltet via
-           :has(:checked) anhand des value-Attributs und kann die zusammengesetzten
-           Contrast-Themes nicht ausdruecken. data-theme (Skript unten) ist die Quelle. -->
-      <input
-        id="theme-toggle"
-        type="checkbox"
-        aria-label="Hell/Dunkel umschalten"
-      />
+  <!-- Tooltip-Wrapper (daisyUI): Klasse auf dem span, damit :has(:focus-visible)
+       den Tooltip auch bei Tastaturfokus der Checkbox zeigt.
+       tooltip-left: die Toggles sitzen am rechten Seitenrand, ein zentrierter
+       Bottom-Tooltip würde rechts aus dem Viewport ragen. -->
+  <span class="tooltip tooltip-left" data-tip={themeToggleLabel}>
+    <div class="btn btn-circle btn-ghost">
+      <label class="swap swap-rotate">
+        <!-- steuert hell/dunkel -->
+        <!-- bewusst OHNE daisyUI-Klasse "theme-controller": diese schaltet via
+             :has(:checked) anhand des value-Attributs und kann die zusammengesetzten
+             Contrast-Themes nicht ausdruecken. data-theme (Skript unten) ist die Quelle. -->
+        <input
+          id="theme-toggle"
+          type="checkbox"
+          aria-label={themeToggleLabel}
+        />
 
       <!-- sun icon -->
       <svg
@@ -31,17 +45,19 @@ import "@styles/global.css";
         <path
           d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
       </svg>
-    </label>
-  </div>
+      </label>
+    </div>
+  </span>
 
-  <div class="btn btn-circle btn-ghost">
-    <label class="swap">
-      <!-- steuert Normal-/Hoch-Kontrast -->
-      <input
-        id="contrast-toggle"
-        type="checkbox"
-        aria-label="Hohen Kontrast umschalten"
-      />
+  <span class="tooltip tooltip-left" data-tip={contrastToggleLabel}>
+    <div class="btn btn-circle btn-ghost">
+      <label class="swap">
+        <!-- steuert Normal-/Hoch-Kontrast -->
+        <input
+          id="contrast-toggle"
+          type="checkbox"
+          aria-label={contrastToggleLabel}
+        />
 
       <!-- normaler Kontrast: halb gefuellter Kreis -->
       <svg
@@ -59,8 +75,9 @@ import "@styles/global.css";
         viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" />
       </svg>
-    </label>
-  </div>
+      </label>
+    </div>
+  </span>
 </div>
 
 <script is:inline>

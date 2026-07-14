@@ -46,20 +46,26 @@ function navLinkClass(href: string, extra: string[] = []): string {
 
 <div class="navbar site-navbar shadow-sm">
   <div class="navbar-start">
-    <button
-      type="button"
-      class="btn btn-ghost mr-2 docs-toggle-btn"
-      data-docs-sidebar-toggle
-      aria-controls="docs-sidebar global-docs-sidebar"
-      aria-expanded="false"
-      aria-label={dictionary.docs.toggleNav}
-    >
-      <span class="docs-toggle-icon" aria-hidden="true">
-        <span class="docs-toggle-line"></span>
-        <span class="docs-toggle-line"></span>
-        <span class="docs-toggle-line"></span>
-      </span>
-    </button>
+    <!-- Tooltip-Wrapper (daisyUI): Klasse auf dem span statt dem Button, damit
+         :has(:focus-visible) den Tooltip auch bei Tastaturfokus zeigt.
+         tooltip-right: der Button sitzt am linken Seitenrand, ein zentrierter
+         Bottom-Tooltip würde links aus dem Viewport ragen. -->
+    <span class="tooltip tooltip-right" data-tip={dictionary.docs.toggleNavTooltip}>
+      <button
+        type="button"
+        class="btn btn-ghost mr-2 docs-toggle-btn"
+        data-docs-sidebar-toggle
+        aria-controls="docs-sidebar global-docs-sidebar"
+        aria-expanded="false"
+        aria-label={dictionary.docs.toggleNav}
+      >
+        <span class="docs-toggle-icon" aria-hidden="true">
+          <span class="docs-toggle-line"></span>
+          <span class="docs-toggle-line"></span>
+          <span class="docs-toggle-line"></span>
+        </span>
+      </button>
+    </span>
     <div class="btn btn-link text-xl">
       <a class="brand" href={homeHref} aria-label={homeLabel}>
         <img
@@ -99,7 +105,10 @@ function navLinkClass(href: string, extra: string[] = []): string {
         </a>
       )
     }
-    <ThemeController />
+    <ThemeController
+      themeToggleLabel={dictionary.a11y.themeToggle}
+      contrastToggleLabel={dictionary.a11y.contrastToggle}
+    />
   </div>
 </div>
 

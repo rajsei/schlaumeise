@@ -1,5 +1,7 @@
 ---
 import { parseLineSelection } from "@plugins/code-block-meta.mjs";
+import { getDictionary } from "@i18n";
+import { getLocaleFromPathname } from "@i18n/routing";
 
 interface Props {
   title?: string;
@@ -24,6 +26,8 @@ const {
   highlightWords = [],
   class: className = "",
 } = Astro.props;
+
+const t = getDictionary(getLocaleFromPathname(Astro.url.pathname)).docs;
 
 const slotHtml = Astro.slots.has("default") ? await Astro.slots.render("default") : "";
 
@@ -110,10 +114,10 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
           type="button"
           class="docs-code-block__copy docs-code-block__copy--terminal"
           data-docs-copy-button
-          data-copy-label="Copy"
-          data-copied-label="Copied"
+          data-copy-label={t.copyCode}
+          data-copied-label={t.copiedCode}
           data-copy-source={normalizedCode}
-          aria-label="Copy terminal snippet to clipboard"
+          aria-label={t.copyCode}
         >
           <span class="docs-code-block__copy-icon-wrap">
             <svg class="docs-code-block__copy-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -123,7 +127,7 @@ const classes = ["docs-terminal", showLineNumbers ? "has-line-numbers" : "", cla
               <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </span>
-          <span class="sr-only">Copy</span>
+          <span class="sr-only">{t.copyCode}</span>
         </button>
       )
     }

@@ -19,14 +19,14 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Navigation (Sidebar mit Topics)
 
-**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung.
+**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung. Thema-Buttons bewusst ohne Tooltips (2026-07-14 erprobt und wieder entfernt — sichtbare Labels reichen).
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/config/docs-navigation.ts`, `src/lib/docs-navigation.ts`, `src/components/ui-elements/Sidebar*.astro`
 **Erweiterungsmöglichkeiten:** Topbar-Themen-Dropdown mit echten Zielen (Komponente `DropdownNavItem` liegt dafür reserviert bereit); `aria-current` für aktive Links.
 
 ## Mobile Darstellung
 
-**Beschreibung:** Drawer-Pattern: Sidebar als Off-Canvas mobil, fest ab `lg`; MenuDrawer stellt die Themen-Navigation auch auf Nicht-Docs-Seiten bereit; TOC mobil als ausklappbares `<details>`; Hamburger-Button mit animiertem Icon.
+**Beschreibung:** Drawer-Pattern: Sidebar als Off-Canvas mobil, fest ab `lg`; MenuDrawer stellt die Themen-Navigation auch auf Nicht-Docs-Seiten bereit; TOC mobil als ausklappbares `<details>`; Hamburger-Button mit animiertem Icon und Tooltip (`docs.toggleNavTooltip`).
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/scripts/docs-drawer.ts`, `src/components/MenuDrawer.astro`, `src/components/Header.astro`, `src/styles/docs.css`
 **Erweiterungsmöglichkeiten:** Fokus-Falle im offenen Drawer; Wischgesten.
@@ -47,14 +47,14 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Theme-Umschaltung (hell/dunkel)
 
-**Beschreibung:** Zwei Custom-daisyUI-Themes („light" Standard / „dark") mit Markenfarben (Meisen-Blau `#2558a0`/`#499bff`, Meisen-Gelb `#f9d15b`, Violett-Akzent). Theme-Auflösung per Inline-Skript im `<head>` vor dem ersten Paint (kein Aufblitzen); Persistenz im versionierten Format `schlaumeise:theme:v1` (`{mode, contrast}`), Migration vom alten `theme`-Key; `prefers-color-scheme`-Fallback; `color-scheme` pro Theme (Scrollbars/Formulare wechseln mit). Der `ThemeController` ist nur noch Toggle-UI.
+**Beschreibung:** Zwei Custom-daisyUI-Themes („light" Standard / „dark") mit Markenfarben (Meisen-Blau `#2558a0`/`#499bff`, Meisen-Gelb `#f9d15b`, Violett-Akzent). Theme-Auflösung per Inline-Skript im `<head>` vor dem ersten Paint (kein Aufblitzen); Persistenz im versionierten Format `schlaumeise:theme:v1` (`{mode, contrast}`), Migration vom alten `theme`-Key; `prefers-color-scheme`-Fallback; `color-scheme` pro Theme (Scrollbars/Formulare wechseln mit). Der `ThemeController` ist nur noch Toggle-UI; beide Toggles haben Tooltips + aria-Labels aus dem i18n-Dictionary (`a11y.themeToggle`/`a11y.contrastToggle`, Props aus `Header.astro`).
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/styles/global.css` (Theme-Definitionen), `src/layouts/MainLayout.astro` (Head-Skript), `src/components/ui-elements/ThemeController.astro`, `src/config/site.config.ts`
 **Erweiterungsmöglichkeiten:** High-Contrast-Varianten `light-contrast`/`dark-contrast` (Vorlage am Ende von `global.css`, Speicherformat bereits vorbereitet, `prefers-contrast: more` als Default beachten) — todo #6b.
 
 ## Codeblöcke
 
-**Beschreibung:** Shiki-Highlighting (zwei Themes), Titelzeile mit Sprach-Badge, Copy-Button mit Statuswechsel, Zeilennummern, Zeilen-Highlighting (`highlight`/`mark`/`ins`), Umbruchmodus; `Terminal`-Variante für Konsolen-Sessions; nutzbar in Markdown (Fences) und MDX (`Code`, `CodeBlock`, `Terminal`).
+**Beschreibung:** Shiki-Highlighting (zwei Themes), Titelzeile mit Sprach-Badge, Copy-Button mit Statuswechsel und lokalisierten Labels (i18n-Keys `docs.copyCode`/`docs.copiedCode` als aria-Label; in Markdown-Fences via Locale-Erkennung aus dem Content-Pfad im rehype-Plugin), Zeilennummern, Zeilen-Highlighting (`highlight`/`mark`/`ins`), Umbruchmodus; `Terminal`-Variante für Konsolen-Sessions; nutzbar in Markdown (Fences) und MDX (`Code`, `CodeBlock`, `Terminal`).
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/plugins/` (alle vier), `src/components/docs/Code*.astro`, `Terminal.astro`, `src/scripts/docs-code-copy.ts`
 **Erweiterungsmöglichkeiten:** Diff-Ansicht; Dateinamen-Tabs für Mehrdatei-Beispiele.
