@@ -2,6 +2,12 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-14 — Navbar-Menü verlinkt BirdNET-Live-Guide statt Startseite (Agent)
+
+### Geändert
+- `Header.astro`: das Hauptmenü (navbar-center, ab `lg` sichtbar) führt jetzt zum BirdNET-Live-Guide (`/guides/birdnet-live/` via `buildLocalizedUrl`) statt zur Startseite — die ist über das Logo/den Markennamen ohnehin erreichbar
+- i18n: neuer Key `nav.birdnetLive` („BirdNET Live App", de/en); ungenutzter Key `nav.home` entfernt
+
 ## 2026-07-14 — Header-Tooltips + lokalisierte Copy-Button-Labels (Agent)
 
 ### Hinzugefügt

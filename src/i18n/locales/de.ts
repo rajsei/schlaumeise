@@ -6,7 +6,7 @@ export const de = {
     contrastToggle: "Hohen Kontrast umschalten",
   },
   nav: {
-    home: "Startseite",
+    birdnetLive: "BirdNET Live App",
     switchTo: "English",
   },
   footer: {

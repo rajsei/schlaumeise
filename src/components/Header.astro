@@ -23,8 +23,8 @@ const currentPathname = Astro.url.pathname;
 
 const primaryNavItems = [
   {
-    href: homeHref,
-    label: dictionary.nav.home,
+    href: buildLocalizedUrl(locale, "/guides/birdnet-live/"),
+    label: dictionary.nav.birdnetLive,
   },
 ];
 
