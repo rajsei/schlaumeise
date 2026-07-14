@@ -23,6 +23,8 @@ export const de = {
     topicsHeading: "",
     globalHeading: "Allgemein",
     tocHeading: "Inhalt",
+    tocSectionCount: "{count} Abschnitte",
+    tocSectionCountOne: "1 Abschnitt",
     noTocItems: "Keine Überschriften vorhanden.",
     glossaryTermHint: "(Glossar)",
   },

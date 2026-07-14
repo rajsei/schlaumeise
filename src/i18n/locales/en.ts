@@ -23,6 +23,8 @@ export const en = {
     topicsHeading: "",
     globalHeading: "Global",
     tocHeading: "Contents",
+    tocSectionCount: "{count} sections",
+    tocSectionCountOne: "1 section",
     noTocItems: "No headings available.",
     glossaryTermHint: "(glossary)",
   },
