@@ -13,6 +13,9 @@ export interface NavigationAutogenerateItem {
 export interface NavigationGroupItem {
   label: string;
   translations?: TranslationMap;
+  /* true: Gruppe ist standardmaessig ausgeklappt — nicht nur, wenn sie die
+     aktive Seite enthaelt. */
+  expanded?: boolean;
   items: NavigationSidebarItem[];
 }
 
@@ -81,6 +84,7 @@ export const navigation: NavigationConfig = {
           translations: {
             de: "BirdNET Live",
           },
+          expanded: true,
           items: [{ autogenerate: { directory: "guides/birdnet-live" } }],
         },
       ],
@@ -97,6 +101,7 @@ export const navigation: NavigationConfig = {
         translations: {
           de: "Das lauschende Vogelhaus",
         },
+        expanded: true,
         items: [{ autogenerate: { directory: "projects/project01" } }],
       }],
     },

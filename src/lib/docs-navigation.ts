@@ -42,6 +42,10 @@ export interface ResolvedNavGroupItem {
   label: string;
   items: ResolvedNavItem[];
   overview?: ResolvedNavLinkItem;
+  /* active: Teilbaum enthaelt die aktive Seite (steuert die Topic-Auswahl).
+     expanded: nur Aufklapp-Zustand — kann per Config (expanded: true) erzwungen
+     sein und taugt daher NICHT als Aktivitaets-Signal. */
+  active: boolean;
   expanded: boolean;
   emphasis?: boolean;
 }
@@ -358,9 +362,9 @@ function resolveSidebarItem(
         childExcludedPaths,
       ),
     );
-    const hasActiveChild = resolvedChildren.some((child) =>
-      child.type === "link" ? child.active : child.expanded,
-    );
+    const groupActive =
+      resolvedChildren.some((child) => child.active) ||
+      Boolean(overview?.link.active);
 
     return [
       {
@@ -368,7 +372,8 @@ function resolveSidebarItem(
         label: groupLabel,
         items: resolvedChildren,
         overview: overview?.link,
-        expanded: hasActiveChild || Boolean(overview?.link.active),
+        active: groupActive,
+        expanded: Boolean(item.expanded) || groupActive,
         emphasis: topLevel,
       },
     ];
@@ -429,9 +434,7 @@ export function resolveSidebarNavigation(
       const items = topic.items.flatMap((item) =>
         resolveSidebarItem(locale, currentPathname, docIndex, item, true),
       );
-      const active = items.some((item) =>
-        item.type === "link" ? item.active : item.expanded,
-      );
+      const active = items.some((item) => item.active);
       const resolved: ResolvedTopicWithItems = {
         ...base,
         type: "items",

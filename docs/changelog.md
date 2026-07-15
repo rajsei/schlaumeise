@@ -2,6 +2,14 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-14 — Sidebar: Gruppen per Config ausklappbar (Agent)
+
+### Hinzugefügt
+- `docs-navigation.ts`: optionales Flag `expanded: true` an Gruppen — die Gruppe ist dann immer ausgeklappt, nicht nur bei aktiver Kindseite. Gesetzt für „BirdNET Live" (Anleitungen) und „Das lauschende Vogelhaus" (Projekte), solange der Content-Umfang klein ist
+
+### Geändert
+- Resolver: `ResolvedNavGroupItem` trägt jetzt getrennt `active` (Teilbaum enthält die aktive Seite → steuert Topic-Auswahl) und `expanded` (nur Aufklapp-Zustand). Vorher diente `expanded` als Aktivitäts-Signal — mit dem neuen Config-Flag wäre sonst immer das erste Topic „Anleitungen" als ausgewählt markiert worden, egal welche Seite offen ist
+
 ## 2026-07-14 — Navbar-Menü verlinkt BirdNET-Live-Guide statt Startseite (Agent)
 
 ### Geändert

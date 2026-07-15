@@ -27,7 +27,7 @@ Beide Catch-all-Routen laden die `docs`-Collection in `getStaticPaths` und reich
 
 Inhalte liegen in der Collection `docs` unter `src/content/docs/<locale>/<themenbereich>/…` als `.md`/`.mdx`. Das Zod-Schema steht in `src/content.config.ts` (Felder: siehe [content-handbook.md](./content-handbook.md)). Der erste Pfadabschnitt der Entry-ID ist die Locale; `src/lib/docs-content.ts` filtert danach.
 
-Die Sidebar-Struktur ist **nicht** im Dateisystem kodiert, sondern in `src/config/docs-navigation.ts` deklariert (Topics → Gruppen → `autogenerate`-Verzeichnisse/Links). `src/lib/docs-navigation.ts` löst diese Deklaration gegen die Collection auf (Labels, Reihenfolge über `sidebar.order`, aktive Pfade, Prev/Next-Pagination).
+Die Sidebar-Struktur ist **nicht** im Dateisystem kodiert, sondern in `src/config/docs-navigation.ts` deklariert (Topics → Gruppen → `autogenerate`-Verzeichnisse/Links). `src/lib/docs-navigation.ts` löst diese Deklaration gegen die Collection auf (Labels, Reihenfolge über `sidebar.order`, aktive Pfade, Prev/Next-Pagination). Gruppen sind standardmäßig eingeklappt und öffnen sich, wenn sie die aktive Seite enthalten; `expanded: true` an einer Gruppe klappt sie immer auf.
 
 Strukturierte Daten (Quiz) liegen als JSON unter `src/data/quizzes/<locale>/` und werden über `src/lib/quizzes.ts` geladen und gegen `src/lib/quiz-schema.ts` validiert — Details in [quiz-handbook.md](./quiz-handbook.md).
 
