@@ -229,7 +229,7 @@
       if (image.dataset.docsZoomReady === "true") {
         continue;
       }
-      if (image.closest("a,button,[data-no-zoom],.not-zoomable")) {
+      if (image.closest("a,button,[data-no-zoom],.not-zoomable,.docs-image-carousel")) {
         continue;
       }
 
@@ -255,13 +255,17 @@
 </script>
 
 <style is:global>
-  .docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable) {
+  /* Groessen-/Rahmen-Styling nur fuer Bilder, die auch zoombar sind. Die
+     :not(:is(...) img)-Ausschluesse spiegeln die closest()-Liste im Skript:
+     Bilder in Links/Buttons, mit Opt-out oder im Carousel bleiben unberuehrt. */
+  .docs-article__body .mdx-interpreter img:not(.arrow):not(.not-zoomable):not(:is(a, button, [data-no-zoom], .not-zoomable, .docs-image-carousel) img) {
     box-sizing: border-box;
     display: block;
     width: auto;
     max-width: min(100%, 580px);
     height: auto;
-    max-height: min(70dvh, 350px);
+    /* Feste Obergrenze statt dvh: Bildgroesse haengt nicht von der Fensterhoehe ab. */
+    max-height: 350px;
     object-fit: contain;
     border-radius: var(--radius-sm);
     border: var(--border-sm);
