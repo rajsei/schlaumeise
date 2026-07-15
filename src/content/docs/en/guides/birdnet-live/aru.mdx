@@ -3,6 +3,39 @@ title: ARU Mode (Autonomous Recording Unit)
 sidebar:
   order: 5
 ---
+import ImageCarousel from "@components/docs/ImageCarousel.astro";
+
+import aru1 from "@assets/images/birdnet-live/aru/aru1.JPG";
+import aru2 from "@assets/images/birdnet-live/aru/aru2.JPG";
+import aru3 from "@assets/images/birdnet-live/aru/aru3.JPG";
+import aru4 from "@assets/images/birdnet-live/aru/aru4.JPG";
+import aru5 from "@assets/images/birdnet-live/aru/aru5.JPG";
+
+<ImageCarousel
+  label="Images of a smartphone used as an ARU"
+  images={[
+    {
+      src: aru1,
+      alt: "Smartphone with the BirdNET Live app in a junction box from a home improvement store.",
+    },
+    {
+      src: aru2,
+      alt: "Smartphone with the BirdNET Live app in a junction box from a home improvement store.",
+    },
+    {
+      src: aru3,
+      alt: "Smartphone in a junction box, used as an autonomous recording unit (ARU) on a tree.",
+    },
+    {
+      src: aru4,
+      alt: "Smartphone used as an autonomous recording unit (ARU).",
+    },
+        {
+      src: aru5,
+      alt: "A smartphone used as an ARU in a resealable freezer bag on a balcony.",
+    },
+  ]}
+/>
 
 The ARU Mode turns your smartphone into an autonomous recording device (Autonomous Recording Unit, or ARU for short).
 Instead of running continuously, BirdNET Live starts recordings automatically on a defined schedule – for example at sunrise or sunset – making it ideal for long-term surveys at a fixed location.
