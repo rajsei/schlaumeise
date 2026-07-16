@@ -30,6 +30,7 @@ import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
         for example on a walk or along a fixed route.
         The app tracks your path via GPS, recognizes species automatically, and
         assigns each detection to the place where you heard it.
+        This creates a complete, spatially referenced record of your walk.
         At the end, you review everything conveniently in the Session Review.
       </p>
     </div>
@@ -65,12 +66,45 @@ import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
 />
 
 
-## How survey mode works
+## Typical use cases
+
+Survey Mode is especially suited for:
+
+- walks and hikes with continuous recording
+- surveys along fixed routes
+- transect mapping
+- surveys where the location of each detection matters
+- citizen-science projects with a spatial reference
+
+## What is Survey Mode not suited for?
+
+- exploring nature spontaneously
+
+<LinkCard
+  title="Live Mode"
+  href="../live/"
+/>
+
+- capturing bird sounds at a fixed location over a set period of time
+
+<LinkCard
+  title="Point Count"
+  href="../point-count/"
+/>
+
+- using your phone as a recorder
+
+<LinkCard
+  title="ARU Mode (Autonomous Recording Unit)"
+  href="../aru/"
+/>
+
+## How Survey Mode works
 
 1. Open **Survey Mode**.
 2. Complete the **setup wizard**.
     - Enter the **details**. For the start location, it's advisable to use the current GPS position.
-    - Set the **parameters**. The default settings are suitable for most applications.
+    - Set the **parameters**. See [Settings](../settings/) for more information. The default settings are suitable for most applications.
     - Configure **species alerts**.
       The app can alert you to certain species during the survey. For this feature, we recommend using headphones. That way the voice output is not picked up again by the microphone and does not affect the analysis.
       The announcements are especially helpful when you carry your smartphone in your pocket during a hike.
@@ -78,9 +112,9 @@ import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
     - Check the configuration and **start the survey**.
 3. **Monitor the live survey.** During the survey, the dashboard shows:
     - a **route map with detections**
-    - a **spectrogram**
-    - a **statistics view with a species breakdown**
-    - a list of the **most recent detections**
+    - an **audio spectrogram**
+    - an **overview with a species breakdown**
+    - a list of **possible species in your area**
 4. **Let the survey run in the background.**
 5. **End the survey and evaluate it**
     - In the live dashboard, tap the red button to **end the survey**.
@@ -95,3 +129,19 @@ Then select **"Allow all the time" (Android)** or enable **continuous location a
 Only with this permission can BirdNET Live reliably record your route during a survey recording
 – even when the app is in the background or the display is turned off.</span>
 </div>
+
+## Evaluating the results
+
+After you end the survey, BirdNET Live automatically opens the **Session Review**.
+There you can see your route with all located detections on the map, listen to individual detections, view spectrograms, and add metadata.
+
+Later, you'll find the survey at any time in **Sessions**, where you can export the results or share them with others.
+
+## Settings and tips
+
+If you want to improve your recording quality, take a look at the settings and tips.
+
+<LinkCard
+  title="Settings and tips"
+  href="../settings/"
+/>
