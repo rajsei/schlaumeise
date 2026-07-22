@@ -1,6 +1,7 @@
 ---
 import DocsLayout from "@layouts/DocsLayout.astro";
 import Steps from "@components/docs/Steps.astro";
+import Checklist from "@components/docs/Checklist.astro";
 import LinkCard from "@components/docs/LinkCard.astro";
 import Code from "@components/docs/Code.astro";
 import CodeBlock from "@components/docs/CodeBlock.astro";
@@ -45,7 +46,7 @@ export async function getStaticPaths() {
 const { locale, entry, entries } = Astro.props;
 
 const { Content, headings } = await render(entry);
-const mdxComponents = { Steps, LinkCard, Code, CodeBlock, Terminal, Term };
+const mdxComponents = { Steps, Checklist, LinkCard, Code, CodeBlock, Terminal, Term };
 ---
 
 <DocsLayout locale={locale} entry={entry} entries={entries} headings={headings}>

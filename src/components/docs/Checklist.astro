@@ -1,0 +1,359 @@
+---
+interface Props {
+  id?: string;
+  persist?: boolean;
+  ariaLabel?: string;
+}
+
+const {
+  id,
+  persist = true,
+  ariaLabel = "Checkliste",
+} = Astro.props;
+---
+
+<section
+  class="docs-checklist"
+  data-checklist-root
+  data-checklist-id={id ?? ""}
+  data-checklist-persist={persist ? "true" : "false"}
+  aria-label={ariaLabel}
+>
+  <slot />
+</section>
+
+<script>
+  interface ChecklistState {
+    done: Set<number>;
+    key: string | null;
+    persist: boolean;
+  }
+
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-checklist-root]"),
+  );
+
+  // Elemente, deren Klick NICHT abhaken soll (eigene Interaktion / auswaehlbarer Inhalt).
+  const noToggleSelector =
+    "a,button,input,select,textarea,label,summary,[role='button'],[role='link'],pre,code";
+
+  const readStoredState = (key: string): number[] => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .map((value) => Number(value))
+        .filter((num) => Number.isFinite(num) && num > 0);
+    } catch {
+      return [];
+    }
+  };
+
+  const persistState = (state: ChecklistState): void => {
+    if (!state.persist || !state.key) return;
+    try {
+      const sorted = Array.from(state.done).sort((a, b) => a - b);
+      localStorage.setItem(state.key, JSON.stringify(sorted));
+    } catch {
+      // Quota- und Private-Mode-Fehler ignorieren.
+    }
+  };
+
+  const getTopLevelItems = (
+    list: HTMLOListElement | HTMLUListElement,
+  ): HTMLLIElement[] =>
+    Array.from(list.children).filter(
+      (node): node is HTMLLIElement => node instanceof HTMLLIElement,
+    );
+
+  roots.forEach((root, rootIndex) => {
+    const list = Array.from(root.children).find(
+      (node): node is HTMLOListElement | HTMLUListElement =>
+        node.tagName === "OL" || node.tagName === "UL",
+    );
+    if (!list) return;
+
+    const items = getTopLevelItems(list);
+    if (items.length === 0) return;
+
+    const persist = root.dataset.checklistPersist !== "false";
+    const providedId = root.dataset.checklistId?.trim();
+    const stateKey = persist
+      ? providedId
+        ? `checklist:${providedId}`
+        : `checklist:${location.pathname}:${rootIndex}`
+      : null;
+
+    const initialDone = new Set<number>();
+    if (persist && stateKey) {
+      for (const value of readStoredState(stateKey)) {
+        initialDone.add(value);
+      }
+    }
+
+    const state: ChecklistState = {
+      done: initialDone,
+      key: stateKey,
+      persist,
+    };
+
+    list.classList.add("checklist__list");
+
+    const updateItem = (item: HTMLLIElement, index: number): void => {
+      const itemNumber = index + 1;
+      const isDone = state.done.has(itemNumber);
+      item.setAttribute("data-checklist-checked", isDone ? "true" : "false");
+
+      const toggle = item.querySelector<HTMLButtonElement>(
+        ":scope > .checklist__toggle",
+      );
+      if (toggle) {
+        toggle.setAttribute("aria-checked", isDone ? "true" : "false");
+      }
+    };
+
+    const toggleItem = (item: HTMLLIElement, index: number): void => {
+      const itemNumber = index + 1;
+      if (state.done.has(itemNumber)) {
+        state.done.delete(itemNumber);
+      } else {
+        state.done.add(itemNumber);
+      }
+      updateItem(item, index);
+      persistState(state);
+    };
+
+    const isEventFromNestedItem = (
+      item: HTMLLIElement,
+      target: Element,
+    ): boolean => {
+      const nearest = target.closest(".checklist__item");
+      return !!nearest && nearest !== item;
+    };
+
+    items.forEach((item, index) => {
+      item.classList.add("checklist__item");
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "checklist__toggle";
+      toggle.setAttribute("role", "checkbox");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.setAttribute(
+        "aria-label",
+        `Punkt ${index + 1} abhaken`,
+      );
+      toggle.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 6.5" /></svg>';
+
+      item.prepend(toggle);
+
+      // Titel (Inhalt vor der ersten verschachtelten Liste) in ein Label wrappen,
+      // damit beim Abhaken nur er durchgestrichen wird – nicht die Unterpunkte.
+      // Ein per Vorfahre gezeichneter Durchstreich-Strich laesst sich von
+      // Kind-Elementen nicht zuverlaessig abschalten, deshalb den Strich gezielt
+      // nur auf diesen Titel setzen.
+      const label = document.createElement("span");
+      label.className = "checklist__label";
+      let node = toggle.nextSibling;
+      while (node) {
+        const next = node.nextSibling;
+        if (
+          node instanceof HTMLElement &&
+          (node.tagName === "UL" || node.tagName === "OL")
+        ) {
+          break;
+        }
+        label.append(node);
+        node = next;
+      }
+      toggle.after(label);
+
+      toggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleItem(item, index);
+      });
+
+      // Klick auf den Punkt (Titelbereich) hakt ebenfalls ab – ausser auf
+      // eigener Interaktion, auswaehlbarem Code oder verschachtelten Punkten.
+      item.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (isEventFromNestedItem(item, target)) return;
+        if (target.closest(noToggleSelector)) return;
+        toggleItem(item, index);
+      });
+
+      item.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        if (!(event.target instanceof Element)) return;
+        if (event.target !== toggle) return;
+        event.preventDefault();
+        toggleItem(item, index);
+      });
+
+      updateItem(item, index);
+    });
+  });
+</script>
+
+<style is:global>
+  .docs-checklist {
+    /* Checkbox-Gutter: Breite der linken Spur fuer die absolut positionierte
+       Checkbox. Bespoke, weil er sich nicht aus der Spacing-Skala zusammensetzt
+       (Checkbox 1.45rem + Luecke). Als Variable zentralisiert, damit der Rohwert
+       nur an einer Stelle steht und per Media-Query ueberschrieben werden kann. */
+    --checklist-indent: 2.4rem;
+
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Oberste Liste: Aufzaehlungszeichen und Standard-Einrueckung des MDX-Interpreters
+     zuruecksetzen – die Checkbox uebernimmt die Rolle des Markers. */
+  [data-checklist-root] > :is(ol, ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  [data-checklist-root] > :is(ol, ul) > .checklist__item {
+    position: relative;
+    padding: 0 0 0 var(--checklist-indent);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    /* Titel in normaler Schrift – nur explizit markierte Teile (**..** = <strong>)
+       werden fett. Kein --font-weight-normal-Token vorhanden, daher Keyword. */
+    font-weight: normal;
+  }
+
+  /* Checkbox */
+  [data-checklist-root] .checklist__toggle {
+    position: absolute;
+    top: 0.05rem;
+    left: 0;
+    width: 1.45rem;
+    height: 1.45rem;
+    border-radius: var(--radius-sm);
+    border: var(--border-m);
+    background: var(--color-surface-panel);
+    color: var(--color-text-on-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0.18rem; /* bespoke: feinjustierter Innenabstand des Haekchen-SVG */
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease,
+      transform 0.1s ease;
+  }
+
+  [data-checklist-root] .checklist__toggle:active {
+    transform: scale(0.9);
+  }
+
+  [data-checklist-root] .checklist__toggle:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  [data-checklist-root] .checklist__toggle svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 0.2s ease 0.02s;
+  }
+
+  [data-checklist-root]
+    .checklist__item[data-checklist-checked="true"]
+    > .checklist__toggle {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  [data-checklist-root]
+    .checklist__item[data-checklist-checked="true"]
+    > .checklist__toggle
+    svg {
+    stroke-dashoffset: 0;
+  }
+
+  /* Titel steht als eigenes Label direkt nach der Checkbox. Nur dieses wird beim
+     Abhaken durchgestrichen und gedaempft – die eingerueckten Unterpunkte bleiben
+     unberuehrt, weil sie ausserhalb des Labels liegen. */
+  /* Longhands statt Shorthand: text-decoration wuerde die Dicke wieder auf
+     "auto" zuruecksetzen. */
+  [data-checklist-root]
+    .checklist__item[data-checklist-checked="true"]
+    > .checklist__label {
+    color: var(--color-text-muted);
+    text-decoration-line: line-through;
+    text-decoration-thickness: 2px;
+    /* dunkler Strich, aber leicht transparent – abgeleitet vom Text-Token */
+    text-decoration-color: color-mix(in srgb, var(--color-text), transparent 55%);
+  }
+
+  /* Unterpunkte: eingerueckt mit Leitlinie, Strich- statt Punkt-Marker,
+     normale (nicht fette) Schrift. */
+  [data-checklist-root] .checklist__item > :is(ul, ol) {
+    list-style: none;
+    /* Negativer linker Rand zieht die vertikale Leitlinie aus der Titel-Spur
+       heraus nach links Richtung Checkbox – verkleinert die Einrueckung vor dem
+       Strich. */
+    margin: var(--spacing-2xs) 0 0 calc(-1 * var(--spacing-md));
+    padding: 0 0 0 var(--spacing-xs);
+    border-left: 2px solid var(--color-border-subtle);
+    display: grid;
+    gap: var(--spacing-2xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+  }
+
+  [data-checklist-root] .checklist__item > :is(ul, ol) > li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin: 0;
+  }
+
+  [data-checklist-root] .checklist__item > :is(ul, ol) > li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Tiefere Ebene (Unter-Unterpunkte): ohne Leitlinie, dezenter Marker. */
+  [data-checklist-root] .checklist__item :is(ul, ol) :is(ul, ol) {
+    border-left: 0;
+    padding-left: var(--spacing-sm);
+    margin-top: var(--spacing-2xs);
+  }
+
+  [data-checklist-root] .checklist__item :is(ul, ol) :is(ul, ol) > li::before {
+    content: "·";
+  }
+
+  @media (max-width: 480px) {
+    .docs-checklist {
+      --checklist-indent: 2.1rem;
+    }
+  }
+</style>
