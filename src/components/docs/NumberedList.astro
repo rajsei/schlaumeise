@@ -1,0 +1,136 @@
+---
+/**
+ * NumberedList — schlichte, nummerierte Aufzaehlung fuer geordnete Abfolgen.
+ *
+ * Ergaenzung zu <Steps>: kein Abhaken, kein gespeicherter Zustand, kein
+ * JavaScript. Die Nummerierung erzeugt CSS ueber einen Counter, die Optik ist
+ * ein rundes Akzent-Badge pro Punkt.
+ *
+ * Verwendung (reines Markdown im Slot):
+ *   <NumberedList>
+ *
+ *   1. **Titel** — kurze Beschreibung
+ *   2. Naechster Punkt
+ *
+ *   </NumberedList>
+ *
+ * Ob die Liste als `1.` (ol) oder `-` (ul) geschrieben wird, ist egal — die
+ * Nummern kommen aus dem Counter.
+ */
+interface Props {
+  ariaLabel?: string;
+}
+
+const { ariaLabel } = Astro.props;
+---
+
+<section class="docs-numbered-list" data-numbered-list aria-label={ariaLabel}>
+  <slot />
+</section>
+
+<style is:global>
+  .docs-numbered-list {
+    /* Nummern-Gutter: Breite der linken Spur fuer das Badge. Bespoke, weil er
+       sich nicht aus der Spacing-Skala zusammensetzt (Badge 1.6rem + Luecke). */
+    --numbered-list-indent: 2.4rem;
+
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Oberste Liste: Standard-Marker und -Einrueckung des MDX-Interpreters
+     zuruecksetzen – das Nummern-Badge uebernimmt die Marker-Rolle. */
+  [data-numbered-list] > :is(ol, ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    counter-reset: numbered-list;
+  }
+
+  [data-numbered-list] > :is(ol, ul) > li {
+    counter-increment: numbered-list;
+    position: relative;
+    padding: 0 0 0 var(--numbered-list-indent);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  /* Nummern-Badge */
+  [data-numbered-list] > :is(ol, ul) > li::before {
+    content: counter(numbered-list);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent-strong);
+    display: grid;
+    place-items: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Abstaende innerhalb eines Punkts selbst steuern: die grossen Absatz-Margins
+     des MDX-Interpreters wuerden sonst per Margin-Collapsing einen zu grossen
+     Abstand zwischen Titel und Beschreibung erzeugen. Der Abstand kommt gezielt
+     ueber margin-top der Beschreibung/Unterpunkte (siehe unten). */
+  [data-numbered-list] > :is(ol, ul) > li > p {
+    margin: 0;
+  }
+
+  /* Erster Inhalt buendig zum Badge starten, letzter ohne Rest-Abstand. */
+  [data-numbered-list] > :is(ol, ul) > li > :first-child {
+    margin-top: 0;
+  }
+
+  [data-numbered-list] > :is(ol, ul) > li > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* Beschreibung ohne Anstriche: jeder weitere Absatz nach dem Titel (loose
+     Liste liefert Titel + Beschreibung als getrennte <p>) wird gedaempft und
+     kleiner gesetzt – genau wie die Anstrich-Unterpunkte. So funktioniert eine
+     Beschreibung sowohl als Fliesstext als auch als Aufzaehlung. */
+  [data-numbered-list] > :is(ol, ul) > li > p:not(:first-child) {
+    margin-top: var(--spacing-2xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Optionale Unterpunkte: leicht eingerueckt, gedaempft, Strich-Marker.
+     Bewusst schlicht – ohne Leitlinie. */
+  [data-numbered-list] > :is(ol, ul) > li :is(ul, ol) {
+    list-style: none;
+    margin: var(--spacing-2xs) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-2xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  [data-numbered-list] > :is(ol, ul) > li :is(ul, ol) > li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin: 0;
+  }
+
+  [data-numbered-list] > :is(ol, ul) > li :is(ul, ol) > li::before {
+    content: "–";
+    position: absolute;
+    left: var(--spacing-2xs);
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+  }
+</style>
