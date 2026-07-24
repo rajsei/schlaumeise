@@ -123,8 +123,8 @@
   --color-info-content: #ffffff;
   --color-success: #0a5027;
   --color-success-content: #ffffff;
-  --color-warning: #792f12;
-  --color-warning-content: #ffffff;
+  --color-warning: #ffc55a;
+  --color-warning-content: #000000;
   --color-error: #8a133e;                 
   --color-error-content: #ffffff;
 
@@ -235,6 +235,7 @@
   /* Border */
   --color-border-base: var(--palette-n-200);               /* custom: daisyUI hat keinen Border-Token */
   --color-border-subtle: var(--palette-n-300);
+  --color-border-decorative: color-mix(in srgb, var(--color-border-subtle) 40%, transparent); 
   --border-sm: 1px solid var(--color-border-base);
   --border-m: 2px solid var(--color-border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
@@ -295,12 +296,13 @@
 :root[data-theme="dark-contrast"] {
   /* Text */
   --color-text-strong: var(--palette-n-0);
-  --color-text-muted: var(--palette-n-300);
+  --color-text-muted: var(--palette-n-200);
   --color-spec-axis: #f4f6fa;   /* Spektrogramm-Zeitachse */
 
   /* Border */
   --color-border-base: var(--palette-n-500);               /* custom: daisyUI hat keinen Border-Token */
   --color-border-subtle: var(--palette-n-400);
+  --color-border-decorative: color-mix(in srgb, var(--color-border-subtle) 40%, transparent); 
   --border-sm: 1px solid var(--color-border-base);
   --border-m: 2px solid var(--color-border-subtle);
   --border-sm-transparent: 1px solid transparent;     /* nur bei High-Contrast sichtbar */
