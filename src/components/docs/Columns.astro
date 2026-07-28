@@ -1,0 +1,56 @@
+---
+/**
+ * Columns — legt seine Kinder nebeneinander, sobald genug Platz ist, und
+ * stapelt sie sonst. Reines CSS-Grid (auto-fit), kein JavaScript.
+ *
+ * Jedes Kind ist eine Spalte; die Anzahl ergibt sich automatisch aus der
+ * verfuegbaren Breite und der Mindestbreite pro Spalte (`min`).
+ *
+ * Passt zu <MediaSection>: dessen Container-Query reagiert auf die Spaltenbreite,
+ * d. h. schmale Spalten stapeln Text/Bild intern, eine breite Spalte zeigt sie
+ * wieder nebeneinander.
+ *
+ * Verwendung:
+ *   <Columns min="20rem">
+ *     <MediaSection> ... </MediaSection>
+ *     <MediaSection> ... </MediaSection>
+ *   </Columns>
+ */
+interface Props {
+  /** Mindestbreite pro Spalte; darunter wird umgebrochen. Beliebige CSS-Laenge. */
+  min?: string;
+  /** Vertikale Ausrichtung der Spalten: oben buendig oder auf gleiche Hoehe. */
+  align?: "start" | "stretch";
+}
+
+const { min = "18rem", align = "start" } = Astro.props;
+---
+
+<div class="columns" data-columns data-align={align} style={`--columns-min: ${min}`}>
+  <slot />
+</div>
+
+<style is:global>
+  [data-columns] {
+    display: grid;
+    /* min(...) verhindert Ueberlauf, wenn die Mindestbreite groesser als der
+       verfuegbare Platz ist (dann eine Spalte in voller Breite). */
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(var(--columns-min, 18rem), 100%), 1fr)
+    );
+    gap: var(--spacing-lg);
+    width: 100%;
+    min-width: 0;
+    align-items: start;
+  }
+
+  [data-columns][data-align="stretch"] {
+    align-items: stretch;
+  }
+
+  /* Grid-Items nie ueber ihre Spalte hinauslaufen lassen. */
+  [data-columns] > * {
+    min-width: 0;
+  }
+</style>

@@ -96,7 +96,7 @@ Weitere Regeln:
 
 ## MDX-Bausteine
 
-In `.mdx`-Dateien stehen ohne Import zur Verfügung (registriert in den Catch-all-Routen): `Steps`, `LinkCard`, `Code`, `CodeBlock`, `Terminal`, `Term`. Andere Komponenten (z. B. `ImageCarousel`, `RevealImage`, `HighlightSection`) müssen relativ importiert werden:
+In `.mdx`-Dateien stehen ohne Import zur Verfügung (registriert in den Catch-all-Routen): `Steps`, `Checklist`, `NumberedList`, `MediaSection`, `Columns`, `LinkCard`, `Code`, `CodeBlock`, `Terminal`, `Term`. Andere Komponenten (z. B. `ImageCarousel`, `RevealImage`, `HighlightSection`) müssen relativ importiert werden:
 
 ```mdx
 import ImageCarousel from "../../../../../components/docs/ImageCarousel.astro";
@@ -119,6 +119,47 @@ print("Welt")
 ```
 
 Tastenkombinationen: `<kbd class="kbd">Strg</kbd>+<kbd class="kbd">C</kbd>`.
+
+### Listen- & Layout-Bausteine
+
+`Checklist` (abhakbar, Zustand gespeichert), `NumberedList` (schlichte nummerierte Aufzählung, kein Abhaken), `MediaSection` (Text + Bild nebeneinander, stapelt schmal), `Columns` (mehrere Blöcke nebeneinander, bricht bei Platzmangel um). Zwischen Öffnungs-Tag und Markdown-Liste gehört eine Leerzeile.
+
+```mdx
+<Checklist id="project01-components">
+
+- Einen **Raspberry Pi**
+  - Pi 5 ca. 55–140 €
+- **SD-Karte** mindestens 8 GB
+
+</Checklist>
+
+<NumberedList>
+
+1. **Mikrofon nimmt auf**
+
+   Zeichnet die Umgebung rund um die Uhr auf. (Beschreibung als Absatz …)
+2. **Ergebnisse im Dashboard**
+   - … oder als eingerückte Unterpunkte
+
+</NumberedList>
+
+<MediaSection side="left" ratio="text" caption="Beispielaufbau">
+
+Der **Textinhalt** als Markdown.
+
+<Fragment slot="image">
+  ![Alt-Text](../../assets/images/project01/overview/parts1.jpg)
+</Fragment>
+
+</MediaSection>
+
+<Columns min="20rem">
+  <MediaSection> … </MediaSection>
+  <MediaSection> … </MediaSection>
+</Columns>
+```
+
+`Checklist` braucht eine stabile `id` (Key für `localStorage`). `MediaSection`-Props: `side` (`left`/`right`), `ratio` (`equal`/`text`/`image`), `caption`. `Columns`-Props: `min` (Spalten-Mindestbreite), `align` (`start`/`stretch`). Steckt eine `MediaSection` in `Columns`, richtet sie sich automatisch nach der Spaltenbreite (schmal → gestapelt, breit → nebeneinander).
 
 ### Inline-Glossar (`Term`)
 

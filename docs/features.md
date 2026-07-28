@@ -115,6 +115,13 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 **Betroffene Bereiche:** `src/components/docs/Term.astro`, `src/content.config.ts`, `src/types/docs.ts`, `src/i18n/locales/*` (`docs.glossaryTermHint`), `src/pages/[...slug].astro`, `src/pages/[locale]/[...slug].astro`, `src/content/docs/*/glossary/*`, diverse MDX-Inhalte
 **Erweiterungsmöglichkeiten:** automatische Verlinkung bekannter Begriffe beim Build; weitere Glossareinträge (z. B. Bioindikator, Ökosystem) für die Wissenssammlung — todo #31.
 
+## MDX-Bausteine: Listen & Layout
+
+**Beschreibung:** Vier MDX-Komponenten für strukturierte Inhalte, ohne Import nutzbar (Catch-all-Routen). `Checklist` — abhakbare Liste mit gespeicherten Zuständen (`localStorage`), fetter Titel + eingerückte Unterpunkte, nur der Titel wird beim Abhaken durchgestrichen. `NumberedList` — schlichte nummerierte Aufzählung (CSS-Counter, kein JS), Beschreibung als Fließtext **oder** Unterpunkte. `MediaSection` — Text und Bild nebeneinander (zwei benannte Slots), stapelt per Container-Query auf schmalen Containern; Props `side`, `ratio`, `caption`. `Columns` — legt Kinder per CSS-Grid (`auto-fit`) nebeneinander und bricht bei Platzmangel um (Props `min`, `align`); mit `MediaSection` verschachtelt ergibt sich automatisch das richtige Verhalten (schmale Spalte → intern gestapelt, breite Einzelspalte → nebeneinander).
+**Status:** ✅ umgesetzt (2026-07-27) — nur semantische Tokens (`lint:colors` grün), Build grün. `Checklist` eingesetzt in `project01/components` (DE+EN); `NumberedList` in den vier BirdNET-Live-Guides (`aru`, `point-count`, `survey`, `live`, DE+EN). `MediaSection` + `Columns` noch ohne Content-Einsatz (siehe „Reservierte Komponenten“). Demo-Seiten unter `src/pages/dev/`.
+**Betroffene Bereiche:** `src/components/docs/{Checklist,NumberedList,MediaSection,Columns}.astro`, beide Catch-all-Routen, `src/content/docs/*/projects/project01/components.mdx`, `src/content/docs/*/guides/birdnet-live/*.mdx`, `src/pages/dev/*`
+**Erweiterungsmöglichkeiten:** aria-Labels von `Checklist` lokalisieren (derzeit fest deutsch, wie `Steps`); `MediaSection` optional „Bild beim Stapeln oben“; `Columns` optionaler Karten-Stil.
+
 ## Lernfortschritt
 
 **Beschreibung:** Speicherung absolvierter Quizze/Module im Browser.
@@ -139,4 +146,6 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 ## Reservierte Komponenten
 
 `DropdownNavItem.astro` (`src/components/ui-elements/`): generisches, framework-freies Navbar-Dropdown mit Tastatursteuerung — derzeit ohne Verwendung, reserviert für ein künftiges Themen-Dropdown im Header. Nicht löschen, ohne diese Zeile zu aktualisieren.
+
+`MediaSection.astro` und `Columns.astro` (`src/components/docs/`): fertig, getestet und in beiden Catch-all-Routen registriert, aber noch auf keiner Content-Seite eingesetzt (nur Demo unter `src/pages/dev/media-section-demo.astro`). Reserviert für den Einsatz in Doku-/Projektseiten. Nicht löschen, ohne diese Zeile zu aktualisieren.
               

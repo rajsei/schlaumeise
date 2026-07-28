@@ -2,6 +2,18 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-07-27 — MDX-Bausteine: Checkliste, Aufzählung, Text-Bild, Spalten (Agent)
+
+### Hinzugefügt
+- `Checklist.astro`: abhakbare Liste (Checkbox + fetter Titel + eingerückte Unterpunkte). Zustand pro Punkt in `localStorage` (`checklist:<id|pfad:index>`), abschaltbar via `persist={false}`. Beim Abhaken wird nur der Titel durchgestrichen (Inhalt vor der ersten verschachtelten Liste in `.checklist__label` gewrappt; Durchstreich-Linie 2px, gedämpfte Farbe aus `--color-text`). Ersetzt die rohen `<input type="checkbox">` in `project01/components` (DE+EN)
+- `NumberedList.astro`: schlichte nummerierte Aufzählung via CSS-Counter (kein Client-JS). Beschreibung eines Punkts wahlweise als Fließtext-Absatz **oder** als Unterpunkte, beide gedämpft; Gruppierungsabstand zum Titel klein gehalten (Absatz-Margins des MDX-Interpreters neutralisiert). Eingesetzt in den vier BirdNET-Live-Guides (`aru`, `point-count`, `survey`, `live`, DE+EN)
+- `MediaSection.astro`: Abschnitt mit Text + Bild nebeneinander (Standard-Slot Text, `slot="image"` Bild), stapelt per **Container-Query** (≤460px Sektionsbreite; Bild darunter). Props `side` (`left`/`right`), `ratio` (`equal`/`text`/`image`, via Flex-Basis), `caption` (optionale `<figcaption>`). Noch ohne Content-Einsatz (reserviert)
+- `Columns.astro`: CSS-Grid-Wrapper (`auto-fit` + `minmax`), legt Kinder nebeneinander und bricht bei Platzmangel um. Props `min` (Spalten-Mindestbreite), `align` (`start`/`stretch`). Komponiert mit `MediaSection`: deren Container-Query reagiert auf die Spaltenbreite. Noch ohne Content-Einsatz (reserviert)
+- Alle vier in beiden Catch-all-Routen registriert (in MDX ohne Import); Demo-Seiten unter `src/pages/dev/`. Nur semantische Tokens (`lint:colors` grün), `npm run build` grün
+
+### Bekannte Einschränkung
+- aria-Labels von `Checklist` sind fest deutsch (wie `Steps`) — auf EN-Seiten deutsch; Lokalisierung offen
+
 ## 2026-07-14 — Sidebar: Gruppen per Config ausklappbar (Agent)
 
 ### Hinzugefügt

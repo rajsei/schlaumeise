@@ -16,6 +16,13 @@ import survey1 from "@assets/images/birdnet-live/survey/survey1.JPG";
 import survey2 from "@assets/images/birdnet-live/survey/survey2.JPG";   
 import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
 
+import erkennungen from "@assets/images/birdnet-live/erkennungen.jpg";
+import spectrogramm from "@assets/images/birdnet-live/spectrogramm.jpg";
+import arteninformationen from "@assets/images/birdnet-live/arteninformationen.jpg";
+import karte from "@assets/images/birdnet-live/karte.jpg";
+
+
+
 <div class="hero bg-base-200 rounded-box docs-hero-bleed min-h-[60vh] md:min-h-screen">
   <div class="hero-content flex-col lg:flex-row">
     <Image
@@ -36,6 +43,18 @@ import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
     </div>
   </div>
 </div>
+
+<br />
+
+## Typical use cases
+
+Survey Mode is especially suited for:
+
+- walks and hikes with continuous recording
+- surveys along fixed routes
+- transect mapping
+- surveys where the location of each detection matters
+- citizen-science projects with a spatial reference
 
 <br />
 
@@ -64,17 +83,6 @@ import survey3 from "@assets/images/birdnet-live/survey/survey3.JPG";
     },
   ]}
 />
-
-
-## Typical use cases
-
-Survey Mode is especially suited for:
-
-- walks and hikes with continuous recording
-- surveys along fixed routes
-- transect mapping
-- surveys where the location of each detection matters
-- citizen-science projects with a spatial reference
 
 ## What is Survey Mode not suited for?
 
@@ -131,6 +139,54 @@ Then select **"Allow all the time" (Android)** or enable **continuous location a
 Only with this permission can BirdNET Live reliably record your route during a survey recording
 – even when the app is in the background or the display is turned off.</span>
 </div>
+
+## What does BirdNET Live show during the analysis?
+
+<MediaSection  side="left">
+### Follow your route on the map
+
+There you can see your current position, the route you've already covered, and where a bird call was detected.
+
+  <Fragment slot="image">
+    <Image src={karte} alt="Route map" />
+  </Fragment>
+</MediaSection>
+
+<MediaSection>
+
+### Live spectrogram
+
+At the top of the app you'll see a live spectrogram.
+It displays the recorded sounds graphically and makes bird calls and other sounds visible.
+This lets you follow when a sound was recorded and analyzed.
+
+  <Fragment slot="image">
+    <Image src={spectrogramm} alt="Live spectrogram" />
+  </Fragment>
+</MediaSection>
+
+<MediaSection  side="left">
+### Detections in real time
+
+Below the spectrogram, all species detected in the last few seconds appear.
+For each detection, the app shows, among other things, the common and scientific species name and the AI's confidence score.
+
+  <Fragment slot="image">
+    <Image src={erkennungen} alt="Real-time detections" />
+  </Fragment>
+</MediaSection>
+
+<MediaSection>
+### Species information
+
+Tapping a detection gives you more information about the species.
+How often have you already recorded the species?
+How high is the expected frequency of the species at your location?
+
+  <Fragment slot="image">
+    <Image src={arteninformationen} alt="Species information" />
+  </Fragment>
+</MediaSection>
 
 ## Evaluating the results
 

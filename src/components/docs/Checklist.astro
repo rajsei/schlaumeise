@@ -1,4 +1,33 @@
 ---
+/**
+ * Checklist — abhakbare Liste fuer Materiallisten o. Ae. (z. B. „Was brauche
+ * ich?"). Anders als <Steps> geht es nicht um eine Reihenfolge, sondern um das
+ * Abhaken einzelner Punkte; der Zustand wird pro Punkt in localStorage
+ * gespeichert.
+ *
+ * Inhalt als reines Markdown im Slot: oberste Listenpunkte werden zu Checkbox-
+ * Zeilen, verschachtelte Listen zu eingerueckten Unterpunkten. Beim Abhaken
+ * wird nur der Titel (Inhalt vor der ersten verschachtelten Liste)
+ * durchgestrichen.
+ *
+ * Props:
+ *   - id       Stabiler Schluessel fuer localStorage (empfohlen; sonst
+ *              Pfad+Index). Key-Form: `checklist:<id>`.
+ *   - persist  Zustand speichern (Default true); false = rein visuell.
+ *   - ariaLabel Beschriftung der Sektion (Default „Checkliste").
+ *
+ * Verwendung:
+ *   <Checklist id="project01-components">
+ *
+ *   - Einen **Raspberry Pi**
+ *     - Pi 5 ca. 55–140 €
+ *   - **SD-Karte** mindestens 8 GB
+ *
+ *   </Checklist>
+ *
+ * Hinweis: aria-Labels sind derzeit fest deutsch (wie <Steps>) – auf EN-Seiten
+ * daher deutsch; Lokalisierung offen.
+ */
 interface Props {
   id?: string;
   persist?: boolean;

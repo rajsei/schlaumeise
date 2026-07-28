@@ -1,0 +1,144 @@
+---
+/**
+ * MediaSection — Abschnitt mit Text und Bild nebeneinander. Wird der Platz
+ * schmal, stapeln sich beide (Bild standardmaessig unter dem Text).
+ *
+ * Zwei benannte Bereiche:
+ *   - Standard-Slot: der Textinhalt (Markdown)
+ *   - slot="image":  das Bild (Markdown-Bild, <img> oder eine Bild-Komponente)
+ *
+ * Der Umbruch laeuft ueber eine Container-Query, d. h. die Sektion reagiert auf
+ * ihre eigene Breite – nicht auf die Fensterbreite. So bricht sie auch in
+ * schmalen Spalten korrekt um.
+ *
+ * Verwendung:
+ *   <MediaSection side="left" ratio="text" caption="Quelle: ...">
+ *
+ *   Hier der **Textinhalt** als Markdown.
+ *
+ *   <Fragment slot="image">
+ *     ![Alt-Text](../../assets/images/...)
+ *   </Fragment>
+ *
+ *   </MediaSection>
+ */
+interface Props {
+  /** Auf welche Seite das Bild kommt (breite Screens). */
+  side?: "left" | "right";
+  /** Breitenverhaeltnis Text/Bild: gleich, Text breiter oder Bild breiter. */
+  ratio?: "equal" | "text" | "image";
+  /** Optionale Bildunterschrift unter dem Bild. */
+  caption?: string;
+}
+
+const { side = "right", ratio = "equal", caption } = Astro.props;
+
+const classes = [
+  "media",
+  side === "left" ? "media--img-left" : "",
+  ratio === "text" ? "media--ratio-text" : "",
+  ratio === "image" ? "media--ratio-image" : "",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<section class={classes} data-media-section>
+  <div class="media__inner">
+    <div class="media__body"><slot /></div>
+    <figure class="media__figure">
+      <slot name="image" />
+      {caption && <figcaption class="media__cap">{caption}</figcaption>}
+    </figure>
+  </div>
+</section>
+
+<style is:global>
+  [data-media-section] {
+    container-type: inline-size;
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  [data-media-section] .media__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Beide Seiten gleich breit; min-width:0 verhindert das Ueberlaufen von
+     langen Woertern / breiten Bildern. */
+  [data-media-section] .media__body,
+  [data-media-section] .media__figure {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+
+  /* Bildseite ueber die Reihenfolge – unabhaengig vom Breitenverhaeltnis. */
+  [data-media-section].media--img-left .media__figure {
+    order: -1;
+  }
+
+  /* Breitenverhaeltnisse (Basis pro Element, damit sie mit der Bildseite
+     kombinierbar bleiben). */
+  [data-media-section].media--ratio-text .media__body {
+    flex-basis: 60%;
+  }
+  [data-media-section].media--ratio-text .media__figure {
+    flex-basis: 40%;
+  }
+  [data-media-section].media--ratio-image .media__body {
+    flex-basis: 40%;
+  }
+  [data-media-section].media--ratio-image .media__figure {
+    flex-basis: 60%;
+  }
+
+  /* Text: Rand des ersten/letzten Elements zuruecksetzen, damit die Sektion
+     buendig mit dem Bild oben/unten abschliesst. */
+  [data-media-section] .media__body > :first-child {
+    margin-top: 0;
+  }
+  [data-media-section] .media__body > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* Bild */
+  [data-media-section] .media__figure {
+    margin: 0;
+  }
+  [data-media-section] .media__figure :where(img, picture, svg, video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+  }
+
+  [data-media-section] .media__cap {
+    margin-top: var(--spacing-2xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  /* Stapeln, sobald die Sektion selbst schmal wird. Das Bild landet unter dem
+     Text (Quellreihenfolge); Verhaeltnis-Basis wird aufgehoben. */
+  @container (max-width: 460px) {
+    [data-media-section] .media__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-md);
+    }
+    [data-media-section] .media__body,
+    [data-media-section] .media__figure {
+      flex-basis: auto;
+    }
+    /* Auch bei img-left steht das Bild gestapelt unter dem Text. */
+    [data-media-section].media--img-left .media__figure {
+      order: 0;
+    }
+  }
+</style>
