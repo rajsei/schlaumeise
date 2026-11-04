@@ -58,7 +58,7 @@ pages/[...slug].astro ──────▶ layouts/DocsLayout.astro
 | Layouts | `MainLayout`, `DocsLayout` | HTML-Grundgerüst bzw. Docs-Shell |
 | Docs-Inhalt | `MdxInterpreter`, `DocsTOC`, `DocsPagination`, `ZoomableDocsImages` | Typografie, Inhaltsverzeichnis, Blättern, Bild-Zoom |
 | MDX-Bausteine | `Steps`, `LinkCard`, `Code`/`CodeBlock`, `Terminal`, `ImageCarousel`, `RevealImage`, `HighlightSection` | In Inhalten verwendbare Bausteine (in den Catch-all-Routen als `mdxComponents` registriert) |
-| UI | `Sidebar`, `SidebarItems`, `ThemeController`, `TopicIcon`, `DropdownNavItem` (reserviert) | Navigation und Bedienelemente |
+| UI | `Sidebar`, `SidebarItems`, `NavBadge`, `ThemeController`, `TopicIcon`, `DropdownNavItem` (reserviert) | Navigation und Bedienelemente |
 
 ## Client-JavaScript
 

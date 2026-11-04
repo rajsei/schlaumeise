@@ -1,10 +1,12 @@
 import type { CollectionEntry } from "astro:content";
+import type { NavBadgeVariant } from "@config/docs-navigation";
 
 export interface DocsSidebarMeta {
   label?: string;
   order?: number;
   hidden?: boolean;
   attrs?: Record<string, string>;
+  badge?: NavBadgeVariant;
 }
 
 export interface DocsPaginationOverrideObject {

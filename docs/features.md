@@ -19,10 +19,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Navigation (Sidebar mit Topics)
 
-**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung. Thema-Buttons bewusst ohne Tooltips (2026-07-14 erprobt und wieder entfernt — sichtbare Labels reichen).
-**Status:** ✅ umgesetzt
-**Betroffene Bereiche:** `src/config/docs-navigation.ts`, `src/lib/docs-navigation.ts`, `src/components/ui-elements/Sidebar*.astro`
-**Erweiterungsmöglichkeiten:** Topbar-Themen-Dropdown mit echten Zielen (Komponente `DropdownNavItem` liegt dafür reserviert bereit); `aria-current` für aktive Links.
+**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung. Thema-Buttons bewusst ohne Tooltips (2026-07-14 erprobt und wieder entfernt — sichtbare Labels reichen). Hinweis-Badges („Neu“, „Archiv“) rechtsbündig hinter Topics, Gruppen und Links — gesetzt per `badge` in der Navigations-Config oder per Frontmatter `sidebar.badge` an einer Seite; Labels aus dem i18n-Dictionary (`navBadge`), Darstellung über `NavBadge` (daisyUI-`badge`). Derzeit gesetzt: Topic „Workshops“ → „Archiv“.
+**Status:** ✅ umgesetzt (Badges seit 2026-11-02)
+**Betroffene Bereiche:** `src/config/docs-navigation.ts`, `src/lib/docs-navigation.ts`, `src/components/ui-elements/Sidebar*.astro`, `src/components/ui-elements/NavBadge.astro`, `src/content.config.ts`, `src/types/docs.ts`, `src/i18n/locales/*` (`navBadge`)
+**Erweiterungsmöglichkeiten:** Topbar-Themen-Dropdown mit echten Zielen (Komponente `DropdownNavItem` liegt dafür reserviert bereit); `aria-current` für aktive Links; weitere Badge-Varianten (z. B. „Aktualisiert“); „Neu“-Badge mit Ablaufdatum (wirkt bei statischem Build erst beim nächsten Build).
 
 ## Mobile Darstellung
 
