@@ -4,14 +4,6 @@ export type TranslationMap = Partial<Record<Locale, string>>;
 
 export type TopicIconName = "open-book" | "information" | "books" | "memo" | "archive";
 
-/* Hinweis-Badges hinter Sidebar-Eintraegen (Topic, Gruppe, Link oder per
-   Frontmatter `sidebar.badge` an einer Seite). Beschriftung kommt aus dem
-   i18n-Dictionary (`navBadge.<variante>`), Optik aus NavBadge.astro.
-   Neue Variante: hier ergaenzen + Key in allen Locales + Klasse in NavBadge. */
-export const navBadgeVariants = ["new", "archive"] as const;
-
-export type NavBadgeVariant = (typeof navBadgeVariants)[number];
-
 export interface NavigationAutogenerateItem {
   autogenerate: {
     directory: string;
@@ -24,7 +16,6 @@ export interface NavigationGroupItem {
   /* true: Gruppe ist standardmaessig ausgeklappt — nicht nur, wenn sie die
      aktive Seite enthaelt. */
   expanded?: boolean;
-  badge?: NavBadgeVariant;
   items: NavigationSidebarItem[];
 }
 
@@ -33,7 +24,6 @@ export interface NavigationLinkItem {
   translations?: TranslationMap;
   link: string;
   attrs?: Record<string, string>;
-  badge?: NavBadgeVariant;
 }
 
 export type NavigationSidebarItem =
@@ -47,7 +37,6 @@ interface TopicBase {
   label: string;
   translations?: TranslationMap;
   icon?: TopicIconName;
-  badge?: NavBadgeVariant;
 }
 
 export interface NavigationTopicWithItems extends TopicBase {
@@ -141,7 +130,6 @@ export const navigation: NavigationConfig = {
         de: "Workshops",
       },
       icon: "archive",
-      badge: "archive",
       items: [
         {
           label: "Spring School 2026",

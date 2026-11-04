@@ -1,6 +1,5 @@
 ---
 import type { ResolvedNavItem } from "@lib/docs-navigation";
-import NavBadge from "./NavBadge.astro";
 
 interface Props {
   items: ResolvedNavItem[];
@@ -27,7 +26,6 @@ const { items, nested = false } = Astro.props;
               {...(item.attrs ?? {})}
             >
               {item.label}
-              {item.badge && <>{" "}<NavBadge badge={item.badge} /></>}
             </a>
           </li>
         );
@@ -42,10 +40,7 @@ const { items, nested = false } = Astro.props;
             ]}
             open={item.expanded}
           >
-            <summary class="docs-nav__group_label summary-btn">
-              {item.label}
-              {item.badge && <>{" "}<NavBadge badge={item.badge} /></>}
-            </summary>
+            <summary class="docs-nav__group_label summary-btn">{item.label}</summary>
             {
               item.overview && (
                 <a
@@ -60,7 +55,6 @@ const { items, nested = false } = Astro.props;
                   {...(item.overview.attrs ?? {})}
                 >
                   {item.overview.label}
-                  {item.overview.badge && <>{" "}<NavBadge badge={item.overview.badge} /></>}
                 </a>
               )
             }

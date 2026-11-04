@@ -2,14 +2,6 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
-## 2026-11-02 — Sidebar: Hinweis-Badges „Neu“/„Archiv“ (Agent)
-
-### Hinzugefügt
-- Badges hinter Sidebar-Einträgen: optionales Feld `badge` (`"new"` | `"archive"`) an Topics, Gruppen und Links in `docs-navigation.ts` sowie Frontmatter-Feld `sidebar.badge` für einzelne Seiten (Zod-Schema in `content.config.ts` + `types/docs.ts`; Varianten zentral in `navBadgeVariants`)
-- Resolver (`lib/docs-navigation.ts`) liefert `badge: { variant, label }` an Topics, Gruppen, Links und Übersichts-Links; Label lokalisiert über neue i18n-Sektion `navBadge` (de: „Neu“/„Archiv“, en: „New“/„Archive“)
-- `NavBadge.astro` (`components/ui-elements/`): rendert das Badge als daisyUI-`badge badge-sm` (Neu = `badge-secondary`/Meisen-Gelb, Archiv = `badge-ghost`), rechtsbündig im Eintrag; Badge-Text ist Teil des zugänglichen Link-Namens. Eingebunden in `Sidebar` (Topic-Buttons/-Links) und `SidebarItems` (Links, Gruppen-Titel, Übersichts-Links)
-- Topic „Workshops“ trägt das Badge „Archiv“
-
 ## 2026-07-27 — MDX-Bausteine: Checkliste, Aufzählung, Text-Bild, Spalten (Agent)
 
 ### Hinzugefügt

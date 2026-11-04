@@ -3,7 +3,6 @@ import type { Locale } from "@i18n/config";
 import { getDictionary } from "@i18n";
 import { resolveSidebarNavigation } from "@lib/docs-navigation";
 import type { DocsEntry } from "@types/docs";
-import NavBadge from "./NavBadge.astro";
 import SidebarItems from "./SidebarItems.astro";
 import TopicIcon from "./TopicIcon.astro";
 
@@ -42,7 +41,6 @@ const resolved = resolveSidebarNavigation(locale, currentPathname, entries);
               >
                 <TopicIcon icon={topic.icon} />
                 <span>{topic.label}</span>
-                {topic.badge && <>{" "}<NavBadge badge={topic.badge} /></>}
               </button>
             )}
             {topic.type === "link" && (
@@ -53,14 +51,12 @@ const resolved = resolveSidebarNavigation(locale, currentPathname, entries);
               >
                 <TopicIcon icon={topic.icon} />
                 <span>{topic.label}</span>
-                {topic.badge && <>{" "}<NavBadge badge={topic.badge} /></>}
               </a>
             )}
             {topic.type === "static" && (
               <span class="docs-topic docs-topic--static">
                 <TopicIcon icon={topic.icon} />
                 <span>{topic.label}</span>
-                {topic.badge && <>{" "}<NavBadge badge={topic.badge} /></>}
               </span>
             )}
           </li>

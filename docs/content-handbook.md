@@ -21,7 +21,6 @@ sidebar:
   order: 3                    # Reihenfolge in der Sidebar (aufsteigend)
   label: Anderes Label        # optional — überschreibt title in der Sidebar
   hidden: true                # optional — Seite aus Sidebar/Pagination ausblenden
-  badge: new                  # optional — Hinweis-Badge in der Sidebar: new („Neu“) | archive („Archiv“)
 topicId: knowledge             # optional — aktives Topic erzwingen
 category: "Audio"             # optional — Kategorisierung
 tags: ["Basteln", "Outdoor"]  # optional — Schlagworte
@@ -36,24 +35,6 @@ next:                         # optional — „Weiter“-Link überschreiben
 ```
 
 Nur diese Felder sind erlaubt. Neue Felder müssen zuerst in `src/content.config.ts` (Zod-Schema) und `src/types/docs.ts` ergänzt werden — unbekannte Felder werden sonst stillschweigend verworfen.
-
-### Hinweis-Badges in der Sidebar („Neu“, „Archiv“)
-
-Ein kleines Badge rechts neben einem Sidebar-Eintrag macht auf neue oder archivierte Inhalte aufmerksam. Erlaubte Werte: `new` („Neu“ / „New“) und `archive` („Archiv“ / „Archive“) — die Beschriftung kommt automatisch in der passenden Sprache aus dem i18n-Dictionary (`navBadge`).
-
-- **Einzelne Seite:** im Frontmatter `sidebar.badge: new` (siehe oben). In jeder Sprachversion setzen.
-- **Topic, Gruppe oder Link** (z. B. ein ganzes neues Projekt): in `src/config/docs-navigation.ts` am Eintrag `badge: "new"` ergänzen — gilt für alle Sprachen.
-
-```ts
-{
-  label: "The Listening Birdhouse",
-  translations: { de: "Das lauschende Vogelhaus" },
-  badge: "new",
-  items: [{ autogenerate: { directory: "projects/project01" } }],
-}
-```
-
-„Neu“ nach ein paar Wochen wieder entfernen, sonst verliert es seine Wirkung. Neue Badge-Arten (z. B. „Aktualisiert“) brauchen eine kleine Code-Änderung: `navBadgeVariants` in `docs-navigation.ts`, Key in allen Locale-Dateien, Klasse in `NavBadge.astro`.
 
 ### Projekt-Steckbrief (`project`, nur Projekt-`index`-Seiten)
 

@@ -1,7 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 import { quizSchema, validateQuizIntegrity } from "./lib/quiz-schema";
-import { navBadgeVariants } from "./config/docs-navigation";
 
 const paginationOverrideSchema = z.union([
   z.boolean(),
@@ -63,9 +62,6 @@ const docs = defineCollection({
           order: z.number().optional(),
           hidden: z.boolean().optional(),
           attrs: z.record(z.string()).optional(),
-          // Hinweis-Badge hinter dem Sidebar-Eintrag (Varianten:
-          // navBadgeVariants in config/docs-navigation.ts).
-          badge: z.enum(navBadgeVariants).optional(),
         }),
       ])
       .optional(),
