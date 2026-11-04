@@ -1,0 +1,116 @@
+---
+title: Smartfinch Pi
+description: Baue mit einem Raspberry Pi und BirdNET eine Vogelstation, die Vogelstimmen ohne Internet erkennt und die Ergebnisse im Browser zeigt.
+category: "Audio"
+tags: ["Raspberry-pi", "Citizen-Science", "Interaktiv", "Outdoor"]
+prev: false
+sidebar:
+  order: 1
+project:
+  difficulty: 1
+  skillLevel: 2
+  duration: "1–2 Stunden"
+  cost: "ca. 50–150 €"
+  supervision: adults
+  ageMin: 10
+  indoorOutdoor: both
+  tools:
+    - Raspberry Pi
+    - microSD-Karte (min. 16 GB)
+    - Netzteil
+    - USB-Mikrofon
+    - Handy, Tablet oder Laptop
+  learningGoals:
+    - Vogelstimmen erkennen mit BirdNET
+    - Raspberry Pi einrichten
+    - WLAN und Hotspot verstehen
+---
+
+Welche Vögel singen in deiner Umgebung, und zu welcher Tageszeit?
+Smartfinch Pi macht aus einem Raspberry Pi und einem USB-Mikrofon eine Vogelstation, die rund um die Uhr zuhört.
+Die KI BirdNET erkennt die Vogelarten direkt auf dem Pi. Dafür braucht die Station weder Internet noch Cloud.
+Die Ergebnisse siehst du im Browser auf deinem Handy, Tablet oder Computer.
+
+Für die Einrichtung brauchst du keine Konsole: Du schreibst ein fertiges Image auf die SD-Karte, schließt den Pi an den Strom an und richtest ihn über seinen eigenen WLAN-Hotspot im Browser ein.
+
+## Was entsteht?
+
+Am Ende hast du eine Vogelstation mit:
+
+- einem Raspberry Pi mit USB-Mikrofon, der Vogelstimmen aufnimmt,
+- BirdNET, das die Arten direkt auf dem Gerät erkennt,
+- einer Weboberfläche mit den neuesten Erkennungen, Tonaufnahmen, Spektrogrammen und Statistiken,
+- einem Artenfilter, der nur Vögel speichert, die an deinem Standort zur jeweiligen Jahreszeit vorkommen,
+- einem eigenen WLAN-Hotspot, über den du die Station auch ohne WLAN in der Nähe erreichst.
+
+## Ablauf
+
+<LinkCard
+  title="Benötigte Materialien"
+  href="./components/"
+  description="Welcher Raspberry Pi, welche SD-Karte und welches Zubehör du brauchst."
+/>
+<br />
+<LinkCard
+  title="SD-Karte einrichten"
+  href="./sd-setup/"
+  description="Lade das Smartfinch-Image herunter und schreibe es mit dem Raspberry Pi Imager auf die SD-Karte."
+/>
+<br />
+<LinkCard
+  title="Alternative: Installation per Befehl"
+  href="./install-script/"
+  description="Für Fortgeschrittene: Smartfinch auf einem vorhandenen Raspberry Pi OS über die Konsole installieren."
+/>
+<br />
+<LinkCard
+  title="Ersteinrichtung"
+  href="./first-setup/"
+  description="Verbinde dich mit dem Hotspot der Station und folge dem Einrichtungsassistenten."
+/>
+<br />
+<LinkCard
+  title="Station aufstellen"
+  href="./assembly/"
+  description="Finde einen guten Platz und schütze Pi und Mikrofon vor Wetter."
+/>
+<br />
+<LinkCard
+  title="Weboberfläche im Überblick"
+  href="./web-interface/"
+  description="Was du auf den Seiten Übersicht, Erkennungen, Statistik und Einstellungen findest."
+/>
+<br />
+<LinkCard
+  title="Fehlerbehebung"
+  href="./troubleshooting/"
+  description="Was du tun kannst, wenn der Hotspot fehlt, die Seite nicht lädt oder nichts erkannt wird."
+/>
+
+## Smartfinch Pi oder BirdNET-Pi?
+
+Beide nutzen BirdNET auf dem Raspberry Pi.
+Das Projekt [Das lauschende Vogelhaus](../project01/) baut auf BirdNET-Pi auf, einem Community-Projekt, das über die Konsole installiert und eingerichtet wird.
+Smartfinch Pi ist auf eine Einrichtung ohne Konsole ausgelegt: fertiges SD-Image, Einrichtungsassistent im Browser und ein Hotspot, der von selbst startet, wenn kein bekanntes WLAN erreichbar ist.
+Die Oberfläche gibt es auf Deutsch und Englisch.
+
+## Daten und Lizenz
+
+Aufnahmen und Erkennungen bleiben auf dem Pi. Es gibt kein Benutzerkonto und keinen Cloud-Dienst.
+
+Der Programmcode von Smartfinch Pi steht unter der Apache-Lizenz 2.0.
+Das BirdNET-Modell, mit dem die Station Vogelstimmen erkennt, steht unter der Lizenz CC BY-NC-SA 4.0 und darf nicht kommerziell genutzt werden.
+Deshalb ist auch ein kommerzieller Betrieb von Smartfinch Pi nicht erlaubt.
+
+<LinkCard
+  title="Smartfinch Pi auf GitHub"
+  description="Quellcode, Versionen zum Herunterladen und technische Dokumentation."
+  href="https://github.com/rajsei/smartfinch-pi"
+  isExternal
+/>
+
+## Vorwissen
+
+Du solltest eine Datei herunterladen, ein Programm installieren und dein Handy oder deinen Laptop mit einem WLAN verbinden können.
+Die <Term id="console">Konsole</Term> brauchst du nur für die alternative Installation per Befehl.
+Die Download-Seite auf GitHub ist auf Englisch; welche Datei du dort brauchst, steht in der Anleitung.

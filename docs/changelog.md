@@ -2,6 +2,16 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-11-04 — Projekt „Smartfinch Pi“ (project02) (Agent)
+
+### Hinzugefügt
+- Neues Projekt `projects/project02` „Smartfinch Pi“ (DE + EN), neutral formuliert als Grundanleitung, auf der spätere Anleitungen für Lehrkräfte und Schüler:innen aufbauen. Gleicher Seitenaufbau wie `project01` mit Projekt-Steckbrief: `index` (Übersicht, Vergleich mit BirdNET-Pi, Datenschutz/Lizenz), `components` (Checkliste `project02-components`), `sd-setup` (SD-Image aus dem GitHub-Release mit dem Raspberry Pi Imager, Imager-Screenshots aus `project01` wiederverwendet), `install-script` (Alternative: Einzeiler per SSH, Update), `first-setup` (Hotspot und Einrichtungsassistent), `assembly` (Aufstellen, verweist für Gehäuse-Beispiele auf `project01/assembly`), `web-interface` (Übersicht, Erkennungen, Statistik, Einstellungen, Passwortschutz, Presets), `troubleshooting`
+- `docs-navigation.ts`: Gruppe „Smartfinch Pi“ unter „Projekte“ (`expanded: true`)
+
+### Bekannte Einschränkungen
+- Download-Links und Installationsbefehl zeigen auf `github.com/rajsei/smartfinch-pi/releases/latest`. Sie funktionieren erst, wenn das Repository öffentlich ist und es ein stabiles Release gibt (bisher nur Vorabversionen `v0.1.0-rc1` bis `rc3`)
+- Noch keine Screenshots der Smartfinch-Weboberfläche und keine Fotos eines Smartfinch-Aufbaus
+
 ## 2026-07-27 — MDX-Bausteine: Checkliste, Aufzählung, Text-Bild, Spalten (Agent)
 
 ### Hinzugefügt

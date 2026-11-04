@@ -1,0 +1,131 @@
+---
+title: Ersteinrichtung
+description: Verbinde dich mit dem Hotspot der Station und richte Smartfinch Pi im Browser mit dem Einrichtungsassistenten ein.
+prev:
+  link: projects/project02/sd-setup
+  label: SD-Karte einrichten
+sidebar:
+  order: 5
+---
+
+Beim ersten Start öffnet die Station einen eigenen WLAN-Hotspot.
+Über diesen Hotspot richtest du sie mit einem Handy, Tablet oder Laptop im Browser ein. Eine Internetverbindung brauchst du dafür nicht.
+
+## Station einschalten
+
+<Steps>
+
+1. Stecke die microSD-Karte in den Raspberry Pi.
+
+2. Schließe das USB-Mikrofon an.
+   Beim Raspberry Pi Zero 2 W gehört der microUSB-OTG-Adapter in die Buchse mit der Beschriftung `USB`, nicht in die Buchse `PWR IN`.
+
+3. Verbinde den Pi mit dem Netzteil. Eine LED am Pi leuchtet oder blinkt.
+   Der erste Start dauert einige Minuten, weil das System die SD-Karte vorbereitet. Trenne den Pi in dieser Zeit nicht vom Strom.
+
+</Steps>
+
+> **Mehrere Stationen auf einmal einrichten?** Schalte sie nacheinander ein und richte jede fertig ein, bevor du die nächste startest.
+> Jede neue Station hat einen eigenen Hotspot-Namen, aber am Namen erkennst du nicht, welches Gerät gemeint ist.
+
+## Mit dem Hotspot verbinden
+
+<Steps>
+
+1. Öffne die WLAN-Einstellungen deines Handys, Tablets oder Laptops.
+   Nach ein paar Minuten erscheint ein WLAN, dessen Name mit `Smartfinch-` beginnt, zum Beispiel `Smartfinch-a1b2`.
+
+2. Verbinde dich mit diesem WLAN. Beim ersten Start hat der Hotspot kein Passwort.
+
+3. Dein Gerät meldet eventuell, dass dieses WLAN keinen Internetzugang hat. Das ist normal.
+   Wähle die Option, mit der du trotzdem verbunden bleibst, zum Beispiel `Verbunden bleiben`.
+
+4. Öffne den Browser und gib diese Adresse ein:
+
+   ```
+   http://smartfinch-pi.local:8080
+   ```
+
+   Lädt die Seite nicht, nimm stattdessen diese Adresse:
+
+   ```
+   http://10.42.0.1:8080
+   ```
+
+   Die Seite öffnet sich nicht von selbst wie in manchen öffentlichen WLANs. Du musst die Adresse eintippen.
+
+</Steps>
+
+> **Kein Hotspot, weil der Pi schon im WLAN ist?** Hast du im Raspberry Pi Imager ein WLAN eingetragen oder Smartfinch [per Befehl installiert](../install-script/), verbindet sich der Pi mit diesem WLAN und öffnet keinen Hotspot.
+> Öffne die Adresse dann von einem Gerät im selben WLAN aus. Hast du einen eigenen Hostnamen vergeben, lautet sie `http://<dein-hostname>.local:8080`.
+
+## Der Einrichtungsassistent
+
+Der Assistent führt dich in sechs Schritten durch die Einrichtung.
+Alles, was du hier festlegst, kannst du später in den Einstellungen ändern.
+
+### 1. Willkommen
+
+Wähle die Sprache der Oberfläche (Deutsch oder English) und tippe auf `Einrichtung starten`.
+
+### 2. Gerätename
+
+Gib der Station einen Namen, zum Beispiel `vogelstation-garten`.
+Unter diesem Namen erreichst du sie später im Netzwerk: `http://vogelstation-garten.local:8080`.
+Erlaubt sind Kleinbuchstaben, Ziffern und Bindestriche. Leerzeichen werden zu Bindestrichen, Umlaute werden umgeschrieben (ü wird zu ue).
+
+Betreibst du mehrere Stationen, gib jeder einen eigenen Namen. Der Name wird erst beim Abschluss der Einrichtung übernommen.
+
+### 3. Standort
+
+Tippe auf der Karte auf den Ort, an dem die Station später aufnimmt, oder suche den nächsten größeren Ort.
+Die Karte funktioniert ohne Internet.
+
+Mit dem Standort speichert BirdNET nur Vögel, die dort zur jeweiligen Jahreszeit vorkommen. Das verhindert viele Fehlerkennungen.
+Auf 10 bis 25 Kilometer genau reicht; eine genaue Adresse wird nicht gebraucht und gespeichert wird nur ein auf etwa einen Kilometer gerundeter Punkt.
+Im Feld darüber kannst du den Platz beschreiben, zum Beispiel „Garten, Nordseite“.
+
+Mit `Weiter` wird der Standort gespeichert. Lässt du ihn leer, speichert die Station alle Vogelarten.
+
+### 4. Notfall-Hotspot
+
+Ist kein bekanntes WLAN erreichbar, öffnet die Station ihren Hotspot. So erreichst du sie immer, auch draußen ohne WLAN.
+
+Lege hier den Namen des Hotspots und ein Passwort mit mindestens acht Zeichen fest und tippe auf `Hotspot speichern`.
+Ohne Passwort kann sich jede Person in Reichweite mit der Station verbinden. Schreib dir Name und Passwort auf.
+
+Bist du gerade über den Hotspot verbunden, bricht die Verbindung beim Speichern kurz ab.
+Verbinde dich danach mit dem Hotspot unter seinem neuen Namen und mit dem neuen Passwort und lade die Seite neu.
+Beginnt der Assistent dann wieder bei „Willkommen“, ist nichts verloren: Deine Eingaben sind gespeichert. Tippe dich mit `Weiter` bis zum nächsten Schritt durch.
+
+### 5. WLAN
+
+Dieser Schritt ist freiwillig. Soll die Station ein vorhandenes WLAN nutzen, tippe auf `Netzwerke suchen`, wähle dein WLAN aus, gib das Passwort ein und tippe auf `WLAN speichern`.
+Während der Suche kann die Verbindung zum Hotspot kurz abbrechen.
+
+Die Station wechselt erst nach dem Abschluss der Einrichtung in das WLAN.
+Du kannst mehrere WLANs speichern; die Station verbindet sich mit dem ersten erreichbaren aus der Liste.
+Ohne WLAN ist die Station nur über ihren Hotspot erreichbar. Für eine Station, die allein draußen steht, ist das völlig in Ordnung.
+
+### 6. Fertig
+
+Der letzte Schritt zeigt eine Zusammenfassung: Gerätename, die Adresse nach der Einrichtung, Standort, Hotspot und WLAN.
+Mach am besten ein Foto davon.
+
+- **Mikrofon prüfen:** Tippe auf `Pegel testen`. Die Station nimmt zwei Sekunden auf und meldet `Pegel in Ordnung`, `Pegel zu niedrig` oder `Kein Signal`.
+- **Gerät identifizieren:** `LED blinken lassen` lässt die grüne LED am Pi 30 Sekunden lang blinken. So siehst du, welche Station du gerade einrichtest.
+- **Vogelerkennung starten:** Lass `Vogelerkennung nach der Einrichtung starten` angehakt, damit die Station sofort zu lauschen beginnt.
+
+Tippe zum Schluss auf `Einrichtung abschließen`. Danach erscheint die Übersicht der Station.
+
+## Nach der Einrichtung
+
+- **Mit WLAN:** Nach spätestens etwa fünf Minuten wechselt die Station in das gespeicherte WLAN und der Hotspot verschwindet.
+  Verbinde dein Gerät wieder mit diesem WLAN und öffne `http://<gerätename>.local:8080`.
+- **Ohne WLAN oder außer Reichweite:** Die Station bleibt im Hotspot. Verbinde dich mit dem Hotspot und öffne `http://10.42.0.1:8080`.
+
+Ist das WLAN einmal nicht erreichbar, zum Beispiel nach einem Stromausfall, öffnet die Station wieder ihren Hotspot und kehrt von selbst ins WLAN zurück, sobald es wieder da ist.
+
+Tipp: Speichere die Adresse als Lesezeichen oder lege sie über das Browsermenü auf dem Startbildschirm deines Handys ab.
+
+Lässt sich die Seite nicht öffnen, hilft die [Fehlerbehebung](../troubleshooting/).

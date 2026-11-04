@@ -1,0 +1,75 @@
+---
+title: "Alternative: Installation per Befehl"
+description: Installiere Smartfinch Pi über die Konsole auf einem Raspberry Pi, auf dem schon Raspberry Pi OS läuft.
+sidebar:
+  order: 4
+  label: "Alternative: per Befehl"
+---
+
+Statt das fertige SD-Image zu nutzen, kannst du Smartfinch auch mit einem einzigen Befehl auf einem Raspberry Pi installieren, auf dem bereits Raspberry Pi OS läuft.
+Dieser Weg ist sinnvoll, wenn du schon ein eingerichtetes System hast oder lieber mit der <Term id="console">Konsole</Term> arbeitest.
+Hast du die SD-Karte bereits mit dem Smartfinch-Image beschrieben, überspringe diese Seite und mach mit der [Ersteinrichtung](../first-setup/) weiter.
+
+## Voraussetzungen
+
+- Ein Raspberry Pi Zero 2 W, 3, 4 oder 5 mit **Raspberry Pi OS Bookworm oder neuer**, 32 oder 64 Bit. Die Lite-Version ohne Desktop genügt.
+- **SSH-Zugang** zum Pi und eine **Internetverbindung** während der Installation.
+
+Wie du Raspberry Pi OS mit WLAN und SSH auf die SD-Karte bringst, zeigt die Anleitung [SD-Karte einrichten](../../project01/sd-setup/) im Projekt „Das lauschende Vogelhaus“.
+Für Smartfinch gibt es zwei Unterschiede:
+
+- Wähle als Betriebssystem `Raspberry Pi OS (other)` und dann `Raspberry Pi OS Lite (64-bit)`. Die Legacy-Version brauchst du nicht.
+- Wähle als Hostnamen zum Beispiel `smartfinch-pi`. Unter diesem Namen erreichst du die Station später im Netzwerk.
+
+## Smartfinch installieren
+
+<Steps>
+
+1. Stecke die SD-Karte in den Raspberry Pi, schließe das USB-Mikrofon an und verbinde den Pi mit dem Strom.
+   Warte ein paar Minuten, bis er gestartet ist.
+
+2. Öffne auf deinem Computer die Konsole.
+
+   <LinkCard
+     title="Mehr Informationen zur Konsole"
+     href="../../../glossary/console/"
+     description="Eine Anleitung zum Öffnen und Bedienen der Konsole."
+   />
+
+3. Verbinde dich per SSH mit dem Pi. Ersetze `benutzer` durch den Benutzernamen und `smartfinch-pi` durch den Hostnamen, die du im Raspberry Pi Imager festgelegt hast.
+
+   ```sh
+   ssh benutzer@smartfinch-pi.local
+   ```
+
+   Bestätige die erste Verbindung mit `yes` und gib dein Passwort ein. Die Eingabe bleibt dabei unsichtbar.
+   Klappt die Verbindung nicht, helfen die Hinweise zur Fehlerbehebung in der Anleitung [Raspberry Pi einrichten](../../project01/pi-setup/) des lauschenden Vogelhauses.
+
+4. Starte die Installation mit diesem Befehl:
+
+   ```sh
+   curl -fsSL https://github.com/rajsei/smartfinch-pi/releases/latest/download/install.sh | sudo sh
+   ```
+
+   Der Befehl lädt die neueste Version von Smartfinch und das BirdNET-Modell herunter, prüft die Dateien und richtet beide Dienste ein.
+   Das dauert einige Minuten, auf dem Raspberry Pi Zero 2 W auch länger. Lass die Konsole geöffnet, bis die Installation fertig ist.
+
+5. Am Ende zeigt die Konsole die Adresse der Station an, zum Beispiel `http://smartfinch-pi.local:8080`.
+   Öffne diese Adresse im Browser eines Geräts, das im selben WLAN ist wie der Pi.
+   Es erscheint der Einrichtungsassistent. Weiter geht es mit der [Ersteinrichtung](../first-setup/#der-einrichtungsassistent).
+
+</Steps>
+
+Der Installationsbefehl funktioniert nicht auf dem Raspberry Pi 1, Pi Zero und Pi Zero W und bricht dort mit einer Meldung ab.
+
+## Smartfinch aktualisieren
+
+Um Smartfinch zu aktualisieren, verbindest du dich per SSH mit dem Pi und führst denselben Befehl noch einmal aus:
+
+```sh
+curl -fsSL https://github.com/rajsei/smartfinch-pi/releases/latest/download/install.sh | sudo sh
+```
+
+Programm und BirdNET-Modell werden dabei ersetzt.
+Einstellungen, Erkennungen und Aufnahmen bleiben erhalten.
+Das gilt auch für Stationen, die du mit dem SD-Image eingerichtet hast, sofern du im Raspberry Pi Imager einen Benutzer und SSH aktiviert hast.

@@ -1,0 +1,48 @@
+---
+title: Fehlerbehebung
+description: Was du tun kannst, wenn der Hotspot fehlt, die Weboberfläche nicht lädt oder die Station keine Vögel erkennt.
+next: false
+sidebar:
+  order: 8
+---
+
+## Der Hotspot erscheint nicht
+
+- Warte nach dem Einschalten etwa fünf Minuten. Der erste Start dauert länger als die folgenden.
+- Prüfe, ob eine LED am Pi leuchtet oder blinkt. Bleibt alles dunkel, prüfe Netzteil und Kabel.
+- Hast du im Raspberry Pi Imager ein WLAN eingetragen? Dann verbindet sich der Pi mit diesem WLAN und öffnet keinen Hotspot. Öffne die Weboberfläche von einem Gerät im selben WLAN.
+- Ist die Station schon eingerichtet und ein gespeichertes WLAN in Reichweite, ist sie im WLAN statt im Hotspot. Auch dann erreichst du sie über das WLAN.
+- Hilft das alles nicht, schreibe das Image noch einmal auf die SD-Karte (siehe [SD-Karte einrichten](../sd-setup/)) und starte den Pi neu.
+
+## Die Seite lädt nicht
+
+- Prüfe, ob dein Gerät noch mit dem Hotspot oder mit demselben WLAN wie die Station verbunden ist.
+  Manche Handys trennen ein WLAN ohne Internet nach kurzer Zeit wieder.
+- Achte auf die Adresse: Sie beginnt mit `http://` (nicht `https://`) und endet mit `:8080`.
+- Funktioniert `http://<gerätename>.local:8080` nicht, nimm die IP-Adresse: im Hotspot `http://10.42.0.1:8080`, im WLAN die Adresse, die du in den Einstellungen unter `Netzwerk` → `Name & Adresse` oder in deinem Router findest.
+  Ältere Android-Handys kennen Adressen mit `.local` nicht.
+- Schalte die mobilen Daten am Handy kurz aus. Manche Handys schicken Anfragen sonst ins Mobilfunknetz statt zur Station.
+- Hast du den Gerätenamen geändert, gilt die alte `.local`-Adresse nicht mehr. Lesezeichen musst du dann anpassen.
+
+## Die Station erkennt keine Vögel
+
+- Auf der `Übersicht` steht ein Hinweis, wenn die Vogelerkennung pausiert ist. Tippe dann auf `Jetzt starten` oder starte sie unter `Einstellungen` → `Analyse`.
+- Prüfe das Mikrofon unter `Einstellungen` → `Gerät` → `Mikrofon-Pegeltest`:
+  - `Kein Mikrofon gefunden`: Stecke das USB-Mikrofon neu ein. Beim Pi Zero 2 W gehört der Adapter in die Buchse `USB`, nicht in `PWR IN`.
+  - `Kein Signal`: Das Mikrofon liefert keinen Ton. Probiere einen anderen USB-Anschluss oder ein anderes Mikrofon.
+    Oft steht auch der Aufnahmepegel auf null. Hast du SSH eingerichtet, kannst du ihn auf dem Pi mit dem Befehl `alsamixer` anheben (Taste <kbd class="kbd">F4</kbd> zeigt die Aufnahme-Regler).
+  - `Pegel zu niedrig`: Stelle das Mikrofon näher an die Vögel oder an einen ruhigeren Platz.
+- Hast du einen Standort gewählt, speichert die Station nur Vögel, die dort zu dieser Jahreszeit vorkommen. Prüfe unter `Einstellungen` → `Allgemein` → `Standort`, ob der Ort stimmt.
+- Hab etwas Geduld: Nachts und mittags singen deutlich weniger Vögel als früh am Morgen.
+
+## Die Uhrzeit stimmt nicht
+
+Ohne Internet kennt der Pi nach einem Stromausfall die genaue Zeit nicht.
+Öffne `Einstellungen` → `Allgemein` → `Zeit & Datum` und tippe auf `Zeit von diesem Gerät übernehmen`.
+
+## Passwort vergessen
+
+- **Hotspot-Passwort:** Verbinde dich über das WLAN mit der Station und lege unter `Einstellungen` → `Netzwerk` → `Notfall-Hotspot` ein neues Passwort fest.
+- **Passwort für die Einstellungen:** Eine Funktion zum Zurücksetzen gibt es noch nicht. Im Notfall schreibst du das Image neu auf die SD-Karte; dabei gehen alle Erkennungen und Einstellungen verloren.
+
+Kommst du an keiner Stelle mehr weiter, kannst du die Station jederzeit neu einrichten, indem du das Image erneut auf die SD-Karte schreibst.

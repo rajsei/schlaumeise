@@ -1,0 +1,48 @@
+---
+title: Troubleshooting
+description: What to do if the hotspot is missing, the web interface won't load or the station doesn't detect any birds.
+next: false
+sidebar:
+  order: 8
+---
+
+## The hotspot doesn't appear
+
+- After switching on, wait about five minutes. The first boot takes longer than later ones.
+- Check whether an LED on the Pi lights up or blinks. If everything stays dark, check the power supply and cable.
+- Did you enter a Wi-Fi network in Raspberry Pi Imager? Then the Pi connects to that network and doesn't open a hotspot. Open the web interface from a device on the same Wi-Fi network.
+- If the station is already set up and a saved Wi-Fi network is in range, it is on that network instead of in hotspot mode. You reach it through the Wi-Fi network then, too.
+- If none of this helps, write the image to the SD card again (see [Setting up the SD card](../sd-setup/)) and restart the Pi.
+
+## The page doesn't load
+
+- Check that your device is still connected to the hotspot or to the same Wi-Fi network as the station.
+  Some phones drop a network without internet after a short time.
+- Check the address: it starts with `http://` (not `https://`) and ends with `:8080`.
+- If `http://<device-name>.local:8080` doesn't work, use the IP address: in hotspot mode `http://10.42.0.1:8080`, on Wi-Fi the address shown in the settings under `Network` → `Name & address` or in your router.
+  Older Android phones don't understand addresses ending in `.local`.
+- Briefly switch off mobile data on your phone. Some phones otherwise send requests to the mobile network instead of to the station.
+- If you changed the device name, the old `.local` address no longer works. Update your bookmarks.
+
+## The station doesn't detect any birds
+
+- The `Overview` shows a notice when bird detection is paused. Tap `Start now` or start it under `Settings` → `Analysis`.
+- Check the microphone under `Settings` → `Device` → `Microphone level test`:
+  - `No microphone found`: Plug the USB microphone in again. On a Pi Zero 2 W, the adapter goes into the `USB` port, not into `PWR IN`.
+  - `No signal`: The microphone delivers no sound. Try another USB port or another microphone.
+    The recording level is also often set to zero. If you set up SSH, you can raise it on the Pi with the command `alsamixer` (the <kbd class="kbd">F4</kbd> key shows the capture controls).
+  - `Level too low`: Move the microphone closer to the birds or to a quieter spot.
+- If you chose a location, the station only keeps birds that occur there in the current season. Check under `Settings` → `General` → `Location` that the place is correct.
+- Be patient: far fewer birds sing at night and around midday than early in the morning.
+
+## The time is wrong
+
+Without internet, the Pi doesn't know the exact time after a power outage.
+Open `Settings` → `General` → `Time & date` and tap `Set time from this device`.
+
+## Forgotten password
+
+- **Hotspot password:** Connect to the station over Wi-Fi and set a new password under `Settings` → `Network` → `Emergency hotspot`.
+- **Settings password:** There is no way to reset it yet. In an emergency, write the image to the SD card again; all detections and settings are lost.
+
+If you get stuck anywhere, you can always set up the station from scratch by writing the image to the SD card again.

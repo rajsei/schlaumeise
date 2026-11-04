@@ -1,0 +1,131 @@
+---
+title: Initial setup
+description: Connect to the station's hotspot and set up Smartfinch Pi in your browser with the setup wizard.
+prev:
+  link: projects/project02/sd-setup
+  label: Setting up the SD card
+sidebar:
+  order: 5
+---
+
+On first boot, the station opens its own Wi-Fi hotspot.
+Through this hotspot, you set it up in the browser of a phone, tablet or laptop. You don't need an internet connection for this.
+
+## Switch on the station
+
+<Steps>
+
+1. Put the microSD card into the Raspberry Pi.
+
+2. Connect the USB microphone.
+   On a Raspberry Pi Zero 2 W, the micro-USB OTG adapter goes into the port labeled `USB`, not into the port labeled `PWR IN`.
+
+3. Connect the Pi to the power supply. An LED on the Pi lights up or blinks.
+   The first boot takes a few minutes because the system prepares the SD card. Don't unplug the Pi during this time.
+
+</Steps>
+
+> **Setting up several stations at once?** Switch them on one after the other and finish setting up each one before you start the next.
+> Every new station has its own hotspot name, but the name doesn't tell you which device it belongs to.
+
+## Connect to the hotspot
+
+<Steps>
+
+1. Open the Wi-Fi settings of your phone, tablet or laptop.
+   After a few minutes, a network whose name starts with `Smartfinch-` appears, for example `Smartfinch-a1b2`.
+
+2. Connect to this network. On first boot, the hotspot has no password.
+
+3. Your device may report that this network has no internet access. That is normal.
+   Choose the option that keeps you connected anyway, for example `Stay connected`.
+
+4. Open the browser and enter this address:
+
+   ```
+   http://smartfinch-pi.local:8080
+   ```
+
+   If the page doesn't load, use this address instead:
+
+   ```
+   http://10.42.0.1:8080
+   ```
+
+   The page doesn't open by itself like on some public Wi-Fi networks. You have to type in the address.
+
+</Steps>
+
+> **No hotspot because the Pi is already on Wi-Fi?** If you entered a Wi-Fi network in Raspberry Pi Imager or [installed Smartfinch with a command](../install-script/), the Pi connects to that network and doesn't open a hotspot.
+> Open the address from a device on the same Wi-Fi network instead. If you set your own hostname, the address is `http://<your-hostname>.local:8080`.
+
+## The setup wizard
+
+The wizard guides you through the setup in six steps.
+You can change everything you set here later in the settings.
+
+### 1. Welcome
+
+Choose the interface language (English or Deutsch) and tap `Start setup`.
+
+### 2. Device name
+
+Give the station a name, for example `garden-station`.
+This is the name you will use to reach it in your network later: `http://garden-station.local:8080`.
+Lowercase letters, digits and hyphens are allowed. Spaces become hyphens, and accented letters are spelled out.
+
+If you run several stations, give each one its own name. The name is applied when you complete the setup.
+
+### 3. Location
+
+Tap the place on the map where the station will record later, or search for the nearest larger town.
+The map works without internet.
+
+With a location, BirdNET only keeps birds that occur there in the current season. This prevents many false detections.
+An accuracy of 10 to 25 kilometers (about 6 to 15 miles) is enough; no exact address is needed, and only a point rounded to about one kilometer is stored.
+In the field above, you can describe the spot, for example “Garden, north side”.
+
+`Next` saves the location. If you leave it empty, the station keeps all bird species.
+
+### 4. Emergency hotspot
+
+If no known Wi-Fi network is in range, the station opens its hotspot. That way you can always reach it, even outdoors without Wi-Fi.
+
+Set the hotspot name and a password with at least eight characters here and tap `Save hotspot`.
+Without a password, anyone in range can connect to the station. Write down the name and password.
+
+If you are connected through the hotspot right now, the connection drops briefly when you save.
+Then reconnect to the hotspot under its new name with the new password and reload the page.
+If the wizard starts again at “Welcome”, nothing is lost: your entries are saved. Tap `Next` until you reach the next step.
+
+### 5. Wi-Fi
+
+This step is optional. If the station should use an existing Wi-Fi network, tap `Search networks`, choose your network, enter the password and tap `Save Wi-Fi`.
+The connection to the hotspot may drop briefly during the search.
+
+The station only switches to the Wi-Fi network after you complete the setup.
+You can save several networks; the station connects to the first one in the list that is in range.
+Without Wi-Fi, the station can only be reached through its hotspot. For a station that stands on its own outdoors, that is perfectly fine.
+
+### 6. Done
+
+The last step shows a summary: device name, the address after setup, location, hotspot and Wi-Fi.
+It's a good idea to take a photo of it.
+
+- **Check the microphone:** Tap `Test level`. The station records for two seconds and reports `Level OK`, `Level too low` or `No signal`.
+- **Identify the device:** `Blink the LED` makes the green LED on the Pi blink for 30 seconds. That way you can see which station you are setting up.
+- **Start bird detection:** Leave `Start bird detection after setup` checked so the station starts listening right away.
+
+Finally, tap `Complete setup`. The station's overview then appears.
+
+## After the setup
+
+- **With Wi-Fi:** After about five minutes at most, the station switches to the saved Wi-Fi network and the hotspot disappears.
+  Reconnect your device to that network and open `http://<device-name>.local:8080`.
+- **Without Wi-Fi or out of range:** The station stays in hotspot mode. Connect to the hotspot and open `http://10.42.0.1:8080`.
+
+If the Wi-Fi network is ever out of reach, for example after a power outage, the station opens its hotspot again and returns to the Wi-Fi network by itself as soon as it is back.
+
+Tip: Save the address as a bookmark or add it to your phone's home screen from the browser menu.
+
+If the page doesn't open, see [Troubleshooting](../troubleshooting/).

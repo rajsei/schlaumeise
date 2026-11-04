@@ -12,10 +12,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Projektseiten
 
-**Beschreibung:** Schritt-für-Schritt-Bauanleitungen (z. B. „Das lauschende Vogelhaus“: Komponenten, Zusammenbau, Pi-/SD-/Hotspot-Setup) mit Steps, Terminals, Codeblöcken und Bildergalerien.
+**Beschreibung:** Schritt-für-Schritt-Bauanleitungen mit Steps, Terminals, Codeblöcken und Bildergalerien: `project01` „Das lauschende Vogelhaus“ (BirdNET-Pi: Komponenten, SD-/Pi-/Hotspot-Setup per Konsole, Zusammenbau) und `project02` „Smartfinch Pi“ (neutrale Grundanleitung: Materialien, SD-Image mit dem Raspberry Pi Imager, alternativ Einzeiler per SSH, Ersteinrichtung über den Hotspot-Assistenten, Aufstellen, Weboberfläche, Fehlerbehebung; eigene Anleitungen für Lehrkräfte und Schüler:innen sollen darauf aufbauen).
 **Status:** ✅ umgesetzt
-**Betroffene Bereiche:** `src/content/docs/de/projects/project01/`, MDX-Bausteine in `src/components/docs/`
-**Erweiterungsmöglichkeiten:** Weitere Projekte als `project02/` …; Materiallisten als strukturierte Daten statt Markdown-Tabellen.
+**Betroffene Bereiche:** `src/content/docs/<locale>/projects/project01/`, `src/content/docs/<locale>/projects/project02/`, MDX-Bausteine in `src/components/docs/`
+**Erweiterungsmöglichkeiten:** Weitere Projekte als `project03/` …; Smartfinch-Pi-Anleitungen für Lehrkräfte und Schüler:innen; Screenshots der Smartfinch-Weboberfläche und Fotos eines Smartfinch-Aufbaus für `project02`; Materiallisten als strukturierte Daten statt Markdown-Tabellen.
 
 ## Navigation (Sidebar mit Topics)
 

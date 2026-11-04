@@ -103,6 +103,14 @@ export const navigation: NavigationConfig = {
         },
         expanded: true,
         items: [{ autogenerate: { directory: "projects/project01" } }],
+      },
+      {
+        label: "Smartfinch Pi",
+        translations: {
+          de: "Smartfinch Pi",
+        },
+        expanded: true,
+        items: [{ autogenerate: { directory: "projects/project02" } }],
       }],
     },
     {

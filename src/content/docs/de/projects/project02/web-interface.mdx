@@ -1,0 +1,86 @@
+---
+title: Weboberfläche im Überblick
+description: Was du auf den Seiten Übersicht, Erkennungen, Statistik und Einstellungen von Smartfinch Pi findest.
+sidebar:
+  order: 7
+---
+
+Die Weboberfläche öffnest du im Browser unter `http://<gerätename>.local:8080` oder im Hotspot unter `http://10.42.0.1:8080`.
+Über das Menü erreichst du vier Seiten: `Übersicht`, `Erkennungen`, `Statistik` und `Einstellungen`.
+Welche davon sichtbar sind, kann über ein Preset eingeschränkt werden (siehe [unten](#presets)).
+
+## Übersicht
+
+Die Startseite zeigt, was die Station heute gehört hat:
+
+- Anzahl der Erkennungen und Arten von heute, wann zuletzt ein Vogel erkannt wurde und welche Arten am häufigsten waren,
+- die neuesten Erkennungen,
+- einen Hinweis, wenn etwas zu tun ist, zum Beispiel wenn die Vogelerkennung pausiert ist (`Jetzt starten`) oder kein Mikrofon gefunden wurde,
+- das Wetter des Tages, das du hier auch eintragen kannst. Das Wetter lässt sich in den Einstellungen abschalten.
+
+## Erkennungen
+
+Jede Erkennung erscheint als Karte mit:
+
+- dem Namen der Art und ihrem wissenschaftlichen Namen,
+- der Sicherheit, mit der BirdNET die Art erkannt hat: `Sehr sicher` ab 90 %, `Wahrscheinlich` ab 75 %, darunter `Möglich`,
+- der Uhrzeit,
+- der Tonaufnahme zum `Anhören` und einem Spektrogramm, das die Tonhöhe über die Zeit zeigt,
+- einem Link `Mehr über diese Art ↗`,
+- weiteren Angaben unter `Details`, wo du die Erkennung oder nur ihre Aufnahme auch löschen kannst.
+
+Die Seite `Alle Erkennungen` listet alle bisherigen Erkennungen, die neuesten zuerst.
+
+Auch eine sichere Erkennung kann falsch sein. Hör dir die Aufnahme an, wenn dir eine Art ungewöhnlich vorkommt.
+
+## Statistik
+
+Die Statistik zeigt die Erkennungen über längere Zeit:
+
+- **Zeitverlauf:** Erkennungen und Arten pro Tag, Woche, Monat oder Jahr als Balken und Tabelle.
+- **Aktivität nach Tageszeit:** Für jede Art eine kleine Kurve über 24 Stunden mit Sonnenauf- und -untergang. So siehst du, welche Arten früh morgens und welche abends singen.
+- **Tages-Heatmap:** eine Zeile pro Art und eine Spalte pro Stunde für einen ausgewählten Tag.
+- **Arten:** alle erkannten Arten mit ihrer Anzahl. Ein Tipp auf eine Art zeigt ihre Erkennungen.
+
+Hast du Wetter eingetragen, kannst du die Statistik nach Wetter filtern, zum Beispiel nur sonnige Tage anzeigen.
+
+## Einstellungen
+
+Die Einstellungen sind in fünf Bereiche aufgeteilt:
+
+| Bereich | Was du dort findest |
+| --- | --- |
+| `Allgemein` | Darstellung (hell/dunkel), Sprache und Formate, Preset, Wetter, Standort, Zeit & Datum |
+| `Gerät` | Systemstatus (z. B. Temperatur), Mikrofon-Pegeltest, gespeicherte Aufnahmen, Gerät identifizieren, Neustart & Ausschalten |
+| `Netzwerk` | Name & Adresse der Station, WLANs, Notfall-Hotspot |
+| `Sicherheit` | Passwort für die Einstellungen |
+| `Analyse` | Vogelerkennung starten oder pausieren, erkannte Tiergruppen, Feineinstellungen, Fehlerprotokoll |
+
+### Einstellungen mit einem Passwort schützen
+
+Ohne Passwort kann jede Person, die die Weboberfläche öffnen kann, auch die Einstellungen ändern.
+Unter `Sicherheit` legst du mit `Schutz aktivieren` ein Passwort mit mindestens acht Zeichen fest.
+Danach fragt die Station bei jeder Änderung nach dem Passwort. Übersicht, Erkennungen und Statistik bleiben für alle sichtbar.
+
+Merke dir das Passwort gut. Ohne Passwort lassen sich die Einstellungen danach nicht mehr ändern.
+
+### Presets
+
+Ein Preset legt fest, welche Seiten und Funktionen sichtbar sind. Du wählst es unter `Allgemein` → `Preset`:
+
+- **Schulhof-Vögel voll:** alle Seiten, mit Link zu Infos über jede Art. Das ist die Voreinstellung.
+- **Selbst recherchieren:** wie oben, aber ohne Link zu Artinfos, damit man selbst nachschlagen kann.
+- **Nur Anzeige/Beamer:** nur die Übersicht in großer Schrift, ohne Menü und Bedienknöpfe.
+
+Die Einstellungen bleiben bei jedem Preset erreichbar, wenn du die Adresse direkt aufrufst: `http://<gerätename>.local:8080/#/settings`.
+Ein Preset ist kein Schutz. Dafür ist das Passwort da.
+
+### Uhrzeit ohne Internet
+
+Der Raspberry Pi hat keine eigene Uhr. Ohne Internet übernimmt die Station die Uhrzeit bei der Einrichtung von deinem Handy oder Laptop.
+Stimmt die Zeit später nicht, zum Beispiel nach längerer Zeit ohne Strom, tippe unter `Allgemein` → `Zeit & Datum` auf `Zeit von diesem Gerät übernehmen`.
+
+## Als App auf dem Startbildschirm
+
+Du kannst die Weboberfläche über das Menü deines Browsers zum Startbildschirm hinzufügen. Sie öffnet sich dann wie eine App.
+Das funktioniert nur, solange dein Gerät im selben Netz wie die Station ist; ohne Verbindung zur Station zeigt die App nichts an.

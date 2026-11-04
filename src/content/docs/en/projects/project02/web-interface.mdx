@@ -1,0 +1,86 @@
+---
+title: The web interface at a glance
+description: What you will find on the Overview, Detections, Statistics and Settings pages of Smartfinch Pi.
+sidebar:
+  order: 7
+---
+
+You open the web interface in the browser at `http://<device-name>.local:8080`, or in hotspot mode at `http://10.42.0.1:8080`.
+The menu leads to four pages: `Overview`, `Detections`, `Statistics` and `Settings`.
+A preset can limit which of them are visible (see [below](#presets)).
+
+## Overview
+
+The start page shows what the station has heard today:
+
+- today's number of detections and species, when a bird was last detected and which species were most frequent,
+- the latest detections,
+- a notice when something needs to be done, for example when bird detection is paused (`Start now`) or no microphone was found,
+- the weather of the day, which you can also enter here. Weather can be switched off in the settings.
+
+## Detections
+
+Each detection appears as a card with:
+
+- the name of the species and its scientific name,
+- how confident BirdNET is: `Very likely` from 90 %, `Likely` from 75 %, below that `Possible`,
+- the time,
+- the audio recording to `Listen` to and a spectrogram that shows the pitch over time,
+- a link `More about this species ↗`,
+- more information under `Details`, where you can also delete the detection or just its recording.
+
+The `All detections` page lists every detection so far, newest first.
+
+Even a confident detection can be wrong. Listen to the recording if a species seems unusual to you.
+
+## Statistics
+
+The statistics show detections over a longer period:
+
+- **Over time:** detections and species per day, week, month or year as bars and a table.
+- **Activity by time of day:** for each species, a small curve over 24 hours with sunrise and sunset. This shows which species sing early in the morning and which in the evening.
+- **Day heatmap:** one row per species and one column per hour for a chosen day.
+- **Species:** all detected species with their counts. Tapping a species shows its detections.
+
+If you have entered weather, you can filter the statistics by weather, for example to show only sunny days.
+
+## Settings
+
+The settings are divided into five sections:
+
+| Section | What you will find there |
+| --- | --- |
+| `General` | Appearance (light/dark), language and formats, preset, weather, location, time & date |
+| `Device` | System status (e.g. temperature), microphone level test, stored recordings, identify device, restart & shut down |
+| `Network` | Name & address of the station, Wi-Fi networks, emergency hotspot |
+| `Security` | Password for the settings |
+| `Analysis` | Start or pause bird detection, detected animal groups, fine-tuning, error log |
+
+### Protecting the settings with a password
+
+Without a password, anyone who can open the web interface can also change the settings.
+Under `Security`, use `Enable protection` to set a password with at least eight characters.
+From then on, the station asks for the password for every change. Overview, detections and statistics stay visible to everyone.
+
+Remember the password well. Without it, the settings can no longer be changed.
+
+### Presets
+
+A preset determines which pages and functions are visible. You choose it under `General` → `Preset`:
+
+- **Schoolyard birds (full):** all pages, with a link to information about each species. This is the default.
+- **Research yourself:** as above, but without the link to species information, so people look things up themselves.
+- **Display only / projector:** only the overview in large type, without menu or buttons.
+
+The settings stay reachable with every preset if you open the address directly: `http://<device-name>.local:8080/#/settings`.
+A preset is not a protection. That's what the password is for.
+
+### Time without internet
+
+The Raspberry Pi has no built-in clock. Without internet, the station takes the time from your phone or laptop during setup.
+If the time is wrong later, for example after being without power for a while, tap `Set time from this device` under `General` → `Time & date`.
+
+## As an app on the home screen
+
+You can add the web interface to your home screen from your browser menu. It then opens like an app.
+This only works while your device is on the same network as the station; without a connection to the station, the app shows nothing.

@@ -1,0 +1,115 @@
+---
+title: Smartfinch Pi
+description: Build a bird station with a Raspberry Pi and BirdNET that recognizes bird songs without internet and shows the results in your browser.
+category: "Audio"
+tags: ["Raspberry-pi", "Citizen-Science", "Interactive", "Outdoor"]
+prev: false
+sidebar:
+  order: 1
+project:
+  difficulty: 1
+  skillLevel: 2
+  duration: "1–2 hours"
+  cost: "approx. $50–150"
+  supervision: adults
+  ageMin: 10
+  indoorOutdoor: both
+  tools:
+    - Raspberry Pi
+    - microSD card (min. 16 GB)
+    - Power supply
+    - USB microphone
+    - Phone, tablet or laptop
+  learningGoals:
+    - Recognizing bird songs with BirdNET
+    - Raspberry Pi setup
+    - Understanding Wi-Fi and hotspots
+---
+
+Which birds sing around you, and at what time of day?
+Smartfinch Pi turns a Raspberry Pi and a USB microphone into a bird station that listens around the clock.
+The AI BirdNET identifies the bird species directly on the Pi. The station needs neither internet nor a cloud service for this.
+You see the results in the browser on your phone, tablet or computer.
+
+You don't need a console to set it up: you write a ready-made image to the SD card, plug in the Pi and set it up in your browser through its own Wi-Fi hotspot.
+
+## What will you build?
+
+In the end, you will have a bird station with:
+
+- a Raspberry Pi with a USB microphone that records bird songs,
+- BirdNET, which identifies the species directly on the device,
+- a web interface with the latest detections, audio recordings, spectrograms and statistics,
+- a species filter that only keeps birds expected at your location in the current season,
+- its own Wi-Fi hotspot, so you can reach the station even when there is no Wi-Fi nearby.
+
+## Steps
+
+<LinkCard
+  title="Required components"
+  href="./components/"
+  description="Which Raspberry Pi, which SD card and which accessories you need."
+/>
+<br />
+<LinkCard
+  title="Setting up the SD card"
+  href="./sd-setup/"
+  description="Download the Smartfinch image and write it to the SD card with Raspberry Pi Imager."
+/>
+<br />
+<LinkCard
+  title="Alternative: install with a command"
+  href="./install-script/"
+  description="For advanced users: install Smartfinch on an existing Raspberry Pi OS from the console."
+/>
+<br />
+<LinkCard
+  title="Initial setup"
+  href="./first-setup/"
+  description="Connect to the station's hotspot and follow the setup wizard."
+/>
+<br />
+<LinkCard
+  title="Placing the station"
+  href="./assembly/"
+  description="Find a good spot and protect the Pi and microphone from the weather."
+/>
+<br />
+<LinkCard
+  title="The web interface at a glance"
+  href="./web-interface/"
+  description="What you will find on the Overview, Detections, Statistics and Settings pages."
+/>
+<br />
+<LinkCard
+  title="Troubleshooting"
+  href="./troubleshooting/"
+  description="What to do if the hotspot is missing, the page won't load or no birds are detected."
+/>
+
+## Smartfinch Pi or BirdNET-Pi?
+
+Both run BirdNET on a Raspberry Pi.
+The project [The Listening Birdhouse](../project01/) is based on BirdNET-Pi, a community project that you install and set up from the console.
+Smartfinch Pi is designed to be set up without a console: a ready-made SD image, a setup wizard in the browser and a hotspot that starts by itself when no known Wi-Fi is in range.
+The interface is available in English and German.
+
+## Data and license
+
+Recordings and detections stay on the Pi. There is no user account and no cloud service.
+
+The Smartfinch Pi source code is licensed under the Apache License 2.0.
+The BirdNET model the station uses to recognize bird songs is licensed under CC BY-NC-SA 4.0 and must not be used commercially.
+Commercial operation of Smartfinch Pi is therefore not allowed either.
+
+<LinkCard
+  title="Smartfinch Pi on GitHub"
+  description="Source code, downloadable releases and technical documentation."
+  href="https://github.com/rajsei/smartfinch-pi"
+  isExternal
+/>
+
+## Prior knowledge
+
+You should be able to download a file, install a program and connect your phone or laptop to a Wi-Fi network.
+You only need the <Term id="console">console</Term> for the alternative installation with a command.

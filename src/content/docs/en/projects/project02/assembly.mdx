@@ -1,0 +1,61 @@
+---
+title: Placing the station
+description: Find a good spot for your Smartfinch Pi station and protect the Raspberry Pi, power supply and microphone from the weather.
+sidebar:
+  order: 6
+---
+
+For the station to hear as many bird songs as possible, the spot and the microphone matter.
+The Raspberry Pi and power supply are not weatherproof. Outdoors, they need a sheltered spot or an enclosure.
+
+## Finding the right spot
+
+- **Close to the birds:** Hedges, trees, feeders or a quiet edge of the garden are good spots. The closer the birds sing, the more reliably BirdNET identifies them.
+- **Little noise:** Roads, fans, air conditioners and running water drown out quiet bird songs.
+- **Wind and rain:** Wind causes noise in the microphone. A spot sheltered from the wind and a foam or fur windscreen help. Point the microphone downward or to the side so no rain gets in.
+- **Power:** The station needs permanent power. Outdoors, only use outlets and extension cords rated for outdoor use.
+- **Shade:** In direct sun, a closed enclosure heats up quickly. You can see the Pi's temperature in the system status under `Settings` → `Device`.
+- **Reachability:** If the station is outside your Wi-Fi range, you reach it through its hotspot. You need to be nearby for that; the range depends on walls and the Pi model.
+
+## Options for the setup
+
+The same setups that work for a BirdNET-Pi station also work for Smartfinch Pi:
+
+- **Wooden birdhouse:** looks nice but is not weatherproof. Place it somewhere sheltered and bring it inside when it rains or freezes.
+- **Junction box from the hardware store:** an inexpensive, weatherproof enclosure for the Pi and power supply.
+- **Only the microphone outside:** The Pi stays dry indoors, for example on a windowsill, and only the microphone cable goes outside.
+
+You will find pictures and examples of all three options in the project “The Listening Birdhouse”:
+
+<LinkCard
+  title="Assemble the bird station"
+  href="../../project01/assembly/"
+  description="Examples of enclosures, a birdhouse and a windowsill setup with pictures and links."
+/>
+
+## Check after placing
+
+<Steps>
+
+1. Open the station's web interface. The `Overview` should not show a notice such as “No microphone found”.
+
+2. Open `Settings` → `Device` and tap `Test level` in the `Microphone level test`.
+   If the station reports `Level OK`, everything is ready.
+
+3. Be patient: the first detections appear as soon as a bird sings nearby. Most birds are active at dawn.
+
+</Steps>
+
+## Switching off the station
+
+Don't simply pull the plug. If the power is cut while data is being written, the SD card can be damaged.
+
+<Steps>
+
+1. Open `Settings` → `Device` → `Restart & shut down` and tap `Shut down`.
+
+2. Wait until the green LED on the Pi stops blinking.
+
+3. Now disconnect the power. To switch it on again, plug the power supply back in; the station starts and keeps listening by itself.
+
+</Steps>

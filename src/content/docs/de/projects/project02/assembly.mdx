@@ -1,0 +1,61 @@
+---
+title: Station aufstellen
+description: Finde einen guten Platz für deine Smartfinch-Pi-Station und schütze Raspberry Pi, Netzteil und Mikrofon vor Wetter.
+sidebar:
+  order: 6
+---
+
+Damit die Station möglichst viele Vogelstimmen hört, kommt es auf den Platz und auf das Mikrofon an.
+Raspberry Pi und Netzteil sind nicht wetterfest. Draußen brauchen sie einen geschützten Platz oder ein Gehäuse.
+
+## Den richtigen Platz finden
+
+- **Nah an den Vögeln:** Hecken, Bäume, Futterstellen oder ein ruhiger Gartenrand sind gute Orte. Je näher die Vögel singen, desto sicherer erkennt BirdNET sie.
+- **Wenig Lärm:** Straßen, Lüfter, Klimaanlagen und laufendes Wasser überdecken leise Vogelstimmen.
+- **Wind und Regen:** Wind rauscht im Mikrofon. Ein Platz im Windschatten und ein Windschutz aus Schaumstoff oder Fell helfen. Richte das Mikrofon nach unten oder zur Seite, damit kein Regen eindringt.
+- **Strom:** Die Station braucht dauerhaft Strom. Nutze draußen nur Steckdosen und Verlängerungen, die für den Außenbereich geeignet sind.
+- **Schatten:** In der prallen Sonne wird ein geschlossenes Gehäuse schnell heiß. Die Temperatur des Pi siehst du unter `Einstellungen` → `Gerät` im Systemstatus.
+- **Erreichbarkeit:** Steht die Station außerhalb deines WLANs, erreichst du sie über ihren Hotspot. Dafür musst du in der Nähe sein, die Reichweite hängt von Wänden und Pi-Modell ab.
+
+## Möglichkeiten für den Aufbau
+
+Für Smartfinch Pi eignen sich dieselben Aufbauten wie für eine BirdNET-Pi-Station:
+
+- **Vogelhaus aus Holz:** sieht gut aus, ist aber nicht wetterfest. Stelle es geschützt auf und hol es bei Regen oder Frost herein.
+- **Abzweigdose aus dem Baumarkt:** ein günstiges, wetterfestes Gehäuse für Pi und Netzteil.
+- **Nur das Mikrofon nach draußen führen:** Der Pi bleibt drinnen im Trockenen, zum Beispiel auf der Fensterbank, und nur das Mikrofonkabel geht nach draußen.
+
+Bilder und Beispiele zu allen drei Varianten findest du im Projekt „Das lauschende Vogelhaus“:
+
+<LinkCard
+  title="Vogelstation zusammenbauen"
+  href="../../project01/assembly/"
+  description="Beispiele für Gehäuse, Vogelhaus und Fensterbank-Aufbau mit Bildern und Links."
+/>
+
+## Nach dem Aufstellen prüfen
+
+<Steps>
+
+1. Öffne die Weboberfläche der Station. Auf der `Übersicht` darf kein Hinweis wie „Kein Mikrofon erkannt“ erscheinen.
+
+2. Öffne `Einstellungen` → `Gerät` und tippe beim `Mikrofon-Pegeltest` auf `Pegel testen`.
+   Meldet die Station `Pegel in Ordnung`, ist alles bereit.
+
+3. Warte ab: Die ersten Erkennungen erscheinen, sobald ein Vogel in der Nähe singt. Morgens in der Dämmerung sind die meisten Vögel aktiv.
+
+</Steps>
+
+## Station ausschalten
+
+Ziehe nicht einfach den Stecker. Wird der Strom während des Schreibens getrennt, kann die SD-Karte beschädigt werden.
+
+<Steps>
+
+1. Öffne `Einstellungen` → `Gerät` → `Neustart & Ausschalten` und tippe auf `Ausschalten`.
+
+2. Warte, bis die grüne LED am Pi nicht mehr blinkt.
+
+3. Trenne jetzt den Strom. Zum Einschalten steckst du das Netzteil wieder ein; die Station startet und lauscht von selbst weiter.
+
+</Steps>
