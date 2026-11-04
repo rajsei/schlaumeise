@@ -2,6 +2,11 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-11-04 — Sidebar: Abstand zwischen Gruppen (Agent)
+
+### Behoben
+- `docs.css`: Stehen mehrere Gruppen untereinander (z. B. „BirdNET Live“ und „Schlaumeise App“ unter Anleitungen, „Das lauschende Vogelhaus“ und „Smartfinch Pi“ unter Projekte), klebte der Kopf der nächsten Gruppe direkt am letzten Link der aufgeklappten Gruppe darüber. Jede Gruppe, die auf einen anderen Eintrag folgt, bekommt jetzt `margin-top: var(--spacing-sm)` (gilt für Haupt- und verschachtelte Menüs, Desktop und Drawer)
+
 ## 2026-11-04 — Sidebar-Badges „Neu“/„Bald“/„Archiv“, „Bald“ für Schlaumeise App und Smartfinch Pi (Agent)
 
 ### Hinzugefügt

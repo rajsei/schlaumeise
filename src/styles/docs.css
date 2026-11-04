@@ -181,6 +181,14 @@
   display: none;
 }
 
+/* Abstand vor jeder Gruppe, die auf einen anderen Eintrag folgt: sonst klebt
+   der Kopf der naechsten Gruppe direkt am letzten Link der aufgeklappten
+   Gruppe darueber (z. B. „BirdNET Live" → „Schlaumeise App"). */
+.docs-nav__menu > li + li > .docs-nav__group,
+.docs-nav__subitems > li + li > .docs-nav__group {
+  margin-top: var(--spacing-sm);
+}
+
 .docs-nav__group[open] > summary {
   background: color-mix(in srgb, var(--color-accent-subtle), transparent 20%);
   color: var(--color-text-strong);
