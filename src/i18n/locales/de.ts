@@ -33,6 +33,11 @@ export const de = {
     copyCode: "Code kopieren",
     copiedCode: "Kopiert!",
   },
+  navBadge: {
+    new: "Neu",
+    soon: "Bald",
+    archive: "Archiv",
+  },
   home: {
     heading: "Schlaumeise",
     tagline:

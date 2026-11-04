@@ -13,7 +13,7 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 ## App-Anleitungen
 
 **Beschreibung:** Anleitungen zu Smartphone-Apps unter dem Topic „Anleitungen“, je Sprache gleich aufgebaut (Übersicht mit Hero, Bereichs-/Modus-Seiten, Einstellungen und Tipps). `guides/birdnet-live` „BirdNET Live“ — die wissenschaftliche App (Live, Survey, Point Count, ARU, Einstellungen). `guides/smartfinch-app` „Schlaumeise App“ (EN: „Smartfinch App“) — das gamifizierte Sammelspiel für Kinder von 8 bis 13 Jahren, parallel zum BirdNET-Live-Guide aufgebaut: `index` (Vorstellung, Spielprinzip, Bereiche, Kindersicherheit, Hintergrund, Download-Status, FAQ), `comparison` (Abgrenzung zu BirdNET Live: Vergleichstabelle, „Warum zwei Apps?“, Entscheidungshilfe, Hinweis für Lehrkräfte), `listening` (Lauschen/Live), `stars` (Punkteregeln: Stufen, einmal pro Tag, Boni, Extra-Sterne, Jahreslauf), `collection` (Sammlung und Erkunden), `journal` (Tagebuch, „Falsch erkannt?“, Tag teilen), `progress` (Punkte, Auszeichnungen, Errungenschaften, Level, Sticker), `settings` (Tipps, Einstellungen, Sicherung, Hinweise für Eltern und Lehrkräfte). Die BirdNET-Live-Übersicht verlinkt auf den Vergleich.
-**Status:** ✅ umgesetzt (DE + EN) — Schlaumeise-Guide noch ohne App-Screenshots; Store-Links folgen, sobald die App veröffentlicht ist.
+**Status:** ✅ umgesetzt (DE + EN) — Schlaumeise-Guide noch ohne App-Screenshots; Store-Links folgen, sobald die App veröffentlicht ist. Sidebar-Badge „Bald“ an der Gruppe, bis die App erschienen ist.
 **Betroffene Bereiche:** `src/content/docs/<locale>/guides/birdnet-live/`, `src/content/docs/<locale>/guides/smartfinch-app/`, `src/config/docs-navigation.ts`
 **Erweiterungsmöglichkeiten:** Screenshots der Schlaumeise-App; Store-Links nach Veröffentlichung; Header-Menü und Startseiten-CTA (derzeit nur BirdNET Live) um die Schlaumeise-App ergänzen; Unterrichtsmaterial für Lehrkräfte auf Basis des Vergleichs.
 
@@ -26,10 +26,10 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Navigation (Sidebar mit Topics)
 
-**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung. Thema-Buttons bewusst ohne Tooltips (2026-07-14 erprobt und wieder entfernt — sichtbare Labels reichen).
-**Status:** ✅ umgesetzt
-**Betroffene Bereiche:** `src/config/docs-navigation.ts`, `src/lib/docs-navigation.ts`, `src/components/ui-elements/Sidebar*.astro`
-**Erweiterungsmöglichkeiten:** Topbar-Themen-Dropdown mit echten Zielen (Komponente `DropdownNavItem` liegt dafür reserviert bereit); `aria-current` für aktive Links.
+**Beschreibung:** Konfigurationsgetriebene Sidebar (`docs-navigation.ts` → Resolver → `Sidebar`/`SidebarItems`/`TopicIcon`), Topics mit Icons, Gruppen mit Übersichts-Links, automatische Sortierung über `sidebar.order`, aktive-Pfad-Erkennung. Thema-Buttons bewusst ohne Tooltips (2026-07-14 erprobt und wieder entfernt — sichtbare Labels reichen). Hinweis-Badges („Neu“, „Bald“, „Archiv“) rechtsbündig hinter Topics, Gruppen und Links — gesetzt per `badge` in der Navigations-Config oder per Frontmatter `sidebar.badge` an einer Seite; Labels aus dem i18n-Dictionary (`navBadge`), Darstellung über `NavBadge` (daisyUI-`badge`). Derzeit gesetzt: Gruppen „Schlaumeise App“ (Anleitungen) und „Smartfinch Pi“ (Projekte) → „Bald“ / „Coming soon“, weil beide noch nicht veröffentlicht sind.
+**Status:** ✅ umgesetzt (Badges seit 2026-11-04)
+**Betroffene Bereiche:** `src/config/docs-navigation.ts`, `src/lib/docs-navigation.ts`, `src/components/ui-elements/Sidebar*.astro`, `src/components/ui-elements/NavBadge.astro`, `src/content.config.ts`, `src/types/docs.ts`, `src/i18n/locales/*` (`navBadge`)
+**Erweiterungsmöglichkeiten:** Topbar-Themen-Dropdown mit echten Zielen (Komponente `DropdownNavItem` liegt dafür reserviert bereit); `aria-current` für aktive Links; weitere Badge-Varianten (z. B. „Aktualisiert“); „Neu“-Badge mit Ablaufdatum (wirkt bei statischem Build erst beim nächsten Build).
 
 ## Mobile Darstellung
 

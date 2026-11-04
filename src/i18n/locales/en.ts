@@ -33,6 +33,11 @@ export const en = {
     copyCode: "Copy code",
     copiedCode: "Copied!",
   },
+  navBadge: {
+    new: "New",
+    soon: "Coming soon",
+    archive: "Archive",
+  },
   home: {
     heading: "Smartfinch",
     tagline:

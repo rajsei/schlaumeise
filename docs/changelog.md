@@ -2,6 +2,17 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-11-04 — Sidebar-Badges „Neu“/„Bald“/„Archiv“, „Bald“ für Schlaumeise App und Smartfinch Pi (Agent)
+
+### Hinzugefügt
+- Sidebar-Badges wiederhergestellt (Umsetzung aus `c691dde`, die in `15e4387` wieder entfernt worden war): optionales Feld `badge` an Topics, Gruppen und Links in `docs-navigation.ts` sowie Frontmatter-Feld `sidebar.badge` für einzelne Seiten (Zod-Schema in `content.config.ts` + `types/docs.ts`; Varianten zentral in `navBadgeVariants`). Resolver (`lib/docs-navigation.ts`) liefert `badge: { variant, label }`; Label lokalisiert über die i18n-Sektion `navBadge`. `NavBadge.astro` rendert ein daisyUI-`badge badge-sm` rechtsbündig im Eintrag (Teil des zugänglichen Namens), eingebunden in `Sidebar` und `SidebarItems`
+- Neue Variante `soon` („Bald“ / „Coming soon“, `badge-accent`) neben `new` („Neu“ / „New“, `badge-secondary`) und `archive` („Archiv“ / „Archive“, `badge-ghost`)
+- Gruppen „Schlaumeise App“ (Anleitungen) und „Smartfinch Pi“ (Projekte) tragen das Badge „Bald“ / „Coming soon“ — beide sind noch nicht veröffentlicht (App nicht in den Stores, Smartfinch Pi ohne stabiles Release)
+
+### Geändert
+- Gegenüber `c691dde` trägt das Topic „Workshops“ kein „Archiv“-Badge (war nicht angefragt; mit `badge: "archive"` in `docs-navigation.ts` jederzeit wieder setzbar)
+- `content-handbook.md` und `features.md`: Variante „Bald“ und aktuell gesetzte Badges dokumentiert
+
 ## 2026-11-04 — Anleitung „Schlaumeise App“ (guides/smartfinch-app) (Agent)
 
 ### Hinzugefügt
