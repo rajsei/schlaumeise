@@ -1,0 +1,229 @@
+---
+title: Smartfinch
+description: Smartfinch is a collecting game for children aged 8 to 13. The phone listens, identifies the birds with the BirdNET AI, and every bird you hear goes into your own collection.
+category: "Guide"
+tags: ["App", "Game", "Kids"]
+prev: false
+sidebar:
+  order: 1
+---
+
+import { Image } from "astro:assets";
+import smartfinchLogo from "@assets/SmartfinchLogo.svg";
+
+<div class="hero bg-base-200 rounded-box docs-hero-bleed min-h-[60vh] md:min-h-screen">
+  <div class="hero-content flex-col lg:flex-row">
+    <Image
+      src={smartfinchLogo}
+      alt="Logo of the Smartfinch app"
+      width={384}
+      class="w-72 max-w-full h-auto not-zoomable"
+      loading="eager"
+    />
+    <div>
+      <h2 class="text-4xl font-bold">Every bird you hear is one you have found</h2>
+      <p class="py-6">
+        Who is singing out there? Smartfinch turns listening into a collecting game.
+        The phone listens, recognizes the birds around you, and every bird you hear goes into your collection.
+        Rare birds earn more stars than the ones you hear every day.
+      </p>
+    </div>
+  </div>
+</div>
+
+>**Smartfinch** is a **bird-collecting game for children aged 8 to 13**.
+The app listens through the microphone and uses the **BirdNET AI** to recognize which birds are singing.
+Every find earns **stars**, new species go into your **collection**, and in the **journal** you can listen to every day again.
+Recognition runs **directly on the phone**: you need no internet and no account, and your recordings stay on your device.
+
+What you end up with is not a high score but something much better: after a few weeks you realize that there aren't "a few birds" out there, but forty different voices.
+And you can tell a blackbird from a song thrush – **because learning it was fun.**
+
+## How the game works
+
+<NumberedList>
+
+1. **Go outside and listen.**
+
+    At the window, in the garden, on the way to school or in the woods – one tap starts listening.
+2. **The app recognizes a bird.**
+
+    A card shows its name and the stars you earn for it.
+3. **A new species? Then there's confetti.**
+
+    A small card shows you who you have just found, and the bird goes into your collection.
+4. **In the evening you take a look.**
+
+    How many stars did you collect today? Is there a new badge? Who are you still missing?
+5. **"I only need one more tit …"**
+
+    … and off you go outside again.
+
+</NumberedList>
+
+To keep it fair, each animal earns stars **only once a day**.
+Leaving the phone at the same spot for hours therefore achieves almost nothing.
+Going somewhere new achieves a lot.
+
+## The parts of the app
+
+At the top of the home screen you see your stars and your bird.
+Below that there is one large tile for listening and smaller tiles for everything else.
+
+**Live** – The heart of the app. One big button starts listening. You see the spectrogram, a picture of the sound, and below it the animals the app recognizes, with their stars.
+
+<LinkCard
+  title="Live"
+  href="./listening/"
+/>
+<br />
+
+**Collecting stars** – Why is one bird worth 50 stars and another 1,000? And why does that change over the year? All the rules are here.
+
+<LinkCard
+  title="Collecting stars"
+  href="./stars/"
+/>
+<br />
+
+**Collection and Explore** – Your **Collection** holds every animal you have found. **Explore** shows you which animals occur where you are right now and who you could still find.
+
+<LinkCard
+  title="Collection and Explore"
+  href="./collection/"
+/>
+<br />
+
+**Journal** – Every day you listen gets an entry. Play your recordings again, give your listening places names and share your bird day as a picture.
+
+<LinkCard
+  title="Journal"
+  href="./journal/"
+/>
+<br />
+
+**Points, levels and stickers** – Badges for the day and the week, achievements for good and a bird that grows with you from egg to legend. Every new level lets you pick a sticker.
+
+<LinkCard
+  title="Points, levels and stickers"
+  href="./progress/"
+/>
+<br />
+
+**Settings and tips** – How to help the app recognize more birds, how to back up your collection, and what parents and teachers should know.
+
+<LinkCard
+  title="Settings and tips"
+  href="./settings/"
+/>
+
+## Smartfinch or BirdNET Live?
+
+Smartfinch is built on the **BirdNET Live** app and uses the same AI.
+The two apps have very different goals, though:
+**BirdNET Live** is a scientific tool for surveys, monitoring and citizen science – with several recording modes, many settings and data export.
+**Smartfinch** is the simpler, playful version: a single mode, stars instead of spreadsheets, and everything written in language a child understands.
+
+<LinkCard
+  title="Smartfinch or BirdNET Live? – The comparison"
+  href="./comparison/"
+  description="What the two apps have in common, how they differ and which one suits you."
+/>
+
+## Recognizes more than just birds
+
+The AI in Smartfinch knows almost **9,800 animal species** from all over the world.
+Besides birds, you can also collect **mammals**, **amphibians** and **insects** – a frog at the pond, for example, or a field cricket in the meadow.
+Especially in summer, when many birds go quiet, that makes a nice change.
+In the Collection you can filter by birds, mammals, amphibians and insects.
+
+## Safe for children
+
+Smartfinch was built for children from the start. That is why:
+
+- **No account, no sign-up.** The app works straight away.
+- **No ads, no in-app purchases, no leaderboard.**
+- **Nothing is uploaded.** Recognition, collection, journal and recordings stay on the phone.
+- **Location stays coarse and private.** The app only stores it as an approximate area (a grid of 0.1 degrees, i.e. a few kilometres) and never passes it on.
+- **No pressure.** There are no countdowns, no penalty points and no messages like "You haven't done anything today!". A streak that breaks simply starts again.
+- **Internet only with permission.** Map images, place names and weather can each be allowed separately – but the app works perfectly well without them.
+
+<div role="alert" class="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+  </svg>
+  <span>The AI can be wrong. What the app recognizes is a guess, not a certain identification. Listen to the recording and look whether you can see the bird too – especially with rare species.</span>
+</div>
+
+## Background
+
+Smartfinch is a doctoral project at **Chemnitz University of Technology** and part of the BirdNET project.
+The app grew out of **BirdNET Live**: the recognition, the geo model and the spectrogram come from there.
+What is new is everything that turns recognition into a game – stars, collection, journal, badges, levels and stickers – and an interface written for children.
+
+The app has two names: in German it is called **Schlaumeise**, in every other language **Smartfinch**.
+It runs on **Android** and **iOS** and speaks **12 languages**.
+The source code is open source (MIT license); the BirdNET models are licensed under the Apache License 2.0.
+
+## Download the app
+
+<div role="alert" class="alert alert-warning">
+  <span>Smartfinch is **not yet** available on Google Play or the App Store. As soon as the app is published, you will find the links here.</span>
+</div>
+
+<br />
+
+If you know your way around app development, you can already build the app yourself from the source code.
+If you want to identify birds with your phone today, try [BirdNET Live](../birdnet-live/).
+
+<Columns min="16rem">
+  <LinkCard
+    title="Source code on GitHub"
+    href="https://github.com/rajsei/smartfinch-live-app"
+    description="For developers"
+    isExternal
+  />
+  <LinkCard
+    title="BirdNET Live"
+    href="../birdnet-live/"
+    description="The scientific app, already in the stores"
+  />
+</Columns>
+
+## FAQ
+
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" checked="checked" />
+  <div class="collapse-title font-semibold">Does the app cost anything?</div>
+  <div class="collapse-content text-sm">No. Smartfinch is free. There are no ads and no in-app purchases – and there won't be later either.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">Does the app need the internet?</div>
+  <div class="collapse-content text-sm">No. Recognition, stars, collection, journal and species descriptions work completely offline – even in the middle of the woods without reception. Only map images, place names and the weather need the internet, and you have to allow each of them separately.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">Why does the app need my location?</div>
+  <div class="collapse-content text-sm">So that it knows which animals live where you are and how many stars each one is worth there. Instead of GPS, you can also pick your area on the map. Without a location the app still recognizes birds, but there are no stars.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">Why didn't I get any stars for a bird?</div>
+  <div class="collapse-content text-sm">Usually because you have already collected it today – the card then says "already collected today ✓". It may also be that the bird is not expected where you are this week, that the app has no location, or that test mode is on in the settings. The app tells you the reason every time. More under [Collecting stars](./stars/).</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">The app got a bird wrong. What now?</div>
+  <div class="collapse-content text-sm">In the journal you can tap "Wrong bird?" on every find. The bird then disappears from your journal and your collection. You keep your stars all the same. More in the [Journal](./journal/).</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">Can I use Smartfinch and BirdNET Live at the same time?</div>
+  <div class="collapse-content text-sm">Yes. The two apps can be installed side by side. They don't share any data, though: what you record with BirdNET Live does not end up in your Smartfinch collection.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="smartfinch-faq" />
+  <div class="collapse-title font-semibold">What happens if my phone breaks?</div>
+  <div class="collapse-content text-sm">Because nothing is stored in a cloud, the collection is then gone – unless you have saved a backup. Under Settings → Backup you save your whole collection in a single file and restore it on a new phone. More under [Settings and tips](./settings/).</div>
+</div>

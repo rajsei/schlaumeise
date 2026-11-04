@@ -2,6 +2,21 @@
 
 Format: Datum — Änderungen (Wer: Mensch/Agent). Bei jeder Feature-Änderung ergänzen (Pflicht, siehe AGENTS.md).
 
+## 2026-11-04 — Anleitung „Schlaumeise App“ (guides/smartfinch-app) (Agent)
+
+### Hinzugefügt
+- Neue Anleitung `guides/smartfinch-app` zur Schlaumeise-App (EN: „Smartfinch“), DE + EN, parallel zum BirdNET-Live-Guide aufgebaut. Inhalte aus dem App-Repository `rajsei/smartfinch-live-app` (Spezifikation, ARB-Texte, Punkteregeln in `ScoringRules`) übernommen, UI-Begriffe wie in der App („Lauschen“, „Sammlung“, „Tagebuch“, „Falsch erkannt?“ …). Seiten: `index` (Vorstellung, Spielprinzip, Bereiche der App, Kindersicherheit, Hintergrund, Download-Status, FAQ), `comparison` (Abgrenzung zu BirdNET Live: Vergleichstabelle, „Warum zwei Apps?“, Entscheidungshilfe, Übergang zu BirdNET Live, Tipp für Lehrkräfte), `listening` (Lauschen/Live, Fundkarten, Testmodus, Weiterlauschen im Hintergrund, Ansagen), `stars` (sechs Stufen 50–1.000 ⭐, einmal pro Tag und Art, Boni ×2/×3, Extra-Sterne, Frühaufsteher, Beispiele, Jahreslauf, wann es keine Sterne gibt), `collection` (Sammlung und Erkunden, Filter „Nicht gezählt“, Jahreskurve), `journal` (Tagebuch, Ortsnamen, Fund zurücknehmen, Aufnahme löschen, Tag teilen), `progress` (Punkte-Bereich, Auszeichnungen, Errungenschaften, Level vom Ei bis zur Legende, Sticker), `settings` (Tipps, Einstellungen, Sicherung, Hinweise für Eltern und Lehrkräfte)
+- `docs-navigation.ts`: Gruppe „Schlaumeise App“ (EN „Smartfinch App“) unter „Anleitungen“ (`expanded: true`)
+- BirdNET-Live-Übersicht (DE + EN): Abschnitt „BirdNET Live oder Schlaumeise?“ mit Link auf die Vergleichsseite
+
+### Geändert
+- `docs/features.md`: neuer Eintrag „App-Anleitungen“; Einsatzorte von `MediaSection`/`Columns` nachgetragen und deren veralteter Eintrag unter „Reservierte Komponenten“ entfernt (beide werden seit den BirdNET-Live-Guides auf Content-Seiten genutzt)
+
+### Bekannte Einschränkungen
+- Noch keine Screenshots der Schlaumeise-App; als Bild dient das Logo (`SchlaumeiseLogo.svg` bzw. `SmartfinchLogo.svg`)
+- Die App ist noch nicht in den Stores; die Download-Sektion verweist auf den Quellcode auf GitHub und auf BirdNET Live. Store-Links nachtragen, sobald die App veröffentlicht ist
+- Header-Menü und Startseiten-Button verlinken weiterhin nur den BirdNET-Live-Guide
+
 ## 2026-11-04 — Projekt „Smartfinch Pi“ (project02) (Agent)
 
 ### Hinzugefügt

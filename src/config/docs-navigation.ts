@@ -87,6 +87,14 @@ export const navigation: NavigationConfig = {
           expanded: true,
           items: [{ autogenerate: { directory: "guides/birdnet-live" } }],
         },
+        {
+          label: "Smartfinch App",
+          translations: {
+            de: "Schlaumeise App",
+          },
+          expanded: true,
+          items: [{ autogenerate: { directory: "guides/smartfinch-app" } }],
+        },
       ],
     },
     {

@@ -1,0 +1,229 @@
+---
+title: Schlaumeise
+description: Schlaumeise ist ein Sammelspiel für Kinder von 8 bis 13 Jahren. Das Handy hört zu, erkennt die Vögel mit der BirdNET-KI, und jeder gehörte Vogel kommt in deine eigene Sammlung.
+category: "Guide"
+tags: ["App", "Spiel", "Kinder"]
+prev: false
+sidebar:
+  order: 1
+---
+
+import { Image } from "astro:assets";
+import schlaumeiseLogo from "@assets/SchlaumeiseLogo.svg";
+
+<div class="hero bg-base-200 rounded-box docs-hero-bleed min-h-[60vh] md:min-h-screen">
+  <div class="hero-content flex-col lg:flex-row">
+    <Image
+      src={schlaumeiseLogo}
+      alt="Logo der Schlaumeise-App"
+      width={384}
+      class="w-72 max-w-full h-auto not-zoomable"
+      loading="eager"
+    />
+    <div>
+      <h2 class="text-4xl font-bold">Werde selbst zur Schlaumeise</h2>
+      <p class="py-6">
+        Wer singt da eigentlich? Schlaumeise macht aus dem Zuhören ein Sammelspiel.
+        Das Handy lauscht, erkennt die Vögel um dich herum, und jeder Vogel, den du hörst, kommt in deine Sammlung.
+        Für seltene Vögel gibt es mehr Sterne als für die, die du jeden Tag hörst.
+      </p>
+    </div>
+  </div>
+</div>
+
+>**Schlaumeise** ist ein **Vogel-Sammelspiel für Kinder von 8 bis 13 Jahren**.
+Die App hört über das Mikrofon zu und erkennt mit der **BirdNET-KI**, welche Vögel gerade singen.
+Für jeden Fund gibt es **Sterne**, neue Arten landen in deiner **Sammlung**, und im **Tagebuch** kannst du jeden Tag noch einmal nachhören.
+Die Erkennung läuft **direkt auf dem Handy**: Du brauchst kein Internet, kein Konto, und deine Aufnahmen bleiben auf deinem Gerät.
+
+Am Ende steht kein Highscore, sondern etwas viel Besseres: Nach ein paar Wochen weißt du, dass draußen nicht „ein paar Vögel“ singen, sondern vierzig verschiedene Stimmen.
+Und du kannst eine Amsel von einer Singdrossel unterscheiden – **weil das Lernen Spaß gemacht hat.**
+
+## So funktioniert das Spiel
+
+<NumberedList>
+
+1. **Geh nach draußen und lausche.**
+
+    Am Fenster, im Garten, auf dem Schulweg oder im Wald – starte mit einem Tipp das Lauschen.
+2. **Die App erkennt einen Vogel.**
+
+    Auf einer Karte erscheinen sein Name und die Sterne, die du für ihn bekommst.
+3. **Neue Art? Dann gibt es Konfetti.**
+
+    Eine kleine Karte zeigt dir, wen du gerade gefunden hast, und der Vogel kommt in deine Sammlung.
+4. **Am Abend schaust du nach.**
+
+    Wie viele Sterne hast du heute gesammelt? Gibt es ein neues Abzeichen? Wer fehlt dir noch?
+5. **„Mir fehlt nur noch eine Meise …“**
+
+    … und schon geht es wieder nach draußen.
+
+</NumberedList>
+
+Damit es fair bleibt, bekommst du für jedes Tier **nur einmal am Tag** Sterne.
+Das Handy stundenlang an derselben Stelle liegen zu lassen, bringt also kaum etwas.
+An einen neuen Ort zu gehen dagegen sehr viel.
+
+## Die Bereiche der App
+
+Auf dem Startbildschirm siehst du oben deine Sterne und deinen Vogel.
+Darunter gibt es eine große Kachel zum Lauschen und kleinere Kacheln für alles andere.
+
+**Lauschen** – Das Herzstück der App. Ein großer Knopf startet das Zuhören. Du siehst das Spektrogramm, ein Bild vom Klang, und darunter die erkannten Tiere mit ihren Sternen.
+
+<LinkCard
+  title="Lauschen"
+  href="./listening/"
+/>
+<br />
+
+**Sterne sammeln** – Warum ist ein Vogel 50 Sterne wert und ein anderer 1.000? Und warum ändert sich das im Laufe des Jahres? Hier stehen alle Regeln.
+
+<LinkCard
+  title="Sterne sammeln"
+  href="./stars/"
+/>
+<br />
+
+**Sammlung und Erkunden** – In der **Sammlung** steht jedes Tier, das du schon gefunden hast. **Erkunden** zeigt dir, welche Tiere an deinem Ort gerade vorkommen und wen du noch finden kannst.
+
+<LinkCard
+  title="Sammlung und Erkunden"
+  href="./collection/"
+/>
+<br />
+
+**Tagebuch** – Jeder Tag, an dem du zuhörst, bekommt einen Eintrag. Hör dir deine Aufnahmen noch einmal an, gib deinen Lauschorten Namen und teile deinen Vogeltag als Bild.
+
+<LinkCard
+  title="Tagebuch"
+  href="./journal/"
+/>
+<br />
+
+**Punkte, Level und Sticker** – Auszeichnungen für den Tag und die Woche, Errungenschaften für immer und ein Vogel, der mit dir vom Ei bis zur Legende wächst. Für jedes neue Level darfst du dir einen Sticker aussuchen.
+
+<LinkCard
+  title="Punkte, Level und Sticker"
+  href="./progress/"
+/>
+<br />
+
+**Einstellungen und Tipps** – So erkennt die App mehr Vögel, so sicherst du deine Sammlung, und das sollten Eltern und Lehrkräfte wissen.
+
+<LinkCard
+  title="Einstellungen und Tipps"
+  href="./settings/"
+/>
+
+## Schlaumeise oder BirdNET Live?
+
+Schlaumeise baut auf der App **BirdNET Live** auf und nutzt dieselbe KI.
+Die beiden Apps verfolgen aber ganz unterschiedliche Ziele:
+**BirdNET Live** ist ein wissenschaftliches Werkzeug für Kartierungen, Monitoring und Citizen Science – mit mehreren Aufnahmemodi, vielen Einstellungen und Datenexport.
+**Schlaumeise** ist die einfachere, spielerische Version: ein einziger Modus, Sterne statt Tabellen, und alles in einer Sprache, die ein Kind versteht.
+
+<LinkCard
+  title="Schlaumeise oder BirdNET Live? – Der Vergleich"
+  href="./comparison/"
+  description="Was die beiden Apps gemeinsam haben, worin sie sich unterscheiden und welche zu dir passt."
+/>
+
+## Erkennt mehr als nur Vögel
+
+Die KI in Schlaumeise kennt fast **9.800 Tierarten** aus der ganzen Welt.
+Neben Vögeln kannst du auch **Säugetiere**, **Amphibien** und **Insekten** sammeln – zum Beispiel einen Frosch am Teich oder eine Feldgrille auf der Wiese.
+Gerade im Sommer, wenn viele Vögel leiser werden, ist das eine schöne Abwechslung.
+In der Sammlung kannst du nach Vögeln, Säugetieren, Amphibien und Insekten filtern.
+
+## Sicher für Kinder
+
+Schlaumeise wurde von Anfang an für Kinder gebaut. Deshalb gilt:
+
+- **Kein Konto, keine Anmeldung.** Die App funktioniert sofort.
+- **Keine Werbung, keine In-App-Käufe, keine Bestenliste.**
+- **Nichts wird hochgeladen.** Erkennung, Sammlung, Tagebuch und Aufnahmen bleiben auf dem Handy.
+- **Der Standort bleibt grob und privat.** Die App speichert ihn nur als ungefähres Gebiet (ein Raster von 0,1 Grad, also wenige Kilometer) und gibt ihn nie weiter.
+- **Kein Druck.** Es gibt keine Countdowns, keine Strafpunkte und keine Meldungen wie „Du hast heute noch nichts gemacht!“. Eine Serie, die abreißt, fängt einfach wieder von vorn an.
+- **Internet nur mit Erlaubnis.** Kartenbilder, Ortsnamen und Wetter kann man einzeln erlauben – die App funktioniert aber auch ganz ohne.
+
+<div role="alert" class="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+  </svg>
+  <span>Die KI kann sich irren. Was die App erkennt, ist eine Vermutung, keine sichere Bestimmung. Hör dir die Aufnahme an und schau nach, ob du den Vogel auch siehst – besonders bei seltenen Arten.</span>
+</div>
+
+## Hintergrund
+
+Schlaumeise ist ein Promotionsprojekt an der **Technischen Universität Chemnitz** und gehört zum BirdNET-Projekt.
+Die App ist aus **BirdNET Live** entstanden: Die Erkennung, das Geo-Modell und das Spektrogramm stammen von dort.
+Neu sind alles, was aus der Erkennung ein Spiel macht – Sterne, Sammlung, Tagebuch, Abzeichen, Level und Sticker – und eine Oberfläche, die für Kinder geschrieben ist.
+
+Die App hat zwei Namen: Auf Deutsch heißt sie **Schlaumeise**, in allen anderen Sprachen **Smartfinch**.
+Sie läuft auf **Android** und **iOS** und spricht **12 Sprachen**.
+Der Quellcode ist Open Source (MIT-Lizenz), die BirdNET-Modelle stehen unter der Apache-Lizenz 2.0.
+
+## App herunterladen
+
+<div role="alert" class="alert alert-warning">
+  <span>Schlaumeise ist **noch nicht** im Google Play Store oder im App Store erhältlich. Sobald die App veröffentlicht ist, findest du die Links hier.</span>
+</div>
+
+<br />
+
+Wer sich mit App-Entwicklung auskennt, kann die App schon jetzt aus dem Quellcode selbst bauen.
+Wer heute schon mit dem Handy Vögel bestimmen möchte, kann [BirdNET Live](../birdnet-live/) ausprobieren.
+
+<Columns min="16rem">
+  <LinkCard
+    title="Quellcode auf GitHub"
+    href="https://github.com/rajsei/smartfinch-live-app"
+    description="Für Entwicklerinnen und Entwickler"
+    isExternal
+  />
+  <LinkCard
+    title="BirdNET Live"
+    href="../birdnet-live/"
+    description="Die wissenschaftliche App, schon in den Stores"
+  />
+</Columns>
+
+## FAQ
+
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" checked="checked" />
+  <div class="collapse-title font-semibold">Kostet die App etwas?</div>
+  <div class="collapse-content text-sm">Nein. Schlaumeise ist kostenlos. Es gibt keine Werbung und keine In-App-Käufe – auch später nicht.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Braucht die App Internet?</div>
+  <div class="collapse-content text-sm">Nein. Erkennung, Sterne, Sammlung, Tagebuch und Artbeschreibungen funktionieren komplett offline – auch mitten im Wald ohne Empfang. Nur Kartenbilder, Ortsnamen und das Wetter brauchen Internet, und die musst du jeweils einzeln erlauben.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Warum braucht die App meinen Standort?</div>
+  <div class="collapse-content text-sm">Damit sie weiß, welche Tiere bei dir leben und wie viele Sterne jedes Tier bei dir wert ist. Statt GPS kannst du deine Gegend auch auf der Karte auswählen. Ohne Standort erkennt die App weiterhin Vögel, es gibt dann aber keine Sterne.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Warum habe ich für einen Vogel keine Sterne bekommen?</div>
+  <div class="collapse-content text-sm">Meistens, weil du ihn heute schon gesammelt hast – dann steht auf der Karte „heute schon gesammelt ✓“. Es kann auch sein, dass der Vogel an deinem Ort in dieser Woche nicht erwartet wird, dass die App keinen Standort hat oder dass in den Einstellungen der Testmodus aktiv ist. Die App sagt dir jedes Mal, woran es liegt. Mehr dazu unter [Sterne sammeln](./stars/).</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Die App hat einen Vogel falsch erkannt. Was jetzt?</div>
+  <div class="collapse-content text-sm">Im Tagebuch kannst du bei jedem Fund auf „Falsch erkannt?“ tippen. Der Vogel verschwindet dann aus deinem Tagebuch und deiner Sammlung. Deine Sterne bleiben dir trotzdem. Mehr dazu im [Tagebuch](./journal/).</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Kann ich Schlaumeise und BirdNET Live gleichzeitig nutzen?</div>
+  <div class="collapse-content text-sm">Ja. Die beiden Apps lassen sich nebeneinander installieren. Sie teilen aber keine Daten: Was du mit BirdNET Live aufnimmst, landet nicht in deiner Schlaumeise-Sammlung.</div>
+</div>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300">
+  <input type="radio" name="schlaumeise-faq" />
+  <div class="collapse-title font-semibold">Was passiert, wenn mein Handy kaputtgeht?</div>
+  <div class="collapse-content text-sm">Weil nichts in einer Cloud liegt, ist die Sammlung dann weg – außer du hast eine Sicherung gespeichert. Unter Einstellungen → Sicherung speicherst du deine ganze Sammlung in einer einzigen Datei und holst sie auf einem neuen Handy zurück. Mehr dazu unter [Einstellungen und Tipps](./settings/).</div>
+</div>

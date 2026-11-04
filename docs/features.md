@@ -5,10 +5,17 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 ## Dokumentations-/Lernseiten
 
-**Beschreibung:** Markdown/MDX-Inhalte aus der `docs`-Collection, gerendert über `DocsLayout` mit Sidebar, Inhalts-TOC und Prev/Next-Pagination. Themenbereiche: Anleitungen (BirdNET Live), Projekte, Wissenssammlung, Begriffsverzeichnis.
+**Beschreibung:** Markdown/MDX-Inhalte aus der `docs`-Collection, gerendert über `DocsLayout` mit Sidebar, Inhalts-TOC und Prev/Next-Pagination. Themenbereiche: Anleitungen (BirdNET Live, Schlaumeise/Smartfinch-App), Projekte, Wissenssammlung, Begriffsverzeichnis.
 **Status:** ✅ umgesetzt
 **Betroffene Bereiche:** `src/content/docs/`, `src/pages/[...slug].astro`, `src/pages/[locale]/[...slug].astro`, `src/layouts/DocsLayout.astro`, `src/lib/docs-content.ts`
 **Erweiterungsmöglichkeiten:** Verschlagwortung über `tags`/`category` sichtbar machen (Filter-/Übersichtsseiten). Workshop-Materialien sind seit 2026-06-13 als Topic „Workshops“ eingehängt.
+
+## App-Anleitungen
+
+**Beschreibung:** Anleitungen zu Smartphone-Apps unter dem Topic „Anleitungen“, je Sprache gleich aufgebaut (Übersicht mit Hero, Bereichs-/Modus-Seiten, Einstellungen und Tipps). `guides/birdnet-live` „BirdNET Live“ — die wissenschaftliche App (Live, Survey, Point Count, ARU, Einstellungen). `guides/smartfinch-app` „Schlaumeise App“ (EN: „Smartfinch App“) — das gamifizierte Sammelspiel für Kinder von 8 bis 13 Jahren, parallel zum BirdNET-Live-Guide aufgebaut: `index` (Vorstellung, Spielprinzip, Bereiche, Kindersicherheit, Hintergrund, Download-Status, FAQ), `comparison` (Abgrenzung zu BirdNET Live: Vergleichstabelle, „Warum zwei Apps?“, Entscheidungshilfe, Hinweis für Lehrkräfte), `listening` (Lauschen/Live), `stars` (Punkteregeln: Stufen, einmal pro Tag, Boni, Extra-Sterne, Jahreslauf), `collection` (Sammlung und Erkunden), `journal` (Tagebuch, „Falsch erkannt?“, Tag teilen), `progress` (Punkte, Auszeichnungen, Errungenschaften, Level, Sticker), `settings` (Tipps, Einstellungen, Sicherung, Hinweise für Eltern und Lehrkräfte). Die BirdNET-Live-Übersicht verlinkt auf den Vergleich.
+**Status:** ✅ umgesetzt (DE + EN) — Schlaumeise-Guide noch ohne App-Screenshots; Store-Links folgen, sobald die App veröffentlicht ist.
+**Betroffene Bereiche:** `src/content/docs/<locale>/guides/birdnet-live/`, `src/content/docs/<locale>/guides/smartfinch-app/`, `src/config/docs-navigation.ts`
+**Erweiterungsmöglichkeiten:** Screenshots der Schlaumeise-App; Store-Links nach Veröffentlichung; Header-Menü und Startseiten-CTA (derzeit nur BirdNET Live) um die Schlaumeise-App ergänzen; Unterrichtsmaterial für Lehrkräfte auf Basis des Vergleichs.
 
 ## Projektseiten
 
@@ -118,8 +125,8 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 ## MDX-Bausteine: Listen & Layout
 
 **Beschreibung:** Vier MDX-Komponenten für strukturierte Inhalte, ohne Import nutzbar (Catch-all-Routen). `Checklist` — abhakbare Liste mit gespeicherten Zuständen (`localStorage`), fetter Titel + eingerückte Unterpunkte, nur der Titel wird beim Abhaken durchgestrichen. `NumberedList` — schlichte nummerierte Aufzählung (CSS-Counter, kein JS), Beschreibung als Fließtext **oder** Unterpunkte. `MediaSection` — Text und Bild nebeneinander (zwei benannte Slots), stapelt per Container-Query auf schmalen Containern; Props `side`, `ratio`, `caption`. `Columns` — legt Kinder per CSS-Grid (`auto-fit`) nebeneinander und bricht bei Platzmangel um (Props `min`, `align`); mit `MediaSection` verschachtelt ergibt sich automatisch das richtige Verhalten (schmale Spalte → intern gestapelt, breite Einzelspalte → nebeneinander).
-**Status:** ✅ umgesetzt (2026-07-27) — nur semantische Tokens (`lint:colors` grün), Build grün. `Checklist` eingesetzt in `project01/components` (DE+EN); `NumberedList` in den vier BirdNET-Live-Guides (`aru`, `point-count`, `survey`, `live`, DE+EN). `MediaSection` + `Columns` noch ohne Content-Einsatz (siehe „Reservierte Komponenten“). Demo-Seiten unter `src/pages/dev/`.
-**Betroffene Bereiche:** `src/components/docs/{Checklist,NumberedList,MediaSection,Columns}.astro`, beide Catch-all-Routen, `src/content/docs/*/projects/project01/components.mdx`, `src/content/docs/*/guides/birdnet-live/*.mdx`, `src/pages/dev/*`
+**Status:** ✅ umgesetzt (2026-07-27) — nur semantische Tokens (`lint:colors` grün), Build grün. `Checklist` eingesetzt in `project01/components` (DE+EN); `NumberedList` in den vier BirdNET-Live-Guides (`aru`, `point-count`, `survey`, `live`, DE+EN) und im Schlaumeise-Guide (`guides/smartfinch-app`). `MediaSection` in den BirdNET-Live-Guides `live` und `survey`; `Columns` in den Übersichten `guides/birdnet-live` und `guides/smartfinch-app` sowie in `guides/smartfinch-app/comparison`. Demo-Seiten unter `src/pages/dev/`.
+**Betroffene Bereiche:** `src/components/docs/{Checklist,NumberedList,MediaSection,Columns}.astro`, beide Catch-all-Routen, `src/content/docs/*/projects/project01/components.mdx`, `src/content/docs/*/guides/birdnet-live/*.mdx`, `src/content/docs/*/guides/smartfinch-app/*.mdx`, `src/pages/dev/*`
 **Erweiterungsmöglichkeiten:** aria-Labels von `Checklist` lokalisieren (derzeit fest deutsch, wie `Steps`); `MediaSection` optional „Bild beim Stapeln oben“; `Columns` optionaler Karten-Stil.
 
 ## Lernfortschritt
@@ -147,5 +154,4 @@ Pflicht: Nach jeder Feature-Änderung diese Datei aktualisieren (siehe AGENTS.md
 
 `DropdownNavItem.astro` (`src/components/ui-elements/`): generisches, framework-freies Navbar-Dropdown mit Tastatursteuerung — derzeit ohne Verwendung, reserviert für ein künftiges Themen-Dropdown im Header. Nicht löschen, ohne diese Zeile zu aktualisieren.
 
-`MediaSection.astro` und `Columns.astro` (`src/components/docs/`): fertig, getestet und in beiden Catch-all-Routen registriert, aber noch auf keiner Content-Seite eingesetzt (nur Demo unter `src/pages/dev/media-section-demo.astro`). Reserviert für den Einsatz in Doku-/Projektseiten. Nicht löschen, ohne diese Zeile zu aktualisieren.
               
